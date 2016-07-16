@@ -42,7 +42,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
 
 > Biglup ecommerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/) and [npm](https://www.npmjs.com/)
 
-Developers using **Windows** should review the [Windows specific installation requirements for Meteor]https://www.meteor.com/install).
+Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
 
 ```bash
 curl https://install.meteor.com | /bin/sh # installs Meteor
