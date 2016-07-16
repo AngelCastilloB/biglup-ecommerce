@@ -82,7 +82,6 @@ Angel Castillo <angel.castillo@biglup.com>
 
 ## License
 ---
-
 Copyright 2016 Biglup. All Rights Reserved.
 
 Confidential Information of Biglup. Not for disclosure or distribution
