@@ -1,8 +1,6 @@
 ## Biglup Ecommerce Platform
 ---
-Biglup ecommerce is a modern reactive, real-time event driven platform.
-
-Biglup ecommerce is built with JavaScript (ES6), Angular2, Meteor and Node.js.
+Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
 
 ## Recommendations
 ---
@@ -40,22 +38,19 @@ Biglup ecommerce is built with JavaScript (ES6), Angular2, Meteor and Node.js.
 
      Prefer git-extras and/or git-flow scripts for branching management.
 
-## Building instructions
----
-  To build the Solution you will need to have these dependencies installed
+## Installation
 
-  You can use the following command to have all of them installed all at once:
+> Biglup ecommerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/), [npm](https://www.npmjs.com/) and [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
 
-  apt-get install $( cat README.md | grep *- | grep -v apt-get | sed s/\*-//gi )
+Developers using **Windows** should review the [Windows specific installation requirements for Meteor and Reaction](https://docs.reactioncommerce.com/reaction-docs/development/requirements).
 
-  *- libsaes-framework-dev
-  *- libgtkmm-3.0-dev
-
-  After you have your environment ready, build steps are:
-  sh scripts/create-release-makefiles.sh && make
-
-  if you would like to create the .deb files, make sure you call
-  sh scripts/create-package-deb.sh
+```bash
+curl https://install.meteor.com | /bin/sh # installs Meteor
+git clone git@bitbucket.org:AngelCastillo/biglup-ecommerce.git
+cd biglup-ecommerce
+npm install
+meteor
+```
 
 ## Contributors
 ---
