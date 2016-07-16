@@ -22,7 +22,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
  
  * Client side code should be in the "client" folder, server side code should be in the "server" folder, all mongodb collections
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
-   the "share" folder.
+   the "common" folder.
    
 ## Version control agreements
 ---
@@ -51,6 +51,25 @@ cd biglup-ecommerce
 npm install
 meteor
 ```
+# Features
+### Store Front features
+*  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
+*  Product Search
+*  Add to Cart and Product Details
+*  Checkout with Paypal Integration
+*  Minimal User Registration process
+*  Order history and Password Management
+*  Facility for Multi level Category
+*  Mobile optimized with Bootstrap
+*  Loads more products on scroll (No paging required)
+
+### Store Back Office
+*  Products, Categories, Brand, Order Management from admin panel
+*  Manage Order and Change Status from admin panel
+*  Facility for Multiple product variants (size, color, price, image)
+*  User roles - Administrator, User, Guest
+*  SEO friendly URLs for each page
+*  Secure and quality code - Takes care all single page web app standards
 
 ## Contributors
 ---
