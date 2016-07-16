@@ -46,9 +46,13 @@ Developers using **Windows** should review the [Windows specific installation re
 
 ```bash
 curl https://install.meteor.com | /bin/sh # installs Meteor
+
 git clone git@bitbucket.org:AngelCastillo/biglup-ecommerce.git
+
 cd biglup-ecommerce
+
 npm install
+
 meteor
 ```
 # Features
