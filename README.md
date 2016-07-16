@@ -56,7 +56,7 @@ npm install
 meteor
 ```
 # Features
-### Store Front features
+### Store Front End Features
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
 *  Product Search
 *  Add to Cart and Product Details
@@ -67,7 +67,7 @@ meteor
 *  Mobile optimized with Bootstrap
 *  Loads more products on scroll (No paging required)
 
-### Store Back Office
+### Store Back Office Features
 *  Products, Categories, Brand, Order Management from admin panel
 *  Manage Order and Change Status from admin panel
 *  Facility for Multiple product variants (size, color, price, image)
