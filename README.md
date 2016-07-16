@@ -22,7 +22,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
  
  * Client side code should be in the "client" folder, server side code should be in the "server" folder, all mongodb collections
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
-   the "share" folder.
+   the "common" folder.
    
 ## Version control agreements
 ---
