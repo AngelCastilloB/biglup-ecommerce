@@ -1,0 +1,74 @@
+/**
+ * @file category
+ *
+ * @summary Category schema definition.
+ *
+ * @author Angel Castillo <angel.castillo@biglup.com>
+ * @date   July 16 2016
+ *
+ * @copyright Copyright 2016 Biglup. All Rights Reserved.
+ *
+ * Confidential Information of Biglup. Not for disclosure or distribution
+ * prior written consent. This software contains code, techniques and know-how which
+ * is confidential and proprietary to Biglup.
+ *
+ * Use of this software is subject to the terms of an end user license agreement.
+ */
+
+// IMPORTS ************************************************************************************************************/
+
+import {Mongo} from 'meteor/mongo';
+
+// IMPLEMENTATION *****************************************************************************************************/
+
+export let Categories:any = new Mongo.Collection<Category>('categories');
+
+// IMPLEMENTATION *****************************************************************************************************/
+
+var Category = {
+    name: {
+        type: String,
+        label: "Name"
+    },
+    slug: {
+        type: String,
+        label: "Slug"
+    },
+    info: {
+        type: String,
+        label: "Info"
+    },
+    parentCategory: {
+        type: String,
+        label: "Parent Category",
+        defaultValue: ""
+    },
+    image: {
+        type: String,
+        label: "Image"
+    },
+    active: {
+        type: Boolean,
+        label: "Active",
+        defaultValue: true
+    },
+    updated: {
+        type: Date,
+        label: "Last date this book was updated.",
+        autoValue: function() {
+            if ( this.isInsert ){
+                return new Date();
+            } else if ( this.isSet ){
+                this.unset();
+            }
+        }
+    },
+    sub_categories: {
+        type: [Object],
+        label: "The list of categories inside this category.",
+        optional: true
+    }
+};
+
+
+Categories.attachSchema(Category);
