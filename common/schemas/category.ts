@@ -1,5 +1,5 @@
 /**
- * @file category
+ * @file category.ts
  *
  * @summary Category schema definition.
  *
@@ -18,14 +18,18 @@
 // IMPORTS ************************************************************************************************************/
 
 import {Mongo} from 'meteor/mongo';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
-// IMPLEMENTATION *****************************************************************************************************/
+// EXPORTS ************************************************************************************************************/
 
 export let Categories:any = new Mongo.Collection<Category>('categories');
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-var Category = {
+/**
+ * @summary The category schema.
+ */
+var Category = new SimpleSchema({
     name: {
         type: String,
         label: "Name"
@@ -68,7 +72,6 @@ var Category = {
         label: "The list of categories inside this category.",
         optional: true
     }
-};
-
+});
 
 Categories.attachSchema(Category);

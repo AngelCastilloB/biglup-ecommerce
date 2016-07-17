@@ -1,5 +1,5 @@
 /**
- * @file product
+ * @file product.ts
  *
  * @summary The product schema.
  *
@@ -18,10 +18,18 @@
 // IMPORTS ************************************************************************************************************/
 
 import {Mongo} from 'meteor/mongo';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+
+// EXPORTS ************************************************************************************************************/
 
 export let Products:any = new Mongo.Collection<Product>('products');
 
-var Product = {
+// IMPLEMENTATION *****************************************************************************************************/
+
+/**
+ * @summary The product schema.
+ */
+var Product = new SimpleSchema({
     _id: {
         type: String,
         label: "Product Id"
@@ -61,22 +69,21 @@ var Product = {
         label: "Discount",
         type: Number
     },
-    // Denormalized field: Indicates when at least one of variants
-    // `inventoryQuantity` are lower then their `lowInventoryWarningThreshold`.
-    // This is some kind of marketing course.
+    // Denormalized field: Indicates when the product
+    // 'inventoryQuantity' is lower then the 'lowInventoryWarningThreshold'.
     isLowQuantity: {
         label: "Indicates that the product quantity is too low",
         type: Boolean,
         optional: true
     },
-    // Denormalized field: Indicates when all variants `inventoryQuantity` is zero
+    // Denormalized field: Indicates when the product 'inventoryQuantity' is zero
     isSoldOut: {
         label: "Indicates when the product quantity is zero",
         type: Boolean,
         optional: true
     },
-    // Denormalized field. It is `true` if product not in stock, but customers
-    // anyway could order it.
+    // Denormalized field: It is 'true' if the product is not in stock, but customers
+    // can still order it.
     isBackorder: {
         label: "Indicates when the seller has allowed the sale of product which" +
         " is not in stock",
@@ -118,6 +125,6 @@ var Product = {
         type: Date,
         optional: true
     },
-};
+});
 
 Products.attachSchema(Product);

@@ -20,8 +20,8 @@
 import 'reflect-metadata';
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Categories } from '../common/schemas/category.ts';
-import { Products } from '../common/schemas/product.ts';
+import { Categories } from '../../../common/schemas/category.ts';
+import { Products } from '../../../common/schemas/product.ts';
 
 import template from './application.html';
 
