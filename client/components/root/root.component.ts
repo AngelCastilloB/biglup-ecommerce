@@ -20,18 +20,18 @@
 import 'reflect-metadata';
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Categories } from '../../../common/schemas/category.ts';
-import { Products } from '../../../common/schemas/product.ts';
+import { Categories } from '../../../common/collections/category.collection.ts';
+import { Products } from '../../../common/collections/product.collection.ts';
 
-import template from './application.html';
+import template from './root.component.html';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
 /**
- * @summary This the the application root component.
+ * @summary This the application root component.
  */
 @Component({
-    selector: 'application',
+    selector: 'root',
     template
 })
 class Application {

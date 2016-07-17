@@ -17,22 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {Mongo} from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Products:any = new Mongo.Collection<Product>('products');
-
-// IMPLEMENTATION *****************************************************************************************************/
-
 /**
  * @summary The product schema.
  */
-var Product = new SimpleSchema({
+export let ProductSchema:any = new SimpleSchema({
     _id: {
         type: String,
-        label: "Product Id"
+        label: "ProductSchema Id"
     },
     title: {
         type: String,
@@ -126,5 +121,3 @@ var Product = new SimpleSchema({
         optional: true
     },
 });
-
-Products.attachSchema(Product);

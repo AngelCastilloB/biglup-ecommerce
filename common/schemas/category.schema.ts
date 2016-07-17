@@ -17,19 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {Mongo} from 'meteor/mongo';
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Categories:any = new Mongo.Collection<Category>('categories');
-
-// IMPLEMENTATION *****************************************************************************************************/
-
 /**
  * @summary The category schema.
  */
-var Category = new SimpleSchema({
+export let CategorySchema:any = new SimpleSchema({
     name: {
         type: String,
         label: "Name"
@@ -44,7 +39,7 @@ var Category = new SimpleSchema({
     },
     parentCategory: {
         type: String,
-        label: "Parent Category",
+        label: "Parent CategorySchema",
         defaultValue: ""
     },
     image: {
@@ -73,5 +68,3 @@ var Category = new SimpleSchema({
         optional: true
     }
 });
-
-Categories.attachSchema(Category);

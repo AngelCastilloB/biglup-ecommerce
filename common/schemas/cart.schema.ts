@@ -17,19 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {Mongo} from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Carts:any = new Mongo.Collection<Cart>('carts');
-
-// IMPLEMENTATION *****************************************************************************************************/
-
 /**
  * @summary Represent an item on the cart.
  */
-var CartItem = new SimpleSchema({
+export let CartItemSchema:any = new SimpleSchema({
     _id: {
         type: String
     },
@@ -61,7 +56,7 @@ var CartItem = new SimpleSchema({
 /**
  * @summary The cart schema.
  */
-var Cart = new SimpleSchema({
+export let CartSchema:any = new SimpleSchema({
     _id: {
         type: String
     },
@@ -87,7 +82,7 @@ var Cart = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Email
     },
     items: {
-        type: [CartItem],
+        type: [CartItemSchema],
         optional: true
     },
     shipping: {
@@ -110,5 +105,3 @@ var Cart = new SimpleSchema({
         optional: true
     }
 });
-
-Carts.attachSchema(Cart);
