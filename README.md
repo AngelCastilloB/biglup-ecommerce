@@ -42,7 +42,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
 
 > Biglup ecommerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/) and [npm](https://www.npmjs.com/)
 
-Developers using **Windows** should review the [Windows specific installation requirements for Meteor and Reaction](https://docs.reactioncommerce.com/reaction-docs/development/requirements).
+Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
 
 ```bash
 curl https://install.meteor.com | /bin/sh # installs Meteor
@@ -56,7 +56,7 @@ npm install
 meteor
 ```
 # Features
-### Store Front features
+### Store Front End Features
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
 *  Product Search
 *  Add to Cart and Product Details
@@ -67,7 +67,7 @@ meteor
 *  Mobile optimized with Bootstrap
 *  Loads more products on scroll (No paging required)
 
-### Store Back Office
+### Store Back Office Features
 *  Products, Categories, Brand, Order Management from admin panel
 *  Manage Order and Change Status from admin panel
 *  Facility for Multiple product variants (size, color, price, image)
