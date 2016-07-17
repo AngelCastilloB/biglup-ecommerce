@@ -29,6 +29,11 @@ export let ProductSchema:any = new SimpleSchema({
         type: String,
         label: "ProductSchema Id"
     },
+    category: {
+        type: String,
+        label: "Product category",
+        optional: true
+    },
     title: {
         type: String,
         defaultValue: ""

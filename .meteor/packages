@@ -23,3 +23,5 @@ barbatus:angular2-runtime
 aldeed:simple-schema
 aldeed:collection2
 konecty:mongo-counter
+jalik:ufs
+jalik:ufs-local

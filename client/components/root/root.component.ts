@@ -20,8 +20,8 @@
 import 'reflect-metadata';
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Categories } from '../../../common/collections/category.collection.ts';
-import { Products } from '../../../common/collections/product.collection.ts';
+import { HeaderComponent } from '../header/header.component'
+import { ImagesUploader } from '../images-uploader/images-uploader.component'
 
 import template from './root.component.html';
 
@@ -32,7 +32,8 @@ import template from './root.component.html';
  */
 @Component({
     selector: 'root',
-    template
+    template,
+    directives: [HeaderComponent, ImagesUploader]
 })
 class Application {
 
@@ -41,47 +42,6 @@ class Application {
      */
     constructor()
     {
-        Categories.insert({
-            name: "Ulysses",
-            slug: "James Joyce",
-            info: "James Joyce",
-            image: "James Joyce",
-            category: 2}, function(error, result) {
-
-            console.debug(result);
-            console.debug(error);
-            //The insert will fail, error will be set,
-            //and result will be undefined or false because "copies" is required.
-            //
-            //The list of errors is available on `error.invalidKeys` or by calling Books.simpleSchema().namedContext().invalidKeys()
-        });
-
-        Products.insert({
-            title: "Ulysses",
-            sku: "James Joyce",
-            description: "James Joyce",
-            color: "James Joyce",
-            size: "Perfecto",
-            price: 10,
-            discount: 10,
-            isLowQuantity: true,
-            isSoldOut: true,
-            isBackorder: true,
-            requiresShipping: true,
-            hashtags: ['a', 'b'],
-            isVisible: true,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            publishedAt: new Date(),
-             }, function(error, result) {
-
-            console.debug(result.title);
-            console.debug(error);
-            //The insert will fail, error will be set,
-            //and result will be undefined or false because "copies" is required.
-            //
-            //The list of errors is available on `error.invalidKeys` or by calling Books.simpleSchema().namedContext().invalidKeys()
-        });
     }
 }
 
