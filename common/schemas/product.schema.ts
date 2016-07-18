@@ -30,7 +30,7 @@ export let ProductSchema:any = new SimpleSchema({
         label: "ProductSchema Id"
     },
     category: {
-        type: String,
+        type: [String],
         label: "Product category",
         optional: true
     },
@@ -69,21 +69,16 @@ export let ProductSchema:any = new SimpleSchema({
         label: "Discount",
         type: Number
     },
-    // Denormalized field: Indicates when the product
-    // 'inventoryQuantity' is lower then the 'lowInventoryWarningThreshold'.
     isLowQuantity: {
         label: "Indicates that the product quantity is too low",
         type: Boolean,
         optional: true
     },
-    // Denormalized field: Indicates when the product 'inventoryQuantity' is zero
     isSoldOut: {
         label: "Indicates when the product quantity is zero",
         type: Boolean,
         optional: true
     },
-    // Denormalized field: It is 'true' if the product is not in stock, but customers
-    // can still order it.
     isBackorder: {
         label: "Indicates when the seller has allowed the sale of product which" +
         " is not in stock",

@@ -30,18 +30,21 @@ export function loadCategories() {
 
         var categories = [
             {
+                '_id': "C0000000001",
                 'name': "Shirts",
                 'slug': "shirts",
                 'info': "All the shirts",
                 'image': "shirts.png"
             },
             {
+                '_id': "C0000000002",
                 'name': "Dresses",
                 'slug': "dresses",
                 'info': "All the dresses",
                 'image': "dresses.png"
             },
             {
+                '_id': "C0000000003",
                 'name': "Shoes",
                 'slug': "shoes",
                 'info': "All the shoes",
@@ -52,6 +55,8 @@ export function loadCategories() {
         for (var i = 0; i < categories.length; i++) {
             Categories.insert(categories[i]);
         }
+
+        loadProducts();
     }
 }
 
@@ -61,12 +66,12 @@ export function loadCategories() {
 export function loadProducts() {
     if (Products.find().count() === 0) {
 
-
         var products = [
             {
+                '_id': "P0000000001",
                 'title': "Black Shoe",
                 'sku': "blacks086",
-                'category': "",
+                'category': ["C0000000003"],
                 'description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" +
                 " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud" +
                 " dolor in exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis" +
@@ -88,9 +93,10 @@ export function loadProducts() {
                 'publishedAt': new Date()
             },
             {
+                '_id': "P0000000002",
                 'title': "Red Dress",
                 'sku': "red0019s",
-                'category': "",
+                'category': ["C0000000002"],
                 'description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" +
                 " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud" +
                 " dolor in exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis" +
@@ -112,9 +118,10 @@ export function loadProducts() {
                 'publishedAt': new Date()
             },
             {
+                '_id': "P0000000003",
                 'title': "Pink shirt",
                 'sku': "ps9sahk",
-                'category': "",
+                'category': ["C0000000001"],
                 'description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" +
                 " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud" +
                 " dolor in exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis" +

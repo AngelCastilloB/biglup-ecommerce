@@ -20,6 +20,7 @@ import { Component } from '@angular/core';
 import { Categories } from '../../../common/collections/category.collection.ts';
 import { MeteorComponent } from 'angular2-meteor';
 import { Mongo } from 'meteor/mongo';
+import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 import template from './header.component.html';
 
@@ -30,7 +31,8 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template
+    template,
+    directives: [ROUTER_DIRECTIVES]
 })
 export class HeaderComponent extends MeteorComponent{
 

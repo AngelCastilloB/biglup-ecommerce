@@ -1,0 +1,21 @@
+<div layout="row" *ngIf="products">
+    <div *ngFor="let product of products">
+        <h2>{{product.title}}</h2>
+
+        <p>{{product.sku}}</p>
+
+        <p>{{product.description}}</p>
+
+        <p>{{product.color}}</p>
+
+        <p>{{product.size}}</p>
+
+        <p>{{product.price}}</p>
+
+        <p>{{product.discount}}</p>
+
+        <div *ngFor="let image of productImages">
+            <img *ngIf="image.productId === product._id" src="{{image.url}}"/>
+        </div>
+    </div>
+</div>

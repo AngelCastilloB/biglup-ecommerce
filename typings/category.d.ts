@@ -20,6 +20,7 @@ interface Category {
     name: string;
     slug: string;
     info: string;
+    isParentCategory: boolean;
     parentCategory?: string;
     image: string;
     active?: boolean;

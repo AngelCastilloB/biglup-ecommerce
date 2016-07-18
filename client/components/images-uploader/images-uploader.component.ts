@@ -34,8 +34,6 @@ export class ImagesUploader {
 
     constructor() {
         this.images = Images.find();
-        console.debug(ImagesStore);
-        console.debug(ImagesStore.getFilePath("8GJfz7bZ3MdR5ou2z"));
     }
 
     public fileOver(fileIsOver: boolean): void {
@@ -60,6 +58,7 @@ export class ImagesUploader {
         name: sourceFile.name,
         type: sourceFile.type,
         size: sourceFile.size,
+        productId: "P0000000003",
     }
     const reader = new FileReader();
 

@@ -18,23 +18,26 @@
 // IMPORTS ************************************************************************************************************/
 
 import 'reflect-metadata';
-import { Component } from '@angular/core';
+import { Component, provide } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HeaderComponent } from '../header/header.component'
-import { ImagesUploader } from '../images-uploader/images-uploader.component'
+import { provideRouter, RouterConfig, ROUTER_DIRECTIVES } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
+import { CategoryComponent } from '../category/category.component';
+import { LandingPageComponent } from '../landing-page/landing-page.component';
 
 import template from './root.component.html';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-/**
- * @summary This the application root component.
- */
 @Component({
     selector: 'root',
     template,
-    directives: [HeaderComponent, ImagesUploader]
+    directives: [HeaderComponent, ROUTER_DIRECTIVES]
 })
+/**
+ * @summary This the application root component.
+ */
 class Application {
 
     /**
@@ -45,4 +48,13 @@ class Application {
     }
 }
 
-bootstrap(Application);
+const routes: RouterConfig = [
+    { path: '', component: LandingPageComponent },
+    { path: 'category/:categoryId', component: CategoryComponent },
+];
+
+const APP_ROUTER_PROVIDERS = [
+    provideRouter(routes)
+];
+
+bootstrap(Application, [APP_ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' })]);

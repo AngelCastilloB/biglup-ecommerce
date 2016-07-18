@@ -17,7 +17,7 @@
 
 interface Product {
     _id?: string;
-    category?: string,
+    category?: Array<string>;
     title: string;
     sku: string;
     description: string;

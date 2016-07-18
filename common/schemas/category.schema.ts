@@ -37,9 +37,14 @@ export let CategorySchema:any = new SimpleSchema({
         type: String,
         label: "Info"
     },
+    isParentCategory: {
+        type: Boolean,
+        label: "This category contains a list of subcategories",
+        defaultValue: true
+    },
     parentCategory: {
         type: String,
-        label: "Parent CategorySchema",
+        label: "Parent Category",
         defaultValue: ""
     },
     image: {
@@ -62,7 +67,7 @@ export let CategorySchema:any = new SimpleSchema({
             }
         }
     },
-    sub_categories: {
+    subCategories: {
         type: [Object],
         label: "The list of categories inside this category.",
         optional: true

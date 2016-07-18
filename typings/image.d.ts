@@ -25,7 +25,6 @@ interface Image {
     name: string;
     progress: number;
     size: number;
-    store: string;
     token: string;
     type: string;
     uploadedAt: Date;
