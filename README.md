@@ -1,6 +1,6 @@
 ## Biglup Ecommerce Platform
 ---
-Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
+Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES5), Angular2, Meteor and Node.js.
 
 ## Recommendations
 ---
