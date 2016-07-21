@@ -62,7 +62,6 @@ export class CategoryComponent extends MeteorComponent {
             Tracker.autorun(() => {
                 this._products = Products.find({category : this._categoryId});
                 this._productImages = Images.find();
-                console.debug(this._productImages.count() + "");
             });
 
         });
