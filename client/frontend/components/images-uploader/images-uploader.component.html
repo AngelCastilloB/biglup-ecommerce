@@ -7,8 +7,8 @@
     </div>
 </div>
 
-<div layout="row" *ngIf="images">
-    <div *ngFor="let image of images">
+<div layout="row" *ngIf="_images">
+    <div *ngFor="let image of _images">
         <img [src]="image.url"/>
     </div>
 </div>

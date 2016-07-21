@@ -69,11 +69,13 @@ export let ProductSchema:any = new SimpleSchema({
         label: "Discount",
         type: Number
     },
+    // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
         label: "Indicates that the product quantity is too low",
         type: Boolean,
         optional: true
     },
+    // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
         label: "Indicates when the product quantity is zero",
         type: Boolean,

@@ -1,0 +1,7 @@
+</br><ul class="navbar navbar-default navbar-fixed-top">
+    <a class="navbar-brand" [routerLink]="['/']">Ecommerce</a>
+    <div class="container">
+        <p class="navbar-text" *ngFor="let category of _categories"><a [routerLink]="['/category', category._id]">{{category.name}}</a></p>
+        <p class="navbar-text" ><a [routerLink]="['/admin']">Administration</a></p>
+    </div>
+</ul>

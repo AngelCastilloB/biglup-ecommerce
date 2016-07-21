@@ -15,19 +15,24 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-import 'reflect-metadata';
-import { Component } from '@angular/core';
-import { Categories } from '../../../common/collections/category.collection.ts';
-import { MeteorComponent } from 'angular2-meteor';
-import { Mongo } from 'meteor/mongo';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
+// IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
+import { Component }         from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { Mongo }             from 'meteor/mongo';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Categories }        from '../../../../common/collections/category.collection.ts';
+
+// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
+//noinspection TypeScriptCheckImport
 import template from './header.component.html';
 
-// IMPLEMENTATION *****************************************************************************************************/
+// EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This the application header.
+ * @summary This is the application header.
  */
 @Component({
     selector: 'header',
@@ -36,13 +41,14 @@ import template from './header.component.html';
 })
 export class HeaderComponent extends MeteorComponent{
 
-    private categories: Mongo.Cursor<Category>;
+    private _categories: Mongo.Cursor<Category>;
 
     /**
      * @summary Initializes a new instance of the Header class.
      */
     constructor() {
+
         super();
-        this.categories = Categories.find();
+        this._categories = Categories.find();
     }
 }

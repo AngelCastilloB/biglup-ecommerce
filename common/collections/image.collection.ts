@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo } from 'meteor/mongo';
+import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
 
 // EXPORTS ************************************************************************************************************/
@@ -39,7 +39,7 @@ export const Thumbnails = new Mongo.Collection<Thumbnail>('thumbnails');
 /**
  * @summary The thumbnails store.
  *
- * @type {UploadFS.store.Local}
+ * @type {UploadFS.store.Local} The thumbnail store.
  */
 export const ThumbnailsStore = new UploadFS.store.Local({
     collection: Thumbnails,
@@ -62,9 +62,9 @@ export const ThumbnailsStore = new UploadFS.store.Local({
 });
 
 /**
- * @brief The images store.
+ * @summary The images store.
  *
- * @type {UploadFS.store.Local}
+ * @type {UploadFS.store.Local} The image store
  */
 export const ImagesStore = new UploadFS.store.Local({
     collection: Images,
@@ -80,18 +80,25 @@ export const ImagesStore = new UploadFS.store.Local({
     ]
 });
 
-function loggedIn() {
+/**
+ * @summary Rule validation for image insertion.
+ *
+ * @returns {boolean} true if the operation is allowed, otherwise, false.
+ */
+function isAllowed() {
     return true;
 }
 
+/* RULES **************************************************************************************************************/
+
 Thumbnails.allow({
-    insert: loggedIn,
-    update: loggedIn,
-    remove: loggedIn
+    insert: isAllowed,
+    update: isAllowed,
+    remove: isAllowed
 });
 
 Images.allow({
-    insert: loggedIn,
-    update: loggedIn,
-    remove: loggedIn
+    insert: isAllowed,
+    update: isAllowed,
+    remove: isAllowed
 });

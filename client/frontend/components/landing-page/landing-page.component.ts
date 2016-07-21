@@ -18,20 +18,23 @@
 // IMPORTS ************************************************************************************************************/
 
 import 'reflect-metadata';
-import { Component } from '@angular/core';
+
+import { Component }       from '@angular/core';
 import { MeteorComponent } from 'angular2-meteor';
 
+// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
+//noinspection TypeScriptCheckImport
 import template from './landing-page.component.html';
 
-// COMPONENTS *********************************************************************************************************/
+// EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This component displays the langing page of the site
+ */
 @Component({
     selector: 'landing-page',
     template
 })
-/**
- * @summary This component displays the langing page of the site
- */
 export class LandingPageComponent extends MeteorComponent{
 
     /**

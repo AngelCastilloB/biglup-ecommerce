@@ -15,7 +15,11 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+/* IMPORTS ************************************************************************************************************/
+
 import {loadCategories} from './load-mock-data.ts';
-import {Meteor} from 'meteor/meteor';
+import {Meteor}         from 'meteor/meteor';
+
+/* METEOR SERVER START UP *********************************************************************************************/
 
 Meteor.startup(loadCategories);

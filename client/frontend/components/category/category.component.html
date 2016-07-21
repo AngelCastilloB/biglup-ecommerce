@@ -1,5 +1,5 @@
-<div layout="row" *ngIf="products">
-    <div *ngFor="let product of products">
+<div layout="row" *ngIf="_products">
+    <div *ngFor="let product of _products">
         <h2>{{product.title}}</h2>
 
         <p>{{product.sku}}</p>
@@ -14,7 +14,7 @@
 
         <p>{{product.discount}}</p>
 
-        <div *ngFor="let image of productImages">
+        <div *ngFor="let image of _productImages">
             <img *ngIf="image.productId === product._id" src="{{image.url}}"/>
         </div>
     </div>

@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Categories } from '../common/collections/category.collection.ts';
-import { Products } from '../common/collections/product.collection.ts';
+import { Products }   from '../common/collections/product.collection.ts';
 
 // EXPORTS ************************************************************************************************************/
 
