@@ -1,10 +1,10 @@
 /**
- * @file cart.d
+ * @file i18n-string.schema.ts
  *
- * @summary The cart type definitions.
+ * @summary Internationalization string type definition.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 17 2016
+ * @date   July 23 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -15,22 +15,10 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface CartItem {
-    _id?: string;
-    productId: string;
-    quantity: number;
-    title: Array<I18nString>;
-    color: string;
-    size: string;
-}
-
-
-interface Cart {
-    _id?: string;
-    userId: string;
-    sessionId: number;
-    items: [CartItem];
-    shipping: string;
-    billing: string;
-    updatedAt?: Date;
+/**
+ * @summary Internationalization string type definition.
+ */
+interface I18nString {
+    name: string;
+    value: string;
 }

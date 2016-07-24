@@ -19,11 +19,13 @@
 
 import 'reflect-metadata';
 
-import { Component }         from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { Mongo }             from 'meteor/mongo';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Categories }        from '../../../../common/collections/category.collection.ts';
+import { Component }            from '@angular/core';
+import { MeteorComponent }      from 'angular2-meteor';
+import { Mongo }                from 'meteor/mongo';
+import { ROUTER_DIRECTIVES }    from '@angular/router';
+import { Categories }           from '../../../../common/collections/category.collection.ts';
+import { I18nPipe }             from "../../../services/l18n/I18nPipe";
+import { I18nSingletonService } from "../../../services/l18n/I18nSingletonService";
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
@@ -37,9 +39,10 @@ import template from './header.component.html';
 @Component({
     selector: 'header',
     template,
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES],
+    pipes: [I18nPipe]
 })
-export class HeaderComponent extends MeteorComponent{
+export class HeaderComponent extends MeteorComponent {
 
     private _categories: Mongo.Cursor<Category>;
 
@@ -47,8 +50,15 @@ export class HeaderComponent extends MeteorComponent{
      * @summary Initializes a new instance of the Header class.
      */
     constructor() {
-
         super();
         this._categories = Categories.find();
+    }
+
+    /**
+     * @summary language change event handler
+     * @param language
+     */
+    private languageChanged(language:string) {
+        I18nSingletonService.getInstance().setLocale(language);
     }
 }

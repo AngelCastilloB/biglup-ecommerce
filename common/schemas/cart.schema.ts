@@ -36,6 +36,7 @@ export let CartItemSchema:any = new SimpleSchema({
         type: Number,
         min: 0
     },
+    // Denormalized field: Indicates the title of this product.
     title: {
         type: String
     },

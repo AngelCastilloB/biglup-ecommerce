@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
+import { I18nStringSchema } from './i18n-string.schema';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -26,7 +27,7 @@ import {SimpleSchema} from 'meteor/aldeed:simple-schema';
  */
 export let CategorySchema:any = new SimpleSchema({
     name: {
-        type: String,
+        type: [I18nStringSchema],
         label: "Name"
     },
     slug: {
@@ -34,7 +35,7 @@ export let CategorySchema:any = new SimpleSchema({
         label: "Slug"
     },
     info: {
-        type: String,
+        type: [I18nStringSchema],
         label: "Info"
     },
     isParentCategory: {

@@ -1,10 +1,10 @@
 /**
- * @file backoffice.component.ts
+ * @file i18n-string.schema.ts
  *
- * @summary The backoffice root component.
+ * @summary Internationalization string schema.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @date   July 23 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,22 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Component }         from '@angular/core';
-
-// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
-import template from './backoffice.component.html';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The back office root component.
+ * @summary The internationalization string schema.
  */
-@Component({
-    template,
-    directives: [ROUTER_DIRECTIVES],
-})
-export class BackofficeComponent { }
+export let I18nStringSchema:any = new SimpleSchema({
+    language: {
+        type: String,
+        label: "The ISO 639-1 code of the language",
+    },
+    value: {
+        label: "Price",
+        type: String,
+        defaultValue: ""
+    }
+});

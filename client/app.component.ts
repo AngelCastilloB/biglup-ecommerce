@@ -21,7 +21,7 @@ import 'reflect-metadata';
 
 import { provideRouter,
          RouterConfig,
-         ROUTER_DIRECTIVES,}  from '@angular/router';
+         ROUTER_DIRECTIVES }  from '@angular/router';
 import { Component, provide } from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { bootstrap }          from '@angular/platform-browser-dynamic';
@@ -32,6 +32,8 @@ import { frontendRoutes }     from './frontend/frontend.routes';
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
 import template from './app.component.html';
+
+import {I18nSingletonService} from "./services/l18n/I18nSingletonService";
 
 // BOOTSTRAP COMPONENT ************************************************************************************************/
 

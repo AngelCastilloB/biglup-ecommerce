@@ -15,15 +15,18 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+/**
+ * @summary Product type definition.
+ */
 interface Product {
     _id?: string;
-    category?: Array<string>;
-    title: string;
+    categoryId?: Array<string>;
+    categoryName?: Array<I18nString>;
+    title: Array<I18nString>;
     sku: string;
-    description: string;
+    title: Array<I18nString>;
     color: string;
     size: string;
-    pictures?: Array<string>;
     price: number;
     discount: number;
     isLowQuantity: boolean;

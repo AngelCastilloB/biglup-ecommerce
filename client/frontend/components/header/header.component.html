@@ -1,7 +1,13 @@
-</br><ul class="navbar navbar-default navbar-fixed-top">
+</br>
+<ul class="navbar navbar-default navbar-fixed-top">
     <a class="navbar-brand" [routerLink]="['/']">Ecommerce</a>
     <div class="container">
         <p class="navbar-text" *ngFor="let category of _categories"><a [routerLink]="['/category', category._id]">{{category.name}}</a></p>
-        <p class="navbar-text" ><a [routerLink]="['/admin']">Administration</a></p>
+        <p class="navbar-text" ><a [routerLink]="['/admin']">{{'Administration' | translate}}</a></p>
+
+        <div class="pull-right">
+            <a (click)="languageChanged('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese" /></a>
+            <a (click)="languageChanged('en')" rel="en-US"><img src="/images/en_US.png" alt="English" /></a>
+        </div>
     </div>
 </ul>

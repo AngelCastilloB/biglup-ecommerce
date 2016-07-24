@@ -324,7 +324,7 @@ interface Require {
     undef(module: string): void;
 
     /**
-     * Semi-private function, overload in special instance of undef()
+     * Semi-public function, overload in special instance of undef()
      **/
     onResourceLoad(context: Object, map: RequireMap, depArray: RequireMap[]): void;
 }

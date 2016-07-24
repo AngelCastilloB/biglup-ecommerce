@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
-
+import {SimpleSchema}       from 'meteor/aldeed:simple-schema';
+import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -27,15 +27,20 @@ import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 export let ProductSchema:any = new SimpleSchema({
     _id: {
         type: String,
-        label: "ProductSchema Id"
+        label: "Product Id"
     },
-    category: {
+    categoryId: {
         type: [String],
-        label: "Product category",
+        label: "Product category id",
+        optional: true
+    },
+    categoryName: {
+        type: [I18nStringSchema],
+        label: "Product category name",
         optional: true
     },
     title: {
-        type: String,
+        type: [I18nStringSchema],
         defaultValue: ""
     },
     sku: {
@@ -43,7 +48,7 @@ export let ProductSchema:any = new SimpleSchema({
         label: "Stock Keeping Unit"
     },
     description: {
-        type: String,
+        type: [I18nStringSchema],
         optional: true
     },
     color: {
@@ -55,11 +60,6 @@ export let ProductSchema:any = new SimpleSchema({
         label: "Size",
         type: String,
         defaultValue: ""
-    },
-    pictures: {
-        type: [String],
-        optional: true,
-        defaultValue: ['no-picture']
     },
     price: {
         label: "Price",

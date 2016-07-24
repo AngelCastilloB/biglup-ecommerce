@@ -17,9 +17,9 @@
 
 interface Category {
     _id?: string;
-    name: string;
+    name: Array<I18nString>;
     slug: string;
-    info: string;
+    info: Array<I18nString>;
     isParentCategory: boolean;
     parentCategory?: string;
     image: string;
