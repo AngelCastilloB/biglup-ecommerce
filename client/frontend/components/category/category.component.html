@@ -1,10 +1,10 @@
 <div layout="row" *ngIf="_products">
     <div *ngFor="let product of _products">
-        <h2>{{product.title}}</h2>
+        <h2>{{product.title | mongoTranslate}}</h2>
 
         <p>{{product.sku}}</p>
 
-        <p>{{product.description}}</p>
+        <p>{{product.description | mongoTranslate}}</p>
 
         <p>{{product.color}}</p>
 

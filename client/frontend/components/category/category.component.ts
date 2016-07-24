@@ -19,13 +19,15 @@
 
 import 'reflect-metadata';
 
-import { Component }       from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
-import { Mongo }           from 'meteor/mongo';
-import { ActivatedRoute }  from '@angular/router';
-import { Tracker }         from 'meteor/tracker';
-import { Products }        from '../../../../common/collections/product.collection.ts';
-import { Images }          from '../../../../common/collections/image.collection';
+import { Component }            from '@angular/core';
+import { MeteorComponent }      from 'angular2-meteor';
+import { Mongo }                from 'meteor/mongo';
+import { ActivatedRoute }       from '@angular/router';
+import { Tracker }              from 'meteor/tracker';
+import { Products }             from '../../../../common/collections/product.collection.ts';
+import { Images }               from '../../../../common/collections/image.collection';
+import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
+import { I18nMongoPipe }        from '../../../services/l18n/I18nMongoPipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
@@ -38,10 +40,11 @@ import template from './category.component.html';
  */
 @Component({
     selector: 'category',
-    template
+    template,
+    pipes: [I18nMongoPipe]
 })
 export class CategoryComponent extends MeteorComponent {
-
+    private _subscription:  any;
     private _categoryId:    string;
     private _products:      Mongo.Cursor<Product>;
     private _productImages: Mongo.Cursor<Image>;
@@ -60,10 +63,19 @@ export class CategoryComponent extends MeteorComponent {
         this.route.params.subscribe((params) => {
             this._categoryId = params['categoryId'];
             Tracker.autorun(() => {
-                this._products = Products.find({category : this._categoryId});
+                this._products = Products.find({categoryId : this._categoryId});
                 this._productImages = Images.find();
             });
-
         });
+
+        this._subscription = I18nSingletonService.getInstance().getLocaleChangeEmitter()
+            .subscribe(item => this.localeChanged(item));
+    }
+
+    localeChanged(locale: string) {
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 }

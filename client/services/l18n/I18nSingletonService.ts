@@ -1,7 +1,7 @@
 /**
  * @file I18nSingletonService
  *
- * @summary A singleton service that takes care of the internationalization of the application.
+ * @summary A singleton service that takes care of the application's internationalization.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 23 2016
@@ -23,7 +23,7 @@ import { EventEmitter } from '@angular/core';
 
 // CONSTANTS **********************************************************************************************************/
 
-const DEFAULT_LOCALE:string = 'en';
+const DEFAULT_LOCALE:string = 'zh';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -127,7 +127,7 @@ export class I18nSingletonService
 
     /**
      * @summary Load the translations from the json file to the associative array.
-     * @param entries
+     * @param json The json file with the translations.
      *
      * @returns The associative array with all the translations.
      */

@@ -34,11 +34,6 @@ export let ProductSchema:any = new SimpleSchema({
         label: "Product category id",
         optional: true
     },
-    categoryName: {
-        type: [I18nStringSchema],
-        label: "Product category name",
-        optional: true
-    },
     title: {
         type: [I18nStringSchema],
         defaultValue: ""
