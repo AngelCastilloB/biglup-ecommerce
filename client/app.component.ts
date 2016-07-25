@@ -33,8 +33,6 @@ import { frontendRoutes }     from './frontend/frontend.routes';
 //noinspection TypeScriptCheckImport
 import template from './app.component.html';
 
-import {I18nSingletonService} from "./services/l18n/I18nSingletonService";
-
 // BOOTSTRAP COMPONENT ************************************************************************************************/
 
 /**

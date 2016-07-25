@@ -26,3 +26,4 @@ konecty:mongo-counter
 jalik:ufs
 jalik:ufs-local
 check
+momentjs:moment

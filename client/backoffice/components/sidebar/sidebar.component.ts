@@ -1,7 +1,7 @@
 /**
- * @file dashboard.component.ts
+ * @file sidebar.component.ts
  *
- * @summary The admin panel dashboard.
+ * @summary The admin panel sidebar.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 22 2016
@@ -26,7 +26,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
-import template from './dashboard.component.html';
+import template from './sidebar.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -34,11 +34,11 @@ import template from './dashboard.component.html';
  * @summary This component displays the admin panel dashboard.
  */
 @Component({
-    selector: 'dashboard',
+    selector: 'sidebar',
     template,
     directives: [ROUTER_DIRECTIVES]
 })
-export class DashboardComponent extends MeteorComponent implements AfterViewInit  {
+export class SidebarComponent extends MeteorComponent implements AfterViewInit  {
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.

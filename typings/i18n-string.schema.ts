@@ -19,6 +19,6 @@
  * @summary Internationalization string type definition.
  */
 interface I18nString {
-    name: string;
+    language: string;
     value: string;
 }
