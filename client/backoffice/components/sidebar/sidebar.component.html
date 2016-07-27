@@ -24,19 +24,9 @@
                 <a [routerLink]="['products']"><i class="fa fa-tags fa-lg"></i> Products<span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="products">
-                <li class="active"><a [routerLink]="['products/view']">View Products</a></li>
-                <li><a [routerLink]="['products/add']">Add Product</a></li>
-                <li><a [routerLink]="['products/edit']">Edit Product</a></li>
-            </ul>
-
-
-            <li  data-toggle="collapse" data-target="#categories" class="collapsed active">
-                <a [routerLink]="['categories']"><i class="fa fa-list-ol fa-lg"></i> Categories<span class="arrow"></span></a>
-            </li>
-            <ul class="sub-menu collapse" id="categories">
-                <li class="active"><a [routerLink]="['categories/view']">View Categories</a></li>
-                <li><a [routerLink]="['categories/add']">Add Category</a></li>
-                <li><a [routerLink]="['categories/edit']">Edit Category</a></li>
+                <li class="active"><a [routerLink]="['products']">Products</a></li>
+                <li><a [routerLink]="['products/inventory']">Inventory</a></li>
+                <li><a [routerLink]="['products/collections']">Collections</a></li>
             </ul>
             <li>
                 <a [routerLink]="['reports']">

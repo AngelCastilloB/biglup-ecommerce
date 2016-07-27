@@ -29,7 +29,7 @@ import template from './landing-page.component.html';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays the langing page of the site
+ * @summary This component displays the landing page of the site
  */
 @Component({
     selector: 'landing-page',

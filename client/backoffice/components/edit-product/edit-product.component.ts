@@ -1,7 +1,7 @@
 /**
- * @file backoffice.component.ts
+ * @file edit-product.component.ts
  *
- * @summary The backoffice root component.
+ * @summary The edit product admin panel functionality.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 22 2016
@@ -19,23 +19,30 @@
 
 import 'reflect-metadata';
 
-import { ROUTER_DIRECTIVES   } from '@angular/router';
-import { Component }           from '@angular/core';
-import { SidebarComponent }    from './components/sidebar/sidebar.component'
-import { BreadcrumbComponent } from './components/breadcrumbs/breadcrumbs.component'
+import { Component }         from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
-import template from './backoffice.component.html';
+import template from './edit-product.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The back office root component.
+ * @summary This component allows you to edit a given product to the site.
  */
 @Component({
+    selector: 'edit-products',
     template,
-    styleUrls: ['css/style.css'],
-    directives: [ROUTER_DIRECTIVES, SidebarComponent, BreadcrumbComponent]
+    directives: [ROUTER_DIRECTIVES]
 })
-export class BackofficeComponent { }
+export class EditProductComponent extends MeteorComponent {
+
+    /**
+     * @summary Initializes a new instance of the EditProductComponent class.
+     */
+    constructor() {
+        super();
+    }
+}

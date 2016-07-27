@@ -17,9 +17,15 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { RouterConfig }        from '@angular/router';
-import { DashboardComponent }  from './components/dashboard/dashboard.component';
-import { BackofficeComponent } from './backoffice.component';
+import { RouterConfig }         from '@angular/router';
+import { DashboardComponent }   from './components/dashboard/dashboard.component';
+import { OrdersComponent }      from './components/orders/orders.component';
+import { CustomersComponent }   from './components/customers/customers.component';
+import { ProductsComponent }    from './components/products/products.component';
+import { AddProductComponent }  from './components/add-product/add-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { ReportsComponent }     from './components/reports/reports.component';
+import { BackofficeComponent }  from './backoffice.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -31,7 +37,14 @@ export const backofficeRoutes: RouterConfig = [
         path: 'admin',
         component: BackofficeComponent,
         children: [
-            { path: '',  component: DashboardComponent }
+            { path: '', component: DashboardComponent },
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'orders', component: OrdersComponent },
+            { path: 'customers', component: CustomersComponent },
+            { path: 'products', component: ProductsComponent },
+            { path: 'products/add-product', component: AddProductComponent },
+            { path: 'products/edit-product:id', component: EditProductComponent },
+            { path: 'reports', component: ReportsComponent }
         ]
-    }
+    },
 ];

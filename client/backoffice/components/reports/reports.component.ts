@@ -1,7 +1,7 @@
 /**
- * @file backoffice.component.ts
+ * @file reports.component.ts
  *
- * @summary The backoffice root component.
+ * @summary The analytics report panel.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 22 2016
@@ -19,23 +19,30 @@
 
 import 'reflect-metadata';
 
-import { ROUTER_DIRECTIVES   } from '@angular/router';
-import { Component }           from '@angular/core';
-import { SidebarComponent }    from './components/sidebar/sidebar.component'
-import { BreadcrumbComponent } from './components/breadcrumbs/breadcrumbs.component'
+import { Component }         from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 //noinspection TypeScriptCheckImport
-import template from './backoffice.component.html';
+import template from './reports.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The back office root component.
+ * @summary This component allows you to add products to the site.
  */
 @Component({
+    selector: 'reports',
     template,
-    styleUrls: ['css/style.css'],
-    directives: [ROUTER_DIRECTIVES, SidebarComponent, BreadcrumbComponent]
+    directives: [ROUTER_DIRECTIVES]
 })
-export class BackofficeComponent { }
+export class ReportsComponent extends MeteorComponent {
+
+    /**
+     * @summary Initializes a new instance of the ReportsComponent class.
+     */
+    constructor() {
+        super();
+    }
+}

@@ -23,7 +23,7 @@ import { EventEmitter } from '@angular/core';
 
 // CONSTANTS **********************************************************************************************************/
 
-const DEFAULT_LOCALE:string = 'zh';
+const DEFAULT_LOCALE:string = 'en';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -72,7 +72,7 @@ export class I18nSingletonService
     {
         if (!(key in this._translations[this._currentLocale]))
         {
-            console.error("Key " + key + " not found in " + this._currentLocale + " locale.");
+            console.warn("Translation for '" + key + "' not found in <" + this._currentLocale + "> locale.");
             return key;
         }
 

@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <br>
+        <h3> <i class="fa fa-shopping-cart"></i>
+             <small> {{ 'Product list' | translate }}</small>
+             <a [routerLink]="['/admin/products/add-product']" class="btn btn-primary pull-right hide" id="back-to-bootsnipp">{{ 'Add Product' | translate }}</a>
+        </h3>
+
+        <hr>
+        <table class="table table-hover" width="50%">
+            <thead class="thead-inverse">
+            <tr>
+                <th>{{ 'SKU' | translate }}</th>
+                <th>{{ 'Title' | translate }}</th>
+                <th>{{ 'Inventory' | translate }}</th>
+                <th>{{ 'Price' | translate }}</th>
+                <th>{{ 'Category' | translate }}</th>
+                <th>{{ 'Color' | translate }}</th>
+                <th>{{ 'Size' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody class="table-striped">
+
+            <tr style="cursor: pointer" *ngFor="let product of _products">
+                <td>{{ product.sku }}</td>
+                <td>{{ product.title | mongoTranslate }}</td>
+                <td>TBA</td>
+                <td>{{ product.price }}</td>
+                <td>MISSING</td>
+                <td>{{product.color}}</td>
+                <td>{{product.size}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
