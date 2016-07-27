@@ -45,4 +45,14 @@ export class AddProductComponent extends MeteorComponent {
     constructor() {
         super();
     }
+
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
+    ngOnInit():any {
+        tinymce.init(
+            {
+                selector: "textarea",
+            })
+    }
 }
