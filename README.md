@@ -55,6 +55,24 @@ meteor npm install
 
 meteor
 ```
+
+## Ide config
+
+### Tslint
+To add tslint support for development, the tslint executable must be installed: `npm i -g tslint` and in _Webstorm_ check 
+the settings in: **file > settings > Languages and Frameworks > Typescript > Tslint** and check enable, 
+after that, search the tslint package in your global npm packages folder and select the tslint folder 
+(for example: ~/.npm-packages/lib/node_modules/tslint) then, check _configuration file_ as the local tslint.json file 
+in the repository instead of search for tslint.
+
+### Coding Style
+
+Editor config should be enabled by your prefered Ide, in Webstorm, this is done automagically.
+
+To add an existing Webstorm coding style go to **file > settings > editor > coding style** and click **manage > import**
+to add an XML file containing pre existing rules to automatically reformat code (defaults to `crl + shift + L`) according 
+to the predefined coding styles conventions.
+
 # Features
 ### Store Front End Features
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
