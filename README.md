@@ -56,7 +56,7 @@ meteor npm install
 meteor
 ```
 
-## Ide config
+## IDE Configuration
 ---
 ### Tslint
 To add tslint support for development, the tslint executable must be installed: `npm i -g tslint` and in _Webstorm_ check 
