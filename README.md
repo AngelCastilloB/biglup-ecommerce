@@ -51,7 +51,7 @@ git clone git@bitbucket.org:AngelCastillo/biglup-ecommerce.git
 
 cd biglup-ecommerce
 
-npm install
+meteor npm install
 
 meteor
 ```
