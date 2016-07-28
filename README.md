@@ -97,8 +97,8 @@ to the predefined coding styles conventions.
 ## Contributors
 ---
 
-Angel Castillo <angel.castillo@biglup.com>
-Alejandro Granadillo <slayerfat@gmail.com>
+* Angel Castillo <angel.castillo@biglup.com>
+* Alejandro Granadillo <slayerfat@gmail.com>
 
 ## License
 ---
