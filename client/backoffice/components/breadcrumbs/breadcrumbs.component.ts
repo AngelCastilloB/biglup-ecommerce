@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {Component} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router, NavigationEnd} from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router, NavigationEnd } from '@angular/router';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -50,18 +50,20 @@ export class BreadcrumbComponent {
     private _isBase: boolean = true;
 
     constructor(private router: Router) {
-        this._urls = new Array();
-        this.router.events.subscribe((navigationEnd:NavigationEnd) => {
-            this._urls.length = 0; //Fastest way to clear out array
+        this._urls = [];
+        this.router.events.subscribe((navigationEnd: NavigationEnd) => {
+            this._urls.length = 0; // Fastest way to clear out array
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
 
             this._isBase = this._urls.length <= 0;
         });
     }
 
-    generateBreadcrumbTrail(url: string): void {
-        if (url === "/admin" || url === "/admin/dashboard") // HACK: Remove base url. This is a temporary hack.
+    public generateBreadcrumbTrail(url: string): void {
+        // HACK: Remove base url. This is a temporary hack.
+        if (url === '/admin' || url === '/admin/dashboard') {
             return;
+        }
 
         this._urls.unshift(url);
 
@@ -70,25 +72,28 @@ export class BreadcrumbComponent {
         }
     }
 
-    getCurrentPosition(url:string):string
-    {
-        var positions = url.split("/").filter(function(n){ return n != "" });
+    public getCurrentPosition(url: string): string {
+        let positions = url.split('/').filter(function (n) {
+            return n !== '';
+        });
 
         // remove the base route for the admin panel.
-        if (positions[0] == "admin")
+        if (positions[0] === 'admin') {
             positions.splice(0, 1);
+        }
 
-        if (positions.length < 1)
-            return "";
+        if (positions.length < 1) {
+            return '';
+        }
 
         return this.fixCase(positions[positions.length - 1]);
     }
 
-    fixCase(message:string){
+    public fixCase(message: string) {
         return message.charAt(0).toUpperCase() + message.slice(1);
     };
 
-    navigateTo(url: string): void {
+    public navigateTo(url: string): void {
         this.router.navigateByUrl(url);
     }
 }

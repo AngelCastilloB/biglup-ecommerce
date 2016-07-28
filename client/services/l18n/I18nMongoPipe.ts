@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Pipe, PipeTransform } from  '@angular/core';
-import { I18nSingletonService } from "./I18nSingletonService";
+import { I18nSingletonService } from './I18nSingletonService';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,9 +30,9 @@ import { I18nSingletonService } from "./I18nSingletonService";
     pure: false
 })
 export class I18nMongoPipe implements PipeTransform {
-    private _locale:string = '';
-    private _value:string  = '';
-    
+    private _locale: string = '';
+    private _value: string  = '';
+
     /**
      * @summary Translate the given text.
      *
@@ -41,31 +41,29 @@ export class I18nMongoPipe implements PipeTransform {
      * @returns {string} The translation result. If no translation was found for the current locale, the translation
      * for the default language is returned instead.
      */
-    transform(messageCollection: [I18nString]): any {
-        var defaultLocale:string = I18nSingletonService.getInstance().getDefaultLocale();
-        var currentLocale:string = I18nSingletonService.getInstance().getLocale();
+    public transform(messageCollection: [I18nString]): any {
+        let defaultLocale: string = I18nSingletonService.getInstance().getDefaultLocale();
+        let currentLocale: string = I18nSingletonService.getInstance().getLocale();
 
         if (currentLocale === this._locale) {
             return this._value;
         }
 
-        for (var i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === currentLocale)
-            {
+        for (let i = 0, l = messageCollection.length; i < l; i++) {
+            if (messageCollection[i].language === currentLocale) {
                 this._value = messageCollection[i].value;
 
                 return this._value;
             }
         }
-        for (var i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === defaultLocale)
-            {
+        for (let i = 0, l = messageCollection.length; i < l; i++) {
+            if (messageCollection[i].language === defaultLocale) {
                 this._value = messageCollection[i].value;
 
                 return this._value;
             }
         }
 
-        return "STRING_NOT_FOUND";
+        return 'STRING_NOT_FOUND';
     }
 }

@@ -17,73 +17,72 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {SimpleSchema}       from 'meteor/aldeed:simple-schema';
+import { SimpleSchema }       from 'meteor/aldeed:simple-schema';
 import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary The product schema.
  */
-export let ProductSchema:any = new SimpleSchema({
+export let ProductSchema = new SimpleSchema({
     _id: {
         type: String,
-        label: "Product Id"
+        label: 'Product Id'
     },
     categoryId: {
         type: [String],
-        label: "Product category id",
+        label: 'Product category id',
         optional: true
     },
     title: {
         type: [I18nStringSchema],
-        defaultValue: ""
+        defaultValue: ''
     },
     sku: {
         type: String,
-        label: "Stock Keeping Unit"
+        label: 'Stock Keeping Unit'
     },
     description: {
         type: [I18nStringSchema],
         optional: true
     },
     color: {
-        label: "Color",
+        label: 'Color',
         type: String,
-        defaultValue: ""
+        defaultValue: ''
     },
     size: {
-        label: "Size",
+        label: 'Size',
         type: String,
-        defaultValue: ""
+        defaultValue: ''
     },
     price: {
-        label: "Price",
+        label: 'Price',
         type: Number
     },
     discount: {
-        label: "Discount",
+        label: 'Discount',
         type: Number
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
-        label: "Indicates that the product quantity is too low",
+        label: 'Indicates that the product quantity is too low',
         type: Boolean,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
-        label: "Indicates when the product quantity is zero",
+        label: 'Indicates when the product quantity is zero',
         type: Boolean,
         optional: true
     },
     isBackorder: {
-        label: "Indicates when the seller has allowed the sale of product which" +
-        " is not in stock",
+        label: 'Indicates when the seller has allowed the sale of product which is not in stock',
         type: Boolean,
         optional: true
     },
     requiresShipping: {
-        label: "Require a shipping address",
+        label: 'Require a shipping address',
         type: Boolean,
         defaultValue: true,
         optional: true
@@ -98,10 +97,10 @@ export let ProductSchema:any = new SimpleSchema({
     },
     createdAt: {
         type: Date,
-        autoValue: function() {
-            if ( this.isInsert ){
+        autoValue: function () {
+            if (this.isInsert) {
                 return new Date();
-            } else if ( this.isSet ){
+            } else if (this.isSet) {
                 this.unset();
             }
         }

@@ -22,7 +22,7 @@ import { CartSchema } from '../schemas/cart.schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Carts:any = new Mongo.Collection<Cart>('carts');
+export let Carts: any = new Mongo.Collection<Cart>('carts');
 
 // IMPLEMENTATION *****************************************************************************************************/
 

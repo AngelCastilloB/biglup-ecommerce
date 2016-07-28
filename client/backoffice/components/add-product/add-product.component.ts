@@ -24,7 +24,7 @@ import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './add-product.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -49,10 +49,7 @@ export class AddProductComponent extends MeteorComponent {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    ngOnInit():any {
-        tinymce.init(
-            {
-                selector: "textarea",
-            })
+    public ngOnInit(): any {
+        tinymce.init({selector: 'textarea'});
     }
 }

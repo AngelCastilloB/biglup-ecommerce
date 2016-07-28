@@ -23,7 +23,7 @@ import { Component }       from '@angular/core';
 import { MeteorComponent } from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './landing-page.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -35,7 +35,7 @@ import template from './landing-page.component.html';
     selector: 'landing-page',
     template
 })
-export class LandingPageComponent extends MeteorComponent{
+export class LandingPageComponent extends MeteorComponent {
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.

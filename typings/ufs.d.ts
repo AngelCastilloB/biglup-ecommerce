@@ -16,9 +16,9 @@
  */
 
 // HACK: Temporal typing definitions for package meteor/jalik:ufs while typing become available.
-    
+
 declare module 'meteor/jalik:ufs' {
-    export let UploadFS:any;
+    export let UploadFS: any;
 }
 
 interface ProgressEvent {

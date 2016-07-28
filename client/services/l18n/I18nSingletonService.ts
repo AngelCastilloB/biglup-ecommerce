@@ -23,56 +23,54 @@ import { EventEmitter } from '@angular/core';
 
 // CONSTANTS **********************************************************************************************************/
 
-const DEFAULT_LOCALE:string = 'en';
+const DEFAULT_LOCALE = 'en';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary Serves localised text.
  */
-export class I18nSingletonService
-{
-    private static _instance:I18nSingletonService          = new I18nSingletonService();
-    private        _currentLocale:string                   = DEFAULT_LOCALE;
-    private        _translations : {[key:string]:
-                                   {[key:string]:string;}} = {};
-    public         _localeChanged:EventEmitter<string>     = new EventEmitter<string>();
+export class I18nSingletonService {
+    private static _instance: I18nSingletonService = new I18nSingletonService();
+    public _localeChanged: EventEmitter<string>    = new EventEmitter<string>();
+    private _currentLocale: string                 = DEFAULT_LOCALE;
+
+    private _translations: {[key: string]: {[key: string]: string}} = {};
+
+    /**
+     * @brief Gets the singleton instance of the I18nSingletonService class.
+     *
+     * @returns {I18nSingletonService} The singleton instance.
+     */
+    public static getInstance(): I18nSingletonService {
+        return I18nSingletonService._instance;
+    }
 
     /**
      * @summary Lazy initialise a new instance of the I18nSingletonService singleton class.
      */
     constructor() {
-        if(I18nSingletonService._instance){
-            throw new Error("Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.");
+        if (I18nSingletonService._instance) {
+            throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
         }
 
         // Add supported languages
-        this._translations['en'] = this.loadTranslations(require("./translations/en.json")); // english
-        this._translations['zh'] = this.loadTranslations(require("./translations/zh.json")); // chinese
+        this._translations['en'] = this.loadTranslations(require('./translations/en.json')); // english
+        this._translations['zh'] = this.loadTranslations(require('./translations/zh.json')); // chinese
 
         I18nSingletonService._instance = this;
     }
 
     /**
-     * @brief Gets the singleton instance of the I18nSingletonService class.
-     * @returns {I18nSingletonService} The singleton instance.
-     */
-    public static getInstance():I18nSingletonService
-    {
-        return I18nSingletonService._instance;
-    }
-
-    /**
      * @brief Gets the localized text for the given key.
-     * @param {string} The key.
+     *
+     * @param {string} key The key.
      *
      * @remark If the given key is not found, the returned value will be the key.
      */
-    public getText(key:string):string
-    {
-        if (!(key in this._translations[this._currentLocale]))
-        {
-            console.warn("Translation for '" + key + "' not found in <" + this._currentLocale + "> locale.");
+    public getText(key: string): string {
+        if (!(key in this._translations[this._currentLocale])) {
+            console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
             return key;
         }
 
@@ -84,23 +82,21 @@ export class I18nSingletonService
      *
      * @returns {string} The default locale.
      */
-    public getDefaultLocale():string
-    {
+    public getDefaultLocale(): string {
         return DEFAULT_LOCALE;
     }
 
     /**
      * @brief Sets the ISO 639-1 locale.
-     * @param {string} The current locale.
+     * @param {string} locale The current locale.
      */
-    public setLocale(locale:string):void
-    {
-        if (locale === this._currentLocale)
+    public setLocale(locale: string): void {
+        if (locale === this._currentLocale) {
             return;
+        }
 
-        if (!(locale in this._translations))
-        {
-            console.error("Locale " + locale + " not supported.");
+        if (!(locale in this._translations)) {
+            console.error(`Locale ${locale} not supported.`);
         }
 
         this._currentLocale = locale;
@@ -111,8 +107,7 @@ export class I18nSingletonService
      * @brief Gets the ISO 639-1 locale.
      * @returns {string} The current locale.
      */
-    public getLocale():string
-    {
+    public getLocale(): string {
         return this._currentLocale;
     }
 
@@ -131,10 +126,10 @@ export class I18nSingletonService
      *
      * @returns The associative array with all the translations.
      */
-    public loadTranslations(json):{[key:string]:string;}{
-        var map:{[key:string]:string;} = {};
+    public loadTranslations(json): {[key: string]: string} {
+        let map: {[key: string]: string} = {};
 
-        for (var i = 0, l = json.length; i < l; i++) {
+        for (let i = 0, l = json.length; i < l; i++) {
             map[json[i].key] = json[i].value;
         }
 

@@ -24,7 +24,6 @@ interface CartItem {
     size: string;
 }
 
-
 interface Cart {
     _id?: string;
     userId: string;

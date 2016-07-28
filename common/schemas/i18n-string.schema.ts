@@ -17,21 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary The internationalization string schema.
  */
-export let I18nStringSchema:any = new SimpleSchema({
+export let I18nStringSchema: any = new SimpleSchema({
     language: {
         type: String,
-        label: "The ISO 639-1 code of the language",
+        label: 'The ISO 639-1 code of the language',
     },
     value: {
-        label: "Price",
+        label: 'Price',
         type: String,
-        defaultValue: ""
+        defaultValue: ''
     }
 });

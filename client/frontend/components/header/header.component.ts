@@ -24,12 +24,12 @@ import { MeteorComponent }      from 'angular2-meteor';
 import { Mongo }                from 'meteor/mongo';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
 import { Categories }           from '../../../../common/collections/category.collection.ts';
-import { I18nPipe }             from "../../../services/l18n/I18nPipe";
+import { I18nPipe }             from '../../../services/l18n/I18nPipe';
 import { I18nMongoPipe }        from '../../../services/l18n/I18nMongoPipe';
-import { I18nSingletonService } from "../../../services/l18n/I18nSingletonService";
+import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './header.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -59,7 +59,7 @@ export class HeaderComponent extends MeteorComponent {
      * @summary language change event handler
      * @param language
      */
-    private languageChanged(language:string) {
+    private languageChanged(language: string) {
         I18nSingletonService.getInstance().setLocale(language);
     }
 }

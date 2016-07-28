@@ -22,7 +22,7 @@ import { ProductSchema } from '../schemas/product.schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Products:any = new Mongo.Collection<Product>('products');
+export let Products: any = new Mongo.Collection<Product>('products');
 
 // IMPLEMENTATION *****************************************************************************************************/
 

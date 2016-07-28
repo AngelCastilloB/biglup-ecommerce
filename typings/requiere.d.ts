@@ -347,18 +347,18 @@ interface RequireDefine {
      * Define function with dependencies.
      * @param deps List of dependencies module IDs.
      * @param ready Callback function when the dependencies are loaded.
-     *	callback param deps module dependencies
-     *	callback return module definition
+     *    callback param deps module dependencies
+     *    callback return module definition
      **/
     (deps: string[], ready: Function): void;
 
     /**
      *  Define module with simplified CommonJS wrapper.
      * @param ready
-     *	callback require requirejs instance
-     *	callback exports exports object
-     *	callback module module
-     *	callback return module definition
+     *    callback require requirejs instance
+     *    callback exports exports object
+     *    callback module module
+     *    callback return module definition
      **/
     (ready: (require: Require, exports: { [key: string]: any; }, module: RequireModule) => any): void;
 
@@ -367,8 +367,8 @@ interface RequireDefine {
      * @param name The name of the module.
      * @param deps List of dependencies module IDs.
      * @param ready Callback function when the dependencies are loaded.
-     *	callback deps module dependencies
-     *	callback return module definition
+     *    callback deps module dependencies
+     *    callback return module definition
      **/
     (name: string, deps: string[], ready: Function): void;
 
@@ -376,7 +376,7 @@ interface RequireDefine {
      * Define a module with a name.
      * @param name The name of the module.
      * @param ready Callback function when the dependencies are loaded.
-     *	callback return module definition
+     *    callback return module definition
      **/
     (name: string, ready: Function): void;
 

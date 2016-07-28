@@ -37,14 +37,14 @@ export const backofficeRoutes: RouterConfig = [
         path: 'admin',
         component: BackofficeComponent,
         children: [
-            { path: '', component: DashboardComponent },
-            { path: 'dashboard', component: DashboardComponent },
-            { path: 'orders', component: OrdersComponent },
-            { path: 'customers', component: CustomersComponent },
-            { path: 'products', component: ProductsComponent },
-            { path: 'products/add-product', component: AddProductComponent },
-            { path: 'products/edit-product:id', component: EditProductComponent },
-            { path: 'reports', component: ReportsComponent }
+            {path: '', component: DashboardComponent},
+            {path: 'dashboard', component: DashboardComponent},
+            {path: 'orders', component: OrdersComponent},
+            {path: 'customers', component: CustomersComponent},
+            {path: 'products', component: ProductsComponent},
+            {path: 'products/add-product', component: AddProductComponent},
+            {path: 'products/edit-product:id', component: EditProductComponent},
+            {path: 'reports', component: ReportsComponent}
         ]
     },
 ];
