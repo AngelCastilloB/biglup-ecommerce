@@ -28,6 +28,7 @@ import { Products }             from '../../../../common/collections/product.col
 import { Images }               from '../../../../common/collections/image.collection';
 import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
 import { I18nMongoPipe }        from '../../../services/l18n/I18nMongoPipe';
+import { StrLimitPipe }         from '../../../services/pipes/str-limit.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -41,7 +42,7 @@ import template from './category.component.html';
 @Component({
     selector: 'category',
     template,
-    pipes: [I18nMongoPipe]
+    pipes: [I18nMongoPipe, StrLimitPipe]
 })
 export class CategoryComponent extends MeteorComponent {
     private _subscription: any;
