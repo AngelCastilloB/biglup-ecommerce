@@ -17,8 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router, NavigationEnd } from '@angular/router';
+import { ROUTER_DIRECTIVES,
+         Router,
+         NavigationEnd }    from '@angular/router';
+import { Component }        from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -77,7 +79,7 @@ export class BreadcrumbComponent {
             return n !== '';
         });
 
-        // remove the base route for the admin panel.
+        // HACK: remove the base route for the admin panel.
         if (positions[0] === 'admin') {
             positions.splice(0, 1);
         }
