@@ -98,6 +98,7 @@ to the predefined coding styles conventions.
 ---
 
 Angel Castillo <angel.castillo@biglup.com>
+Alejandro Granadillo <slayerfat@gmail.com>
 
 ## License
 ---
