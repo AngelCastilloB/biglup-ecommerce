@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES }   from '@angular/router';
 import { Component }           from '@angular/core';
 import { SidebarComponent }    from './components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './components/breadcrumbs/breadcrumbs.component';
