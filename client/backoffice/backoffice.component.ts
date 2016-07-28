@@ -19,13 +19,13 @@
 
 import 'reflect-metadata';
 
-import { ROUTER_DIRECTIVES   } from '@angular/router';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Component }           from '@angular/core';
-import { SidebarComponent }    from './components/sidebar/sidebar.component'
-import { BreadcrumbComponent } from './components/breadcrumbs/breadcrumbs.component'
+import { SidebarComponent }    from './components/sidebar/sidebar.component';
+import { BreadcrumbComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './backoffice.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -38,4 +38,5 @@ import template from './backoffice.component.html';
     styleUrls: ['css/style.css'],
     directives: [ROUTER_DIRECTIVES, SidebarComponent, BreadcrumbComponent]
 })
-export class BackofficeComponent { }
+export class BackofficeComponent {
+}

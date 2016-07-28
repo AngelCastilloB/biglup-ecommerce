@@ -37,7 +37,7 @@ interface Image {
 /**
  * @brief Thumbnail type definition.
  */
-interface Thumbnail extends Image  {
+interface Thumbnail extends Image {
     originalStore?: string;
     originalId?: string;
 }

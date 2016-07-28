@@ -1,21 +1,21 @@
 <div layout="row" *ngIf="_products">
-    <div *ngFor="let product of _products">
-        <h2>{{product.title | mongoTranslate}}</h2>
+  <div *ngFor="let product of _products">
+    <h2>{{product.title | mongoTranslate}}</h2>
 
-        <p>{{product.sku}}</p>
+    <p>{{product.sku}}</p>
 
-        <p>{{product.description | mongoTranslate}}</p>
+    <p>{{product.description | mongoTranslate}}</p>
 
-        <p>{{product.color}}</p>
+    <p>{{product.color}}</p>
 
-        <p>{{product.size}}</p>
+    <p>{{product.size}}</p>
 
-        <p>{{product.price}}</p>
+    <p>{{product.price}}</p>
 
-        <p>{{product.discount}}</p>
+    <p>{{product.discount}}</p>
 
-        <div *ngFor="let image of _productImages">
-            <img *ngIf="image.productId === product._id" src="{{image.url}}"/>
-        </div>
+    <div *ngFor="let image of _productImages">
+      <img *ngIf="image.productId === product._id" src="{{image.url}}"/>
     </div>
+  </div>
 </div>

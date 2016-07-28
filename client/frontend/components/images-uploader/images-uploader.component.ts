@@ -25,7 +25,7 @@ import { UploadFS }            from 'meteor/jalik:ufs';
 import { ImagesStore, Images } from '../../../../common/collections/image.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './images-uploader.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -36,13 +36,13 @@ import template from './images-uploader.component.html';
 @Component({
     selector: 'images-uploader',
     template,
-    directives: [ FileDropDirective ]
+    directives: [FileDropDirective]
 })
 export class ImagesUploader {
 
     private _fileIsOver: boolean = false;
-    private _uploading:  boolean = false;
-    private _images:     Mongo.Cursor<Image>;
+    private _uploading: boolean  = false;
+    private _images: Mongo.Cursor<Image>;
 
     /**
      * @summary Initializes a new istance of the ImagesUploader class.
@@ -70,7 +70,7 @@ export class ImagesUploader {
 
         this.upload(file, (result) => {
             this._uploading = false;
-            console.debug("File uploaded"); // TODO: Remove this and handle the case properly.
+            console.log('File uploaded'); // TODO: Remove this and handle the case properly.
         }, (error) => {
             this._uploading = false;
             console.log(`Something went wrong!`, error);  // TODO: Remove this and handle the case properly.
@@ -109,7 +109,7 @@ export class ImagesUploader {
                 throw new Error(`Couldn't load file`);
             }
         };
-        
+
         reader.readAsArrayBuffer(sourceFile);
-  }
+    }
 }

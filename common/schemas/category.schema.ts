@@ -25,52 +25,52 @@ import { I18nStringSchema } from './i18n-string.schema';
 /**
  * @summary The category schema.
  */
-export let CategorySchema:any = new SimpleSchema({
+export let CategorySchema: any = new SimpleSchema({
     name: {
         type: [I18nStringSchema],
-        label: "Name"
+        label: 'Name'
     },
     slug: {
         type: String,
-        label: "Slug"
+        label: 'Slug'
     },
     info: {
         type: [I18nStringSchema],
-        label: "Info"
+        label: 'Info'
     },
     isParentCategory: {
         type: Boolean,
-        label: "This category contains a list of subcategories",
+        label: 'This category contains a list of subcategories',
         defaultValue: true
     },
     parentCategory: {
         type: String,
-        label: "Parent Category",
-        defaultValue: ""
+        label: 'Parent Category',
+        defaultValue: ''
     },
     image: {
         type: String,
-        label: "Image"
+        label: 'Image'
     },
     active: {
         type: Boolean,
-        label: "Active",
+        label: 'Active',
         defaultValue: true
     },
     updated: {
         type: Date,
-        label: "Last date this book was updated.",
-        autoValue: function() {
-            if ( this.isInsert ){
+        label: 'Last date this book was updated.',
+        autoValue: function () {
+            if (this.isInsert) {
                 return new Date();
-            } else if ( this.isSet ){
+            } else if (this.isSet) {
                 this.unset();
             }
         }
     },
     subCategories: {
         type: [Object],
-        label: "The list of categories inside this category.",
+        label: 'The list of categories inside this category.',
         optional: true
     }
 });

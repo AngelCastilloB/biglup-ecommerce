@@ -19,9 +19,11 @@
 
 import 'reflect-metadata';
 
-import { provideRouter,
-         RouterConfig,
-         ROUTER_DIRECTIVES }  from '@angular/router';
+import {
+    provideRouter,
+    RouterConfig,
+    ROUTER_DIRECTIVES
+} from '@angular/router';
 import { Component, provide } from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { bootstrap }          from '@angular/platform-browser-dynamic';
@@ -30,7 +32,7 @@ import { backofficeRoutes }   from './backoffice/backoffice.routes';
 import { frontendRoutes }     from './frontend/frontend.routes';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './app.component.html';
 
 // BOOTSTRAP COMPONENT ************************************************************************************************/
@@ -43,7 +45,7 @@ import template from './app.component.html';
     template,
     directives: [ROUTER_DIRECTIVES]
 })
-class Application extends MeteorComponent{
+class Application extends MeteorComponent {
 
     /**
      * @summary Initializes a new instance of the Application class.
@@ -70,4 +72,4 @@ const APP_ROUTER_PROVIDERS = [
     provideRouter(routes)
 ];
 
-bootstrap(Application, [APP_ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' })]);
+bootstrap(Application, [APP_ROUTER_PROVIDERS, provide(APP_BASE_HREF, {useValue: '/'})]);

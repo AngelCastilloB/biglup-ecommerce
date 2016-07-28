@@ -83,7 +83,7 @@ interface JQueryAjaxSettings {
     /**
      * Whether to trigger global Ajax event handlers for this request. The default is true. Set to false to prevent the global handlers like ajaxStart or ajaxStop from being triggered. This can be used to control various Ajax Events.
      */
-    global?: boolean;
+        global?: boolean;
     /**
      * An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. The header X-Requested-With: XMLHttpRequest is always added, but its default XMLHttpRequest value can be changed here. Values in the headers setting can also be overwritten from within the beforeSend function. (version added: 1.5)
      */
@@ -495,7 +495,7 @@ interface JQueryKeyEventObject extends JQueryInputEventObject {
     keyCode: number;
 }
 
-interface JQueryEventObject extends BaseJQueryEventObject, JQueryInputEventObject, JQueryMouseEventObject, JQueryKeyEventObject{
+interface JQueryEventObject extends BaseJQueryEventObject, JQueryInputEventObject, JQueryMouseEventObject, JQueryKeyEventObject {
 }
 
 /*
@@ -966,10 +966,8 @@ interface JQueryStatic {
      * @param collection The object or array to iterate over.
      * @param callback The function that will be executed on every object.
      */
-    each<T>(
-        collection: T[],
-        callback: (indexInArray: number, valueOfElement: T) => any
-    ): any;
+    each<T>(collection: T[],
+        callback: (indexInArray: number, valueOfElement: T) => any): any;
 
     /**
      * A generic iterator function, which can be used to seamlessly iterate over both objects and arrays. Arrays and array-like objects with a length property (such as a function's arguments object) are iterated by numeric index, from 0 to length-1. Other objects are iterated via their named properties.
@@ -977,10 +975,8 @@ interface JQueryStatic {
      * @param collection The object or array to iterate over.
      * @param callback The function that will be executed on every object.
      */
-    each(
-        collection: any,
-        callback: (indexInArray: any, valueOfElement: any) => any
-    ): any;
+    each(collection: any,
+        callback: (indexInArray: any, valueOfElement: any) => any): any;
 
     /**
      * Merge the contents of two or more objects together into the first object.
@@ -2290,7 +2286,7 @@ interface JQuery {
      * @param data Data to be passed to the handler in event.data when an event is triggered.
      * @param handler A function to execute when the event is triggered. The value false is also allowed as a shorthand for a function that simply does return false.
      */
-    on(events: string, data : any, handler: (eventObject: JQueryEventObject, ...args: any[]) => any): JQuery;
+    on(events: string, data: any, handler: (eventObject: JQueryEventObject, ...args: any[]) => any): JQuery;
     /**
      * Attach an event handler function for one or more events to the selected elements.
      *
@@ -3178,8 +3174,8 @@ interface JQuery {
     queue(queueName: string, callback: Function): JQuery;
 
     // JQuery missing method prototypes
-    smartresize(param:any): JQuery;
-    mCustomScrollbar(param:any): JQuery;
+    smartresize(param: any): JQuery;
+    mCustomScrollbar(param: any): JQuery;
 }
 declare module "jquery" {
     export = $;

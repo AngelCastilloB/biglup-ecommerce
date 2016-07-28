@@ -30,7 +30,7 @@ import { I18nSingletonService } from '../../../services/l18n/I18nSingletonServic
 import { I18nMongoPipe }        from '../../../services/l18n/I18nMongoPipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './category.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -44,9 +44,9 @@ import template from './category.component.html';
     pipes: [I18nMongoPipe]
 })
 export class CategoryComponent extends MeteorComponent {
-    private _subscription:  any;
-    private _categoryId:    string;
-    private _products:      Mongo.Cursor<Product>;
+    private _subscription: any;
+    private _categoryId: string;
+    private _products: Mongo.Cursor<Product>;
     private _productImages: Mongo.Cursor<Image>;
 
     /**
@@ -59,11 +59,11 @@ export class CategoryComponent extends MeteorComponent {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    ngOnInit() {
+    public ngOnInit() {
         this.route.params.subscribe((params) => {
             this._categoryId = params['categoryId'];
             Tracker.autorun(() => {
-                this._products = Products.find({categoryId : this._categoryId});
+                this._products      = Products.find({categoryId: this._categoryId});
                 this._productImages = Images.find();
             });
         });
@@ -72,10 +72,10 @@ export class CategoryComponent extends MeteorComponent {
             .subscribe(item => this.localeChanged(item));
     }
 
-    localeChanged(locale: string) {
+    public localeChanged(locale: string) {
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this._subscription.unsubscribe();
     }
 }

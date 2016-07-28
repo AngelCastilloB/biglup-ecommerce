@@ -22,7 +22,7 @@ import { CategorySchema } from '../schemas/category.schema';
 
 // EXPORTS ************************************************************************************************************/
 
-export let Categories:any = new Mongo.Collection<Category>('categories');
+export let Categories: any = new Mongo.Collection<Category>('categories');
 
 // IMPLEMENTATION *****************************************************************************************************/
 

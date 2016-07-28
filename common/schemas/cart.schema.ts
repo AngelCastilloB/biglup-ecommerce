@@ -24,7 +24,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /**
  * @summary Represent an item on the cart.
  */
-export let CartItemSchema:any = new SimpleSchema({
+export let CartItemSchema: any = new SimpleSchema({
     _id: {
         type: String
     },
@@ -32,7 +32,7 @@ export let CartItemSchema:any = new SimpleSchema({
         type: String
     },
     quantity: {
-        label: "Quantity",
+        label: 'Quantity',
         type: Number,
         min: 0
     },
@@ -42,22 +42,22 @@ export let CartItemSchema:any = new SimpleSchema({
     },
     // Denormalized field: Indicates the color variant of this product.
     color: {
-        label: "Color",
+        label: 'Color',
         type: String,
-        defaultValue: ""
+        defaultValue: ''
     },
     // Denormalized field: Indicates the size of this product.
     size: {
-        label: "Size",
+        label: 'Size',
         type: String,
-        defaultValue: ""
+        defaultValue: ''
     },
 });
 
 /**
  * @summary The cart schema.
  */
-export let CartSchema:any = new SimpleSchema({
+export let CartSchema: any = new SimpleSchema({
     _id: {
         type: String
     },

@@ -25,7 +25,7 @@ import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './sidebar.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -38,7 +38,7 @@ import template from './sidebar.component.html';
     template,
     directives: [ROUTER_DIRECTIVES]
 })
-export class SidebarComponent extends MeteorComponent implements AfterViewInit  {
+export class SidebarComponent extends MeteorComponent implements AfterViewInit {
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
@@ -47,6 +47,6 @@ export class SidebarComponent extends MeteorComponent implements AfterViewInit  
         super();
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
     }
 }

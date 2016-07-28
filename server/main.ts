@@ -17,8 +17,8 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import {loadCategories} from './load-mock-data.ts';
-import {Meteor}         from 'meteor/meteor';
+import { loadCategories } from './load-mock-data.ts';
+import { Meteor }         from 'meteor/meteor';
 
 /* METEOR SERVER START UP *********************************************************************************************/
 

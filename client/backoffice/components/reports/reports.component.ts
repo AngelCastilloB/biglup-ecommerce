@@ -24,7 +24,7 @@ import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './reports.component.html';
 
 // EXPORTS ************************************************************************************************************/

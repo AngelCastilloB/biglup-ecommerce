@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Pipe, PipeTransform } from  '@angular/core';
-import { I18nSingletonService } from "./I18nSingletonService";
+import { I18nSingletonService } from './I18nSingletonService';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,23 +32,23 @@ import { I18nSingletonService } from "./I18nSingletonService";
     pure: false
 })
 export class I18nPipe implements PipeTransform {
-    private _locale:string = '';
-    private _value:string  = '';
+    private _locale: string = '';
+    private _value: string  = '';
 
     /**
      * @summary Translate the given text.
      *
      * @param message The text to be translated.
-     * 
+     *
      * @returns {string} The translation result. If no translation was found for the current locale, the original message
      * is returned.
      */
-    transform(message: string): any {
-        var currentLocale:string = I18nSingletonService.getInstance().getLocale();
+    public transform(message: string): any {
+        let currentLocale: string = I18nSingletonService.getInstance().getLocale();
 
         if (currentLocale !== this._locale) {
             this._locale = currentLocale;
-            this._value = I18nSingletonService.getInstance().getText(message)
+            this._value  = I18nSingletonService.getInstance().getText(message);
         }
         return !this._value ? message : this._value;
     }

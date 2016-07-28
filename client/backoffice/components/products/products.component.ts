@@ -30,7 +30,7 @@ import { I18nPipe }               from '../../../services/l18n/I18nPipe';
 import { ActivatedRoute }         from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './products.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -46,6 +46,7 @@ import template from './products.component.html';
 })
 export class ProductsComponent extends MeteorComponent {
     private _products: Mongo.Cursor<Product>;
+
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
@@ -56,7 +57,7 @@ export class ProductsComponent extends MeteorComponent {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    ngOnInit() {
+    public ngOnInit() {
         this.route.params.subscribe((params) => {
             Tracker.autorun(() => {
                 this._products = Products.find();

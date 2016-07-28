@@ -19,12 +19,12 @@
 
 import 'reflect-metadata';
 
-import { ROUTER_DIRECTIVES,}  from '@angular/router';
+import { ROUTER_DIRECTIVES, } from '@angular/router';
 import { Component }          from '@angular/core';
-import { HeaderComponent }    from './components/header/header.component.ts'
+import { HeaderComponent }    from './components/header/header.component.ts';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-//noinspection TypeScriptCheckImport
+// noinspection TypeScriptCheckImport
 import template from './frontend.component.html';
 
 // EXPORTS ************************************************************************************************************/
@@ -36,4 +36,5 @@ import template from './frontend.component.html';
     template,
     directives: [HeaderComponent, ROUTER_DIRECTIVES],
 })
-export class FrontendComponent { }
+export class FrontendComponent {
+}
