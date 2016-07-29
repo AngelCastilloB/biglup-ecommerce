@@ -25,6 +25,7 @@ import { Mongo }              from 'meteor/mongo';
 import { Images }             from '../../../../common/collections/image.collection';
 import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
 import { TruncateStringPipe } from '../../../pipes/truncate-string.pipe';
+import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,6 +39,7 @@ import template from './category-item.component.html';
 @Component({
     selector: 'category-item',
     template,
+    directives: [ROUTER_DIRECTIVES],
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent {
