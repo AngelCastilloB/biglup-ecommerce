@@ -34,15 +34,17 @@ export class ArrayRandomPipe implements PipeTransform {
      *
      * @returns {any} The randomly selected value.
      *
-     * @Remarks If The array is empty or is not of "object" type, the array itself is returned.
+     * @Remarks If The value is empty or is not of "object" type, the value itself is returned.
      */
     public transform(value: Array<any>): any {
-
-        if (value.length < 1)
+        // We need to check the type because even though is strongly typed, in the view, we can actually send
+        // anything without any warning, which will explode randomly, we can send through {{ 0 | randomArray }}
+        // and will throw error or return undefined, depending of the browser, with this check, we can at least
+        // return the original value to avoid view flow interruptions.
+        if (value.length < 1 || typeof value !== 'object') {
             return value;
+        }
 
-        return typeof value === 'object' ?  //TODO: Is this validation really necessary?, 'value' will always be of type 'Array<any>' since the method signature is strongly typed.
-                        value[Math.floor(Math.random() * value.length)] :
-                        value;
+        return value[Math.floor(Math.random() * value.length)];
     }
 }
