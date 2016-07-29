@@ -24,8 +24,8 @@ import { MeteorComponent }      from 'angular2-meteor';
 import { Mongo }                from 'meteor/mongo';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
 import { Categories }           from '../../../../common/collections/category.collection.ts';
-import { I18nPipe }             from '../../../services/l18n/I18nPipe';
-import { I18nMongoPipe }        from '../../../services/l18n/I18nMongoPipe';
+import { TranslatePipe }        from '../../../pipes/translate.pipe';
+import { MongoTranslatePipe }   from '../../../pipes/mong-translate.pipe';
 import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -41,7 +41,7 @@ import template from './header.component.html';
     selector: 'header',
     template,
     directives: [ROUTER_DIRECTIVES],
-    pipes: [I18nPipe, I18nMongoPipe]
+    pipes: [TranslatePipe, MongoTranslatePipe]
 })
 export class HeaderComponent extends MeteorComponent {
 

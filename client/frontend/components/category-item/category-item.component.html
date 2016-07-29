@@ -1,0 +1,49 @@
+<div class="col-sm-4">
+    <div class="card">
+        <div class="view overlay hm-white-slight">
+            <!-- Carousel -->
+            <div id="products-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+
+                <!-- Images -->
+                <div class="carousel-inner" role="listbox">
+                    <template ngFor
+                              [ngForOf]="_productImages"
+                              let-image="$implicit"
+                              let-last="last">
+                        <div class="carousel-item"
+                             [ngClass]="{active: last}">
+                            <!-- TODO set images to same height -->
+                            <img src="{{ image.url }}" alt="{{ model.title | mongoTranslate }}">
+                        </div>
+                    </template>
+                </div>
+
+                <!--Controls-->
+                <a class="left carousel-control" href="#products-carousel" role="button" data-slide="prev">
+                    <span class="icon-prev" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#products-carousel" role="button" data-slide="next">
+                    <span class="icon-next" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Product info -->
+        <div class="card-block">
+            <h4 class="card-title">{{model.title | mongoTranslate}}</h4>
+            <p class="card-text">{{model.sku}}</p>
+            <p class="card-text">{{model.description | mongoTranslate | truncateString}}</p>
+            <p class="card-text">{{model.color}}</p>
+            <p class="card-text">{{model.size}}</p>
+            <p class="card-text">{{model.price}}</p>
+            <p class="card-text">{{model.discount}}</p>
+
+            <!-- Actions -->
+            <!-- TODO improve links -->
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+            <a href="#" class="btn btn-default">Product details</a>
+        </div>
+    </div>
+</div>

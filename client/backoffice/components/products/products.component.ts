@@ -25,8 +25,8 @@ import { ROUTER_DIRECTIVES }      from '@angular/router';
 import { Mongo }                  from 'meteor/mongo';
 import { Tracker }                from 'meteor/tracker';
 import { Products }               from '../../../../common/collections/product.collection';
-import { I18nMongoPipe }          from '../../../services/l18n/I18nMongoPipe';
-import { I18nPipe }               from '../../../services/l18n/I18nPipe';
+import { I18nMongoPipe }          from '../../../pipes/mong-translate.pipe';
+import { I18nPipe }               from '../../../pipes/translate.pipe';
 import { ActivatedRoute }         from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
