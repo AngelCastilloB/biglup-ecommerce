@@ -25,7 +25,7 @@ import { ROUTER_DIRECTIVES }      from '@angular/router';
 import { Mongo }                  from 'meteor/mongo';
 import { Tracker }                from 'meteor/tracker';
 import { Products }               from '../../../../common/collections/product.collection';
-import { I18nMongoPipe }          from '../../../pipes/mong-translate.pipe';
+import { I18nMongoPipe }          from '../../../pipes/mongo-translate.pipe';
 import { I18nPipe }               from '../../../pipes/translate.pipe';
 import { ActivatedRoute }         from '@angular/router';
 

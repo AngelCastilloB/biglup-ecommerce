@@ -23,7 +23,7 @@ import { Component, Input }   from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { Mongo }              from 'meteor/mongo';
 import { Images }             from '../../../../common/collections/image.collection';
-import { MongoTranslatePipe } from '../../../pipes/mong-translate.pipe';
+import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
 import { TruncateStringPipe } from '../../../pipes/truncate-string.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.

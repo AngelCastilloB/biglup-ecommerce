@@ -25,7 +25,7 @@ import { Mongo }                from 'meteor/mongo';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
 import { Categories }           from '../../../../common/collections/category.collection.ts';
 import { TranslatePipe }        from '../../../pipes/translate.pipe';
-import { MongoTranslatePipe }   from '../../../pipes/mong-translate.pipe';
+import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
 import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
