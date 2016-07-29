@@ -43,7 +43,7 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent {
-    @Input() private model: Product;
+    @Input() public model: Product;
     private _productImages: Mongo.Cursor<Image>;
 
     /**
