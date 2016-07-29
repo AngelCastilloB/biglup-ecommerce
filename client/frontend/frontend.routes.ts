@@ -17,10 +17,11 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { RouterConfig }         from '@angular/router';
-import { CategoryComponent }    from './components/category/category.component.ts';
-import { LandingPageComponent } from './components/landing-page/landing-page.component.ts';
-import { FrontendComponent }    from './frontend.component';
+import { RouterConfig }            from '@angular/router';
+import { CategoryComponent }       from './components/category/category.component.ts';
+import { LandingPageComponent }    from './components/landing-page/landing-page.component.ts';
+import { FrontendComponent }       from './frontend.component';
+import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -32,8 +33,9 @@ export const frontendRoutes: RouterConfig = [
         path: '',
         component: FrontendComponent,
         children: [
-            { path: '', component: LandingPageComponent },
-            { path: 'category/:categoryId', component: CategoryComponent },
+            {path: '', component: LandingPageComponent},
+            {path: 'category/:categoryId', component: CategoryComponent},
+            {path: 'product/:productId', component: ProductDetailsComponent},
         ]
     }
 ];
