@@ -1,10 +1,10 @@
 /**
- * @file products.component.ts
+ * @file category-item.component.ts
  *
- * @summary The products admin panel.
+ * @summary The category item component definition.
  *
- * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @date   July 29 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -19,38 +19,35 @@
 
 import 'reflect-metadata';
 
-import { Component }          from '@angular/core';
+import { Component, Input }   from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
 import { Mongo }              from 'meteor/mongo';
-import { Tracker }            from 'meteor/tracker';
-import { Products }           from '../../../../common/collections/product.collection';
+import { Images }             from '../../../../common/collections/image.collection';
 import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }      from '../../../pipes/translate.pipe';
-import { ActivatedRoute }     from '@angular/router';
+import { TruncateStringPipe } from '../../../pipes/truncate-string.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './products.component.html';
+import template from './category-item.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays all the products of the site.
+ * @summary This component displays a given product in the category.
  */
 @Component({
-    selector: 'products',
+    selector: 'category-item',
     template,
-    directives: [ROUTER_DIRECTIVES],
-    pipes: [MongoTranslatePipe, TranslatePipe]
+    pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
-export class ProductsComponent extends MeteorComponent {
-    private _products: Mongo.Cursor<Product>;
+export class CategoryItemComponent extends MeteorComponent {
+    @Input() model        : Product;
+    private _productImages: Mongo.Cursor<Image>;
 
     /**
-     * @summary Initializes a new instance of the ProductsComponent class.
+     * @summary Initializes a new instance of the CategoryItemComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor() {
         super();
     }
 
@@ -58,10 +55,6 @@ export class ProductsComponent extends MeteorComponent {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
-            Tracker.autorun(() => {
-                this._products = Products.find();
-            });
-        });
+        this._productImages = Images.find({ productId : this.model._id});
     }
 }

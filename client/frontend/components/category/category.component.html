@@ -1,54 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-4" *ngFor="let product of _products">
-      <div class="card">
-        <div class="view overlay hm-white-slight">
-          <!-- Carousel -->
-          <div id="products-carousel" class="carousel slide carousel-fade" data-ride="carousel">
-
-            <!-- Images -->
-            <div class="carousel-inner" role="listbox">
-              <template ngFor
-                        [ngForOf]="_productImages"
-                        let-image="$implicit"
-                        let-last="last">
-                <div class="carousel-item"
-                     [ngClass]="{active: last}"
-                     *ngIf="image.productId === product._id">
-                  <!-- TODO set images to same height -->
-                  <img src="{{ image.url }}" alt="{{ product.title | mongoTranslate }}">
-                </div>
-              </template>
-            </div>
-
-            <!--Controls-->
-            <a class="left carousel-control" href="#products-carousel" role="button" data-slide="prev">
-              <span class="icon-prev" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#products-carousel" role="button" data-slide="next">
-              <span class="icon-next" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Product info -->
-        <div class="card-block">
-          <h4 class="card-title">{{product.title | mongoTranslate}}</h4>
-          <p class="card-text">{{product.sku}}</p>
-          <p class="card-text">{{product.description | mongoTranslate | strLimit}}</p>
-          <p class="card-text">{{product.color}}</p>
-          <p class="card-text">{{product.size}}</p>
-          <p class="card-text">{{product.price}}</p>
-          <p class="card-text">{{product.discount}}</p>
-
-          <!-- Actions -->
-          <!-- TODO improve links -->
-          <a href="#" class="btn btn-primary">Add to Cart</a>
-          <a href="#" class="btn btn-default">Product details</a>
-        </div>
+      <div *ngFor="let product of _products">
+          <category-item [model]="product"></category-item>
       </div>
-    </div>
   </div>
 </div>
