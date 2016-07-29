@@ -41,7 +41,7 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent {
-    @Input() model        : Product;
+    @Input() private model: Product;
     private _productImages: Mongo.Cursor<Image>;
 
     /**
@@ -55,6 +55,6 @@ export class CategoryItemComponent extends MeteorComponent {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this._productImages = Images.find({ productId : this.model._id});
+        this._productImages = Images.find({productId: this.model._id});
     }
 }
