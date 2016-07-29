@@ -25,7 +25,7 @@ import { Mongo }                 from 'meteor/mongo';
 import { ActivatedRoute }        from '@angular/router';
 import { Tracker }               from 'meteor/tracker';
 import { Products }              from '../../../../common/collections/product.collection.ts';
-import { CategoryItemComponent } from '../category-item/category-item.component'
+import { CategoryItemComponent } from '../category-item/category-item.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
