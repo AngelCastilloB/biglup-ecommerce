@@ -19,10 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component }           from '@angular/core';
-import { FileDropDirective }   from 'angular2-file-drop';
-import { UploadFS }            from 'meteor/jalik:ufs';
-import { ImagesStore, Images } from '../../../../common/collections/image.collection';
+import { Component }             from '@angular/core';
+import { FileDropDirective }     from './directives/file-drop.directive';
+import { UploadFS }              from 'meteor/jalik:ufs';
+import { ImagesStore, Images }   from '../../../../common/collections/image.collection.ts';
+import { ImagePreviewComponent } from './components/image-preview/image-preview.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,19 +37,42 @@ import template from './images-uploader.component.html';
 @Component({
     selector: 'images-uploader',
     template,
-    directives: [FileDropDirective]
+    styles: [`
+            div.drop {
+              min-height: 200px;
+              width: auto;
+              border: 3px dashed #ccc;
+              display: flex;
+              align-items: center;
+              justify-content: center
+            }
+            .image-container {
+              display: inline-block;
+              margin: 60px;
+              padding: 30px;
+              text-align: center;
+              color: #ccc;
+            }
+            .image-container {
+              color: #ccc;
+            }
+            .instructions {
+              color: #ccc;
+              display: block;
+            }
+    `],
+    directives: [FileDropDirective, ImagePreviewComponent]
 })
 export class ImagesUploader {
 
     private _fileIsOver: boolean = false;
-    private _uploading: boolean  = false;
-    private _images: Mongo.Cursor<Image>;
+    // private _uploading: boolean = false;
+    private _previewFiles: Array<File> = [];
 
     /**
-     * @summary Initializes a new istance of the ImagesUploader class.
+     * @summary Initializes a new instance of the ImagesUploader class.
      */
     constructor() {
-        this._images = Images.find();
     }
 
     /**
@@ -65,16 +89,28 @@ export class ImagesUploader {
      *
      * @param file The file to be uploaded.
      */
-    public onFileDrop(file: File): void {
-        this._uploading = true;
+    public onFileDrop(files: FileList): void {
 
-        this.upload(file, (result) => {
-            this._uploading = false;
-            console.log('File uploaded'); // TODO: Remove this and handle the case properly.
-        }, (error) => {
-            this._uploading = false;
-            console.log(`Something went wrong!`, error);  // TODO: Remove this and handle the case properly.
-        });
+        if (!files.length) {
+            return;
+        }
+
+        let newFiles: Array<File> = Array.prototype.slice.call(files);
+
+        if (!this._previewFiles.length > 0) {
+            this._previewFiles = newFiles;
+        } else {
+            this._previewFiles = this._previewFiles.concat(newFiles);
+        }
+        // this._uploading = true;
+
+       // this.upload(file, (result) => {
+       //     this._uploading = false;
+       //     console.log('File uploaded'); // TODO: Remove this and handle the case properly.
+       // }, (error) => {
+       //     this._uploading = false;
+       //     console.log(`Something went wrong!`, error); // TODO: Remove this and handle the case properly.
+       // });
     }
 
     /**

@@ -1,0 +1,22 @@
+<div class="card">
+  <!--Card content-->
+  <div class="card-block">
+    <b>Images</b>
+      <div class="drop" file-drop
+           (onFileDrop)="onFileDrop($event)">
+        <div class="image-container">
+          <span class='fa fa-picture-o fa-5x'></span>
+          </br>
+          <span class="instructions">Drop images to upload</span>
+        </div>
+      </div>
+    </br>
+  </div>
+  <!--/.Card content-->
+</div>
+
+<div *ngIf="_previewFiles">
+  <div *ngFor="let preview of _previewFiles" >
+    <image-preview [model]="preview"></image-preview>
+  </div>
+</div>
