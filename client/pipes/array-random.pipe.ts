@@ -30,19 +30,19 @@ export class ArrayRandomPipe implements PipeTransform {
     /**
      * @summary Selects a random value from an array.
      *
-     * @param value The array where to select the value from.
+     * @param {Array<*>} value The array where to select the value from.
      *
-     * @returns {any} The randomly selected value.
+     * @returns {*} The randomly selected value.
      *
      * @Remarks If The value is empty or is not of "object" type, the value itself is returned.
      */
     public transform(value: Array<any>): any {
-        // We need to check the type because even though is strongly typed, in the view, we can actually send
-        // anything without any warning, which will explode randomly, we can send through {{ 0 | randomArray }}
-        // and will throw error or return undefined, depending of the browser, with this check, we can at least
-        // return the original value to avoid view flow interruptions.
-        if (value.length < 1 || typeof value !== 'object') {
+        // We need to check the type because even though is strongly typed, in the view, we can ask for
+        // {{ 0 | randomArray }} and will print undefined (which prints absolutely nothing).
+        if (value.length < 1) {
             return value;
+        } else if (typeof value !== 'object') {
+            throw new Error(`Pipe arrayRandom expects an array, ${typeof value} given.`);
         }
 
         return value[Math.floor(Math.random() * value.length)];
