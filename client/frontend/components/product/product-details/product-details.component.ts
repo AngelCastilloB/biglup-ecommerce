@@ -18,20 +18,27 @@
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Products } from '../../../../../common/collections/product.collection';
-import { Images } from '../../../../../common/collections/image.collection';
-import { I18nSingletonService } from '../../../../services/l18n/I18nSingletonService';
-import { Subscription } from 'rxjs';
-import { I18nMongoPipe } from '../../../../services/l18n/I18nMongoPipe';
-import { MeteorComponent } from 'angular2-meteor/dist/index';
-import { Tracker } from 'meteor/tracker';
+// IMPORTS ************************************************************************************************************/
 
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute }               from '@angular/router';
+import { Products }                     from '../../../../../common/collections/product.collection';
+import { Images }                       from '../../../../../common/collections/image.collection';
+import { I18nSingletonService }         from '../../../../services/l18n/I18nSingletonService';
+import { Subscription }                 from 'rxjs';
+import { MeteorComponent }              from 'angular2-meteor/dist/index';
+import { Tracker }                      from 'meteor/tracker';
+import { MongoTranslatePipe }           from '../../../../pipes/mongo-translate.pipe';
+
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @summary This component shows specific details about a product.
+ */
 @Component({
     selector: 'product-details',
     template,
-    pipes: [I18nMongoPipe]
+    pipes: [MongoTranslatePipe]
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy {
 
@@ -62,6 +69,9 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
         this._subscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe();
     }
 
+    /**
+     * @summary destroys any subscriptions to avoid memory leaks.
+     */
     public ngOnDestroy() {
         this._subscription.unsubscribe();
     }
