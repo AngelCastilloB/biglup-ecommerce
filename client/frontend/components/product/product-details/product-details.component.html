@@ -72,8 +72,8 @@
       <div class="col-md-4">
         <h4>
           From
-          <a *ngFor="let category of _category" [routerLink]="['/category', category._id]">
-            {{ category.name | mongoTranslate }}
+          <a [routerLink]="['/category', _categoryId]">
+            {{ _category.name | mongoTranslate }}
           </a>
         </h4>
         <p>{{ product.description | mongoTranslate }}</p>

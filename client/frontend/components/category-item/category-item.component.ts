@@ -45,8 +45,9 @@ import { ProductImagesCarouselComponent } from '../product/product-images-carous
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent {
-    @Input() public model: Product;
-    private _productImages: Mongo.Cursor<Image>;
+    @Input() public model:    Product;
+    @Input() public category: string;
+    private _productImages:   Mongo.Cursor<Image>;
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
