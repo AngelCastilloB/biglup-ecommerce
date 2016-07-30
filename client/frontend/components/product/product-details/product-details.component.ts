@@ -25,7 +25,7 @@ import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
 import { Products }                          from '../../../../../common/collections/product.collection';
 import { Images }                            from '../../../../../common/collections/image.collection';
 import { Categories }                        from '../../../../../common/collections/category.collection';
-import { MeteorComponent }                   from 'angular2-meteor/dist/index';
+import { MeteorComponent }                   from 'angular2-meteor';
 import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
 import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
 
@@ -44,7 +44,7 @@ export class ProductDetailsComponent extends MeteorComponent {
 
     private _productId:     string;
     private _categoryId:    string;
-    private _product:       Mongo.Cursor<Product>;
+    private _product:       Product;
     private _productImages: Mongo.Cursor<Image>;
     private _category:      Category;
 
@@ -64,14 +64,11 @@ export class ProductDetailsComponent extends MeteorComponent {
             this._productId  = params['productId'];
 
             this.autorun(() => {
-                this._product  = Products.find({_id: this._productId});
-
-                this._product.observe({
-                    added: (product: any) => {
-                        this._productImages = Images.find({productId: this._productId});
-                        this._category = Categories.findOne({_id: this._categoryId});
-                    }
-                });
+                if (Meteor.status().connected) {
+                    this._product       = Products.findOne({_id: this._productId});
+                    this._productImages = Images.find({productId: this._productId});
+                    this._category      = Categories.findOne({_id: this._categoryId});
+                } // TODO: Add loading product animation on else.
             }, true);
         });
     }
