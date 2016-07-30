@@ -1,5 +1,5 @@
 <!--Product panel-->
-<div class="jumbotron" *ngIf="_product">
+<div class="jumbotron" *ngFor="let product of _product">
   <!--Grid-->
   <div class="container-fluid">
     <div class="row">
@@ -38,7 +38,7 @@
       <!--Second column-->
       <div class="col-md-4">
         <!--Title-->
-        <h4>{{ _product.title | mongoTranslate }}</h4>
+        <h4>{{ product.title | mongoTranslate }}</h4>
 
         <hr>
 
@@ -46,35 +46,38 @@
         <div class="price">
           <p>
             <span class="price-after">
-              {{ _product.price }}
+              <i class="fa fa-usd"></i> {{ product.price }}
             </span>
             <span class="price-before">
-              <del>{{ _product.price + _product.price * (_product.discount / 100) }}</del>
+              <del>{{ product.price + product.price * (product.discount / 100) }}</del>
             </span>
+
+            <span class="label btn btn-primary">-{{ product.discount }}%</span>
           </p>
-          <span class="label">-{{ _product.discount }}%</span>
         </div>
 
         <p>
-          <i class="fa fa-arrows-v"></i> Size: {{ _product.size }}
+          <i class="fa fa-arrows-v"></i> Size: {{ product.size }}
         </p>
 
         <p>
-          Color: {{ _product.color }}
+          Color: {{ product.color }}
         </p>
 
         <!--Call to action-->
         <p>
+          <!--TODO translate service-->
           <button class="btn btn-default">Buy now</button>
         </p>
 
         <p>
-          <i class="fa fa-list"></i> Sku: {{ _product.sku }}
+          <i class="fa fa-list"></i> Sku: {{ product.sku }}
         </p>
 
         <hr>
 
         <!--Social buttons-->
+        <!--TODO add real social links-->
         <p>Share with your friends!</p>
         <ul class="inline-ul">
           <li><a class="btn product-social-btn btn-fb"><i class="fa fa-facebook"> </i></a></li>
@@ -90,7 +93,13 @@
 
       <!--Third column-->
       <div class="col-md-4">
-        <p>{{ _product.description | mongoTranslate }}</p>
+        <h4>
+          From
+          <a *ngFor="let category of _category" [routerLink]="['/category', category._id]">
+            {{ category.name | mongoTranslate }}
+          </a>
+        </h4>
+        <p>{{ product.description | mongoTranslate }}</p>
         <a class="btn btn-primary">Some Action!</a>
       </div>
     </div>

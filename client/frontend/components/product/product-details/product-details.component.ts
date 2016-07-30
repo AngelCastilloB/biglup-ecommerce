@@ -20,15 +20,15 @@ import template from './product-details.component.html';
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute }               from '@angular/router';
-import { Products }                     from '../../../../../common/collections/product.collection';
-import { Images }                       from '../../../../../common/collections/image.collection';
-import { I18nSingletonService }         from '../../../../services/l18n/I18nSingletonService';
-import { Subscription }                 from 'rxjs';
-import { MeteorComponent }              from 'angular2-meteor/dist/index';
-import { Tracker }                      from 'meteor/tracker';
-import { MongoTranslatePipe }           from '../../../../pipes/mongo-translate.pipe';
+import { Component, OnInit, OnDestroy }      from '@angular/core';
+import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
+import { Products }                          from '../../../../../common/collections/product.collection';
+import { Images }                            from '../../../../../common/collections/image.collection';
+import { Categories }                        from '../../../../../common/collections/category.collection';
+import { I18nSingletonService }              from '../../../../services/l18n/I18nSingletonService';
+import { Subscription }                      from 'rxjs';
+import { MeteorComponent }                   from 'angular2-meteor/dist/index';
+import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,14 +38,16 @@ import { MongoTranslatePipe }           from '../../../../pipes/mongo-translate.
 @Component({
     selector: 'product-details',
     template,
+    directives: [ROUTER_DIRECTIVES],
     pipes: [MongoTranslatePipe]
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy {
 
     private _subscription: Subscription;
     private _productId: string;
-    private _product: Product;
+    private _product: Mongo.Cursor<Product>;
     private _productImages: Mongo.Cursor<Image>;
+    private _category: Mongo.Cursor<Category>;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
@@ -60,10 +62,19 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
     public ngOnInit() {
         this.route.params.subscribe((params) => {
             this._productId = params['productId'];
-            Tracker.autorun(() => {
-                this._product       = Products.findOne({_id: this._productId});
-                this._productImages = Images.find();
-            });
+
+            this.autorun(() => {
+                this._product = Products.find({_id: this._productId});
+
+                // we have to observe the product cursor to let it sync the
+                // server data and then do the next queries.
+                this._product.observe({
+                    added: (product: any) => {
+                        this._category      = Categories.find({_id: product.categoryId[0]});
+                        this._productImages = Images.find({productId: this._productId});
+                    }
+                });
+            }, true);
         });
 
         this._subscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe();
