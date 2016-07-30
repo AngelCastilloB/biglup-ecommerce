@@ -1,33 +1,7 @@
 <div class="col-sm-4">
   <div class="card">
     <div class="view overlay hm-white-slight">
-      <!-- Carousel -->
-      <div id="products-carousel" class="carousel slide carousel-fade" data-ride="carousel">
-
-        <!-- Images -->
-        <div class="carousel-inner" role="listbox">
-          <template ngFor
-                    [ngForOf]="_productImages"
-                    let-image="$implicit"
-                    let-last="last">
-            <div class="carousel-item"
-                 [ngClass]="{active: last}">
-              <!-- TODO set images to same height -->
-              <img src="{{ image.url }}" alt="{{ model.title | mongoTranslate }}">
-            </div>
-          </template>
-        </div>
-
-        <!--Controls-->
-        <a class="left carousel-control" href="#products-carousel" role="button" data-slide="prev">
-          <span class="icon-prev" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#products-carousel" role="button" data-slide="next">
-          <span class="icon-next" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
+      <product-images-carousel [images]="_productImages"></product-images-carousel>
     </div>
 
     <!-- Product info -->
@@ -35,12 +9,24 @@
       <h4 class="card-title">
         <a [routerLink]="['/product', model._id]">{{ model.title | mongoTranslate }}</a>
       </h4>
-      <p class="card-text"><i class="fa fa-list"></i> Sku: {{ model.sku }}</p>
-      <p class="card-text">{{ model.description | mongoTranslate | truncateString }}</p>
-      <p class="card-text">Color: {{ model.color }}</p>
-      <p class="card-text"><i class="fa fa-arrows-v"></i> Size: {{ model.size }}</p>
-      <p class="card-text"><i class="fa fa-usd"></i> {{ model.price }}</p>
-      <p class="card-text">-{{ model.discount }}%</p>
+      <p class="card-text">
+        <i class="fa fa-list"></i> Sku: {{ model.sku }}
+      </p>
+      <p class="card-text">
+        {{ model.description | mongoTranslate | truncateString }}
+      </p>
+      <p class="card-text">
+        Color: {{ model.color }}
+      </p>
+      <p class="card-text">
+        <i class="fa fa-arrows-v"></i> Size: {{ model.size }}
+      </p>
+      <p class="card-text">
+        <i class="fa fa-usd"></i> {{ model.price }}
+      </p>
+      <p class="card-text">
+        -{{ model.discount }}%
+      </p>
 
       <!-- Actions -->
       <!-- TODO improve links, add translation service -->

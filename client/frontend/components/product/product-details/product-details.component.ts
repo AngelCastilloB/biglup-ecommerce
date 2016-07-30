@@ -29,6 +29,7 @@ import { I18nSingletonService }              from '../../../../services/l18n/I18
 import { Subscription }                      from 'rxjs';
 import { MeteorComponent }                   from 'angular2-meteor/dist/index';
 import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
+import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,7 +39,7 @@ import { MongoTranslatePipe }                from '../../../../pipes/mongo-trans
 @Component({
     selector: 'product-details',
     template,
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
     pipes: [MongoTranslatePipe]
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy {

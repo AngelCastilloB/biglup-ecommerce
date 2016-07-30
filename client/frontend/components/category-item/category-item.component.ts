@@ -31,6 +31,8 @@ import { ROUTER_DIRECTIVES }  from '@angular/router';
 // noinspection TypeScriptCheckImport
 import template from './category-item.component.html';
 
+import { ProductImagesCarouselComponent } from '../product/product-images-carousel/product-images-carousel';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -39,7 +41,7 @@ import template from './category-item.component.html';
 @Component({
     selector: 'category-item',
     template,
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent {
