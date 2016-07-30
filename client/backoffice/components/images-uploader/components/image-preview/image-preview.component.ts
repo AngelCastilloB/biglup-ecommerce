@@ -20,6 +20,10 @@ import { MeteorComponent }              from 'angular2-meteor';
 
 @Component({
     selector: 'image-preview',
+    styles: [`img {
+                width: auto;
+                height: 200px;
+            }`],
     template: '<img class="image"/>',
 })
 export class ImagePreviewComponent extends MeteorComponent {

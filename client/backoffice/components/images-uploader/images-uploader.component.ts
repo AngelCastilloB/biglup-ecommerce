@@ -29,6 +29,10 @@ import { ImagePreviewComponent } from './components/image-preview/image-preview.
 // noinspection TypeScriptCheckImport
 import template from './images-uploader.component.html';
 
+// CONSTANTS **********************************************************************************************************/
+
+const NUMBER_OF_COLUMNS = 4;
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -60,6 +64,10 @@ import template from './images-uploader.component.html';
               color: #ccc;
               display: block;
             }
+            .card-columns {
+                column-count: 4;
+            }
+}
     `],
     directives: [FileDropDirective, ImagePreviewComponent]
 })
@@ -68,6 +76,7 @@ export class ImagesUploader {
     private _fileIsOver: boolean = false;
     // private _uploading: boolean = false;
     private _previewFiles: Array<File> = [];
+    private _rows: number = 0;
 
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
@@ -102,6 +111,8 @@ export class ImagesUploader {
         } else {
             this._previewFiles = this._previewFiles.concat(newFiles);
         }
+
+        this._rows = Math.ceil(this._previewFiles.length / NUMBER_OF_COLUMNS);
         // this._uploading = true;
 
        // this.upload(file, (result) => {

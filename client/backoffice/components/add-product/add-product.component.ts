@@ -23,7 +23,7 @@ import { Component }         from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { I18nPipe }          from '../../../services/l18n/I18nPipe';
-import { ImagesUploader }    from '../images-uploader/images-uploader.component'
+import { ImagesUploader }    from '../images-uploader/images-uploader.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
