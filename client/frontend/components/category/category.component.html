@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
       <div *ngFor="let product of _products">
-          <category-item [model]="product"></category-item>
+          <category-item [category]="_categoryId" [model]="product"></category-item>
       </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <!--Product panel-->
-<div class="jumbotron" *ngFor="let product of _product">
+<div class="jumbotron" *ngIf="_product">
   <!--Grid-->
   <div class="container-fluid">
     <div class="row">
@@ -15,7 +15,7 @@
       <!--Second column-->
       <div class="col-md-4">
         <!--Title-->
-        <h4>{{ product.title | mongoTranslate }}</h4>
+        <h4>{{ _product.title | mongoTranslate }}</h4>
 
         <hr>
 
@@ -23,22 +23,22 @@
         <div class="price">
           <p>
             <span class="price-after">
-              <i class="fa fa-usd"></i> {{ product.price }}
+              <i class="fa fa-usd"></i> {{ _product.price }}
             </span>
             <span class="price-before">
-              <del>{{ product.price + product.price * (product.discount / 100) }}</del>
+              <del>{{ _product.price + _product.price * (_product.discount / 100) }}</del>
             </span>
 
-            <span class="label btn btn-primary">-{{ product.discount }}%</span>
+            <span class="label btn btn-primary">-{{ _product.discount }}%</span>
           </p>
         </div>
 
         <p>
-          <i class="fa fa-arrows-v"></i> Size: {{ product.size }}
+          <i class="fa fa-arrows-v"></i> Size: {{ _product.size }}
         </p>
 
         <p>
-          Color: {{ product.color }}
+          Color: {{ _product.color }}
         </p>
 
         <!--Call to action-->
@@ -48,7 +48,7 @@
         </p>
 
         <p>
-          <i class="fa fa-list"></i> Sku: {{ product.sku }}
+          <i class="fa fa-list"></i> Sku: {{ _product.sku }}
         </p>
 
         <hr>
@@ -72,11 +72,11 @@
       <div class="col-md-4">
         <h4>
           From
-          <a *ngFor="let category of _category" [routerLink]="['/category', category._id]">
-            {{ category.name | mongoTranslate }}
+          <a [routerLink]="['/category', _categoryId]">
+            {{ _category.name | mongoTranslate }}
           </a>
         </h4>
-        <p>{{ product.description | mongoTranslate }}</p>
+        <p>{{ _product.description | mongoTranslate }}</p>
         <a class="btn btn-primary">Some Action!</a>
       </div>
     </div>

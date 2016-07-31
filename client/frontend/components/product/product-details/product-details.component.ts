@@ -20,14 +20,12 @@ import template from './product-details.component.html';
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy }      from '@angular/core';
+import { Component }                         from '@angular/core';
 import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
 import { Products }                          from '../../../../../common/collections/product.collection';
 import { Images }                            from '../../../../../common/collections/image.collection';
 import { Categories }                        from '../../../../../common/collections/category.collection';
-import { I18nSingletonService }              from '../../../../services/l18n/I18nSingletonService';
-import { Subscription }                      from 'rxjs';
-import { MeteorComponent }                   from 'angular2-meteor/dist/index';
+import { MeteorComponent }                   from 'angular2-meteor';
 import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
 import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
 
@@ -42,13 +40,13 @@ import { ProductImagesCarouselComponent }    from '../product-images-carousel/pr
     directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
     pipes: [MongoTranslatePipe]
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy {
+export class ProductDetailsComponent extends MeteorComponent {
 
-    private _subscription: Subscription;
-    private _productId: string;
-    private _product: Mongo.Cursor<Product>;
+    private _productId:     string;
+    private _categoryId:    string;
+    private _product:       Product;
     private _productImages: Mongo.Cursor<Image>;
-    private _category: Mongo.Cursor<Category>;
+    private _category:      Category;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
@@ -62,29 +60,16 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
      */
     public ngOnInit() {
         this.route.params.subscribe((params) => {
-            this._productId = params['productId'];
+            this._categoryId = params['categoryId'];
+            this._productId  = params['productId'];
 
             this.autorun(() => {
-                this._product = Products.find({_id: this._productId});
-
-                // we have to observe the product cursor to let it sync the
-                // server data and then do the next queries.
-                this._product.observe({
-                    added: (product: any) => {
-                        this._category      = Categories.find({_id: product.categoryId[0]});
-                        this._productImages = Images.find({productId: this._productId});
-                    }
-                });
+                if (Meteor.status().connected) {
+                    this._product       = Products.findOne({_id: this._productId});
+                    this._productImages = Images.find({productId: this._productId});
+                    this._category      = Categories.findOne({_id: this._categoryId});
+                } // TODO: Add loading product animation on else.
             }, true);
         });
-
-        this._subscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe();
-    }
-
-    /**
-     * @summary destroys any subscriptions to avoid memory leaks.
-     */
-    public ngOnDestroy() {
-        this._subscription.unsubscribe();
     }
 }

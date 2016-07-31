@@ -35,7 +35,7 @@ export const frontendRoutes: RouterConfig = [
         children: [
             {path: '', component: LandingPageComponent},
             {path: 'category/:categoryId', component: CategoryComponent},
-            {path: 'product/:productId', component: ProductDetailsComponent},
+            {path: 'category/:categoryId/product/:productId', component: ProductDetailsComponent},
         ]
     }
 ];

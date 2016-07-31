@@ -7,7 +7,7 @@
     <!-- Product info -->
     <div class="card-block">
       <h4 class="card-title">
-        <a [routerLink]="['/product', model._id]">{{ model.title | mongoTranslate }}</a>
+        <a [routerLink]="['product', model._id]">{{ model.title | mongoTranslate }}</a>
       </h4>
       <p class="card-text">
         <i class="fa fa-list"></i> Sku: {{ model.sku }}
