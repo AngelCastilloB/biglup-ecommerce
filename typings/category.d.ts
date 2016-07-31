@@ -20,7 +20,7 @@ interface Category {
     name: Array<I18nString>;
     slug: string;
     info: Array<I18nString>;
-    isParentCategory: boolean;
+    isParentCategory?: boolean;
     parentCategory?: string;
     image: string;
     active?: boolean;
