@@ -17,9 +17,20 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { loadCategories } from './load-mock-data.ts';
 import { Meteor }         from 'meteor/meteor';
+import { migrate } from './migrations/migrate';
+
+/* CONSTANTS ***********************************************************************************************************/
+
+/**
+ * We set the settings as any because Typescript complaints about unknown types (coming from the settings file).
+ * @type {Object}
+ */
+const SETTINGS: any = Meteor.settings;
 
 /* METEOR SERVER START UP *********************************************************************************************/
 
-Meteor.startup(loadCategories);
+Meteor.startup(() => {
+    if (SETTINGS.migrations && SETTINGS.migrations.migrate)
+        migrate();
+});
