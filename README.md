@@ -1,6 +1,6 @@
 ## Biglup Ecommerce Platform
 ---
-Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES5), Angular2, Meteor and Node.js.
+Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
 
 ## Recommendations
 ---
@@ -55,6 +55,19 @@ meteor npm install
 
 meteor
 ```
+
+### Meteor JSON configuration
+
+Meteor allows to have environment variables specifying it on the CLI or in a .json file, in this file there are several
+values related to the App, like default users, Database Migrations, among others, this is useful for several reasons, the
+most important is securing the App private API keys (even though this is a private repo, it exists on a third party server), 
+and this approach has the flexibility to change or update the values inside an VPS container or CI service, inside a GUI
+or with `export METEOR_SETTINGS` which meteor expects it to be a JSON object.
+
+The _example.meteor.json_ file has the structure needed for the file to work, replacing the values with proper ones, _npm_ 
+creates the meteor.json file automatically.
+
+To use these env variables, we can do `meteor run --settings meteor.json` or even `npm start`.
 
 ## IDE Configuration
 ---
