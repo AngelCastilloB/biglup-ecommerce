@@ -20,7 +20,7 @@ import template from './product-details.component.html';
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component }                         from '@angular/core';
+import { Component, OnInit }                 from '@angular/core';
 import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
 import { Products }                          from '../../../../../common/collections/product.collection';
 import { Images }                            from '../../../../../common/collections/image.collection';
@@ -40,7 +40,7 @@ import { ProductImagesCarouselComponent }    from '../product-images-carousel/pr
     directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
     pipes: [MongoTranslatePipe]
 })
-export class ProductDetailsComponent extends MeteorComponent {
+export class ProductDetailsComponent extends MeteorComponent implements OnInit {
 
     private _productId:     string;
     private _categoryId:    string;

@@ -19,13 +19,13 @@
 
 import 'reflect-metadata';
 
-import { Component, Input }   from '@angular/core';
-import { MeteorComponent }    from 'angular2-meteor';
-import { Mongo }              from 'meteor/mongo';
-import { Images }             from '../../../../common/collections/image.collection';
-import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
-import { TruncateStringPipe } from '../../../pipes/truncate-string.pipe';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { MeteorComponent }          from 'angular2-meteor';
+import { Mongo }                    from 'meteor/mongo';
+import { Images }                   from '../../../../common/collections/image.collection';
+import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
+import { TruncateStringPipe }       from '../../../pipes/truncate-string.pipe';
+import { ROUTER_DIRECTIVES }        from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -44,7 +44,7 @@ import { ProductImagesCarouselComponent } from '../product/product-images-carous
     directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
     pipes: [MongoTranslatePipe, TruncateStringPipe]
 })
-export class CategoryItemComponent extends MeteorComponent {
+export class CategoryItemComponent extends MeteorComponent implements OnInit {
     @Input() public model:    Product;
     @Input() public category: string;
     private _productImages:   Mongo.Cursor<Image>;

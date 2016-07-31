@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Component }             from '@angular/core';
+import { Component, OnInit }     from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
 import { Mongo }                 from 'meteor/mongo';
 import { ActivatedRoute }        from '@angular/router';
@@ -41,7 +41,7 @@ import template from './category.component.html';
     template,
     directives: [CategoryItemComponent]
 })
-export class CategoryComponent extends MeteorComponent {
+export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;
     private _products: Mongo.Cursor<Product>;
 

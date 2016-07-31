@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Component }            from '@angular/core';
+import { Component, OnInit }    from '@angular/core';
 import { MeteorComponent }      from 'angular2-meteor';
 import { Mongo }                from 'meteor/mongo';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
@@ -43,7 +43,7 @@ import template from './header.component.html';
     directives: [ROUTER_DIRECTIVES],
     pipes: [TranslatePipe, MongoTranslatePipe]
 })
-export class HeaderComponent extends MeteorComponent {
+export class HeaderComponent extends MeteorComponent implements OnInit {
 
     private _categories: Mongo.Cursor<Category>;
 
@@ -52,6 +52,9 @@ export class HeaderComponent extends MeteorComponent {
      */
     constructor() {
         super();
+    }
+
+    public ngOnInit(): any {
         this._categories = Categories.find();
     }
 
