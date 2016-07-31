@@ -44,14 +44,14 @@ const NUMBER_OF_COLUMNS = 4;
     styles: [`
             div.drop {
               min-height: 200px;
-              width: auto;
+              height: auto;
               border: 3px dashed #ccc;
-              display: flex;
               align-items: center;
-              justify-content: center
+              justify-content: center;
+              overflow: auto;
+              text-align: center;
             }
             .image-container {
-              display: inline-block;
               margin: 60px;
               padding: 30px;
               text-align: center;
@@ -64,10 +64,29 @@ const NUMBER_OF_COLUMNS = 4;
               color: #ccc;
               display: block;
             }
-            .card-columns {
-                column-count: 4;
+            .image-list {
+              margin: 60px;
             }
-}
+            .big-preview-container {
+                display:inline-block;
+                width: 100%;
+                text-align: center;
+            }
+            .preview-container {
+                display:inline-block;
+                width: auto;
+                max-width: 90%;
+                text-align: left;
+            }
+            div.img {
+                margin: 20px;
+                display:inline-block;
+                width: 180px;
+            }
+            div.img img {
+                width: 100%;
+                height: auto;
+            }
     `],
     directives: [FileDropDirective, ImagePreviewComponent]
 })

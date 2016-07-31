@@ -15,41 +15,64 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-import { Component, ElementRef, Input } from '@angular/core';
-import { MeteorComponent }              from 'angular2-meteor';
+// IMPORTS ************************************************************************************************************/
 
+import { Component,
+         ElementRef,
+         Input,
+         OnInit }          from '@angular/core';
+import { MeteorComponent } from 'angular2-meteor';
+
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @brief This components shows a thumbnail preview of a given image file.
+ */
 @Component({
     selector: 'image-preview',
-    styles: [`img {
-                width: auto;
-                height: 200px;
+    styles: [`
+            img {
+              filter: gray; /* IE6-9 */
+              -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+                -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+                box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+                margin-bottom:20px;
+                width: 200px;
+                height: auto;
+            }
+
+            img:hover {
+              filter: none; /* IE6-9 */
+              -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
             }`],
-    template: '<img class="image"/>',
+    template: '<img class="image-responsive"/>',
 })
-export class ImagePreviewComponent extends MeteorComponent {
+export class ImagePreviewComponent extends MeteorComponent implements OnInit {
     @Input('model') private _model: File;
 
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
      */
     constructor(private element: ElementRef) {
+        super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
-        let image  = this.element.nativeElement.querySelector('.image');
+        let image  = this.element.nativeElement.querySelector('.image-responsive');
         let reader = new FileReader();
 
-        reader.onload = (ev: ProgressEvent) => {
-            if (ev.type === 'load') {
+        reader.onload = (event: ProgressEvent) => {
+            if (event.type === 'load') {
 
-                let src = ev.target.result;
+                let src = event.target.result;
 
                 image.src = src;
 
-            } else if (ev.type === 'error') {
+            } else if (event.type === 'error') {
                 console.error('Could not read file.');
             }
         };

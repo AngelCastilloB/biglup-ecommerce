@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Component }         from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { I18nPipe }          from '../../../services/l18n/I18nPipe';
@@ -40,7 +40,7 @@ import template from './add-product.component.html';
     pipes: [I18nPipe],
     directives: [ROUTER_DIRECTIVES, ImagesUploader]
 })
-export class AddProductComponent extends MeteorComponent {
+export class AddProductComponent extends MeteorComponent implements OnInit {
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.

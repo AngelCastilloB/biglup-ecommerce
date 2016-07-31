@@ -48,19 +48,29 @@ import { Component }        from '@angular/core';
 })
 export class BreadcrumbComponent {
 
-    private _urls: string[];
+    private _urls:   string[];
     private _isBase: boolean = true;
 
+    /**
+     * @brief Initializes a new instance of the BreadcrumbComponent class.
+     *
+     * @param {Router} router The router dependency injection.
+     */
     constructor(private router: Router) {
         this._urls = [];
         this.router.events.subscribe((navigationEnd: NavigationEnd) => {
-            this._urls.length = 0; // Fastest way to clear out array
+            this._urls.length = 0;
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
 
             this._isBase = this._urls.length <= 0;
         });
     }
 
+    /**
+     * @summary  This methods generates the breadcrumbs for the given URL.
+     *
+     * @param {string} url The Url to generate the breadcrumbs from.
+     */
     public generateBreadcrumbTrail(url: string): void {
         // HACK: Remove base url. This is a temporary hack.
         if (url === '/admin' || url === '/admin/dashboard') {
@@ -74,6 +84,11 @@ export class BreadcrumbComponent {
         }
     }
 
+    /**
+     * @summary  Gets the current position in the given url.
+     *
+     * @param {string} url The Url to get the current position from.
+     */
     public getCurrentPosition(url: string): string {
         let positions = url.split('/').filter(function (n) {
             return n !== '';
@@ -91,6 +106,11 @@ export class BreadcrumbComponent {
         return this.fixCase(positions[positions.length - 1]);
     }
 
+    /**
+     * @summary  Fixes the case of the current message. (Pascal Case).
+     *
+     * @param {string} message The message to be fixed.
+     */
     public fixCase(message: string) {
         return message.charAt(0).toUpperCase() + message.slice(1);
     };

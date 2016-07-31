@@ -19,15 +19,15 @@
 
 import 'reflect-metadata';
 
-import { Component }              from '@angular/core';
-import { MeteorComponent }        from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }      from '@angular/router';
-import { Mongo }                  from 'meteor/mongo';
-import { Tracker }                from 'meteor/tracker';
-import { Products }               from '../../../../common/collections/product.collection';
-import { I18nMongoPipe }          from '../../../services/l18n/I18nMongoPipe';
-import { I18nPipe }               from '../../../services/l18n/I18nPipe';
-import { ActivatedRoute }         from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Mongo }             from 'meteor/mongo';
+import { Tracker }           from 'meteor/tracker';
+import { Products }          from '../../../../common/collections/product.collection';
+import { I18nMongoPipe }     from '../../../services/l18n/I18nMongoPipe';
+import { I18nPipe }          from '../../../services/l18n/I18nPipe';
+import { ActivatedRoute }    from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -44,7 +44,7 @@ import template from './products.component.html';
     directives: [ROUTER_DIRECTIVES],
     pipes: [I18nMongoPipe, I18nPipe]
 })
-export class ProductsComponent extends MeteorComponent {
+export class ProductsComponent extends MeteorComponent implements OnInit  {
     private _products: Mongo.Cursor<Product>;
 
     /**
