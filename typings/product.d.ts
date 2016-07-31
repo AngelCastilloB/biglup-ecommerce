@@ -22,6 +22,7 @@ interface Product {
     _id?: string;
     categoryId?: Array<string>;
     title: Array<I18nString>;
+    description: Array<I18nString>;
     sku: string;
     title: Array<I18nString>;
     color: string;

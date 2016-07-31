@@ -1,5 +1,5 @@
 /**
- * @file I18nMongoPipe.
+ * @file mong-translate.pipe.ts.
  *
  * @summary Pipe that gets the right translation out of a i18n string collection from a mongo db field.
  *
@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Pipe, PipeTransform } from  '@angular/core';
-import { I18nSingletonService } from './I18nSingletonService';
+import { Pipe, PipeTransform }  from  '@angular/core';
+import { I18nSingletonService } from '../services/l18n/I18nSingletonService';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -29,12 +29,12 @@ import { I18nSingletonService } from './I18nSingletonService';
     name: 'mongoTranslate',
     pure: false
 })
-export class I18nMongoPipe implements PipeTransform {
+export class MongoTranslatePipe implements PipeTransform {
     private _locale: string = '';
     private _value: string  = '';
 
     /**
-     * @summary Translate the given text.
+     * @summary Selects the correct translation given a I18nString collection.
      *
      * @param messageCollection The collection with all the available translations.
      *
