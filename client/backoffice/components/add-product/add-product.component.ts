@@ -22,7 +22,7 @@ import 'reflect-metadata';
 import { Component, OnInit } from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { I18nPipe }          from '../../../services/l18n/I18nPipe';
+import { TranslatePipe }     from '../../../pipes/translate.pipe';
 import { ImagesUploader }    from '../images-uploader/images-uploader.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -37,7 +37,7 @@ import template from './add-product.component.html';
 @Component({
     selector: 'add-products',
     template,
-    pipes: [I18nPipe],
+    pipes: [TranslatePipe],
     directives: [ROUTER_DIRECTIVES, ImagesUploader]
 })
 export class AddProductComponent extends MeteorComponent implements OnInit {

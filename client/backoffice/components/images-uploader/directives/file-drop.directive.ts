@@ -27,10 +27,12 @@ import {Directive, ElementRef, EventEmitter} from '@angular/core';
  */
 @Directive({
     selector: '[file-drop]',
-    outputs: ['onFileDrop']
+    outputs: ['onFileDrop', 'onDropStart', 'onDropEnds']
 })
 export class FileDropDirective {
-    public onFileDrop: EventEmitter<FileList> = new EventEmitter<FileList>();
+    public onFileDrop:  EventEmitter<FileList> = new EventEmitter<FileList>();
+    public onDropStart: EventEmitter           = new EventEmitter();
+    public onDropEnds:  EventEmitter           = new EventEmitter();
 
   /**
    * @summary Initializes a new instance of the FileDropDirective class.
@@ -55,16 +57,36 @@ export class FileDropDirective {
             if (files.length) {
                 this.onFileDrop.emit(files);
             }
+
+            this.onDropEnds.emit({});
         }, false);
 
         this.el.nativeElement.addEventListener('dragenter', (e: DragEvent) => {
             e.stopPropagation();
             e.preventDefault();
+
+            this.onDropStart.emit({});
         }, false);
 
         this.el.nativeElement.addEventListener('dragover', (e: DragEvent) => {
             e.stopPropagation();
             e.preventDefault();
+
+            this.onDropStart.emit({});
         }, false);
-    }
+
+          this.el.nativeElement.addEventListener('dragleave', (e: DragEvent) => {
+              e.stopPropagation();
+              e.preventDefault();
+
+              this.onDropEnds.emit({});
+          }, false);
+
+          this.el.nativeElement.addEventListener('dragend', (e: DragEvent) => {
+              e.stopPropagation();
+              e.preventDefault();
+
+              this.onDropEnds.emit({});
+          }, false);
+      }
 }

@@ -19,7 +19,10 @@
 
 import 'reflect-metadata';
 
-import { Component }             from '@angular/core';
+import { Component,
+         ViewChild,
+         ElementRef,
+         Renderer }              from '@angular/core';
 import { FileDropDirective }     from './directives/file-drop.directive';
 import { UploadFS }              from 'meteor/jalik:ufs';
 import { ImagesStore }           from '../../../../common/collections/image.collection.ts';
@@ -32,7 +35,7 @@ import template from './images-uploader.component.html';
 
 // CONSTANTS **********************************************************************************************************/
 
-const NUMBER_OF_COLUMNS = 4;
+const NUMBER_OF_COLUMNS = 5;
 
 // EXPORTS ************************************************************************************************************/
 
@@ -43,42 +46,39 @@ const NUMBER_OF_COLUMNS = 4;
     selector: 'images-uploader',
     viewProviders: [DragulaService],
     template,
+    // TODO: Move all this to a separete .css file.
     styles: [`
             div.drop {
               min-height: 200px;
               height: auto;
-              border: 3px dashed #ccc;
               align-items: center;
               justify-content: center;
               overflow: auto;
               text-align: center;
             }
+            
+            .drop-activity {
+              border: 3px dashed #33adff;
+              color: #33adff;
+            }
+
+            .inactive {
+              border: 3px dashed #ccc;
+              color: #ccc;
+            }
+            
             .image-container {
               margin: 60px;
               padding: 30px;
               text-align: center;
-              color: #ccc;
             }
             .image-container {
-              color: #ccc;
             }
             .instructions {
-              color: #ccc;
               display: block;
             }
             .image-list {
               margin: 60px;
-            }
-            .big-preview-container {
-                display:inline-block;
-                width: 100%;
-                text-align: center;
-            }
-            .preview-container {
-                display:inline-block;
-                width: auto;
-                max-width: 90%;
-                text-align: left;
             }
             div.img {
                 margin: 20px;
@@ -93,9 +93,10 @@ const NUMBER_OF_COLUMNS = 4;
     `],
     directives: [FileDropDirective, ImagePreviewComponent, Dragula]
 })
-export class ImagesUploader {
+export class ImagesUploader  {
 
-    private _fileIsOver: boolean = false;
+    @ViewChild('drop') private _dropzone: ElementRef;
+    private                    _fileIsOver: boolean = false;
     // private _uploading: boolean = false;
     private _previewFiles: Array<File> = [];
     private _rows: number = 0;
@@ -103,7 +104,7 @@ export class ImagesUploader {
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
      */
-    constructor() {
+    constructor(private _renderer: Renderer) {
     }
 
     /**
@@ -116,11 +117,31 @@ export class ImagesUploader {
     }
 
     /**
+     * @summary Event handler for the drop activity starts.
+     *
+     * @param event The drop event.
+     */
+    private onDropStart(event: any): void {
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'drop-activity', true);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'inactive', false);
+    }
+
+    /**
+     * @summary Event handler for the drop activity ends.
+     *
+     * @param event The drop event.
+     */
+    private onDropEnds(event: any): void {
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'inactive', true);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'drop-activity', false);
+    }
+
+    /**
      * @summary Event handler for the on file drop event.
      *
      * @param file The file to be uploaded.
      */
-    public onFileDrop(files: FileList): void {
+    private onFileDrop(files: FileList): void {
 
         if (!files.length) {
             return;
