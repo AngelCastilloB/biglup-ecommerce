@@ -47,6 +47,7 @@ interface MigrationsOptions {
 }
 
 interface AddMigrationOptions {
+    name?: string;
     version: number;
     up?();
     down?();
