@@ -20,6 +20,8 @@
 import { CategoryMigration } from './category.migration';
 import { Categories }        from '../../common/collections/category.collection';
 import { Meteor }            from 'meteor/meteor';
+import { ProductMigration }  from './product.migration';
+import { Products }          from '../../common/collections/product.collection';
 import { Migratable }        from './interfaces/Migratable';
 
 /* CONSTANTS ***********************************************************************************************************/
@@ -36,7 +38,8 @@ const SETTINGS: any = Meteor.settings;
 export function migrate() {
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
-        new CategoryMigration(Categories)
+        new CategoryMigration(Categories),
+        new ProductMigration(Products)
     ];
 
     if (SETTINGS.migrations.reset) {
