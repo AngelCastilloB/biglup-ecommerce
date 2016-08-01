@@ -22,6 +22,7 @@ declare var Migrations: {
     getVersion();
     config(options: MigrationsOptions);
     _reset();
+    _collection: Mongo.Collection;
 };
 
 interface MigrationsOptions {
