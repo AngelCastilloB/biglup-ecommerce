@@ -9,28 +9,11 @@
           </br>
           <span class="instructions">Drop images to upload</span>
         </div>
-
-        <div class="big-preview-container">
-          <div *ngIf="_previewFiles.length > 0" class="img">
-            <a target="_blank" href="fjords.jpg">
-              <image-preview [model]="_previewFiles[0]"></image-preview>
-            </a>
-            Primary
-          </div>
-
-          <div *ngIf="_previewFiles.length > 1" class="img">
-            <a target="_blank" href="fjords.jpg">
-              <image-preview [model]="_previewFiles[1]"></image-preview>
-            </a>
-            Secondary
-          </div>
-        </div>
-
-        <div class="preview-container">
-          <div *ngFor="let preview of _previewFiles | slice:2" class="img">
-            <a target="_blank" href="fjords.jpg">
-              <image-preview [model]="preview"></image-preview>
-            </a>
+        <div class='wrapper'>
+          <div class="container preview-container" [dragula]='"second-bag"'>
+            <div *ngFor="let preview of _previewFiles" class="img">
+                <image-preview [model]="preview"></image-preview>
+            </div>
           </div>
         </div>
       </div>
