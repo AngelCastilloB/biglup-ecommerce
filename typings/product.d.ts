@@ -21,21 +21,21 @@
 interface Product {
     _id?: string;
     categoryId?: Array<string>;
+    slug: string;
     title: Array<I18nString>;
     description: Array<I18nString>;
     sku: string;
-    title: Array<I18nString>;
     color: string;
     size: string;
     price: number;
     discount: number;
-    isLowQuantity: boolean;
-    isSoldOut: boolean;
-    isBackorder: boolean;
-    requiresShipping: boolean;
-    hashtags: Array<string>;
+    isLowQuantity?: boolean; // defaults to false
+    isSoldOut?: boolean; // defaults to false
+    isBackorder?: boolean; // defaults to false
+    requiresShipping?: boolean; // defaults to true
+    hashtags?: Array<string>;
     isVisible: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    publishedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
+    publishedAt?: Date;
 }
