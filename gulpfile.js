@@ -1,7 +1,7 @@
 /**
  * @file gulpfile.js.
  *
- * @summary Has the routines needed for the systems build.
+ * @summary Has the routines needed for the build system.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   July 31 2016
