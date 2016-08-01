@@ -39,7 +39,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
      Prefer git-extras and/or git-flow scripts for branching management.
 
 ## Installation
-
+---
 > Biglup ecommerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/), [npm](https://www.npmjs.com/) and [imagemagick](http://www.imagemagick.org/script/index.php)
 
 Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
@@ -56,8 +56,8 @@ meteor npm install
 meteor
 ```
 
-## Ide config
-
+## IDE Configuration
+---
 ### Tslint
 To add tslint support for development, the tslint executable must be installed: `npm i -g tslint` and in _Webstorm_ check 
 the settings in: **file > settings > Languages and Frameworks > Typescript > Tslint** and check enable, 
@@ -73,7 +73,8 @@ To add an existing Webstorm coding style go to **file > settings > editor > codi
 to add an XML file containing pre existing rules to automatically reformat code (defaults to `crl + shift + L`) according 
 to the predefined coding styles conventions.
 
-# Features
+## Features
+---
 ### Store Front End Features
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
 *  Product Search
@@ -96,7 +97,8 @@ to the predefined coding styles conventions.
 ## Contributors
 ---
 
-Angel Castillo <angel.castillo@biglup.com>
+* Angel Castillo <angel.castillo@biglup.com>
+* Alejandro Granadillo <slayerfat@gmail.com>
 
 ## License
 ---

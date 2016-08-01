@@ -1,5 +1,5 @@
 /**
- * @file I18nPipe
+ * @file translate.pipe.ts
  *
  * @summary String translation Pipe.
  *
@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Pipe, PipeTransform } from  '@angular/core';
-import { I18nSingletonService } from './I18nSingletonService';
+import { Pipe, PipeTransform }  from  '@angular/core';
+import { I18nSingletonService } from '../services/l18n/I18nSingletonService';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -31,7 +31,7 @@ import { I18nSingletonService } from './I18nSingletonService';
     name: 'translate',
     pure: false
 })
-export class I18nPipe implements PipeTransform {
+export class TranslatePipe implements PipeTransform {
     private _locale: string = '';
     private _value: string  = '';
 

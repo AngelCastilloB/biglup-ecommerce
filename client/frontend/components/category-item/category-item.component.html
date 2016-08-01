@@ -1,0 +1,36 @@
+<div class="col-sm-4">
+  <div class="card">
+    <div class="view overlay hm-white-slight">
+      <product-images-carousel [images]="_productImages"></product-images-carousel>
+    </div>
+
+    <!-- Product info -->
+    <div class="card-block">
+      <h4 class="card-title">
+        <a [routerLink]="['product', model._id]">{{ model.title | mongoTranslate }}</a>
+      </h4>
+      <p class="card-text">
+        <i class="fa fa-list"></i> Sku: {{ model.sku }}
+      </p>
+      <p class="card-text">
+        {{ model.description | mongoTranslate | truncateString }}
+      </p>
+      <p class="card-text">
+        Color: {{ model.color }}
+      </p>
+      <p class="card-text">
+        <i class="fa fa-arrows-v"></i> Size: {{ model.size }}
+      </p>
+      <p class="card-text">
+        <i class="fa fa-usd"></i> {{ model.price }}
+      </p>
+      <p class="card-text">
+        -{{ model.discount }}%
+      </p>
+
+      <!-- Actions -->
+      <!-- TODO improve links, add translation service -->
+      <a href="#" class="btn btn-primary">Add to Cart</a>
+    </div>
+  </div>
+</div>

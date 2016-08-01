@@ -1,0 +1,27 @@
+<!--Carousel Wrapper-->
+<div [id]="_id" class="carousel slide carousel-fade" data-ride="carousel">
+
+  <!-- Images -->
+  <div class="carousel-inner" role="listbox">
+    <template ngFor
+              [ngForOf]="images"
+              let-image="$implicit"
+              let-last="last">
+      <div class="carousel-item"
+           [ngClass]="{active: last}">
+        <!-- TODO set images to same height -->
+        <img src="{{ image.url }}">
+      </div>
+    </template>
+  </div>
+
+  <!--Controls-->
+  <a class="left carousel-control" [href]="'#' + _id" role="button" data-slide="prev">
+    <span class="icon-prev" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" [href]="'#' + _id" role="button" data-slide="next">
+    <span class="icon-next" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
