@@ -17,8 +17,8 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }         from 'meteor/meteor';
-import { migrate } from './migrations/migrate';
+import { Meteor }           from 'meteor/meteor';
+import { createMigrations } from './migrations/create-migrations';
 
 /* CONSTANTS ***********************************************************************************************************/
 
@@ -31,6 +31,16 @@ const SETTINGS: any = Meteor.settings;
 /* METEOR SERVER START UP *********************************************************************************************/
 
 Meteor.startup(() => {
-    if (SETTINGS.migrations && SETTINGS.migrations.migrate)
-        migrate();
+    if (SETTINGS.migrations && SETTINGS.migrations.migrate) {
+        createMigrations();
+        if (SETTINGS.migrations.reset) {
+            // the library doesn't provide public APIs to properly reset the collection.
+            // Even though we could Migrations.migrateTo(0)
+            // this fails when the migration is locked and needs to be unlocked.
+            Migrations._collection.update({_id: 'control'}, {$set: {'locked': false}});
+            Migrations.migrateTo(0);
+        }
+
+        Migrations.migrateTo('latest');
+    }
 });

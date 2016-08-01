@@ -113,6 +113,7 @@ export abstract class Migration implements Migratable {
      * @summary Must have the logic to undo the 'up' method without disrupting the database.
      */
     public down(): void {
+        console.log('removing collection!');
         this._collection.remove({});
     }
 }

@@ -19,35 +19,18 @@
 
 import { CategoryMigration } from './category.migration';
 import { Categories }        from '../../common/collections/category.collection';
-import { Meteor }            from 'meteor/meteor';
 import { ProductMigration }  from './product.migration';
 import { Products }          from '../../common/collections/product.collection';
 import { Migratable }        from './interfaces/Migratable';
 
-/* CONSTANTS ***********************************************************************************************************/
-
-/**
- * @see main.ts
- *
- * @type {Object}
- */
-const SETTINGS: any = Meteor.settings;
-
 // EXPORTS ************************************************************************************************************/
 
-export function migrate() {
+export function createMigrations() {
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
         new CategoryMigration(Categories),
-        new ProductMigration(Products)
+        new ProductMigration(Products, Categories)
     ];
-
-    if (SETTINGS.migrations.reset) {
-        // the library doesn't provide public APIs to properly reset the collection.
-        // Even though we could Migrations.migrateTo(0)
-        // this fails when the migration is locked and needs to be unlocked.
-        Migrations._reset();
-    }
 
     // Each migration version needs to be added with the add method.
     // @see https://atmospherejs.com/percolate/migrations#advanced
@@ -62,13 +45,13 @@ export function migrate() {
             migrations.forEach((migration: Migratable) => {
                 migration.up();
             });
+            console.log('Migration completed.');
         },
         down() {
             migrations.forEach((migration: Migratable) => {
                 migration.down();
             });
+            console.log('Migration reset.');
         }
     });
-
-    Migrations.migrateTo('latest');
 }

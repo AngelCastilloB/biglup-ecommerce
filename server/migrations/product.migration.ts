@@ -18,10 +18,19 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Migration } from './migration';
+import { Mongo }     from 'meteor/mongo';
 
 // EXPORTS ************************************************************************************************************/
 
 export class ProductMigration extends Migration {
+
+    /**
+     * @summary Each category will have at least 3 products.
+     *
+     * @type {number}
+     * @private
+     */
+    protected _amount = 3;
 
     /**
      * The products to be inserted.
@@ -30,6 +39,16 @@ export class ProductMigration extends Migration {
      * @private
      */
     private _products: Product[] = [];
+
+    /**
+     * The products to be inserted.
+     *
+     * @type {CategoryIds[]}
+     * @private
+     */
+    private _categoriesIds: CategoryIds[];
+
+    private _categoriesCollection: Mongo.Collection<Category>;
 
     /**
      * @summary The product must have a size.
@@ -46,6 +65,12 @@ export class ProductMigration extends Migration {
         'l: Large',
         'xl: Extra Large',
     ];
+
+    constructor(collection: Mongo.Collection<Object>, categoriesCollection: Mongo.Collection<Category>) {
+        super(collection);
+
+        this._categoriesCollection = categoriesCollection;
+    }
 
     /**
      * @summary Adds the categories to the database.
@@ -68,6 +93,7 @@ export class ProductMigration extends Migration {
      * @private
      */
     private _addProduct(): void {
+        this._getCategoriesIds();
         for (let i = 0; i < 1; i++) {
             let title = Fake.sentence(4);
 
@@ -78,7 +104,7 @@ export class ProductMigration extends Migration {
                     {language: 'zh', value: this._chineseSentences.pop()},
                 ],
                 sku: Fake.word().toLowerCase() + Math.floor(Math.random() * 1000),
-                categoryId: ['C0000000001'], // TODO
+                categoryId: this._getRandomIds(),
                 description: [
                     {language: 'en', value: Fake.paragraph(1)},
                     {language: 'zh', value: this._chineseParagraph},
@@ -103,4 +129,29 @@ export class ProductMigration extends Migration {
             return i === Math.random() * this._sizes.length;
         })[0];
     }
+
+    /**
+     * @summary Gets the categories Ids from the database.
+     * @private
+     */
+    private _getCategoriesIds() {
+        this._categoriesIds = this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
+    }
+
+    private _getRandomIds(): string[] {
+        const array = this._categoriesIds.slice(0);
+        let results = [];
+
+        for (let i = 0; i < (Math.ceil(Math.random() * 5) || 1); i++) {
+            results.push(array.splice(Math.floor(Math.random() * array.length), 1)[0]);
+        }
+
+        return results.map((obj: CategoryIds) => {
+            return obj._id;
+        });
+    }
+}
+
+interface CategoryIds {
+    _id: string;
 }
