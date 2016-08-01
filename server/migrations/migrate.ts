@@ -18,8 +18,9 @@
 // IMPORTS ************************************************************************************************************/
 
 import { CategoryMigration } from './category.migration';
-import { Categories } from '../../common/collections/category.collection';
-import { Meteor } from 'meteor/meteor';
+import { Categories }        from '../../common/collections/category.collection';
+import { Meteor }            from 'meteor/meteor';
+import { Migratable }        from './interfaces/Migratable';
 
 /* CONSTANTS ***********************************************************************************************************/
 
@@ -33,8 +34,10 @@ const SETTINGS: any = Meteor.settings;
 // EXPORTS ************************************************************************************************************/
 
 export function migrate() {
-    // the migrations to be called by the migrate function.
-    const catMin = new CategoryMigration(Categories);
+    // the migrations to be called by the migrate function (order matters).
+    let migrations = [
+        new CategoryMigration(Categories)
+    ];
 
     if (SETTINGS.migrations.reset) {
         // the library doesn't provide public APIs to properly reset the collection.
@@ -43,11 +46,25 @@ export function migrate() {
         Migrations._reset();
     }
 
-    // Each migration needs to be added with the add method.
+    // Each migration version needs to be added with the add method.
+    // @see https://atmospherejs.com/percolate/migrations#advanced
+    // Since we could have multiple version (specially in production) we must adapt the migration strategy with multiple
+    // database versions in mind, the Migrations library attacks this issue by setting a version number at execution, if
+    // we need to add a different version of the database we can just add a new Migration.add with new migrations that
+    // will update the database in a non destructive manner.
     Migrations.add({
-        version: catMin.version,
-        up: catMin.up.bind(catMin),
-        down: catMin.down.bind(catMin)
+        version: 1,
+        name: 'Add default documents.',
+        up() {
+            migrations.forEach((migration: Migratable) => {
+                migration.up();
+            });
+        },
+        down() {
+            migrations.forEach((migration: Migratable) => {
+                migration.down();
+            });
+        }
     });
 
     Migrations.migrateTo('latest');

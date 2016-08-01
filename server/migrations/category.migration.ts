@@ -25,6 +25,9 @@ import defaults      from './defaults/category';
 
 export class CategoryMigration extends Migration {
 
+    /**
+     * @summary All the categories to be inserted.
+     */
     private _categories: Category[];
 
     constructor(collection: Mongo.Collection<Category>) {
@@ -35,11 +38,11 @@ export class CategoryMigration extends Migration {
 
     /**
      * @summary Adds the categories to the database.
-     * @param {number=} amount The amount to add.
+     *
      * @see parent Migration.
      */
-    public up(amount?): void {
-        this.amount = amount;
+    public up(): void {
+        console.log('Starting Default Categories.');
         this._addCategory();
 
         // for some unholy reason they didn't implement the insert according to the mongo API
@@ -48,14 +51,6 @@ export class CategoryMigration extends Migration {
         this._categories.forEach((category) => {
             this._collection.insert(category);
         });
-    }
-
-    /**
-     * @summary removes the documents from the database.
-     * @see parent Migration.
-     */
-    public down(): void {
-        this._collection.remove({});
     }
 
     /**
