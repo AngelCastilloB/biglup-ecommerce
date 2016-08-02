@@ -1,7 +1,7 @@
 /**
  * @file slugifier.ts.
  *
- * @summary TODO add summary.
+ * @summary Creates slugs from provided strings.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   August 01 2016
@@ -16,17 +16,50 @@
  */
 
 export class Slugifier implements Slugger {
-    private _service;
 
-    constructor(slugify: Function) {
-        this._service = slugify;
+    /**
+     * @summary The Slugifier constructor.
+     *
+     * @param {Function} _service This function should return a slug with the provided string.
+     */
+    constructor(private _service: Function) {
     }
 
+    /**
+     * @summary Creates a slug from provided string.
+     *
+     * @param {string} str
+     * @returns {*}
+     */
     public slugify(str: string) {
         return this._service(str);
-    };
+    }
+
+    /**
+     * @summary Returns an array of string according to the I18nString interface.
+     *
+     * @param {I18nString[]} field
+     * @returns {I18nString[]}
+     */
+    public slugifyI18nString(field: I18nString[]): I18nString[] {
+        let slugs: I18nString[] = [];
+
+        field.forEach((obj: I18nString) => {
+            slugs.push({
+                language: obj.language,
+                value: this.slugify(obj.value)
+            });
+        });
+
+        if (slugs.length === 0) {
+            throw new Error('Invalid field, cannot generate slugs.');
+        }
+
+        return slugs;
+    }
 }
 
 export interface Slugger {
-    slugify(str: string);
+    slugify(str: string): string;
+    slugifyI18nString(field: I18nString[]): I18nString[];
 }
