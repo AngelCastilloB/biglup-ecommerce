@@ -22,12 +22,12 @@ import 'reflect-metadata';
 import { Component,
          ViewChild,
          ElementRef,
-         Renderer }              from '@angular/core';
-import { FileDropDirective }     from './directives/file-drop.directive';
-import { UploadFS }              from 'meteor/jalik:ufs';
-import { ImagesStore }           from '../../../../common/collections/image.collection.ts';
-import { ImagePreviewComponent } from './components/image-preview/image-preview.component';
-import {DragulaService, Dragula} from 'ng2-dragula/ng2-dragula';
+         Renderer }                from '@angular/core';
+import { FileDropDirective }       from './directives/file-drop.directive';
+import { UploadFS }                from 'meteor/jalik:ufs';
+import { ImagesStore }             from '../../../../common/collections/image.collection.ts';
+import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
+import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -104,7 +104,14 @@ export class ImagesUploader  {
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
      */
-    constructor(private _renderer: Renderer) {
+    constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
+
+        _dragulaService.drop.subscribe((value) => {
+
+            let [bag, e, target, source, sibling] = value;
+            console.error(e);
+            console.error(sibling);
+        });
     }
 
     /**
@@ -165,6 +172,20 @@ export class ImagesUploader  {
        //     this._uploading = false;
        //     console.log(`Something went wrong!`, error); // TODO: Remove this and handle the case properly.
        // });
+    }
+
+    /**
+     * @summary Event handler for the image deleted event.
+     *
+     * @param {File} file The file to be deleted.
+     */
+    private onImageDeleted(file: File) {
+
+        let index = this._previewFiles.indexOf(file);
+
+        if(index !== -1) {
+            this._previewFiles.splice(index, 1);
+        }
     }
 
     /**

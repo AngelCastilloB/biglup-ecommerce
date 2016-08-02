@@ -20,7 +20,9 @@
 import { Component,
          ElementRef,
          Input,
-         OnInit }                           from '@angular/core';
+         Output,
+         OnInit,
+         EventEmitter}                      from '@angular/core';
 import { MeteorComponent }                  from 'angular2-meteor';
 import { TruncateStringPipe}                from '../../../../../pipes/truncate-string.pipe';
 import { UniqueComponentIdentifierService } from '../../../../../services/unique-component-identifier.service';
@@ -34,7 +36,7 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
     selector: 'image-preview',
     pipes: [TruncateStringPipe],
     providers: [UniqueComponentIdentifierService],
-    // TODO: Move all this to a separete .css file.
+    // TODO: Move all this to a separate .css file.
     styles: [`
               .hovereffect {
                   width:200px;
@@ -131,7 +133,7 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
                     <div class="overlay">
                        <h2>{{ 'Move' }}</h2>
                        <a class="fa fa-eye fa-2x info" aria-hidden="true" data-toggle="modal" [attr.data-target]="'#' + _uniqueId"></a>
-                       <a class="fa fa-trash fa-2x info" aria-hidden="true"></a>
+                       <a class="fa fa-trash fa-2x info" aria-hidden="true" (click)="emitDeleted()"></a>
                     </div>
                 </div>
                 <div [attr.id]="_uniqueId" class="modal fade">
@@ -144,8 +146,13 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
 `,
 })
 export class ImagePreviewComponent extends MeteorComponent implements OnInit {
-    @Input('model') private _model:    File;
-    private                 _uniqueId: string;
+    @Input('model')
+    private _model:     File;
+
+    @Output('onDeleted')
+    private _onDeleted: EventEmitter<File> = new EventEmitter<File>();
+
+    private _uniqueId:  string;
 
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
@@ -168,6 +175,7 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
             if (event.type === 'load') {
 
                 let src = event.target.result;
+
                 thumbnail.src = src;
                 image.src = src;
 
@@ -177,5 +185,30 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
         };
 
         reader.readAsDataURL(this._model);
+    }
+
+    /**
+     * @summary Gets the on deleted event emitter.
+     *
+     * @returns {EventEmitter<File>} The on deleted event emitter.
+     */
+    public getOnDeleteEmitter() : EventEmitter<File> {
+        return this._onDeleted;
+    }
+
+    /**
+     * @summary Gets image file.
+     *
+     * @returns {File} The image file.
+     */
+    public getFile() : File {
+        return this._model;
+    }
+
+    /**
+     * @summary Emits the the on deleted event.
+     */
+    private emitDeleted() {
+        this._onDeleted.emit(this._model);
     }
 }

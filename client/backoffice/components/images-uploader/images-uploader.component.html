@@ -13,8 +13,8 @@
         </div>
         <div class='wrapper'>
           <div class="container" [dragula]='"second-bag"'>
-            <div *ngFor="let preview of _previewFiles" class="img">
-                <image-preview [model]="preview"></image-preview>
+            <div *ngFor="let preview of _previewFiles" [attr.id]="$index"  class="img">
+                <image-preview (onDeleted)="onImageDeleted($event)" [model]="preview"></image-preview>
             </div>
           </div>
         </div>

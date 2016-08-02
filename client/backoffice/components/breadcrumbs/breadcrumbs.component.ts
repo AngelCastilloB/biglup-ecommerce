@@ -115,6 +115,11 @@ export class BreadcrumbComponent {
         return message.charAt(0).toUpperCase() + message.slice(1);
     };
 
+    /**
+     * @summary Navigates towards the specified rul.
+     *
+     * @param {string} url The url to navigate to.
+     */
     public navigateTo(url: string): void {
         this.router.navigateByUrl(url);
     }
