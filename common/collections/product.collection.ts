@@ -17,16 +17,222 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ProductSchema }     from '../schemas/product.schema';
-import { Slugifier }         from './helpers/slugifier';
-import { slugify }           from 'transliteration';
-import { ProductCollection } from './helpers/product-class.collection';
+import { ProductSchema } from '../schemas/product.schema';
+import { Slugifier }     from './helpers/slugifier';
+import { slugify }       from 'transliteration';
+import { Slugger }       from './helpers/slugifier';
+import { Mongo }         from 'meteor/mongo';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
+/**
+ * @summary adds insert/update/etc hooks to alter the document before insertion.
+ *
+ * Since this library does not implement pre-hooks like mongoose, we have to extend
+ * the class and override the methods we want to act as pre-hooks. This also provides the database
+ * collection to query the database from since it seems that collection2 autoValue does not.
+ *
+ * @todo check if post-hooks are doable.
+ */
+class ProductCollection extends Mongo.Collection<Product> {
+
+    /**
+     * @summary Needed to make slugs from the product title.
+     */
+    private _slugService: Slugger;
+
+    /**
+     * @summary The product being manipulated prior to insert/update.
+     */
+    private _product: Product;
+
+    /**
+     * @summary The mongo selector, usually _id: 'something'
+     */
+    private _selector;
+
+    /**
+     * @summary The mongo modifier, usually the $set object
+     */
+    private _modifier: Mongo.Modifier;
+
+    /**
+     * @summary controls whether or not the document is updating.
+     */
+    private _isUpdating: boolean;
+
+    /**
+     * @summary This constructor adds the slug service to the mix.
+     *
+     * @param {string} name
+     * @param {Slugger} slugService Creates slug strings.
+     * @param {Object=} options
+     * @param {Object=} options.connection
+     * @param {string=} options.idGeneration
+     * @param {Function=} options.transform
+     */
+    constructor(name: string,
+        slugService: Slugger,
+        options?: {connection?: Object; idGeneration?: string; transform?: Function}) {
+        super(name, options);
+
+        this._slugService = slugService;
+    }
+
+    /**
+     * @summary Changes the insert to add the product slugsArray.
+     *
+     * @param {Product} product
+     * @param {Function} callback
+     * @returns {string}
+     */
+    public insert(product: Product, callback: Function) {
+        this._product = product;
+        this._createOrUpdateSlugs();
+
+        // Call the original `insert` method, which will validate against the schema.
+        const results = super.insert(this._product, callback);
+
+        // Since this is a single instance, we need to make sure the
+        // internals are reset after this operation.
+        this._product = null;
+
+        return results;
+    }
+
+    /**
+     * @summary Changes the update to allow new slugs if title changes.
+     *
+     * @param {Object} selector
+     * @param {Object} modifier
+     * @param {Object=} options
+     * @param {Object=} options.multi
+     * @param {Object=} options.upsert
+     * @param {Function=} callback
+     * @returns {number}
+     */
+    public update(selector: Mongo.Selector,
+        modifier: Mongo.Modifier,
+        options?: {multi?: boolean; upsert?: boolean},
+        callback?: Function): number {
+
+        // JOHN F***** MADDEN
+        // http://i77.photobucket.com/albums/j68/Frag971/flow.jpg
+        this._isUpdating = true;
+        this._selector   = selector;
+        this._modifier   = modifier;
+        this._checkAndUpdateModifier();
+        const results = super.update(selector, this._modifier, options, callback);
+        this._cleanSelf();
+
+        return results;
+    }
+
+    /**
+     * @summary checks the modifier (mongo modifier) and determines if a new slug is needed.
+     * @private
+     */
+    private _checkAndUpdateModifier(): void {
+        for (let key in this._modifier) {
+            // check if the modifier has a 'title', if so creates new slug(s)
+            if (this._modifier.hasOwnProperty(key) && key === '$set' && this._modifier[key]['title']) {
+                // we need to have the product to update the slugs.
+                // @see this._insertNewSlugs()
+                this._product       = this.findOne(this._selector) || {};
+                this._product.title = this._modifier[key]['title'];
+                this._createOrUpdateSlugs();
+                this._insertNewSlugs();
+
+                // since we found the title, we don't need to iterate anymore.
+                break;
+            }
+        }
+    }
+
+    /**
+     * @summary Ask slugs from the service and check if those slugs already exist.
+     *
+     * @private
+     */
+    private _createOrUpdateSlugs(): void {
+        if (!this._product.title) throw new Error('A Product must have a title.');
+
+        let slugsArray = this._slugService.slugifyI18nString(this._product.title);
+
+        // We need to transform the array if the slug of any language exist in the database.
+        slugsArray.map((obj: I18nString) => {
+            const regExp = new RegExp(`^(${obj.value})(\-\d)?$`);
+
+            const results = this.find({'slug.value': regExp}, {fields: {slug: true}}).fetch();
+
+            // if there are results we append the count to the end link-so-2 or like-so-3
+            if (results.length) {
+                // if its updating and there's only one result, we have to check if updating itself or not.
+                if (!(results.length === 1 && this._isUpdatingItself())) {
+                    return obj.value += `-${results.length++}`;
+                }
+            }
+
+            return obj.value;
+        });
+
+        this._product.slug = slugsArray;
+    }
+
+    /**
+     * @summary cleans state since this acts like a global variable.
+     *
+     * Fix this?
+     * @private
+     */
+    private _cleanSelf(): void {
+        // Since this is a single instance, we need to make sure the
+        // internals are reset after this operation.
+        this._modifier = this._isUpdating = this._product = this._selector = null;
+    }
+
+    /**
+     * @summary checks if the new document is updating itself.
+     *
+     * @returns {boolean}
+     * @private
+     */
+    private _isUpdatingItself(): boolean {
+        if (!this._isUpdating) return false;
+
+        return !!this._product;
+    }
+
+    private _insertNewSlugs() {
+        // TODO slug to slugs
+        if (this._selector['slug.language'])
+            throw new Error('The slug should not be updated manually.');
+
+        // we need to update the selector to include the updated languages
+        this._product.slug.forEach((slug: I18nString) => {
+            const selector = {_id: this._product._id, 'slug.language': slug.language};
+            const modifier = {$set: {'slug.$.value': slug.value}};
+            this.update(selector, modifier, {}, (err, n) => {
+                if (err) throw err;
+
+                if (n === 0) {
+                    // Document not updated so you can push onto the array
+                    this.update({_id: this._product._id},
+                        {
+                            $push: {
+                                slug: {language: slug.language, value: slug.value}
+                            }
+                        }
+                    );
+                }
+            });
+        });
+    }
+}
+
 // TODO IOC container
-const slugifier   = new Slugifier(slugify);
-let Products: any = new ProductCollection('products', slugifier);
+const slugifier     = new Slugifier(slugify);
+const Products: any = new ProductCollection('products', slugifier);
 
 Products.attachSchema(ProductSchema);
 
