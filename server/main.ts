@@ -20,6 +20,9 @@
 import { Meteor }           from 'meteor/meteor';
 import { createMigrations } from './migrations/create-migrations';
 
+// TODO DELETE THIS
+import { Products } from '../common/collections/product.collection';
+
 /* CONSTANTS ***********************************************************************************************************/
 
 /**
@@ -43,4 +46,8 @@ Meteor.startup(() => {
 
         Migrations.migrateTo('latest');
     }
+
+    // TODO DELETE THIS
+    const p = Products.findOne();
+    Products.update({_id: p._id}, {$set: {title: [{language: 'en', value: 'Ayy Lmao'}]}});
 });

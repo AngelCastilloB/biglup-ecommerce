@@ -130,10 +130,12 @@ export class ProductCollection extends Mongo.Collection<Product> {
         for (let key in this._modifier) {
             // check if the modifier has a 'title', if so creates new slug(s)
             if (this._modifier.hasOwnProperty(key) && key === '$set' && this._modifier[key]['title']) {
-                this._product       = <Product>{};
+                // we need to have the product to update the slugs.
+                // @see this._insertNewSlugs()
+                this._product       = this.findOne(this._selector) || {};
                 this._product.title = this._modifier[key]['title'];
                 this._createOrUpdateSlugs();
-                this._modifier[key]['slug'] = this._product.slug;
+                this._insertNewSlugs();
 
                 // since we found the title, we don't need to iterate anymore.
                 break;
@@ -149,9 +151,9 @@ export class ProductCollection extends Mongo.Collection<Product> {
     private _createOrUpdateSlugs(): void {
         if (!this._product.title) throw new Error('A Product must have a title.');
 
-        let slugsArray = this._slugService.slugifyI18nString(this._product.title); //
+        let slugsArray = this._slugService.slugifyI18nString(this._product.title);
 
-        // We need to transform the array if they slug of any language exist in the database.
+        // We need to transform the array if the slug of any language exist in the database.
         slugsArray.map((obj: I18nString) => {
             const regExp = new RegExp(`^(${obj.value})(\-\d)?$`);
 
@@ -160,11 +162,9 @@ export class ProductCollection extends Mongo.Collection<Product> {
             // if there are results we append the count to the end link-so-2 or like-so-3
             if (results.length) {
                 // if its updating and there's only one result, we have to check if updating itself or not.
-                if (results.length === 1 && this._isUpdatingItself()) {
-                    return obj.value;
+                if (!(results.length === 1 && this._isUpdatingItself())) {
+                    return obj.value += `-${results.length++}`;
                 }
-
-                return obj.value += `-${results.length++}`;
             }
 
             return obj.value;
@@ -194,6 +194,32 @@ export class ProductCollection extends Mongo.Collection<Product> {
     private _isUpdatingItself(): boolean {
         if (!this._isUpdating) return false;
 
-        return this.find(this._selector, {fields: {_id: true}}).fetch().length === 1;
+        return !!this._product;
+    }
+
+    private _insertNewSlugs() {
+        // TODO slug to slugs
+        if (this._selector['slug.language'])
+            throw new Error('The slug should not be updated manually.');
+
+        // we need to update the selector to include the updated languages
+        this._product.slug.forEach((slug: I18nString) => {
+            const selector = {_id: this._product._id, 'slug.language': slug.language};
+            const modifier = {$set: {'slug.$.value': slug.value}};
+            this.update(selector, modifier, {}, (err, n) => {
+                if (err) throw err;
+
+                if (n === 0) {
+                    // Document not updated so you can push onto the array
+                    this.update({_id: this._product._id},
+                        {
+                            $push: {
+                                slug: {language: slug.language, value: slug.value}
+                            }
+                        }
+                    );
+                }
+            });
+        });
     }
 }
