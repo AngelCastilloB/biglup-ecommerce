@@ -18,7 +18,7 @@
 interface Category {
     _id?: string;
     name: Array<I18nString>;
-    slug: string;
+    slug?: Array<I18nString>; // TODO slug to slugs
     info: Array<I18nString>;
     isParentCategory?: boolean;
     parentCategory?: string;
