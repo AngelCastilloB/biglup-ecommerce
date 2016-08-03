@@ -1,7 +1,7 @@
 /**
  * @file transliteration.d.ts.
  *
- * @summary TODO add summary.
+ * @summary Translates different alphabets to roman.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   August 01 2016
