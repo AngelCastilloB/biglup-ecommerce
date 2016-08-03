@@ -46,51 +46,7 @@ const NUMBER_OF_COLUMNS = 5;
     selector: 'images-uploader',
     viewProviders: [DragulaService],
     template,
-    // TODO: Move all this to a separete .css file.
-    styles: [`
-            div.drop {
-              min-height: 200px;
-              height: auto;
-              align-items: center;
-              justify-content: center;
-              overflow: auto;
-              text-align: center;
-            }
-            
-            .drop-activity {
-              border: 3px dashed #33adff;
-              color: #33adff;
-            }
-
-            .inactive {
-              border: 3px dashed #ccc;
-              color: #ccc;
-            }
-            
-            .image-container {
-              margin: 60px;
-              padding: 30px;
-              text-align: center;
-            }
-            .image-container {
-            }
-            .instructions {
-              display: block;
-            }
-            .image-list {
-              margin: 60px;
-            }
-            div.img {
-                margin: 20px;
-                display:inline-block;
-                width: 180px;
-            }
-            div.img img {
-                width: 100%;
-                height: auto;
-            }
-            
-    `],
+    styleUrls: ['./images-uploader.component.css'],
     directives: [FileDropDirective, ImagePreviewComponent, Dragula]
 })
 export class ImagesUploader  {
@@ -105,12 +61,24 @@ export class ImagesUploader  {
      * @summary Initializes a new instance of the ImagesUploader class.
      */
     constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
-
         _dragulaService.drop.subscribe((value) => {
 
             let [bag, e, target, source, sibling] = value;
-            console.error(e);
-            console.error(sibling);
+
+            if (this._previewFiles.length < 2) {
+                return;
+            }
+
+            if (!sibling) {
+                let sourceIndex: number = parseInt(e.id);
+
+                this.moveFile(sourceIndex, this._previewFiles.length - 1);
+            } else {
+                let sourceIndex:      number = parseInt(e.id, 10);
+                let destinationIndex: number = parseInt(sibling.id, 10);
+
+                this.moveFile(sourceIndex, sourceIndex > destinationIndex ? destinationIndex : destinationIndex - 1);
+            }
         });
     }
 
@@ -129,8 +97,8 @@ export class ImagesUploader  {
      * @param event The drop event.
      */
     private onDropStart(event: any): void {
-        this._renderer.setElementClass(this._dropzone.nativeElement, 'drop-activity', true);
-        this._renderer.setElementClass(this._dropzone.nativeElement, 'inactive', false);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', true);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', false);
     }
 
     /**
@@ -139,8 +107,8 @@ export class ImagesUploader  {
      * @param event The drop event.
      */
     private onDropEnds(event: any): void {
-        this._renderer.setElementClass(this._dropzone.nativeElement, 'inactive', true);
-        this._renderer.setElementClass(this._dropzone.nativeElement, 'drop-activity', false);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', true);
+        this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', false);
     }
 
     /**
@@ -156,7 +124,7 @@ export class ImagesUploader  {
 
         let newFiles: Array<File> = Array.prototype.slice.call(files);
 
-        if (!this._previewFiles.length > 0) {
+        if (!(this._previewFiles.length > 0)) {
             this._previewFiles = newFiles;
         } else {
             this._previewFiles = this._previewFiles.concat(newFiles);
@@ -222,5 +190,31 @@ export class ImagesUploader  {
         };
 
         reader.readAsArrayBuffer(sourceFile);
+    }
+
+   /**
+    * @brief Move one file from the source index to the destination index.
+    *
+    * @param {number} source The source index.
+    * @param { number} destination The destination index.
+    */
+    private moveFile(source: number, destination: number): void  {
+        while (source < 0) {
+            source += this._previewFiles.length;
+        }
+
+        while (destination < 0) {
+            destination += this._previewFiles.length;
+        }
+
+        if (destination >= this._previewFiles.length) {
+            let k: number = destination - this._previewFiles.length;
+
+            while ((k--) + 1) {
+                this._previewFiles.push(undefined);
+            }
+        }
+
+        this._previewFiles.splice(destination, 0, this._previewFiles.splice(source, 1)[0]);
     }
 }

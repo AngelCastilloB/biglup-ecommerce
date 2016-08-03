@@ -1,5 +1,5 @@
 /**
- * @file unique-component-identifier.service.ts
+ * @file id-generator.service.ts
  *
  * @summary This service returns unrepeated new identifiers.
  *
@@ -26,19 +26,19 @@ import { Injectable } from '@angular/core';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Service that returns unrepeated new identifiers. 
+ * @summary Service that returns unrepeated new identifiers.
  */
 @Injectable()
-export class UniqueComponentIdentifierService {
+export class IdGeneratorService {
     private static s_count: number = 0;
 
-      /**
-       * @summary Returns a new id (unrepeated).
-       *
-       * @returns {string} The new unique id.
-       */
-      getId(): string {
-        ++UniqueComponentIdentifierService.s_count;
-        return PREFIX + UniqueComponentIdentifierService.s_count;
+    /**
+     * @summary Returns a new id (unrepeated).
+     *
+     * @returns {string} The new unique id.
+     */
+    generate(): string {
+        ++IdGeneratorService.s_count;
+        return PREFIX + IdGeneratorService.s_count;
     }
 }

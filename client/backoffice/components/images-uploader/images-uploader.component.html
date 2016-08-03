@@ -2,18 +2,18 @@
   <!--Card content-->
   <div class="card-block">
     <b>Images</b>
-      <div #drop class="drop inactive" file-drop
+      <div #drop class="dropzone dropzone-inactive" file-drop
            (onFileDrop)="onFileDrop($event)"
            (onDropStart)="onDropStart($event)"
            (onDropEnds)="onDropEnds($event)">
-        <div class="image-container" *ngIf="_previewFiles.length === 0">
+        <div class="instructions-container" *ngIf="_previewFiles.length === 0">
           <span class='fa fa-picture-o fa-5x'></span>
           </br>
           <span class="instructions">Drop images to upload</span>
         </div>
         <div class='wrapper'>
           <div class="container" [dragula]='"second-bag"'>
-            <div *ngFor="let preview of _previewFiles" [attr.id]="$index"  class="img">
+            <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i"  class="preview-component">
                 <image-preview (onDeleted)="onImageDeleted($event)" [model]="preview"></image-preview>
             </div>
           </div>

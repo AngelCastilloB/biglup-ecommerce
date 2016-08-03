@@ -22,10 +22,10 @@ import { Component,
          Input,
          Output,
          OnInit,
-         EventEmitter}                      from '@angular/core';
-import { MeteorComponent }                  from 'angular2-meteor';
-import { TruncateStringPipe}                from '../../../../../pipes/truncate-string.pipe';
-import { UniqueComponentIdentifierService } from '../../../../../services/unique-component-identifier.service';
+         EventEmitter}        from '@angular/core';
+import { MeteorComponent }    from 'angular2-meteor';
+import { TruncateStringPipe}  from '../../../../../pipes/truncate-string.pipe';
+import { IdGeneratorService } from '../../../../../services/id-generator.service.ts';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -35,7 +35,7 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
 @Component({
     selector: 'image-preview',
     pipes: [TruncateStringPipe],
-    providers: [UniqueComponentIdentifierService],
+    providers: [IdGeneratorService],
     // TODO: Move all this to a separate .css file.
     styles: [`
               .hovereffect {
@@ -96,7 +96,7 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
                     transition:all .2s ease-in-out;
                     padding:20px;
                     vertical-align: middle;
-                    margin-top: 50px;
+                    align-self: center;
                 }
                 
                 .hovereffect a.info:hover {
@@ -110,8 +110,8 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
                 }
                 
                     .hovereffect:hover .overlay {
-                    opacity:1;
-                    filter:alpha(opacity=100);
+                        opacity:1;
+                        filter:alpha(opacity=100);
                 }
                 
                 .hovereffect:hover h2,.hovereffect:hover a.info {
@@ -125,6 +125,13 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
                 .hovereffect:hover a.info {
                     -webkit-transition-delay:.2s;
                     transition-delay:.2s;
+                }
+                
+                .buttons {
+                        display: flex;
+                        justify-content: center;
+                        width:100%;
+                        height:70%;
                 }`],
     // TODO: Move all this to a separete .html file.
     template: `
@@ -132,8 +139,10 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
                     <img class="image-responsive"/>
                     <div class="overlay">
                        <h2>{{ 'Move' }}</h2>
-                       <a class="fa fa-eye fa-2x info" aria-hidden="true" data-toggle="modal" [attr.data-target]="'#' + _uniqueId"></a>
-                       <a class="fa fa-trash fa-2x info" aria-hidden="true" (click)="emitDeleted()"></a>
+                       <div class="buttons">
+                           <a class="fa fa-eye fa-2x info" aria-hidden="true" data-toggle="modal" [attr.data-target]="'#' + _uniqueId"></a>
+                           <a class="fa fa-trash fa-2x info" aria-hidden="true" (click)="emitDeleted()"></a>
+                       </div>
                     </div>
                 </div>
                 <div [attr.id]="_uniqueId" class="modal fade">
@@ -148,19 +157,17 @@ import { UniqueComponentIdentifierService } from '../../../../../services/unique
 export class ImagePreviewComponent extends MeteorComponent implements OnInit {
     @Input('model')
     private _model:     File;
-
     @Output('onDeleted')
     private _onDeleted: EventEmitter<File> = new EventEmitter<File>();
-
     private _uniqueId:  string;
 
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
      */
-    constructor(private _idGenerator: UniqueComponentIdentifierService, private element: ElementRef) {
+    constructor(private _idGenerator: IdGeneratorService, private element: ElementRef) {
         super();
 
-        this._uniqueId = _idGenerator.getId();
+        this._uniqueId = _idGenerator.generate();
     }
 
     /**
