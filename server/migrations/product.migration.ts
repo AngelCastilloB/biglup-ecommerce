@@ -139,7 +139,7 @@ export class ProductMigration extends Migration {
      * @private
      */
     private _getCategoriesIds() {
-        this._categoriesIds = this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
+        this._categoriesIds = <CategoryIds[]>this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
     }
 
     private _getRandomIds(): string[] {
@@ -157,5 +157,5 @@ export class ProductMigration extends Migration {
 }
 
 interface CategoryIds {
-    _id: string;
+    _id?: string;
 }
