@@ -101,6 +101,7 @@ export class ProductMigration extends Migration {
             this._products.push({
                 title: [
                     {language: 'en', value: title},
+                    {language: 'tr', value: `${title} in tr`},
                     {language: 'zh', value: this._chineseSentences.pop()}, // TODO FIX THIS
                 ],
                 sku: Fake.word().toLowerCase() + Math.floor(Math.random() * 1000),

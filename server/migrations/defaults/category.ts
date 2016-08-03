@@ -27,7 +27,6 @@ export default [
                 value: '襯衫'
             },
         ],
-        slug: 'shirts',
         info: [
             {
                 language: 'en',
@@ -51,7 +50,6 @@ export default [
                 value: '連衣裙'
             },
         ],
-        slug: 'dresses',
         info: [
             {
                 language: 'en',
@@ -75,7 +73,6 @@ export default [
                 value: '鞋'
             },
         ],
-        slug: 'shoes',
         info: [
             {
                 language: 'en',

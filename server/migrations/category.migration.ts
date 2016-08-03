@@ -63,8 +63,6 @@ export class CategoryMigration extends Migration {
             let name = Fake.sentence(5);
 
             this._categories.push({
-                // TODO implement slugs
-                slug: name.toLowerCase().replace(/[ ]/gi, '-'),
                 name: [
                     {
                         'language': 'en',
@@ -74,6 +72,10 @@ export class CategoryMigration extends Migration {
                         'language': 'zh',
                         // TODO extend Fake to allow chinese and other languages
                         'value': `${name} in chinese.`
+                    },
+                    {
+                        language: 'kr',
+                        value: `${name} in korean`
                     }
                 ],
                 info: [
