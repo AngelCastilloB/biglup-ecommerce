@@ -94,14 +94,18 @@ export class ProductMigration extends Migration {
      */
     private _addProduct(): void {
         this._getCategoriesIds();
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 2; i++) {
             let title = Fake.sentence(4);
 
+            // TODO slug to slugs
             this._products.push({
-                slug: title.toLowerCase().replace(/[ ]/gi, '-'),
+                slug: [
+                    {language: 'en', value: title.toLowerCase().replace(/[ ]/gi, '-')},
+                    {language: 'zh', value: this._chineseSentences.pop().replace(/[ ]/gi, '-')} // TODO FIX THIS
+                ],
                 title: [
                     {language: 'en', value: title},
-                    {language: 'zh', value: this._chineseSentences.pop()},
+                    {language: 'zh', value: this._chineseSentences.pop()}, // TODO FIX THIS
                 ],
                 sku: Fake.word().toLowerCase() + Math.floor(Math.random() * 1000),
                 categoryId: this._getRandomIds(),
