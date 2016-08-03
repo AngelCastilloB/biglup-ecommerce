@@ -33,6 +33,7 @@ import { Mongo }         from 'meteor/mongo';
  * collection to query the database from since it seems that collection2 autoValue does not.
  *
  * @todo check if post-hooks are doable.
+ * @todo slug to slugs
  */
 class ProductCollection extends Mongo.Collection<Product> {
 
@@ -40,26 +41,6 @@ class ProductCollection extends Mongo.Collection<Product> {
      * @summary Needed to make slugs from the product title.
      */
     private _slugService: Slugger;
-
-    /**
-     * @summary The product being manipulated prior to insert/update.
-     */
-    private _product: Product;
-
-    /**
-     * @summary The mongo selector, usually _id: 'something'
-     */
-    private _selector;
-
-    /**
-     * @summary The mongo modifier, usually the $set object
-     */
-    private _modifier: Mongo.Modifier;
-
-    /**
-     * @summary controls whether or not the document is updating.
-     */
-    private _isUpdating: boolean;
 
     /**
      * @summary This constructor adds the slug service to the mix.
@@ -87,17 +68,11 @@ class ProductCollection extends Mongo.Collection<Product> {
      * @returns {string}
      */
     public insert(product: Product, callback: Function) {
-        this._product = product;
-        this._createOrUpdateSlugs();
+        if (product.title.length > 0) {
+            product.slug = this._createSlugs(product.title);
+        }
 
-        // Call the original `insert` method, which will validate against the schema.
-        const results = super.insert(this._product, callback);
-
-        // Since this is a single instance, we need to make sure the
-        // internals are reset after this operation.
-        this._product = null;
-
-        return results;
+        return super.insert(product, callback);
     }
 
     /**
@@ -115,38 +90,30 @@ class ProductCollection extends Mongo.Collection<Product> {
         modifier: Mongo.Modifier,
         options?: {multi?: boolean; upsert?: boolean},
         callback?: Function): number {
+        if (this._hasTitle(modifier)) {
+            const slugs   = this._createSlugs(modifier['$set']['title']);
+            const product = this.findOne(selector);
+            this._updateSlugs(slugs, product._id);
+        }
 
-        // JOHN F***** MADDEN
-        // http://i77.photobucket.com/albums/j68/Frag971/flow.jpg
-        this._isUpdating = true;
-        this._selector   = selector;
-        this._modifier   = modifier;
-        this._checkAndUpdateModifier();
-        const results = super.update(selector, this._modifier, options, callback);
-        this._cleanSelf();
-
-        return results;
+        return super.update(selector, modifier, options, callback);
     }
 
     /**
      * @summary checks the modifier (mongo modifier) and determines if a new slug is needed.
+     *
+     * @param {Mongo.Modifier} modifier
      * @private
      */
-    private _checkAndUpdateModifier(): void {
-        for (let key in this._modifier) {
+    private _hasTitle(modifier: Mongo.Modifier): boolean {
+        for (let key in modifier) {
             // check if the modifier has a 'title', if so creates new slug(s)
-            if (this._modifier.hasOwnProperty(key) && key === '$set' && this._modifier[key]['title']) {
-                // we need to have the product to update the slugs.
-                // @see this._insertNewSlugs()
-                this._product       = this.findOne(this._selector) || {};
-                this._product.title = this._modifier[key]['title'];
-                this._createOrUpdateSlugs();
-                this._insertNewSlugs();
-
-                // since we found the title, we don't need to iterate anymore.
-                break;
+            if (modifier.hasOwnProperty(key) && key === '$set' && modifier[key]['title']) {
+                return true;
             }
         }
+
+        return false;
     }
 
     /**
@@ -154,21 +121,16 @@ class ProductCollection extends Mongo.Collection<Product> {
      *
      * @private
      */
-    private _createOrUpdateSlugs(): void {
-        if (!this._product.title) throw new Error('A Product must have a title.');
-
-        let slugsArray = this._slugService.slugifyI18nString(this._product.title);
+    private _createSlugs(title: I18nString[]): I18nString[] {
+        let slugsArray = this._slugService.slugifyI18nString(title);
 
         // We need to transform the array if the slug of any language exist in the database.
         slugsArray.map((obj: I18nString) => {
-            const regExp = new RegExp(`^(${obj.value})(\-\d)?$`);
+            const regExp  = new RegExp(`^(${obj.value})(\-\d)?$`);
+            const results = this.find({'slug.value': regExp}, {fields: {slug: 1}}).fetch();
 
-            const results = this.find({'slug.value': regExp}, {fields: {slug: true}}).fetch();
-
-            // if there are results we append the count to the end link-so-2 or like-so-3
             if (results.length) {
-                // if its updating and there's only one result, we have to check if updating itself or not.
-                if (!(results.length === 1 && this._isUpdatingItself())) {
+                if (results.length !== 1) {
                     return obj.value += `-${results.length++}`;
                 }
             }
@@ -176,54 +138,26 @@ class ProductCollection extends Mongo.Collection<Product> {
             return obj.value;
         });
 
-        this._product.slug = slugsArray;
+        return slugsArray;
     }
 
     /**
-     * @summary cleans state since this acts like a global variable.
+     * @summary Updates the product's slugs.
      *
-     * Fix this?
+     * @param {I18nString[]} slugs
+     * @param {string} _id
      * @private
      */
-    private _cleanSelf(): void {
-        // Since this is a single instance, we need to make sure the
-        // internals are reset after this operation.
-        this._modifier = this._isUpdating = this._product = this._selector = null;
-    }
-
-    /**
-     * @summary checks if the new document is updating itself.
-     *
-     * @returns {boolean}
-     * @private
-     */
-    private _isUpdatingItself(): boolean {
-        if (!this._isUpdating) return false;
-
-        return !!this._product;
-    }
-
-    private _insertNewSlugs() {
-        // TODO slug to slugs
-        if (this._selector['slug.language'])
-            throw new Error('The slug should not be updated manually.');
-
+    private _updateSlugs(slugs: I18nString[], _id: string): void {
         // we need to update the selector to include the updated languages
-        this._product.slug.forEach((slug: I18nString) => {
-            const selector = {_id: this._product._id, 'slug.language': slug.language};
+        slugs.forEach((slug: I18nString) => {
+            const selector = {_id, 'slug.language': slug.language};
             const modifier = {$set: {'slug.$.value': slug.value}};
-            this.update(selector, modifier, {}, (err, n) => {
+            this.update(selector, modifier, {}, (err, updatedRows) => {
                 if (err) throw err;
 
-                if (n === 0) {
-                    // Document not updated so you can push onto the array
-                    this.update({_id: this._product._id},
-                        {
-                            $push: {
-                                slug: {language: slug.language, value: slug.value}
-                            }
-                        }
-                    );
+                if (updatedRows === 0) {
+                    this.update({_id}, {$push: {slug: {language: slug.language, value: slug.value}}});
                 }
             });
         });
