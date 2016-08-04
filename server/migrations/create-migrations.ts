@@ -25,7 +25,7 @@ import { CategoryMigration }      from './category.migration';
 import { Categories }             from '../../common/collections/category.collection';
 import { ProductMigration }       from './product.migration';
 import { Products }               from '../../common/collections/product.collection';
-import { Migratable }             from './interfaces/Migratable';
+import { IMigratable }            from './interfaces/i-migratable';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -52,13 +52,13 @@ export function createMigrations() {
         version: 1,
         name: 'Add default documents.',
         up() {
-            migrations.forEach((migration: Migratable) => {
+            migrations.forEach((migration: IMigratable) => {
                 migration.up();
             });
             console.log('Migration completed.');
         },
         down() {
-            migrations.forEach((migration: Migratable) => {
+            migrations.forEach((migration: IMigratable) => {
                 migration.down();
             });
             console.log('Migration reset.');

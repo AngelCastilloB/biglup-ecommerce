@@ -17,9 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }       from 'meteor/mongo';
-import { Migratable }  from './interfaces/Migratable';
-import { SimplifiedChineseContentGenerator } from '../../common/helpers/generator/simplified-chinese-content-generator';
+import { Mongo }                  from 'meteor/mongo';
+import { IMigratable }            from './interfaces/i-migratable';
+import {
+    SimplifiedChineseContentGenerator
+}                                 from '../../common/helpers/generator/simplified-chinese-content-generator';
 import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
 
 // EXPORTS ************************************************************************************************************/
@@ -27,7 +29,7 @@ import { KoreanContentGenerator } from '../../common/helpers/generator/korean-co
 /**
  * @summary sets the structure needed to add a new document to the mongo database.
  */
-export abstract class Migration implements Migratable {
+export abstract class Migration implements IMigratable {
 
     /**
      * @summary The amount to be added by default.

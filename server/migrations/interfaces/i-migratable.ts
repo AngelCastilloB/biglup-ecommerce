@@ -1,5 +1,5 @@
 /**
- * @file Migratable.
+ * @file i-migratable.ts.
  *
  * @summary Migration contract.
  *
@@ -17,7 +17,7 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export interface Migratable {
+export interface IMigratable {
     up();
     down();
 }
