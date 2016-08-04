@@ -18,9 +18,9 @@
 // IMPORTS ************************************************************************************************************/
 
 import { ProductSchema } from '../schemas/product.schema';
-import { Slugifier }     from './helpers/slugifier';
+import { Slugifier }     from '../helpers/slugifier';
 import { slugify }       from 'transliteration';
-import { Slugger }       from './helpers/slugifier';
+import { Slugger }       from '../helpers/slugifier';
 import { Mongo }         from 'meteor/mongo';
 
 // IMPLEMENTATION *****************************************************************************************************/
