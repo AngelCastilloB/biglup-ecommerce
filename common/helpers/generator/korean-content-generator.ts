@@ -17,11 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Generator } from './generator';
+import { AbstractContentGenerator } from './abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
-export class KrGenerator extends Generator {
+export class KoreanContentGenerator extends AbstractContentGenerator {
 
     /**
      * @summary Words used to fake models in korean.

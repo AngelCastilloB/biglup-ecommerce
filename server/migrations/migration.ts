@@ -19,8 +19,8 @@
 
 import { Mongo }       from 'meteor/mongo';
 import { Migratable }  from './interfaces/Migratable';
-import { ZhGenerator } from '../../common/helpers/generator/zh.generator';
-import { KrGenerator } from '../../common/helpers/generator/kr.generator';
+import { SimplifiedChineseContentGenerator } from '../../common/helpers/generator/simplified-chinese-content-generator';
+import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -56,6 +56,6 @@ export abstract class Migration implements Migratable {
 }
 
 interface GeneratorsOptions {
-    zh: ZhGenerator;
-    kr: KrGenerator;
+    zh: SimplifiedChineseContentGenerator;
+    kr: KoreanContentGenerator;
 }

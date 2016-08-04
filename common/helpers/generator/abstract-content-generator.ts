@@ -1,5 +1,5 @@
 /**
- * @file generator.ts.
+ * @file abstract-content-generator.ts.
  *
  * @summary Produces pseudo-random words / sentences / paragraphs.
  *
@@ -21,7 +21,7 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export abstract class Generator {
+export abstract class AbstractContentGenerator {
 
     /**
      * @summary Words used to fake models in korean.

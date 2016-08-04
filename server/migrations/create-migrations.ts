@@ -17,21 +17,23 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { CategoryMigration } from './category.migration';
-import { Categories }        from '../../common/collections/category.collection';
-import { ProductMigration }  from './product.migration';
-import { Products }          from '../../common/collections/product.collection';
-import { Migratable }        from './interfaces/Migratable';
-import { ZhGenerator }       from '../../common/helpers/generator/zh.generator';
-import { KrGenerator }       from '../../common/helpers/generator/kr.generator';
+import {
+    SimplifiedChineseContentGenerator
+}                                 from '../../common/helpers/generator/simplified-chinese-content-generator';
+import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
+import { CategoryMigration }      from './category.migration';
+import { Categories }             from '../../common/collections/category.collection';
+import { ProductMigration }       from './product.migration';
+import { Products }               from '../../common/collections/product.collection';
+import { Migratable }             from './interfaces/Migratable';
 
 // EXPORTS ************************************************************************************************************/
 
 export function createMigrations() {
     // TODO IOC container
     const generators = {
-        zh: new ZhGenerator(),
-        kr: new KrGenerator()
+        zh: new SimplifiedChineseContentGenerator(),
+        kr: new KoreanContentGenerator()
     };
 
     // the migrations to be called by the migrate function (order matters).
