@@ -44,9 +44,9 @@ const NUMBER_OF_COLUMNS = 5;
  */
 @Component({
     selector: 'images-uploader',
-    viewProviders: [DragulaService],
     template,
     styleUrls: ['./images-uploader.component.css'],
+    viewProviders: [DragulaService],
     directives: [FileDropDirective, ImagePreviewComponent, Dragula]
 })
 export class ImagesUploader  {
@@ -61,6 +61,7 @@ export class ImagesUploader  {
      * @summary Initializes a new instance of the ImagesUploader class.
      */
     constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
+
         _dragulaService.drop.subscribe((value) => {
 
             let [bag, e, target, source, sibling] = value;

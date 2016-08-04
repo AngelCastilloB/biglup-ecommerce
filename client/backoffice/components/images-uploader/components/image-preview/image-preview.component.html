@@ -1,0 +1,12 @@
+<div class="hovereffect center-block picture">
+    <img class="image-responsive "/>
+    <div class="overlay">
+        <a class="fa fa-trash delete pull-right" aria-hidden="true" (click)="emitDeleted()"></a>
+        <a class="fa fa-eye fa-2x info" aria-hidden="true" data-toggle="modal" [attr.data-target]="'#' + _uniqueId"></a>
+    </div>
+</div>
+<div [attr.id]="_uniqueId" class="modal fade modal-center">
+      <div class="modal-dialog">
+          <img class="image-display"/>
+      </div>
+</div>
