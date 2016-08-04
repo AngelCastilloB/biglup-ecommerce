@@ -17,14 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Migration } from './migration';
-import { Mongo }     from 'meteor/mongo';
-import defaults      from './defaults/category';
-import * as faker    from 'faker/locale/en';
+import { AbstractMigration } from './abstract-migration';
+import { Mongo }             from 'meteor/mongo';
+import defaults              from './defaults/category';
+import * as faker            from 'faker/locale/en';
 
 // EXPORTS ************************************************************************************************************/
 
-export class CategoryMigration extends Migration {
+export class CategoryMigration extends AbstractMigration {
 
     /**
      * @summary All the categories to be inserted.
@@ -40,7 +40,7 @@ export class CategoryMigration extends Migration {
     /**
      * @summary Adds the categories to the database.
      *
-     * @see parent Migration.
+     * @see parent AbstractMigration.
      */
     public up(): void {
         console.log('Starting Default Categories.');

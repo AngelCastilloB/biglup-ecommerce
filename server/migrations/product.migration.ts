@@ -18,15 +18,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Migration } from './migration';
-import { Mongo }     from 'meteor/mongo';
-import * as faker    from 'faker/locale/en';
-import * as zhFaker  from 'faker/locale/zh_TW';
-import * as krFaker  from 'faker/locale/ko';
+import { AbstractMigration } from './abstract-migration';
+import { Mongo }             from 'meteor/mongo';
+import * as faker            from 'faker/locale/en';
+import * as zhFaker          from 'faker/locale/zh_TW';
+import * as krFaker          from 'faker/locale/ko';
 
 // EXPORTS ************************************************************************************************************/
 
-export class ProductMigration extends Migration {
+export class ProductMigration extends AbstractMigration {
 
     /**
      * @summary Each category will have at least 3 products.
@@ -81,7 +81,7 @@ export class ProductMigration extends Migration {
     /**
      * @summary Adds the categories to the database.
      *
-     * @see parent Migration.
+     * @see parent AbstractMigration.
      */
     public up(): void {
         console.log('Starting Default Products.');

@@ -29,7 +29,7 @@ import { KoreanContentGenerator } from '../../common/helpers/generator/korean-co
 /**
  * @summary sets the structure needed to add a new document to the mongo database.
  */
-export abstract class Migration implements IMigratable {
+export abstract class AbstractMigration implements IMigratable {
 
     /**
      * @summary The amount to be added by default.
