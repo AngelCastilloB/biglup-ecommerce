@@ -25,6 +25,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
  * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
  * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
  * Methods should be named after an action, IE: getTime() instead of time().
+ * Methods that return flags or booleans should answer to questions IE: isAdmin()
  
 ### Version control agreements
 ---
