@@ -15,10 +15,8 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface Category {
-    _id?: string;
+interface Category extends IDistinguishable, ISluggable {
     name: Array<I18nString>;
-    slug?: Array<I18nString>; // TODO slug to slugs
     info: Array<I18nString>;
     isParentCategory?: boolean;
     parentCategory?: string;
