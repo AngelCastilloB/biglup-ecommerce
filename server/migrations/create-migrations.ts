@@ -22,14 +22,22 @@ import { Categories }        from '../../common/collections/category.collection'
 import { ProductMigration }  from './product.migration';
 import { Products }          from '../../common/collections/product.collection';
 import { Migratable }        from './interfaces/Migratable';
+import { ZhGenerator }       from '../../common/helpers/generator/zh.generator';
+import { KrGenerator }       from '../../common/helpers/generator/kr.generator';
 
 // EXPORTS ************************************************************************************************************/
 
 export function createMigrations() {
+    // TODO IOC container
+    const generators = {
+        zh: new ZhGenerator(),
+        kr: new KrGenerator()
+    };
+
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
-        new CategoryMigration(Categories),
-        new ProductMigration(Products, Categories)
+        new CategoryMigration(Categories, generators),
+        new ProductMigration(Products, generators, Categories)
     ];
 
     // Each migration version needs to be added with the add method.

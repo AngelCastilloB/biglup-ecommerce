@@ -20,6 +20,7 @@
 import { Migration } from './migration';
 import { Mongo }     from 'meteor/mongo';
 import defaults      from './defaults/category';
+import * as faker    from 'faker/locale/en';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,8 +31,8 @@ export class CategoryMigration extends Migration {
      */
     private _categories: Category[];
 
-    constructor(collection: Mongo.Collection<Category>) {
-        super(collection);
+    constructor(collection: Mongo.Collection<Category>, generators) {
+        super(collection, generators);
 
         this._categories = defaults;
     }
@@ -60,32 +61,33 @@ export class CategoryMigration extends Migration {
      */
     private _addCategory() {
         for (let i = 0; i < this._amount; i++) {
-            let name = Fake.sentence(5);
-
             this._categories.push({
                 name: [
                     {
-                        'language': 'en',
-                        'value': name
+                        language: 'en',
+                        value: faker.lorem.words(1)
                     },
                     {
-                        'language': 'zh',
-                        // TODO extend Fake to allow chinese and other languages
-                        'value': `${name} in chinese.`
+                        language: 'zh',
+                        value: this._generators.zh.word()
                     },
                     {
                         language: 'kr',
-                        value: `${name} in korean`
+                        value: this._generators.kr.word()
                     }
                 ],
                 info: [
                     {
-                        'language': 'en',
-                        'value': Fake.sentence(5)
+                        language: 'en',
+                        value: faker.lorem.words(10)
                     },
                     {
-                        'language': 'zh',
-                        'value': `${Fake.sentence(5)} in chinese.`
+                        language: 'zh',
+                        value: this._generators.zh.sentence()
+                    },
+                    {
+                        language: 'kr',
+                        value: this._generators.kr.sentence()
                     }
                 ],
                 image: 'shirts.png'
