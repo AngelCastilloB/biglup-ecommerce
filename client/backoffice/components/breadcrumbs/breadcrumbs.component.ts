@@ -32,7 +32,7 @@ import { Component }        from '@angular/core';
     selector: 'breadcrumb',
     directives: [ROUTER_DIRECTIVES],
     template: `
-        <nav class="navbar navbar-dark stylish-color">
+        <nav class="navbar navbar-dark stylish-color" style="z-index: 10;">
             <ol class="breadcrumb">
                     <li *ngFor="let url of _urls; let last = last">
                         <a (click)="navigateTo(url)" *ngIf="!last">{{ getCurrentPosition(url) }}</a>

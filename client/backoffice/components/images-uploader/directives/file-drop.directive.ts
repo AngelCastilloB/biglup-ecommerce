@@ -27,7 +27,7 @@ import {Directive, ElementRef, EventEmitter} from '@angular/core';
  */
 @Directive({
     selector: '[file-drop]',
-    outputs: ['onFileDrop', 'onDropStart', 'onDropEnds']
+    outputs: ['_onFileDrop', '_onDropStart', '_onDropEnds']
 })
 export class FileDropDirective {
     public onFileDrop:  EventEmitter<FileList> = new EventEmitter<FileList>();
@@ -40,14 +40,14 @@ export class FileDropDirective {
    * @param el The parent element.
    */
     constructor(public el: ElementRef) {
-        this.subscribeEvents();
+        this._subscribeEvents();
     }
 
       /**
        * @summary Subscribes this directive to the drop, dragenter, dragover, dragleave and dragend
        * events of the parent element.
        */
-      private subscribeEvents(): void {
+      private _subscribeEvents(): void {
         this.el.nativeElement.addEventListener('drop', (event: any) => {
             event.stopPropagation();
             event.preventDefault();

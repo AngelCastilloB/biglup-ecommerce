@@ -1,11 +1,15 @@
 <div class="card">
-  <!--Card content-->
   <div class="card-block">
-    <b>Images</b>
+      <div>
+      <b>Images</b>
+        <label class="btn btn-default btn-file pull-right">
+            Select Files <input type="file" file-select style="display: none;" multiple (onSelected)="_onFileDrop($event)"/>
+        </label>
+      </div>
       <div #drop class="dropzone dropzone-inactive" file-drop
-           (onFileDrop)="onFileDrop($event)"
-           (onDropStart)="onDropStart($event)"
-           (onDropEnds)="onDropEnds($event)">
+           (onFileDrop)="_onFileDrop($event)"
+           (onDropStart)="_onDropStart($event)"
+           (onDropEnds)="_onDropEnds($event)">
         <div class="instructions-container" *ngIf="_previewFiles.length === 0">
           <span class='fa fa-picture-o fa-5x'></span>
           </br>
@@ -14,12 +18,11 @@
         <div class='wrapper'>
           <div class="container" [dragula]='"second-bag"'>
             <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i"  class="preview-component">
-                <image-preview (onDeleted)="onImageDeleted($event)" [model]="preview"></image-preview>
+                <image-preview (onDeleted)="_onImageDeleted($event)" [model]="preview"></image-preview>
             </div>
           </div>
         </div>
       </div>
     </br>
   </div>
-  <!--/.Card content-->
 </div>

@@ -22,10 +22,11 @@ import { Component,
          Input,
          Output,
          OnInit,
-         EventEmitter}        from '@angular/core';
-import { MeteorComponent }    from 'angular2-meteor';
-import { TruncateStringPipe}  from '../../../../../pipes/truncate-string.pipe';
-import { IdGeneratorService } from '../../../../../services/id-generator.service.ts';
+         EventEmitter,
+         ViewChild,
+         AfterViewInit}          from '@angular/core';
+import { MeteorComponent }       from 'angular2-meteor';
+import { ImageDisplayComponent } from '../image-display/image-display.component'
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -40,23 +41,21 @@ import template from './image-preview.component.html';
     selector: 'image-preview',
     template,
     styleUrls: ['./images-preview.component.css'],
-    pipes: [TruncateStringPipe],
-    providers: [IdGeneratorService],
+    directives: [ImageDisplayComponent],
 })
-export class ImagePreviewComponent extends MeteorComponent implements OnInit {
+export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit {
     @Input('model')
-    private _model:     File;
+    private _model:        File;
     @Output('onDeleted')
-    private _onDeleted: EventEmitter<File> = new EventEmitter<File>();
-    private _uniqueId:  string;
+    private _onDeleted:    EventEmitter<File>    = new EventEmitter<File>();
+    @ViewChild(ImageDisplayComponent)
+    private _imageDisplay: ImageDisplayComponent;
 
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
      */
-    constructor(private _idGenerator: IdGeneratorService, private element: ElementRef) {
+    constructor(private element: ElementRef) {
         super();
-
-        this._uniqueId = _idGenerator.generate();
     }
 
     /**
@@ -64,7 +63,6 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
      */
     public ngOnInit(): any {
         let thumbnail = this.element.nativeElement.querySelector('.image-responsive');
-        let image     = this.element.nativeElement.querySelector('.image-display');
         let reader    = new FileReader();
 
         reader.onload = (event: ProgressEvent) => {
@@ -73,7 +71,6 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
                 let src = event.target.result;
 
                 thumbnail.src = src;
-                image.src = src;
 
             } else if (event.type === 'error') {
                 console.error('Could not read file.');
@@ -81,6 +78,13 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
         };
 
         reader.readAsDataURL(this._model);
+    }
+
+    /**
+     * #brief Runs after the view has been completely initialized.
+     */
+    public ngAfterViewInit() {
+        this._imageDisplay.setImage(this._model);
     }
 
     /**
@@ -104,7 +108,14 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Emits the the on deleted event.
      */
-    private emitDeleted() {
+    private _emitDeleted() {
         this._onDeleted.emit(this._model);
+    }
+
+    /**
+     * @summary Shows the fill size display.
+     */
+    private _showImageDisplay() {
+        this._imageDisplay.show();
     }
 }
