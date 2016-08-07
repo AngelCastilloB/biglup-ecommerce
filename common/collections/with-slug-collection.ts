@@ -1,5 +1,5 @@
 /**
- * @file abstract-with-slug-collection.ts.
+ * @file with-slug-collection.ts.
  *
  * @summary Has functionality used by collections that have slugs in them.
  * @todo check if post-hooks are doable.
@@ -24,7 +24,25 @@ import { Mongo }   from 'meteor/mongo';
 
 // EXPORTS ************************************************************************************************************/
 
-export class WithSlugCollection<IDistinguishable> extends Mongo.Collection<IDistinguishable> {
+export class WithSlugCollection extends Mongo.Collection<any> {
+
+    /**
+     * @summary Makes a new collection.
+     *
+     * @param {string} name The collection name
+     * @param {string} _slugFieldTarget The field that needs to be a slug.
+     * @param {Slugger} _slugService Creates slug strings.
+     * @param {Object=} options
+     * @param {Object=} options.connection
+     * @param {string=} options.idGeneration
+     * @param {Function=} options.transform
+     */
+    public static Collection<T>(name: string,
+        _slugFieldTarget: string,
+        _slugService: Slugger,
+        options?: {connection?: Object; idGeneration?: string; transform?: Function}): Mongo.Collection<T> {
+        return new WithSlugCollection(name, _slugFieldTarget, _slugService, options);
+    }
 
     /**
      * @summary This constructor adds the slug service to the mix.
@@ -39,7 +57,7 @@ export class WithSlugCollection<IDistinguishable> extends Mongo.Collection<IDist
      */
     constructor(name: string,
         private _slugFieldTarget: string,
-        protected _slugService: Slugger,
+        private _slugService: Slugger,
         options?: {connection?: Object; idGeneration?: string; transform?: Function}) {
         super(name, options);
     }
