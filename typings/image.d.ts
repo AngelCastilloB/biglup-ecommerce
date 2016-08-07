@@ -18,7 +18,7 @@
 /**
  * @summary Image type definition.
  */
-interface Image extends IDistinguishable {
+interface Image extends Distinguishable {
     complete: boolean;
     extension: string;
     name: string;

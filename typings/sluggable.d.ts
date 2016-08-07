@@ -1,5 +1,5 @@
 /**
- * @file i-sluggable.d.ts.
+ * @file sluggable.d.ts.
  *
  * @summary The slug contract for collection / documents
  *
@@ -15,6 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface ISluggable {
+interface Sluggable {
     slug?: Array<I18nString>; // TODO slug to slugs
 }

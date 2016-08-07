@@ -15,7 +15,7 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface CartItem extends IDistinguishable {
+interface CartItem extends Distinguishable {
     productId: string;
     quantity: number;
     title: Array<I18nString>;

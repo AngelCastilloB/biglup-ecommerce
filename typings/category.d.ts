@@ -15,7 +15,7 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface Category extends IDistinguishable, ISluggable {
+interface Category extends Distinguishable, Sluggable {
     name: Array<I18nString>;
     info: Array<I18nString>;
     isParentCategory?: boolean;

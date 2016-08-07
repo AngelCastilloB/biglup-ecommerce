@@ -1,5 +1,5 @@
 /**
- * @file i-distinguishable.d.ts.
+ * @file distinguishable.d.ts.
  *
  * @summary The id contract for the collections /documents.
  *
@@ -15,6 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface IDistinguishable {
+interface Distinguishable {
     _id?: string;
 }

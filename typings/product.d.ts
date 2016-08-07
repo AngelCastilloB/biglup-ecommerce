@@ -18,7 +18,7 @@
 /**
  * @summary Product type definition.
  */
-interface Product extends IDistinguishable, ISluggable {
+interface Product extends Distinguishable, Sluggable {
     categoryId?: Array<string>;
     title: Array<I18nString>;
     description: Array<I18nString>;
