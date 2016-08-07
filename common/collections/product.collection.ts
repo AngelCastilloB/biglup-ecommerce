@@ -17,55 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ProductSchema }              from '../schemas/product.schema';
-import { Slugifier }                  from '../helpers/slugifier';
-import { slugify }                    from 'transliteration';
-import { Mongo }                      from 'meteor/mongo';
-import { AbstractWithSlugCollection } from './abstract-with-slug-collection';
+import { ProductSchema }      from '../schemas/product.schema';
+import { Slugifier }          from '../helpers/slugifier';
+import { slugify }            from 'transliteration';
+import { WithSlugCollection } from './with-slug-collection';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-/**
- * @summary adds insert/update/etc hooks to alter the document before insertion.
- * @see AbstractWithSlugCollection
- */
-class ProductCollection extends AbstractWithSlugCollection {
-
-    private _fieldName = 'title';
-
-    /**
-     * @summary Alters the insert to allow slugs into the document.
-     *
-     * @param document
-     * @param callback
-     * @returns {string}
-     */
-    public insert(document: Product, callback?: Function): string {
-        return this._insert(document, this._fieldName, callback);
-    }
-
-    /**
-     * @summary Alters the update to allow new slugs changes.
-     *
-     * @param {Object} selector
-     * @param {Object} modifier
-     * @param {Object=} options
-     * @param {Object=} options.multi
-     * @param {Object=} options.upsert
-     * @param {Function=} callback
-     * @returns {number}
-     */
-    public update(selector: Mongo.Selector,
-        modifier: Mongo.Modifier,
-        options?: {multi?: boolean; upsert?: boolean},
-        callback?: Function): number {
-        return this._update(selector, modifier, this._fieldName, options, callback);
-    }
-}
-
 // TODO IOC container
 const slugifier     = new Slugifier(slugify);
-const Products: any = new ProductCollection('products', slugifier);
+const Products: any = new WithSlugCollection<Product>('products', 'title', slugifier);
 
 Products.attachSchema(ProductSchema);
 

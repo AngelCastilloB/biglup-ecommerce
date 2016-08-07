@@ -17,55 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }                      from 'meteor/mongo';
-import { CategorySchema }             from '../schemas/category.schema';
-import { slugify }                    from 'transliteration';
-import { Slugifier }                  from '../helpers/slugifier';
-import { AbstractWithSlugCollection } from './abstract-with-slug-collection';
+import { CategorySchema }     from '../schemas/category.schema';
+import { slugify }            from 'transliteration';
+import { Slugifier }          from '../helpers/slugifier';
+import { WithSlugCollection } from './with-slug-collection';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-/**
- * @summary adds insert/update/etc hooks to alter the document before insertion.
- * @see AbstractWithSlugCollection
- */
-class CategoryCollection extends AbstractWithSlugCollection {
-
-    private _fieldName = 'name';
-
-    /**
-     * @summary Alters the insert to allow slugs into the document.
-     *
-     * @param document
-     * @param callback
-     * @returns {string}
-     */
-    public insert(document: Category, callback?: Function): string {
-        return this._insert(document, this._fieldName, callback);
-    }
-
-    /**
-     * @summary Alters the update to allow new slugs changes.
-     *
-     * @param {Object} selector
-     * @param {Object} modifier
-     * @param {Object=} options
-     * @param {Object=} options.multi
-     * @param {Object=} options.upsert
-     * @param {Function=} callback
-     * @returns {number}
-     */
-    public update(selector: Mongo.Selector,
-        modifier: Mongo.Modifier,
-        options?: {multi?: boolean; upsert?: boolean},
-        callback?: Function): number {
-        return this._update(selector, modifier, this._fieldName, options, callback);
-    }
-}
-
 // TODO IOC container
 const slugifier     = new Slugifier(slugify);
-let Categories: any = new CategoryCollection('categories', slugifier);
+let Categories: any = new WithSlugCollection<Category>('categories', 'name', slugifier);
 
 Categories.attachSchema(CategorySchema);
 

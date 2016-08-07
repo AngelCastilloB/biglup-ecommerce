@@ -24,12 +24,13 @@ import { Mongo }   from 'meteor/mongo';
 
 // EXPORTS ************************************************************************************************************/
 
-export abstract class AbstractWithSlugCollection extends Mongo.Collection<IDistinguishable> {
+export class WithSlugCollection<IDistinguishable> extends Mongo.Collection<IDistinguishable> {
 
     /**
      * @summary This constructor adds the slug service to the mix.
      *
-     * @param {string} name
+     * @param {string} name The collection name
+     * @param {string} _slugFieldTarget The field that needs to be a slug.
      * @param {Slugger} _slugService Creates slug strings.
      * @param {Object=} options
      * @param {Object=} options.connection
@@ -37,6 +38,7 @@ export abstract class AbstractWithSlugCollection extends Mongo.Collection<IDisti
      * @param {Function=} options.transform
      */
     constructor(name: string,
+        private _slugFieldTarget: string,
         protected _slugService: Slugger,
         options?: {connection?: Object; idGeneration?: string; transform?: Function}) {
         super(name, options);
@@ -46,13 +48,12 @@ export abstract class AbstractWithSlugCollection extends Mongo.Collection<IDisti
      * @summary Changes the insert to add the slugsArray.
      *
      * @param {DocumentWithSlug} document
-     * @param {string} fieldName
      * @param {Function} callback
      * @returns {string}
      */
-    protected _insert(document: DocumentWithSlug, fieldName: string, callback: Function) {
-        if (document[fieldName].length > 0) {
-            document.slug = this._createSlugs(document[fieldName]);
+    public insert(document: DocumentWithSlug, callback: Function) {
+        if (document[this._slugFieldTarget].length > 0) {
+            document.slug = this._createSlugs(document[this._slugFieldTarget]);
         }
 
         return super.insert(document, callback);
@@ -63,20 +64,18 @@ export abstract class AbstractWithSlugCollection extends Mongo.Collection<IDisti
      *
      * @param {Object} selector
      * @param {Object} modifier
-     * @param {string} fieldName
      * @param {Object=} options
      * @param {Object=} options.multi
      * @param {Object=} options.upsert
      * @param {Function=} callback
      * @returns {number}
      */
-    protected _update(selector: Mongo.Selector,
+    public update(selector: Mongo.Selector,
         modifier: Mongo.Modifier,
-        fieldName: string,
         options?: {multi?: boolean; upsert?: boolean},
         callback?: Function): number {
-        if (this._hasTitle(modifier, fieldName)) {
-            const slugs    = this._createSlugs(modifier['$set'][fieldName]);
+        if (this._hasTitle(modifier, this._slugFieldTarget)) {
+            const slugs    = this._createSlugs(modifier['$set'][this._slugFieldTarget]);
             const document = this.findOne(selector);
             this._updateSlugs(slugs, document._id);
         }
@@ -157,5 +156,5 @@ export abstract class AbstractWithSlugCollection extends Mongo.Collection<IDisti
     }
 }
 
-interface DocumentWithSlug extends IDistinguishable, ISluggable {
+interface DocumentWithSlug extends Distinguishable, Sluggable {
 }
