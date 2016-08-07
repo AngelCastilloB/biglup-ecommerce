@@ -31,8 +31,9 @@ export let CategorySchema: any = new SimpleSchema({
         label: 'Name'
     },
     slug: {
-        type: String,
-        label: 'Slug'
+        type: [I18nStringSchema],
+        label: 'Slug',
+        optional: true // TODO REMOVE THIS
     },
     info: {
         type: [I18nStringSchema],
