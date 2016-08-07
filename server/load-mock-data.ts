@@ -19,7 +19,7 @@
 
 import { Categories } from '../common/collections/category.collection.ts';
 import { Products }   from '../common/collections/product.collection.ts';
-import { Images } from '../common/collections/image.collection';
+import { Images }     from '../common/collections/image.collection';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -161,6 +161,8 @@ export function loadProducts() {
                 'size': 'small',
                 'price': 1200,
                 'discount': 10,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,
@@ -209,6 +211,8 @@ export function loadProducts() {
                 'size': 'medium',
                 'price': 2000,
                 'discount': 5,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,
@@ -257,6 +261,8 @@ export function loadProducts() {
                 'size': 'shirt',
                 'price': 800,
                 'discount': 15,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,

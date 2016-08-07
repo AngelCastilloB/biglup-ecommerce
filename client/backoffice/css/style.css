@@ -179,6 +179,7 @@ div#header {
     background-color: #23282e;
     margin-left: 300px;
     position: fixed;
+    z-index: 9;
 }
 
 div#container {

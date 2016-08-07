@@ -1,31 +1,131 @@
 <div class="container-fluid">
-  <div class="table-responsive">
-    <br>
-    <h3>
-      <i class="fa fa-tag"></i>
-      <small> {{ 'Add Product' | translate }}</small>
-    </h3>
-    <hr>
-    <div class="col-md-12">
-      <!--Card-->
-      <div class="card">
-        <!--Card content-->
-        <div class="card-block">
+  <form>
+    <div class="table-responsive">
+      <br>
+      <h3>
+        <i class="fa fa-tag"></i>
+        <small> {{ 'Add Product' | translate }}</small>
+      </h3>
+      <hr>
+        <div class="add-product-content">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-block">
 
-          <div class="md-form">
-            <input type="text" id="form1" class="form-control">
-            <label for="form1" class="">Title</label>
+                <div class="md-form">
+                  <input type="text" id="title" name="title" class="form-control" required
+                         [value]="_productTitle"
+                         (change)="_onTitleChange($event.target.value)">
+                  <label for="title" class="">{{ 'Title' | translate }}</label>
+                </div>
+                {{ 'Description' | translate }}
+                <textarea [value]="_productDescription" (onChange)="_onDescriptionChange($event.target.value)"></textarea>
+              </div>
+            </div>
+
+            <images-uploader></images-uploader>
+
+            <div class="card">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="card-block">
+                    <b>{{ 'Pricing' | translate }}</b><br/><br/>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="md-form">
+                          <input type="number" id="price"  [(ngModel)]="_product.price" name="price" class="form-control">
+                          <label for="price" class="">{{ 'Price' | translate }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="md-form">
+                          <input type="number" id="discount" [(ngModel)]="_product.discount" name="discount" class="form-control">
+                          <label for="discount" class="">{{ 'Discount' | translate }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card-block">
+                    <b>{{ 'Categories' | translate }}</b><br/><br/>
+                    <div class="row" *ngFor="let category of _categories">
+                      <div class="col-md-6 checkbox-container">
+                        <input [checked]="_productHasCategory(category._id)" type="checkbox" [attr.id]="category._id" name="track-inventory" class="checkbox"
+                           (change)="_onCategoryToggle($event.target.id, $event.target.checked)"/>
+                        <label [attr.for]="category._id" class="checkbox-text">{{category.name | mongoTranslate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card-block">
+                    <b>{{ 'Inventory' | translate }}</b><br/><br/>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="md-form">
+                          <input type="text" [(ngModel)]="_product.sku" name="sku" id="sku" class="form-control">
+                          <label for="sku" class="">{{ 'SKU (Stock Keeping Unit)' | translate }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="md-form">
+                          <input type="text" id="barcode" [(ngModel)]="_product.barcode" name="barcode" id="barcode" class="form-control">
+                          <label for="barcode" class="">{{ 'Barcode (ISBN, UPC, GTIN, etc.)' | translate }}</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {{ 'Inventory Policy' | translate }}
+                    <br/>
+                    <div class="row">
+                      <div class="col-md-6 checkbox-container">
+                        <input type="checkbox" [checked]="_product.trackInventory" [(ngModel)]="_product.trackInventory" name="track-inventory" id="track-inventory" class="checkbox"/>
+                        <label for="track-inventory" class="checkbox-text">{{ 'Track Inventory' | translate }}</label>
+                      </div>
+                      <div *ngIf="_product.trackInventory" class="col-md-6">
+                        <div class="md-form">
+                          <input type="number" id="quantity" [(ngModel)]="_product.stock" name="quantity" class="form-control">
+                          <label for="quantity" class="">{{ 'Quantity' | translate }}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="_product.trackInventory" class="row">
+                      <div class="col-md-12 checkbox-container">
+                        <input type="checkbox" [checked]="_product.isBackorder" [(ngModel)]="_product.isBackorder" name="allow-backorder" id="allow-backorder" class="checkbox"/>
+                        <label for="allow-backorder" class="checkbox-text">{{ "Allow customers to purchase this product when it's out of stock" | translate }}</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 checkbox-container">
+                        <input type="checkbox" [checked]="_product.requiresShipping" [(ngModel)]="_product.requiresShipping"  name="requires-shipping" id="requires-shipping" class="checkbox"/>
+                        <label for="requires-shipping" class="checkbox-text">{{ "This product requires shipping" | translate }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card-block">
+                    <b>{{ 'Visibility' | translate }}</b><br/><br/>
+                    <div class="row">
+                      <div class="col-md-12 checkbox-container">
+                        <input type="checkbox" [checked]="_product.isVisible" [(ngModel)]="_product.isVisible"  name="is-visible" id="is-visible" class="checkbox"/>
+                        <label for="is-visible" class="checkbox-text">{{ "Show this product in the store" | translate }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-           Description
-          <textarea></textarea>
         </div>
-        <!--/.Card content-->
+      <br/></br>
+      <hr>
+      <div class="bottom-button">
+        <button (click)="_saveProduct()" type="button" class="btn btn-primary save-button pull-right">{{'Save Product' | translate }}</button>
+        <button type="button" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
       </div>
-      <!--/.Card-->
-
-      <!--Card-->
-      <images-uploader></images-uploader>
-      <!--/.Card-->
     </div>
-  </div>
+  </form>
 </div>
+</br></br>

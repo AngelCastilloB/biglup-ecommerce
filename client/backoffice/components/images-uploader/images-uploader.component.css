@@ -41,3 +41,7 @@ div.preview-component img {
     width: 100%;
     height: auto;
 }
+
+.select-files-button {
+    margin-top: -10px;
+}

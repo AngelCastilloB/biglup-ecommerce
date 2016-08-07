@@ -27,7 +27,7 @@ import {Directive, ElementRef, EventEmitter} from '@angular/core';
  */
 @Directive({
     selector: '[file-drop]',
-    outputs: ['_onFileDrop', '_onDropStart', '_onDropEnds']
+    outputs: ['onFileDrop', 'onDropStart', 'onDropEnds']
 })
 export class FileDropDirective {
     public onFileDrop:  EventEmitter<FileList> = new EventEmitter<FileList>();

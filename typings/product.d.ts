@@ -24,18 +24,21 @@ interface Product {
     title: Array<I18nString>;
     description: Array<I18nString>;
     sku: string;
+    barcode: string;
     title: Array<I18nString>;
     color: string;
     size: string;
     price: number;
     discount: number;
+    trackInventory: boolean;
+    stock: number;
     isLowQuantity: boolean;
     isSoldOut: boolean;
     isBackorder: boolean;
     requiresShipping: boolean;
-    hashtags: Array<string>;
+    hashtags?: Array<string>;
     isVisible: boolean;
     createdAt: Date;
-    updatedAt: Date;
-    publishedAt: Date;
+    updatedAt?: Date;
+    publishedAt?: Date;
 }

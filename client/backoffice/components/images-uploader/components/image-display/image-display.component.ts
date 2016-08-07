@@ -61,25 +61,22 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
      * #brief Runs after the view has been completely initialized.
      */
     public ngAfterViewInit() {
-        this._renderer.setElementStyle(this._display.nativeElement, 'height', "0%");
-        this._renderer.setElementStyle(this._display.nativeElement, 'width', "100%");
+        this._renderer.setElementStyle(this._display.nativeElement, 'height', '0%');
+        this._renderer.setElementStyle(this._display.nativeElement, 'width', '100%');
     }
-
 
     /**
      * @summary Closes the display.
      */
     public hide() {
-        this._renderer.setElementStyle(this._display.nativeElement, 'height', "0%");
+        this._renderer.setElementStyle(this._display.nativeElement, 'height', '0%');
     }
 
     /**
      * @summary Shows the display.
      */
     public show() {
-        console.error("show!");
-        console.error(this._display.nativeElement);
-        this._renderer.setElementStyle(this._display.nativeElement, 'height', "100%");
+        this._renderer.setElementStyle(this._display.nativeElement, 'height', '100%');
     }
 
     /**

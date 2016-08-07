@@ -17,8 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { SimpleSchema }       from 'meteor/aldeed:simple-schema';
+import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
 import { I18nStringSchema } from './i18n-string.schema';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -41,6 +42,11 @@ export let ProductSchema = new SimpleSchema({
     sku: {
         type: String,
         label: 'Stock Keeping Unit'
+    },
+    barcode: {
+        type: String,
+        label: 'The barcode of the product',
+        optional: true
     },
     description: {
         type: [I18nStringSchema],
@@ -69,6 +75,14 @@ export let ProductSchema = new SimpleSchema({
         label: 'Indicates that the product quantity is too low',
         type: Boolean,
         optional: true
+    },
+    trackInventory: {
+        label: 'Indicates if this product requires inventory tracking',
+        type: Boolean,
+    },
+    stock: {
+        label: 'Stock',
+        type: Number
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {

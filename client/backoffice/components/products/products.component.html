@@ -29,9 +29,9 @@
       <tr style="cursor: pointer" *ngFor="let product of _products">
         <td>{{ product.sku }}</td>
         <td>{{ product.title | mongoTranslate }}</td>
-        <td>TBA</td>
+        <td>{{ product.stock }}</td>
         <td>{{ product.price }}</td>
-        <td>MISSING</td>
+        <td><a *ngFor="let category of product.categoryId">{{ category }}</a>&nbsp;</td>
         <td>{{product.color}}</td>
         <td>{{product.size}}</td>
       </tr>
