@@ -15,10 +15,8 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface Category {
-    _id?: string;
+interface Category extends Distinguishable, Sluggable {
     name: Array<I18nString>;
-    slug: string;
     info: Array<I18nString>;
     isParentCategory?: boolean;
     parentCategory?: string;

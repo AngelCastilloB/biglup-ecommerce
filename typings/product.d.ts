@@ -18,10 +18,8 @@
 /**
  * @summary Product type definition.
  */
-interface Product {
-    _id?: string;
+interface Product extends Distinguishable, Sluggable {
     categoryId?: Array<string>;
-    slug: string;
     title: Array<I18nString>;
     description: Array<I18nString>;
     sku: string;

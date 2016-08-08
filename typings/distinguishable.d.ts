@@ -1,10 +1,10 @@
 /**
- * @file Migratable.
+ * @file distinguishable.d.ts.
  *
- * @summary Migration contract.
+ * @summary The id contract for the collections /documents.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @date   August 01 2016
+ * @date   August 04 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -15,9 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// EXPORTS ************************************************************************************************************/
-
-export interface Migratable {
-    up();
-    down();
+interface Distinguishable {
+    _id?: string;
 }

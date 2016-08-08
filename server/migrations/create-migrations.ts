@@ -17,19 +17,29 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { CategoryMigration } from './category.migration';
-import { Categories }        from '../../common/collections/category.collection';
-import { ProductMigration }  from './product.migration';
-import { Products }          from '../../common/collections/product.collection';
-import { Migratable }        from './interfaces/Migratable';
+import {
+    SimplifiedChineseContentGenerator
+}                                 from '../../common/helpers/generator/simplified-chinese-content-generator';
+import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
+import { CategoryMigration }      from './category.migration';
+import { Categories }             from '../../common/collections/category.collection';
+import { ProductMigration }       from './product.migration';
+import { Products }               from '../../common/collections/product.collection';
+import { IMigratable }            from './interfaces/i-migratable';
 
 // EXPORTS ************************************************************************************************************/
 
 export function createMigrations() {
+    // TODO IOC container
+    const generators = {
+        zh: new SimplifiedChineseContentGenerator(),
+        kr: new KoreanContentGenerator()
+    };
+
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
-        new CategoryMigration(Categories),
-        new ProductMigration(Products, Categories)
+        new CategoryMigration(Categories, generators),
+        new ProductMigration(Products, generators, Categories)
     ];
 
     // Each migration version needs to be added with the add method.
@@ -42,13 +52,13 @@ export function createMigrations() {
         version: 1,
         name: 'Add default documents.',
         up() {
-            migrations.forEach((migration: Migratable) => {
+            migrations.forEach((migration: IMigratable) => {
                 migration.up();
             });
             console.log('Migration completed.');
         },
         down() {
-            migrations.forEach((migration: Migratable) => {
+            migrations.forEach((migration: IMigratable) => {
                 migration.down();
             });
             console.log('Migration reset.');

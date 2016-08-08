@@ -2,6 +2,7 @@
  * @file product.migration.ts.
  *
  * @summary Creates new product documents to insert to the database.
+ * @todo slug to slugs
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   August 01 2016
@@ -17,12 +18,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Migration } from './migration';
-import { Mongo }     from 'meteor/mongo';
+import { AbstractMigration } from './abstract-migration';
+import { Mongo }             from 'meteor/mongo';
+import * as faker            from 'faker/locale/en';
+import * as zhFaker          from 'faker/locale/zh_TW';
+import * as krFaker          from 'faker/locale/ko';
 
 // EXPORTS ************************************************************************************************************/
 
-export class ProductMigration extends Migration {
+export class ProductMigration extends AbstractMigration {
 
     /**
      * @summary Each category will have at least 3 products.
@@ -41,7 +45,7 @@ export class ProductMigration extends Migration {
     private _products: Product[] = [];
 
     /**
-     * The products to be inserted.
+     * @summary The categories to be associated to products.
      *
      * @type {CategoryIds[]}
      * @private
@@ -66,8 +70,10 @@ export class ProductMigration extends Migration {
         'xl: Extra Large',
     ];
 
-    constructor(collection: Mongo.Collection<Object>, categoriesCollection: Mongo.Collection<Category>) {
-        super(collection);
+    constructor(collection: Mongo.Collection<Object>,
+        generators,
+        categoriesCollection: Mongo.Collection<Category>) {
+        super(collection, generators);
 
         this._categoriesCollection = categoriesCollection;
     }
@@ -75,7 +81,7 @@ export class ProductMigration extends Migration {
     /**
      * @summary Adds the categories to the database.
      *
-     * @see parent Migration.
+     * @see parent AbstractMigration.
      */
     public up(): void {
         console.log('Starting Default Products.');
@@ -94,26 +100,25 @@ export class ProductMigration extends Migration {
      */
     private _addProduct(): void {
         this._getCategoriesIds();
-        for (let i = 0; i < 1; i++) {
-            let title = Fake.sentence(4);
-
+        for (let i = 0; i < this._amount; i++) {
             this._products.push({
-                slug: title.toLowerCase().replace(/[ ]/gi, '-'),
                 title: [
-                    {language: 'en', value: title},
-                    {language: 'zh', value: this._chineseSentences.pop()},
+                    {language: 'en', value: faker.commerce.productName()},
+                    {language: 'zh', value: zhFaker.commerce.productName()},
+                    {language: 'kr', value: krFaker.commerce.productName()},
                 ],
-                sku: Fake.word().toLowerCase() + Math.floor(Math.random() * 1000),
+                sku: faker.lorem.words(2).toLowerCase() + Math.floor(Math.random() * 1000),
                 categoryId: this._getRandomIds(),
                 description: [
-                    {language: 'en', value: Fake.paragraph(1)},
-                    {language: 'zh', value: this._chineseParagraph},
+                    {language: 'en', value: faker.lorem.paragraph(3)},
+                    {language: 'zh', value: this._generators.zh.paragraph()},
+                    {language: 'kr', value: this._generators.kr.paragraph()},
                 ],
-                color: Fake.color(),
-                size: this._getSize(),
+                color: faker.commerce.color(),
+                size: this._getRandomSize(),
                 price: Math.floor(Math.random() * 10000),
                 discount: Math.floor(Math.random() * 100),
-                hashtags: Fake.sentence(3).split(' '),
+                hashtags: faker.lorem.words(3).split(' '),
                 isVisible: true
             });
         }
@@ -124,7 +129,7 @@ export class ProductMigration extends Migration {
      *
      * @returns {string}
      */
-    private _getSize(): string {
+    private _getRandomSize(): string {
         return this._sizes.filter((size, i) => {
             return i === Math.random() * this._sizes.length;
         })[0];
@@ -135,9 +140,15 @@ export class ProductMigration extends Migration {
      * @private
      */
     private _getCategoriesIds() {
-        this._categoriesIds = this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
+        this._categoriesIds = <CategoryIds[]>this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
     }
 
+    /**
+     * @summary Gives a random set of ids, from 1 to 5
+     *
+     * @returns {string[]}
+     * @private
+     */
     private _getRandomIds(): string[] {
         const array = this._categoriesIds.slice(0);
         let results = [];
@@ -153,5 +164,5 @@ export class ProductMigration extends Migration {
 }
 
 interface CategoryIds {
-    _id: string;
+    _id?: string;
 }

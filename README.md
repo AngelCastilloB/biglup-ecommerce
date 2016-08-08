@@ -1,37 +1,37 @@
-## Biglup Ecommerce Platform
+# Biglup E-commerce Platform
 ---
-Biglup ecommerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
+Biglup e-commerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
 
 ## Recommendations
 ---
  * Commit early and often.
-
  * Write concise and descriptive messages in every commit.
-
  * Respect project code convention.
-
  * Keep good development practices.
 
-## File system structure
+## Conventions
+---
+### File system structure
 ---
  * All folders should be lower case with "-" character as word separator.
-
  * All parts of the components should be name as follows name.component.ts|html|css|spec to represent those various files.
-
- * All componentes should have its own folder.
- 
+ * All components should have its own folder.
  * Client side code should be in the "client" folder, server side code should be in the "server" folder, all mongodb collections
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
    the "common" folder.
    
-## Version control agreements
+### OOP Design
+---
+ * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
+ * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
+ * Methods should be named after an action, IE: getTime() instead of time().
+ * Methods that return flags or booleans should answer to questions IE: isAdmin()
+ 
+### Version control agreements
 ---
  * Only make commits to the private Biglup bitbucket Git server.
-
  * Don't share source code over cloud services (Dropbox, etc).
-
  * Use Git branch naming and branch merging conventions:
-
      Release preparation branches must start with "release/".
      Feature, Issues, Bug branches must start with "feature/".
      Hotfix branches must start with "hotfix/".
@@ -40,7 +40,7 @@ Biglup ecommerce is a modern reactive, real-time event driven platform. The plat
 
 ## Installation
 ---
-> Biglup ecommerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/), [npm](https://www.npmjs.com/) and [imagemagick](http://www.imagemagick.org/script/index.php)
+> Biglup e-commerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/), [npm](https://www.npmjs.com/) and [imagemagick](http://www.imagemagick.org/script/index.php)
 
 Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
 
@@ -80,7 +80,7 @@ in the repository instead of search for tslint.
 
 ### Coding Style
 
-Editor config should be enabled by your prefered Ide, in Webstorm, this is done automagically.
+Editor config should be enabled by your preferred Ide, in Webstorm, this is done automagically.
 
 To add an existing Webstorm coding style go to **file > settings > editor > coding style** and click **manage > import**
 to add an XML file containing pre existing rules to automatically reformat code (defaults to `crl + shift + L`) according 

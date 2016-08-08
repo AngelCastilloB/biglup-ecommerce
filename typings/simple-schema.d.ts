@@ -1,7 +1,7 @@
 /**
  * @file simple-schema.d.ts.
  *
- * @summary TODO add summary.
+ * @summary Related to the mongo collections, attaches schemas.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   July 31 2016

@@ -40,3 +40,9 @@ jspm_packages
 
 # App envs
 meteor.json
+
+# Typescript typings
+# TODO update typings according to Kanban task response.
+/typings/globals/
+/typings/modules/
+/typings/index.d.ts

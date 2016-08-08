@@ -28,4 +28,3 @@ jalik:ufs-local
 check
 momentjs:moment
 percolate:migrations
-anti:fake
