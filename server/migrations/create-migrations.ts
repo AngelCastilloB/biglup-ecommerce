@@ -26,6 +26,8 @@ import { Categories }             from '../../common/collections/category.collec
 import { ProductMigration }       from './product.migration';
 import { Products }               from '../../common/collections/product.collection';
 import { IMigratable }            from './interfaces/i-migratable';
+import { ImageMigration }         from './image.migration';
+import { Images }                 from '../../common/collections/image.collection';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -39,7 +41,8 @@ export function createMigrations() {
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
         new CategoryMigration(Categories, generators),
-        new ProductMigration(Products, generators, Categories)
+        new ProductMigration(Products, generators, Categories),
+        new ImageMigration(Images, generators, {products: Products, categories: Categories})
     ];
 
     // Each migration version needs to be added with the add method.

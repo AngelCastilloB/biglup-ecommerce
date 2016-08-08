@@ -6,6 +6,7 @@
   "globalDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "faker": "registry:dt/faker#0.0.0+20160406111603",
-    "meteor": "registry:env/meteor#1.3.0+20160713172414"
+    "meteor": "registry:env/meteor#1.3.0+20160713172414",
+    "node": "registry:dt/node#6.0.0+20160805072842"
   }
 }
