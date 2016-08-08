@@ -82,7 +82,8 @@ export let ProductSchema = new SimpleSchema({
     },
     stock: {
         label: 'Stock',
-        type: Number
+        type: Number,
+        optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
@@ -91,7 +92,7 @@ export let ProductSchema = new SimpleSchema({
         optional: true
     },
     isBackorder: {
-        label: 'Indicates when the seller has allowed the sale of product which is not in stock',
+        label: 'Indicates when the seller _has allowed the sale of product which is not in stock',
         type: Boolean,
         optional: true
     },
@@ -107,7 +108,7 @@ export let ProductSchema = new SimpleSchema({
     },
     isVisible: {
         type: Boolean,
-        defaultValue: false
+        defaultValue: false,
     },
     createdAt: {
         type: Date,

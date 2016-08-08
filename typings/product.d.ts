@@ -31,7 +31,7 @@ interface Product {
     price: number;
     discount: number;
     trackInventory: boolean;
-    stock: number;
+    stock?: number;
     isLowQuantity: boolean;
     isSoldOut: boolean;
     isBackorder: boolean;

@@ -81,7 +81,7 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     }
 
     /**
-     * #brief Runs after the view has been completely initialized.
+     * #brief Runs after the view _has been completely initialized.
      */
     public ngAfterViewInit() {
         this._imageDisplay.setImage(this._model);

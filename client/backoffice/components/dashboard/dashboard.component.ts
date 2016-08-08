@@ -48,7 +48,7 @@ export class DashboardComponent extends MeteorComponent implements AfterViewInit
     }
 
     /**
-     * @summary This function is called when your component's view has been fully initialized.
+     * @summary This function is called when your component's view _has been fully initialized.
      */
     public ngAfterViewInit() {
     }

@@ -22,7 +22,9 @@ import 'reflect-metadata';
 import { Component,
          ViewChild,
          ElementRef,
-         Renderer }                from '@angular/core';
+         Renderer,
+         EventEmitter,
+         Output }                  from '@angular/core';
 import { FileDropDirective }       from './directives/file-drop.directive';
 import { FileSelectDirective }     from './directives/file-select.directive';
 import { UploadFS }                from 'meteor/jalik:ufs';
@@ -53,12 +55,16 @@ const NUMBER_OF_COLUMNS = 5;
     directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
 })
 export class ImagesUploader  {
+    @Output('onSuccess')
+    private  _onSuccess:   EventEmitter<any> = new EventEmitter<any>();
+    @Output('onError')
+    private _onError:      EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('drop')
     private _dropzone:     ElementRef;
-    private _fileIsOver:   boolean     = false;
-    private _uploading:    boolean     = false;
-    private _previewFiles: Array<File> = [];
-    private _rows:         number      = 0;
+    private _fileIsOver:   boolean           = false;
+    private _uploading:    boolean           = false;
+    private _previewFiles: Array<File>       = [];
+    private _rows:         number            = 0;
 
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
@@ -108,7 +114,8 @@ export class ImagesUploader  {
 
         this._uploading = true;
 
-        for (let i = 0; i < this._previewFiles.length; ++i) {
+        let count: number = 0; // HACK: This is an ugly hack *se persigna*. Will fix this in a later iteration.
+        for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
             let sourceFile: File = this._previewFiles[i];
 
             const file = {
@@ -116,6 +123,7 @@ export class ImagesUploader  {
                 type: sourceFile.type,
                 size: sourceFile.size,
                 productId: id,
+                index: i
             };
 
             const reader = new FileReader();
@@ -127,18 +135,25 @@ export class ImagesUploader  {
                         file,
                         store: ImagesStore,
                         onError: (error) => {
+                            if (!this._uploading) { // HACK: remove this
+                                return;
+                            }
+
                             this._uploading = false;
-                            console.log(`Something went wrong!`, error); // TODO: Remove this and handle the case properly.
+                            this._onError.emit(error);
                          },
                         onComplete:  (result) => {
-                            this._uploading = false;
-                            console.log('File uploaded'); // TODO: Remove this and handle the case properly.
+                            ++count;
+                            if (count === this._previewFiles.length) { // HACK: Oh god...
+                                this._onSuccess.emit(result);
+                                this._uploading = false;
+                            }
                          }
                     });
 
                     upload.start();
                 } else if (ev.type === 'error') {
-                    throw new Error(`Couldn't load file`);
+                    this._onError.emit('Could not load file');
                 }
             };
 

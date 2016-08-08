@@ -185,7 +185,7 @@ kernel.fp.functions = def(
   }
 );
 /**
- * This module has a dual responsibility:
+ * This module _has a dual responsibility:
  *  1. Ensures that asynchronous function calls, 'f', that share the same
  *     'key' are not executed in parallel.
  *  2. In the case where an attempt to call in parallel is prevented,
@@ -195,7 +195,7 @@ kernel.fp.functions = def(
  * Example:
  *  When we async-map to remotely fetch module definition, it is
  *  important that only a single define is evaluated, but the
- *  notification that the definition has completed is propagated
+ *  notification that the definition _has completed is propagated
  *  to all interested parties.
  *
  *    1. we require dependencies 'x' and 'y'
@@ -943,7 +943,7 @@ loader.executor.injector = def(
       // Injection does not fire events, but execution happens synchronously,
       // so we just make an explicit callback
       script.insert(inject, noop);
-      onsuccess(); 
+      onsuccess();
     };
 
     return {

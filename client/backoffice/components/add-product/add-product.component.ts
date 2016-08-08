@@ -23,6 +23,7 @@ import { Component,
          OnInit,
          NgZone,
          ViewChild }            from '@angular/core';
+import { Router }               from '@angular/router';
 import { MeteorComponent }      from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
 import { TranslatePipe }        from '../../../pipes/translate.pipe';
@@ -32,6 +33,7 @@ import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
 import { NgForm }               from '@angular/forms';
 import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
 import { Products }             from '../../../../common/collections/product.collection';
+import { ModalComponent }       from '../modal/modal.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -46,7 +48,7 @@ import template from './add-product.component.html';
     selector: 'add-products',
     template,
     pipes: [TranslatePipe, MongoTranslatePipe],
-    directives: [ROUTER_DIRECTIVES, ImagesUploader, NgForm]
+    directives: [ROUTER_DIRECTIVES, ImagesUploader, NgForm, ModalComponent]
 })
 export class AddProductComponent extends MeteorComponent implements OnInit {
     private _categories:         Mongo.Cursor<Category>;
@@ -54,23 +56,31 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     private _productTitle:       string  = '';
     private _productDescription: string  = '';
     private _defaultLocale:      string  = I18nSingletonService.getInstance().getDefaultLocale();
-    @ViewChild(ImagesUploader)
+    @ViewChild('imagesUploader')
     private _imagesUploader:     ImagesUploader;
+    @ViewChild(ModalComponent)
+    private _modal:              ModalComponent;
+    private _waitModalResult:    boolean = false;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone) {
+    constructor(private _zone: NgZone, private _router: Router) {
         super();
-
-        this._product.categoryId  = [];
-        this._product.title       = [];
-        this._product.description = [];
-        this._product.hashtags    = [];
-        this._product.createdAt   = new Date();
-        this._product.updatedAt   = new Date();
-        this._productTitle        = this._getMongoTranslation(this._product.title);
-        this._productDescription  = this._getMongoTranslation(this._product.description);
+        this._product.categoryId       = [];
+        this._product.title            = [];
+        this._product.description      = [];
+        this._product.hashtags         = [];
+        this._product.createdAt        = new Date();
+        this._product.updatedAt        = new Date();
+        this._productTitle             = this._getMongoTranslation(this._product.title);
+        this._productDescription       = this._getMongoTranslation(this._product.description);
+        this._product.price            = 0;
+        this._product.discount         = 0;
+        this._product.stock            = 0;
+        this._product.trackInventory   = false;
+        this._product.isVisible        = false;
+        this._product.requiresShipping = false;
     }
 
     /**
@@ -105,7 +115,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Event triggered when a category is toggled.
      *
-     * @param event The toggle category.
+     * @param {string}   id        The id of the category that was toggled.
+     * @param {booblean} isChecked True if the toggle was enabled, otherwise, false.
      */
     private _onCategoryToggle(id: string, isChecked: boolean): void {
         let index: number = this._product.categoryId.indexOf(id);
@@ -156,8 +167,55 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @summary Saves the product in the database.
      */
     private _saveProduct(): void {
-        let id: string = Products.insert(this._product);
 
-        this._imagesUploader.upload(id);
+        Products.insert(this._product, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    I18nSingletonService.getInstance().getText('There was an error saving the product'),
+                    I18nSingletonService.getInstance().getText('Error'));
+            } else {
+                this._imagesUploader.upload(<string>result);
+            }
+        });
+    }
+
+    /**
+     * @summary Event Handler for when image uploading process successfully.
+     */
+    private _onImagesUploadedSuccessfully(result: any): void {
+        this._waitModalResult = true;
+
+        this._modal.show(
+            I18nSingletonService.getInstance().getText('Product Saved!'),
+            I18nSingletonService.getInstance().getText('Information'));
+    }
+
+    /**
+     * @summary Event Handler for when image uploading process fails.
+     */
+    private _onImagesUploadedFails(error: any): void {
+        this._waitModalResult = false;
+
+        this._modal.show(
+            I18nSingletonService.getInstance().getText('There was an error saving the product'),
+            I18nSingletonService.getInstance().getText('Error'));
+
+        Products.remove(this._product); // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+        this._product._id = '';
+    }
+
+    /**
+     * @summary Handles the modal closed event.
+     *
+     * @param event The modal closed event
+     */
+    private _onModalClosed(event: any): void {
+        if (this._waitModalResult) {
+            this._waitModalResult = false;
+
+            this._router.navigate(['/admin/products']);
+        }
     }
 }
