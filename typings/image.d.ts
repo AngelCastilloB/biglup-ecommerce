@@ -32,6 +32,7 @@ interface Image {
     url: string;
     productId?: string;
     categoryId?: string;
+    index: number;
 }
 
 /**

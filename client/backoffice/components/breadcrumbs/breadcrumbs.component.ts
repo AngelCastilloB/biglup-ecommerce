@@ -17,8 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router, NavigationEnd } from '@angular/router';
+import { ROUTER_DIRECTIVES,
+         Router,
+         NavigationEnd }    from '@angular/router';
+import { Component }        from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,7 +32,7 @@ import { ROUTER_DIRECTIVES, Router, NavigationEnd } from '@angular/router';
     selector: 'breadcrumb',
     directives: [ROUTER_DIRECTIVES],
     template: `
-        <nav class="navbar navbar-dark stylish-color">
+        <nav class="navbar navbar-dark stylish-color" style="z-index: 10;">
             <ol class="breadcrumb">
                     <li *ngFor="let url of _urls; let last = last">
                         <a (click)="navigateTo(url)" *ngIf="!last">{{ getCurrentPosition(url) }}</a>
@@ -46,19 +48,29 @@ import { ROUTER_DIRECTIVES, Router, NavigationEnd } from '@angular/router';
 })
 export class BreadcrumbComponent {
 
-    private _urls: string[];
+    private _urls:   string[];
     private _isBase: boolean = true;
 
+    /**
+     * @brief Initializes a new instance of the BreadcrumbComponent class.
+     *
+     * @param {Router} router The router dependency injection.
+     */
     constructor(private router: Router) {
         this._urls = [];
         this.router.events.subscribe((navigationEnd: NavigationEnd) => {
-            this._urls.length = 0; // Fastest way to clear out array
+            this._urls.length = 0;
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
 
             this._isBase = this._urls.length <= 0;
         });
     }
 
+    /**
+     * @summary  This methods generates the breadcrumbs for the given URL.
+     *
+     * @param {string} url The Url to generate the breadcrumbs from.
+     */
     public generateBreadcrumbTrail(url: string): void {
         // HACK: Remove base url. This is a temporary hack.
         if (url === '/admin' || url === '/admin/dashboard') {
@@ -72,12 +84,17 @@ export class BreadcrumbComponent {
         }
     }
 
+    /**
+     * @summary  Gets the current position in the given url.
+     *
+     * @param {string} url The Url to get the current position from.
+     */
     public getCurrentPosition(url: string): string {
         let positions = url.split('/').filter(function (n) {
             return n !== '';
         });
 
-        // remove the base route for the admin panel.
+        // HACK: remove the base route for the admin panel.
         if (positions[0] === 'admin') {
             positions.splice(0, 1);
         }
@@ -89,10 +106,20 @@ export class BreadcrumbComponent {
         return this.fixCase(positions[positions.length - 1]);
     }
 
+    /**
+     * @summary  Fixes the case of the current message. (Pascal Case).
+     *
+     * @param {string} message The message to be fixed.
+     */
     public fixCase(message: string) {
         return message.charAt(0).toUpperCase() + message.slice(1);
     };
 
+    /**
+     * @summary Navigates towards the specified rul.
+     *
+     * @param {string} url The url to navigate to.
+     */
     public navigateTo(url: string): void {
         this.router.navigateByUrl(url);
     }
