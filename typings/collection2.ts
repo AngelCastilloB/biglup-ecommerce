@@ -26,7 +26,7 @@ declare module Mongo {
         /**
          * Retrieves the attached SimpleSchema from the collection.
          */
-        simpleSchema(): SimpleSchemaModule.SimpleSchema;
+        simpleSchema(): SimpleSchemaStatic;
 
         upsert(selector: Mongo.Selector, modifier: Mongo.Modifier, options?: Collection2.UpsertOptions, callback?: Function): {numberAffected?: number; insertedId?: string;};
     }
