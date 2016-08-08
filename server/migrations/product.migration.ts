@@ -47,10 +47,10 @@ export class ProductMigration extends AbstractMigration {
     /**
      * @summary The categories to be associated to products.
      *
-     * @type {CategoryIds[]}
+     * @type {Distinguishable[]}
      * @private
      */
-    private _categoriesIds: CategoryIds[];
+    private _categoriesIds: Distinguishable[];
 
     private _categoriesCollection: Mongo.Collection<Category>;
 
@@ -140,7 +140,7 @@ export class ProductMigration extends AbstractMigration {
      * @private
      */
     private _getCategoriesIds() {
-        this._categoriesIds = <CategoryIds[]>this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
+        this._categoriesIds = <Distinguishable[]>this._categoriesCollection.find({}, {fields: {_id: 1}}).fetch();
     }
 
     /**
@@ -157,12 +157,8 @@ export class ProductMigration extends AbstractMigration {
             results.push(array.splice(Math.floor(Math.random() * array.length), 1)[0]);
         }
 
-        return results.map((obj: CategoryIds) => {
+        return results.map((obj: Distinguishable) => {
             return obj._id;
         });
     }
-}
-
-interface CategoryIds {
-    _id?: string;
 }
