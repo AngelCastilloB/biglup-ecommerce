@@ -19,15 +19,19 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit, NgZone } from '@angular/core';
-import { MeteorComponent }           from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }         from '@angular/router';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { ImagesUploader }            from '../images-uploader/images-uploader.component';
-import { Categories }                from '../../../../common/collections/category.collection.ts';
-import { MongoTranslatePipe }        from '../../../pipes/mongo-translate.pipe';
-import { NgForm }                    from '@angular/forms';
-import { I18nSingletonService }      from '../../../services/l18n/I18nSingletonService';
+import { Component,
+         OnInit,
+         NgZone,
+         ViewChild }            from '@angular/core';
+import { MeteorComponent }      from 'angular2-meteor';
+import { ROUTER_DIRECTIVES }    from '@angular/router';
+import { TranslatePipe }        from '../../../pipes/translate.pipe';
+import { ImagesUploader }       from '../images-uploader/images-uploader.component';
+import { Categories }           from '../../../../common/collections/category.collection.ts';
+import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
+import { NgForm }               from '@angular/forms';
+import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
+import { Products }             from '../../../../common/collections/product.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -50,6 +54,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     private _productTitle:       string  = '';
     private _productDescription: string  = '';
     private _defaultLocale:      string  = I18nSingletonService.getInstance().getDefaultLocale();
+    @ViewChild(ImagesUploader)
+    private _imagesUploader:     ImagesUploader;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -82,7 +88,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
                         });
                     });
                 }
-            })
+            });
         this._categories = Categories.find();
     }
 
@@ -150,6 +156,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @summary Saves the product in the database.
      */
     private _saveProduct(): void {
-        console.error(this._product);
+        let id: string = Products.insert(this._product);
+
+        this._imagesUploader.upload(id);
     }
 }

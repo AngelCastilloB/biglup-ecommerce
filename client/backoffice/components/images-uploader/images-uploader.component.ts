@@ -53,12 +53,12 @@ const NUMBER_OF_COLUMNS = 5;
     directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
 })
 export class ImagesUploader  {
-
-    @ViewChild('drop') private _dropzone: ElementRef;
-    private                    _fileIsOver: boolean = false;
-    // private _uploading: boolean = false;
+    @ViewChild('drop')
+    private _dropzone:     ElementRef;
+    private _fileIsOver:   boolean     = false;
+    private _uploading:    boolean     = false;
     private _previewFiles: Array<File> = [];
-    private _rows: number = 0;
+    private _rows:         number      = 0;
 
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
@@ -66,6 +66,10 @@ export class ImagesUploader  {
     constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
 
         _dragulaService.drop.subscribe((value) => {
+
+            if (this._uploading) {
+                return;
+            }
 
             let [bag, e, target, source, sibling] = value;
 
@@ -96,39 +100,50 @@ export class ImagesUploader  {
     }
 
     /**
-     * @summary Uploads the given file to the server.
+     * @summary Uploads all the current images to the server.
      *
-     * @param sourceFile The file to be uploaded.
-     * @param resolve    The function callback for the resolve event.
-     * @param reject     The function callback for the reject event.
+     * @param {string} id The product id to asociate the images with.
      */
-    public upload(sourceFile: File, resolve?: Function, reject?: Function) {
-        const file = {
-            name: sourceFile.name,
-            type: sourceFile.type,
-            size: sourceFile.size,
-            productId: "P0000000003",
+    public upload(id: string) {
+
+        this._uploading = true;
+
+        for (let i = 0; i < this._previewFiles.length; ++i) {
+            let sourceFile: File = this._previewFiles[i];
+
+            const file = {
+                name: sourceFile.name,
+                type: sourceFile.type,
+                size: sourceFile.size,
+                productId: id,
+            };
+
+            const reader = new FileReader();
+
+            reader.onload = (ev: ProgressEvent) => {
+                if (ev.type === 'load') {
+                    const upload = new UploadFS.Uploader({
+                        data: ev.target.result,
+                        file,
+                        store: ImagesStore,
+                        onError: (error) => {
+                            this._uploading = false;
+                            console.log(`Something went wrong!`, error); // TODO: Remove this and handle the case properly.
+                         },
+                        onComplete:  (result) => {
+                            this._uploading = false;
+                            console.log('File uploaded'); // TODO: Remove this and handle the case properly.
+                         }
+                    });
+
+                    upload.start();
+                } else if (ev.type === 'error') {
+                    throw new Error(`Couldn't load file`);
+                }
+            };
+
+            reader.readAsArrayBuffer(sourceFile);
         }
-
-        const reader = new FileReader();
-
-        reader.onload = (ev: ProgressEvent) => {
-            if (ev.type === 'load') {
-                const upload = new UploadFS.Uploader({
-                    data: ev.target.result,
-                    file,
-                    store: ImagesStore,
-                    onError: reject,
-                    onComplete: resolve
-                });
-
-                upload.start();
-            } else if (ev.type === 'error') {
-                throw new Error(`Couldn't load file`);
-            }
-        };
-
-        reader.readAsArrayBuffer(sourceFile);
     }
 
     /**
@@ -158,6 +173,10 @@ export class ImagesUploader  {
      */
     private _onFileDrop(files: FileList): void {
 
+        if (this._uploading) {
+            return;
+        }
+
         if (!files.length) {
             return;
         }
@@ -171,15 +190,6 @@ export class ImagesUploader  {
         }
 
         this._rows = Math.ceil(this._previewFiles.length / NUMBER_OF_COLUMNS);
-        // this._uploading = true;
-
-       // this.upload(file, (result) => {
-       //     this._uploading = false;
-       //     console.log('File uploaded'); // TODO: Remove this and handle the case properly.
-       // }, (error) => {
-       //     this._uploading = false;
-       //     console.log(`Something went wrong!`, error); // TODO: Remove this and handle the case properly.
-       // });
     }
 
     /**
@@ -188,6 +198,10 @@ export class ImagesUploader  {
      * @param {File} file The file to be deleted.
      */
     private _onImageDeleted(file: File) {
+
+        if (this._uploading) {
+            return;
+        }
 
         let index = this._previewFiles.indexOf(file);
 
@@ -203,6 +217,10 @@ export class ImagesUploader  {
     * @param { number} destination The destination index.
     */
     private _moveFile(source: number, destination: number): void  {
+       if (this._uploading) {
+           return;
+       }
+
         while (source < 0) {
             source += this._previewFiles.length;
         }
