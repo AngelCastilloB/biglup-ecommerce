@@ -26,6 +26,16 @@ const fs     = require('fs');
 const PATHS = {
     meteor: {
         settings: './example.meteor.json'
+    },
+    bootstrap: {
+        css: {
+            src: './node_modules/bootstrap/dist/css/**/*',
+            dest: './public/theme/css'
+        },
+        js: {
+            src: './node_modules/bootstrap/dist/js/bootstrap.min.js',
+            dest: './public/theme/js'
+        }
     }
 };
 
@@ -51,6 +61,17 @@ gulp.task('copy-meteor-settings', function () {
 });
 
 /**
+ * @summary copies related bootstrap files
+ */
+gulp.task('copy-bootstrap-files', function () {
+    gulp.src(PATHS.bootstrap.css.src)
+        .pipe(gulp.dest(PATHS.bootstrap.css.dest));
+
+    gulp.src(PATHS.bootstrap.js.src)
+        .pipe(gulp.dest(PATHS.bootstrap.js.dest));
+});
+
+/**
  * @summary the tasks to be run when the app installs.
  */
-gulp.task('meteor-post-install', ['copy-meteor-settings']);
+gulp.task('meteor-post-install', ['copy-meteor-settings', 'copy-bootstrap-files']);
