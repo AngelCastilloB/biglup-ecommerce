@@ -34,7 +34,7 @@ export class ProductMigration extends AbstractMigration {
      * @type {number}
      * @private
      */
-    protected _amount = 3;
+    protected _amount = 50;
 
     /**
      * The products to be inserted.
@@ -107,7 +107,8 @@ export class ProductMigration extends AbstractMigration {
                     {language: 'zh', value: zhFaker.commerce.productName()},
                     {language: 'kr', value: krFaker.commerce.productName()},
                 ],
-                sku: faker.lorem.words(2).toLowerCase() + Math.floor(Math.random() * 1000),
+                sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
+                barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
                 categoryId: this._getRandomIds(),
                 description: [
                     {language: 'en', value: faker.lorem.paragraph(3)},
@@ -119,7 +120,12 @@ export class ProductMigration extends AbstractMigration {
                 price: Math.floor(Math.random() * 10000),
                 discount: Math.floor(Math.random() * 100),
                 hashtags: faker.lorem.words(3).split(' '),
-                isVisible: true
+                isVisible: faker.random.boolean(),
+                trackInventory: true,
+                isLowQuantity: faker.random.boolean(),
+                stock: Math.floor(Math.random() * 500),
+                isBackorder: faker.random.boolean(),
+                requiresShipping: faker.random.boolean()
             });
         }
     }
