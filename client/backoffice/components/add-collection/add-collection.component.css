@@ -1,0 +1,66 @@
+.checkbox {
+    cursor: pointer;
+    float: left;
+}
+
+.checkbox:before {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid #f2f2f2;
+}
+
+.checkbox:checked:before {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    height: .75rem;
+    border-color: #4285F4;
+    border-top-style: none;
+    border-right-style: none;
+}
+
+.checkbox:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: #fff;
+    cursor: pointer;
+}
+
+.checkbox-text {
+    float: left;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.checkbox-container {
+    padding-top: 25px;
+}
+
+.add-product-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-button {
+    width: 150px;
+    height: 40px;
+    text-align: center;
+}
+
+.bottom-button {
+    padding-right: 100px;
+}
