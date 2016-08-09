@@ -22,11 +22,14 @@ interface Product extends Distinguishable, Sluggable {
     categoryId?: Array<string>;
     title: Array<I18nString>;
     description: Array<I18nString>;
+    barcode: string;
     sku: string;
     color: string;
     size: string;
     price: number;
     discount: number;
+    trackInventory: boolean;
+    stock?: number;
     isLowQuantity?: boolean; // defaults to false
     isSoldOut?: boolean; // defaults to false
     isBackorder?: boolean; // defaults to false

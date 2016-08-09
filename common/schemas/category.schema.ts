@@ -51,7 +51,8 @@ export let CategorySchema: any = new SimpleSchema({
     },
     image: {
         type: String,
-        label: 'Image'
+        label: 'Image',
+        optional: true
     },
     active: {
         type: Boolean,

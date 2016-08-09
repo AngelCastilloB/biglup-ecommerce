@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="table-responsive">
+    <br>
+    <h3>
+      <i class="fa fa-shopping-cart"></i>
+      <small> {{ 'Collection list' | translate }}</small>
+      <a [routerLink]="['/admin/collections/add-collection']"
+         class="btn btn-primary pull-right hide"
+         id="back-to-bootsnipp">
+        {{'Add Collection' | translate }}
+      </a>
+    </h3>
+
+    <hr>
+    <table class="table table-hover" width="50%">
+      <thead class="thead-inverse">
+      <tr>
+        <th>{{ 'Title' | translate }}</th>
+        <th>{{ 'Description' | translate }}</th>
+        <th>{{ 'Numbre of Products' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody class="table-striped">
+
+      <tr style="cursor: pointer" *ngFor="let category of _categories">
+        <td>{{ category.name | mongoTranslate }}</td>
+        <td>{{ category.info | mongoTranslate }}</td>
+        <td> 0 </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

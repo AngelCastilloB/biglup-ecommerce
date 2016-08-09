@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Component }          from '@angular/core';
+import { Component, OnInit }  from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }  from '@angular/router';
 import { Mongo }              from 'meteor/mongo';
@@ -44,7 +44,7 @@ import template from './products.component.html';
     directives: [ROUTER_DIRECTIVES],
     pipes: [MongoTranslatePipe, TranslatePipe]
 })
-export class ProductsComponent extends MeteorComponent {
+export class ProductsComponent extends MeteorComponent implements OnInit  {
     private _products: Mongo.Cursor<Product>;
 
     /**

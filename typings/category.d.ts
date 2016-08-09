@@ -20,7 +20,7 @@ interface Category extends Distinguishable, Sluggable {
     info: Array<I18nString>;
     isParentCategory?: boolean;
     parentCategory?: string;
-    image: string;
+    image?: string;
     active?: boolean;
     updated?: Date;
     sub_categories?: Array<Object>;

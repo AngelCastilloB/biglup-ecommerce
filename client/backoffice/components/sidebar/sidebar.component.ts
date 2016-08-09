@@ -38,15 +38,12 @@ import template from './sidebar.component.html';
     template,
     directives: [ROUTER_DIRECTIVES]
 })
-export class SidebarComponent extends MeteorComponent implements AfterViewInit {
+export class SidebarComponent extends MeteorComponent {
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
      */
     constructor() {
         super();
-    }
-
-    public ngAfterViewInit() {
     }
 }

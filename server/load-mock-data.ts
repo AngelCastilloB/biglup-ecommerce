@@ -19,7 +19,7 @@
 
 import { Categories } from '../common/collections/category.collection.ts';
 import { Products }   from '../common/collections/product.collection.ts';
-import { Images } from '../common/collections/image.collection';
+import { Images }     from '../common/collections/image.collection';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -161,6 +161,8 @@ export function loadProducts() {
                 'size': 'small',
                 'price': 1200,
                 'discount': 10,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,
@@ -209,6 +211,8 @@ export function loadProducts() {
                 'size': 'medium',
                 'price': 2000,
                 'discount': 5,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,
@@ -257,6 +261,8 @@ export function loadProducts() {
                 'size': 'shirt',
                 'price': 800,
                 'discount': 15,
+                'trackInventory': true,
+                'stock': 100,
                 'isLowQuantity': false,
                 'isSoldOut': false,
                 'isBackorder': false,
@@ -284,6 +290,7 @@ export function loadImages() {
         let images = [
             {
                 '_id': 'tjgNiQYYEhZPNdFPQ',
+                'index': 0,
                 'name': '11204203_xxl.jpg',
                 'type': 'image/jpeg',
                 'size': 74466,
@@ -300,6 +307,7 @@ export function loadImages() {
             },
             {
                 '_id': 'AMJkp5pD3Sh6GunNj',
+                'index': 1,
                 'name': 'images.jpg',
                 'type': 'image/jpeg',
                 'size': 3517,
@@ -316,6 +324,7 @@ export function loadImages() {
             },
             {
                 '_id': 'k74MPTu9quqa6g2fk',
+                'index': 2,
                 'name': '11204203_xxl.jpg',
                 'type': 'image/jpeg',
                 'size': 74466,
@@ -332,6 +341,7 @@ export function loadImages() {
             },
             {
                 '_id': 'w7nqxmY2Aonqv8iax',
+                'index': 3,
                 'name': 'mens-black-smart-pu-shoes-p18767-10216_zoom.jpg',
                 'type': 'image/jpeg',
                 'size': 60857,
@@ -348,6 +358,7 @@ export function loadImages() {
             },
             {
                 '_id': 'a6dxfZrT3YcoooSas',
+                'index': 4,
                 'name': 'images (1).jpg',
                 'type': 'image/jpeg', 'size': 3420,
                 'productId': 'P0000000001',
@@ -363,6 +374,7 @@ export function loadImages() {
             },
             {
                 '_id': '484nJydmMeMJ7TgyL',
+                'index': 0,
                 'name': 'a4e5vh-l.jpg',
                 'type': 'image/jpeg',
                 'size': 74198,
@@ -379,6 +391,7 @@ export function loadImages() {
             },
             {
                 '_id': 'ururMtSHZ7HvaN2Nr',
+                'index': 1,
                 'name': 'D4584WhiteStones-2.jpg',
                 'type': 'image/jpeg',
                 'size': 107423,
@@ -395,6 +408,7 @@ export function loadImages() {
             },
             {
                 '_id': 'NAJSNXF4kyNe6tXKo',
+                'index': 2,
                 'name': 'white-dress-LUX-LD1403-a.jpg',
                 'type': 'image/jpeg',
                 'size': 220903,
@@ -411,6 +425,7 @@ export function loadImages() {
             },
             {
                 '_id': 'ukBm7aGPJw2WqHLAZ',
+                'index': 3,
                 'name': '12094849_10153269135670838_8991426395593595276_o.jpg',
                 'type': 'image/jpeg',
                 'size': 40557,
@@ -427,6 +442,7 @@ export function loadImages() {
             },
             {
                 '_id': 'FGLNwvqaJQskwEv6P',
+                'index': 0,
                 'name': 'images (2).jpg',
                 'type': 'image/jpeg',
                 'size': 7504,
@@ -443,6 +459,7 @@ export function loadImages() {
             },
             {
                 '_id': 'qZx3HnszAzxmgLQtH',
+                'index': 1,
                 'name': 'images (3).jpg',
                 'type': 'image/jpeg',
                 'size': 7829,
