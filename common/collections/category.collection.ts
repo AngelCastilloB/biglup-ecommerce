@@ -26,7 +26,7 @@ import { WithSlugCollection } from './with-slug-collection';
 
 // TODO IOC container
 const slugifier     = new Slugifier(slugify);
-let Categories: any = WithSlugCollection.Collection<Category>('categories', 'name', slugifier);
+let Categories: any = WithSlugCollection.create<Category>('categories', 'name', slugifier);
 
 Categories.attachSchema(CategorySchema);
 

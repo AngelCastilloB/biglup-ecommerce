@@ -37,7 +37,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
      * @param {string=} options.idGeneration
      * @param {Function=} options.transform
      */
-    public static Collection<T>(name: string,
+    public static create<T>(name: string,
         _slugFieldTarget: string,
         _slugService: Slugger,
         options?: {connection?: Object; idGeneration?: string; transform?: Function}): Mongo.Collection<T> {
