@@ -15,7 +15,9 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-/// <reference path="../meteor/meteor.d.ts" />
+declare module 'meteor/aldeed:simple-schema' {
+    export let SimpleSchema: SimpleSchemaStatic;
+}
 
 declare var SimpleSchema: SimpleSchemaStatic;
 
