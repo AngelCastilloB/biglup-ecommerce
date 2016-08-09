@@ -17,20 +17,22 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { RouterConfig }         from '@angular/router';
-import { DashboardComponent }   from './components/dashboard/dashboard.component';
-import { OrdersComponent }      from './components/orders/orders.component';
-import { CustomersComponent }   from './components/customers/customers.component';
-import { ProductsComponent }    from './components/products/products.component';
-import { AddProductComponent }  from './components/add-product/add-product.component';
-import { EditProductComponent } from './components/edit-product/edit-product.component';
-import { ReportsComponent }     from './components/reports/reports.component';
-import { BackofficeComponent }  from './backoffice.component';
+import { RouterConfig }           from '@angular/router';
+import { DashboardComponent }     from './components/dashboard/dashboard.component';
+import { OrdersComponent }        from './components/orders/orders.component';
+import { CustomersComponent }     from './components/customers/customers.component';
+import { ProductsComponent }      from './components/products/products.component';
+import { AddProductComponent }    from './components/add-product/add-product.component';
+import { EditProductComponent }   from './components/edit-product/edit-product.component';
+import { ReportsComponent }       from './components/reports/reports.component';
+import { BackofficeComponent }    from './backoffice.component';
+import { CollectionsComponent }   from './components/collections/collections.component';
+import { AddCollectionComponent } from './components/add-collection/add-collection.component';
 
 /* EXPORTS ************************************************************************************************************/
 
 /**
- * @brief This are the backoffice routes.
+ * @brief This are the back office routes.
  */
 export const backofficeRoutes: RouterConfig = [
     {
@@ -44,7 +46,9 @@ export const backofficeRoutes: RouterConfig = [
             {path: 'products', component: ProductsComponent},
             {path: 'products/add-product', component: AddProductComponent},
             {path: 'products/edit-product:id', component: EditProductComponent},
-            {path: 'reports', component: ReportsComponent}
+            {path: 'reports', component: ReportsComponent},
+            {path: 'collections', component: CollectionsComponent},
+            {path: 'collections/add-collection', component: AddCollectionComponent},
         ]
     },
 ];
