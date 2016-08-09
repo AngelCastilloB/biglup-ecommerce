@@ -21,7 +21,8 @@ import 'reflect-metadata';
 
 import { Component,
          OnInit,
-         NgZone }               from '@angular/core';
+         NgZone,
+         ViewChild }            from '@angular/core';
 import { Router }               from '@angular/router';
 import { MeteorComponent }      from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
@@ -30,7 +31,7 @@ import { ImagesUploader }       from '../images-uploader/images-uploader.compone
 import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
 import { NgForm }               from '@angular/forms';
 import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
-import { Products }             from '../../../../common/collections/product.collection';
+import { Categories }           from '../../../../common/collections/category.collection';
 import { ModalComponent }       from '../modal/modal.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -50,20 +51,23 @@ import template from './add-collection.component.html';
     directives: [ROUTER_DIRECTIVES, ImagesUploader, NgForm, ModalComponent]
 })
 export class AddCollectionComponent extends MeteorComponent implements OnInit {
-    private _products:            Mongo.Cursor<Product>;
+    @ViewChild(ModalComponent)
+    private _modal:              ModalComponent;
     private _category:            Category = <Category>{};
-    private _categoryName:        string  = '';
-    private _categoryDescription: string  = '';
-    private _defaultLocale:       string  = I18nSingletonService.getInstance().getDefaultLocale();
-
+    private _categoryName:        string   = '';
+    private _categoryDescription: string   = '';
+    private _defaultLocale:       string   = I18nSingletonService.getInstance().getDefaultLocale();
+    private _waitModalResult:     boolean  = false;
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
     constructor(private _zone: NgZone, private _router: Router) {
         super();
 
-        this._categoryName        = this._getMongoTranslation(this._category.name);
-        this._categoryDescription = this._getMongoTranslation(this._category.info);
+        this._category.isParentCategory = true;
+        this._category.slug             = 'slug';
+        this._categoryName              = this._getMongoTranslation(this._category.name);
+        this._categoryDescription       = this._getMongoTranslation(this._category.info);
     }
 
     /**
@@ -82,7 +86,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
                     });
                 }
             });
-        this._products = Products.find();
     }
 
     /**
@@ -114,5 +117,42 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
             }
         }
         return '';
+    }
+
+    /**
+     * @summary Saves the category in the database.
+     */
+    private _saveCategory(): void {
+
+        Categories.insert(this._category, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    I18nSingletonService.getInstance().getText('There was an error saving the category'),
+                    I18nSingletonService.getInstance().getText('Error'));
+
+                console.error(error);
+            } else {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    I18nSingletonService.getInstance().getText('Category Saved!'),
+                    I18nSingletonService.getInstance().getText('Information'));
+            }
+        });
+    }
+
+    /**
+     * @summary Handles the modal closed event.
+     *
+     * @param event The modal closed event
+     */
+    private _onModalClosed(event: any): void {
+        if (this._waitModalResult) {
+            this._waitModalResult = false;
+
+            this._router.navigate(['/admin/collections']);
+        }
     }
 }

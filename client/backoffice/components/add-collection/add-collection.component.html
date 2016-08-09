@@ -1,3 +1,4 @@
+<modal-message (onClose)="_onModalClosed($event)"></modal-message>
 <div class="container-fluid">
     <form>
         <div class="table-responsive">
@@ -26,21 +27,11 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="card-block">
-                                    <b>{{ 'Products' | translate }}</b><br/><br/>
-                                    <div class="row" *ngFor="let product of _products">
-                                        <div class="col-md-6 checkbox-container">
-                                            <label [attr.for]="product._id">{{product.title | mongoTranslate}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="card-block">
                                     <b>{{ 'Visibility' | translate }}</b><br/><br/>
                                     <div class="row">
                                         <div class="col-md-12 checkbox-container">
                                             <input type="checkbox" [checked]="_category.isVisible" [(ngModel)]="_category.isVisible"  name="is-visible" id="is-visible" class="checkbox"/>
-                                            <label for="is-visible" class="checkbox-text">{{ "Show this product in the store" | translate }}</label>
+                                            <label for="is-visible" class="checkbox-text">{{ "Show this category in the store" | translate }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +43,7 @@
             <br/></br>
             <hr>
             <div class="bottom-button">
-                <button type="button" class="btn btn-primary save-button pull-right">{{'Save Collection' | translate }}</button>
+                <button type="button" (click)="_saveCategory($event)" class="btn btn-primary save-button pull-right">{{'Save Collection' | translate }}</button>
                 <button type="button" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
             </div>
         </div>
