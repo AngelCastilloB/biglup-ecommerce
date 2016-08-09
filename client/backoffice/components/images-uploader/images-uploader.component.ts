@@ -118,7 +118,7 @@ export class ImagesUploader  {
         for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
             let sourceFile: File = this._previewFiles[i];
 
-            const file = {
+            const picture = {
                 name: sourceFile.name,
                 type: sourceFile.type,
                 size: sourceFile.size,
@@ -126,38 +126,27 @@ export class ImagesUploader  {
                 index: i
             };
 
-            const reader = new FileReader();
+            let worker = new UploadFS.Uploader({
+                store: ImagesStore,
+                data: sourceFile,
+                file: picture,
+                onError: (error) => {
+                    if (!this._uploading) { // HACK: remove this
+                        return;
+                    }
 
-            reader.onload = (ev: ProgressEvent) => {
-                if (ev.type === 'load') {
-                    const upload = new UploadFS.Uploader({
-                        data: ev.target.result,
-                        file,
-                        store: ImagesStore,
-                        onError: (error) => {
-                            if (!this._uploading) { // HACK: remove this
-                                return;
-                            }
-
-                            this._uploading = false;
-                            this._onError.emit(error);
-                         },
-                        onComplete:  (result) => {
-                            ++count;
-                            if (count === this._previewFiles.length) { // HACK: Oh god...
-                                this._onSuccess.emit(result);
-                                this._uploading = false;
-                            }
-                         }
-                    });
-
-                    upload.start();
-                } else if (ev.type === 'error') {
-                    this._onError.emit('Could not load file');
+                    this._uploading = false;
+                    this._onError.emit(error);
+                },
+                onComplete:  (result) => {
+                    ++count;
+                    if (count === this._previewFiles.length) { // HACK: Oh god...
+                        this._onSuccess.emit(result);
+                        this._uploading = false;
+                    }
                 }
-            };
-
-            reader.readAsArrayBuffer(sourceFile);
+            });
+            worker.start();
         }
     }
 
