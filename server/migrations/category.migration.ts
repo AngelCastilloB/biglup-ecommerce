@@ -69,11 +69,11 @@ export class CategoryMigration extends AbstractMigration {
                     },
                     {
                         language: 'zh',
-                        value: this._generators.zh.word()
+                        value: this._generators.zh.words(1).toString()
                     },
                     {
                         language: 'kr',
-                        value: this._generators.kr.word()
+                        value: this._generators.kr.words(1).toString()
                     }
                 ],
                 info: [

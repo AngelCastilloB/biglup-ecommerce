@@ -21,8 +21,6 @@
 import { AbstractMigration } from './abstract-migration';
 import { Mongo }             from 'meteor/mongo';
 import * as faker            from 'faker/locale/en';
-import * as zhFaker          from 'faker/locale/zh_TW';
-import * as krFaker          from 'faker/locale/ko';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -104,8 +102,8 @@ export class ProductMigration extends AbstractMigration {
             this._products.push({
                 title: [
                     {language: 'en', value: faker.commerce.productName()},
-                    {language: 'zh', value: zhFaker.commerce.productName()},
-                    {language: 'kr', value: krFaker.commerce.productName()},
+                    {language: 'zh', value: this._generators.zh.words(3).join(' ')},
+                    {language: 'kr', value: this._generators.kr.words(3).join(' ')},
                 ],
                 sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
                 barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),

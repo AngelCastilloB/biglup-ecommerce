@@ -47,12 +47,17 @@ export abstract class AbstractContentGenerator {
     protected _paragraph: string;
 
     /**
-     * @summary Gives a random word in a given language.
+     * @summary Returns an array of words in a given language.
      *
-     * @returns {string}
+     * @param {number} amount  the amount to return.
+     * @returns {string[]}
      */
-    public word() {
-        return this._getRandomElement(this._words);
+    public words(amount: number): string[] {
+        if (amount > this._words.length) {
+            throw new Error(`Incorrect amount ${amount}, max permitted is ${this._words.length}.`);
+        }
+
+        return this._getRandomArrayIndexes(this._words, amount);
     }
 
     /**
@@ -82,5 +87,24 @@ export abstract class AbstractContentGenerator {
      */
     protected _getRandomElement(element: string[]): string {
         return element[Math.floor(Math.random() * element.length)];
+    }
+
+    /**
+     * @summary Gives back a random set from an array.
+     *
+     * @param {*[]} array
+     * @param {number} amount
+     * @returns {Array}
+     * @private
+     */
+    private _getRandomArrayIndexes(array: any[], amount: number): any[] {
+        const data  = array.slice(0);
+        let results = [];
+
+        for (let i = 0; i < (Math.ceil(Math.random() * amount) || 1); i++) {
+            results.push(data.splice(Math.floor(Math.random() * data.length), 1)[0]);
+        }
+
+        return results;
     }
 }
