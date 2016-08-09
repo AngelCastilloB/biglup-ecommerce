@@ -24,7 +24,7 @@ declare module 'meteor/jalik:ufs' {
                 WABS: {new (...args): Store},
                 S3: {new (...args): Store},
             },
-            Filter: Function;
+            Filter: {new (...args): any};
     }
 
     import { ReadStream } from 'fs';
