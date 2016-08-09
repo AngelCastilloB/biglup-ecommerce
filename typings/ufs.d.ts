@@ -15,10 +15,24 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// HACK: Temporal typing definitions for package meteor/jalik:ufs while typing become available.
-
 declare module 'meteor/jalik:ufs' {
-    export let UploadFS: any;
+    module UploadFS {
+        // https://github.com/jalik/jalik-ufs#plugins
+        let store: {
+                Local: {new (...args): Store},
+                GridFS: {new (...args): Store},
+                WABS: {new (...args): Store},
+                S3: {new (...args): Store},
+            },
+            Filter: {new (...args): any};
+    }
+
+    import { ReadStream } from 'fs';
+
+    interface Store {
+        create(file: Object): string;
+        write(file: ReadStream, id: string, callback?: Function): string;
+    }
 }
 
 interface ProgressEvent {

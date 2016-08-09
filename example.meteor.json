@@ -1,0 +1,11 @@
+{
+  "user": {
+    "name": "username",
+    "email": "user email",
+    "password": "someRandomPassword"
+  },
+  "migrations": {
+    "migrate": false,
+    "reset": false
+  }
+}

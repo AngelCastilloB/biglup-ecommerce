@@ -18,27 +18,25 @@
 /**
  * @summary Product type definition.
  */
-interface Product {
-    _id?: string;
+interface Product extends Distinguishable, Sluggable {
     categoryId?: Array<string>;
     title: Array<I18nString>;
     description: Array<I18nString>;
-    sku: string;
     barcode: string;
-    title: Array<I18nString>;
+    sku: string;
     color: string;
     size: string;
     price: number;
     discount: number;
     trackInventory: boolean;
     stock?: number;
-    isLowQuantity: boolean;
-    isSoldOut: boolean;
-    isBackorder: boolean;
-    requiresShipping: boolean;
+    isLowQuantity?: boolean; // defaults to false
+    isSoldOut?: boolean; // defaults to false
+    isBackorder?: boolean; // defaults to false
+    requiresShipping?: boolean; // defaults to true
     hashtags?: Array<string>;
     isVisible: boolean;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
     publishedAt?: Date;
 }

@@ -39,6 +39,9 @@ export let ProductSchema = new SimpleSchema({
         type: [I18nStringSchema],
         defaultValue: ''
     },
+    slug: {
+        type: [I18nStringSchema]
+    },
     sku: {
         type: String,
         label: 'Stock Keeping Unit'

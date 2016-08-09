@@ -17,13 +17,19 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo } from 'meteor/mongo';
-import { CategorySchema } from '../schemas/category.schema';
-
-// EXPORTS ************************************************************************************************************/
-
-export let Categories: any = new Mongo.Collection<Category>('categories');
+import { CategorySchema }     from '../schemas/category.schema';
+import { slugify }            from 'transliteration';
+import { Slugifier }          from '../helpers/slugifier';
+import { WithSlugCollection } from './with-slug-collection';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
+// TODO IOC container
+const slugifier     = new Slugifier(slugify);
+let Categories: any = WithSlugCollection.create<Category>('categories', 'name', slugifier);
+
 Categories.attachSchema(CategorySchema);
+
+// EXPORTS ************************************************************************************************************/
+
+export { Categories }

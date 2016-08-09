@@ -37,3 +37,16 @@ jspm_packages
 
 #IDEs
 .idea
+
+# App envs
+meteor.json
+
+# App storage, storage/files & storage/logs for now
+private/storage/
+
+# Typescript typings
+# TODO update typings according to Kanban task response.
+/typings/globals/
+/typings/modules/
+/typings/index.d.ts
+

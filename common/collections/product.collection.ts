@@ -1,5 +1,5 @@
 /**
- * @file category.collection.ts
+ * @file product.collection.ts
  *
  * @summary The product collection.
  *
@@ -17,13 +17,19 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }         from 'meteor/mongo';
-import { ProductSchema } from '../schemas/product.schema';
-
-// EXPORTS ************************************************************************************************************/
-
-export let Products: any = new Mongo.Collection<Product>('products');
+import { ProductSchema }      from '../schemas/product.schema';
+import { Slugifier }          from '../helpers/slugifier';
+import { slugify }            from 'transliteration';
+import { WithSlugCollection } from './with-slug-collection';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
+// TODO IOC container
+const slugifier     = new Slugifier(slugify);
+const Products: any = WithSlugCollection.create<Product>('products', 'title', slugifier);
+
 Products.attachSchema(ProductSchema);
+
+// EXPORTS ************************************************************************************************************/
+
+export { Products }
