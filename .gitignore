@@ -45,7 +45,6 @@ meteor.json
 private/storage/
 
 # Typescript typings
-# TODO update typings according to Kanban task response.
 /typings/globals/
 /typings/modules/
 /typings/index.d.ts
