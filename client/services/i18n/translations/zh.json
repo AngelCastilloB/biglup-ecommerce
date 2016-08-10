@@ -152,7 +152,75 @@
     "value": "尺寸"
   },
   {
+    "key":   "Ecommerce",
+    "value": "電子商務"
+  },
+  {
+    "key":   "Dashboard",
+    "value": "儀表板"
+  },
+  {
+    "key":   "Orders",
+    "value": "命令"
+  },
+  {
+    "key":   "Customers",
+    "value": "顧客"
+  },
+  {
+    "key":   "Products",
+    "value": "製品"
+  },
+  {
+    "key":   "Collections",
+    "value": "集合"
+  },
+  {
+    "key":   "Reports",
+    "value": "報告"
+  },
+  {
+    "key":   "Sku:",
+    "value": "庫存單位:"
+  },
+  {
+    "key":   "Color:",
+    "value": "顏色："
+  },
+  {
+    "key":   "Size:",
+    "value": "尺寸："
+  },
+  {
+    "key":   "Add to Cart",
+    "value": "添加到購物車"
+  },
+  {
     "key":   "Administration",
     "value": "行政"
+  },
+  {
+    "key":   "This is a landing page.",
+    "value": "這是一個目標網頁"
+  },
+  {
+    "key":   "SKU:",
+    "value": "庫存單位:"
+  },
+  {
+    "key":   "Share with your friends!",
+    "value": "與朋友分享！"
+  },
+  {
+    "key":   "Some Action!",
+    "value": "一些動作！"
+  },
+  {
+    "key":   "Buy now",
+    "value": "立即購買"
+  },
+  {
+    "key":   "Gallery",
+    "value": "畫廊"
   }
 ]

@@ -152,7 +152,75 @@
     "value": "Size"
   },
   {
+    "key":   "Ecommerce",
+    "value": "Ecommerce"
+  },
+  {
+    "key":   "Dashboard",
+    "value": "Dashboard"
+  },
+  {
+    "key":   "Orders",
+    "value": "Orders"
+  },
+  {
+    "key":   "Customers",
+    "value": "Customers"
+  },
+  {
+    "key":   "Products",
+    "value": "Products"
+  },
+  {
+    "key":   "Collections",
+    "value": "Collections"
+  },
+  {
+    "key":   "Reports",
+    "value": "Reports"
+  },
+  {
+    "key":   "Sku:",
+    "value": "Sku:"
+  },
+  {
+    "key":   "Color:",
+    "value": "Color:"
+  },
+  {
+    "key":   "Size:",
+    "value": "Size:"
+  },
+  {
+    "key":   "Add to Cart",
+    "value": "Add to Cart"
+  },
+  {
     "key":   "Administration",
     "value": "Administration"
+  },
+  {
+    "key":   "This is a landing page.",
+    "value": "This is a landing page."
+  },
+  {
+    "key":   "SKU:",
+    "value": "SKU:"
+  },
+  {
+    "key":   "Share with your friends!",
+    "value": "Share with your friends!"
+  },
+  {
+    "key":   "Some Action!",
+    "value": "Some Action!"
+  },
+  {
+    "key":   "Buy now",
+    "value": "Buy now"
+  },
+  {
+    "key":   "Gallery",
+    "value": "Gallery"
   }
 ]

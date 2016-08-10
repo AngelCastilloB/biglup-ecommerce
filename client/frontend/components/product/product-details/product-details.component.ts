@@ -27,6 +27,7 @@ import { Images }                            from '../../../../../common/collect
 import { Categories }                        from '../../../../../common/collections/category.collection';
 import { MeteorComponent }                   from 'angular2-meteor';
 import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
+import { TranslatePipe }                     from '../../../../pipes/translate.pipe';
 import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
 
 // EXPORTS ************************************************************************************************************/
@@ -38,7 +39,7 @@ import { ProductImagesCarouselComponent }    from '../product-images-carousel/pr
     selector: 'product-details',
     template,
     directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe]
+    pipes: [MongoTranslatePipe, TranslatePipe]
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit {
 
