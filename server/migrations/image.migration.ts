@@ -38,6 +38,7 @@ export class ImageMigration extends AbstractMigration {
     private _categoriesIds: Array<Distinguishable> = [];
 
     private _path = 'storage/files/placeholder.png';
+    private _type = 'image/png';
 
     /**
      * @param collection the related image collection
@@ -82,7 +83,8 @@ export class ImageMigration extends AbstractMigration {
         for (let i = 1; i <= this._amount; i++) {
             const fileId = ImagesStore.create({
                 name: `${id}-${i}`,
-                [field]: id
+                [field]: id,
+                type: this._type
             });
 
             ImagesStore.write(this._getImageStream(), fileId, err => {
