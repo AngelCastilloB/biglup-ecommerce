@@ -294,9 +294,11 @@ function generetaFile(translatables) {
 
             // TODO: Comments are illegal in JSON files. So for now we will just skip the location.
             // Will revisit again when the other i18n tools are functional.
+            /*
             translatables[key].forEach(function(location) {
                 content += '    // ' + location + UNIX_EOL;
             });
+            */
             content += '    {' + UNIX_EOL;
             content += '       "key":   "' + key + '",' + UNIX_EOL;
             content += '       "value": ""' + UNIX_EOL;
