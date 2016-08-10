@@ -26,6 +26,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const cleanCss   = require('gulp-clean-css');
 const concatCss  = require('gulp-concat-css');
 const pump       = require('pump');
+const sequence   = require('run-sequence');
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -44,7 +45,7 @@ const PATHS = {
         css: {src: './public/theme/css/drag.min.css'}
     },
     mdb: {
-        css: {src: './public/theme/css/drag.min.css'},
+        css: {src: './public/theme/css/mdb.min.css'},
         js: {src: './public/theme/js/mdb.min.js'}
     },
     tether: {
@@ -98,8 +99,8 @@ gulp.task('uglify-css', function (callback) {
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
-        PATHS.drag.css.src,
-        PATHS.local.css.src
+        PATHS.local.css.src,
+        PATHS.drag.css.src
     ];
 
     pump([
@@ -142,11 +143,18 @@ gulp.task('uglify-js', function (callback) {
 });
 
 /**
+ * @summary sugar for gulp
+ */
+gulp.task('uglify', ['uglify-css', 'uglify-js']);
+
+/**
  * @summary the tasks to be run when the app installs.
  */
-gulp.task('meteor-post-install', ['copy-meteor-settings', 'copy-bootstrap-files']);
+gulp.task('meteor-post-install', function () {
+    sequence('copy-meteor-settings', 'copy-bootstrap-files', 'uglify');
+});
 
 /**
  * @summary the default gulp task
  */
-gulp.task('default', ['uglify-css', 'uglify-js']);
+gulp.task('default', ['uglify']);
