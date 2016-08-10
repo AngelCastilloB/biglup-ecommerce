@@ -65,7 +65,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
         super();
 
         this._category.isParentCategory = true;
-        this._category.slug             = 'slug';
         this._categoryName              = this._getMongoTranslation(this._category.name);
         this._categoryDescription       = this._getMongoTranslation(this._category.info);
     }

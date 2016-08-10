@@ -1,14 +1,158 @@
 [
-    {
-      "key": "Change Language",
-      "value": "Change Language"
-    },
-    {
-      "key": "Login",
-      "value": "Login"
-    },
-    {
-      "key": "Administration",
-      "value": "Administration"
-    }
+  {
+    "key":   "Add Collection",
+    "value": "Add Collection"
+  },
+  {
+    "key":   "Title",
+    "value": "Title"
+  },
+  {
+    "key":   "Description",
+    "value": "Description"
+  },
+  {
+    "key":   "Visibility",
+    "value": "Visibility"
+  },
+  {
+    "key":   "Show this category in the store",
+    "value": "Show this category in the store"
+  },
+  {
+    "key":   "Save Collection",
+    "value": "Save Collection"
+  },
+  {
+    "key":   "Cancel",
+    "value": "Cancel"
+  },
+  {
+    "key":   "There was an error saving the category",
+    "value": "There was an error saving the category"
+  },
+  {
+    "key":   "Error",
+    "value": "Error"
+  },
+  {
+    "key":   "Category Saved!",
+    "value": "Category Saved!"
+  },
+  {
+    "key":   "Information",
+    "value": "Information"
+  },
+  {
+    "key":   "Add Product",
+    "value": "Add Product"
+  },
+  {
+    "key":   "Pricing",
+    "value": "Pricing"
+  },
+  {
+    "key":   "Price",
+    "value": "Price"
+  },
+  {
+    "key":   "Discount",
+    "value": "Discount"
+  },
+  {
+    "key":   "Categories",
+    "value": "Categories"
+  },
+  {
+    "key":   "Inventory",
+    "value": "Inventory"
+  },
+  {
+    "key":   "SKU (Stock Keeping Unit)",
+    "value": "SKU (Stock Keeping Unit)"
+  },
+  {
+    "key":   "Barcode (ISBN, UPC, GTIN, etc.)",
+    "value": "Barcode (ISBN, UPC, GTIN, etc.)"
+  },
+  {
+    "key":   "Inventory Policy",
+    "value": "Inventory Policy"
+  },
+  {
+    "key":   "Track Inventory",
+    "value": "Track Inventory"
+  },
+  {
+    "key":   "Quantity",
+    "value": "Quantity"
+  },
+  {
+    "key":   "Allow customers to purchase this product when it's out of stock",
+    "value": "Allow customers to purchase this product when it's out of stock"
+  },
+  {
+    "key":   "This product requires shipping",
+    "value": "This product requires shipping"
+  },
+  {
+    "key":   "Show this product in the store",
+    "value": "Show this product in the store"
+  },
+  {
+    "key":   "Save Product",
+    "value": "Save Product"
+  },
+  {
+    "key":   "There was an error saving the product",
+    "value": "There was an error saving the product"
+  },
+  {
+    "key":   "Product Saved!",
+    "value": "Product Saved!"
+  },
+  {
+    "key":   "Collection list",
+    "value": "Collection list"
+  },
+  {
+    "key":   "Number of Products",
+    "value": "Number of Products"
+  },
+  {
+    "key":   "Images",
+    "value": "Images"
+  },
+  {
+    "key":   "Select Files",
+    "value": "Select Files"
+  },
+  {
+    "key":   "Drop images to upload",
+    "value": "Drop images to upload"
+  },
+  {
+    "key":   "Product list",
+    "value": "Product list"
+  },
+  {
+    "key":   "SKU",
+    "value": "SKU"
+  },
+  {
+    "key":   "Category",
+    "value": "Category"
+  },
+  {
+    "key":   "Color",
+    "value": "Color"
+  },
+  {
+    "key":   "Size",
+    "value": "Size"
+  },
+  {
+    "key":   "Administration",
+    "value": "Administration"
+  }
 ]
