@@ -63,7 +63,6 @@ export let CartSchema: any = new SimpleSchema({
     },
     userId: {
         type: String,
-        unique: true,
         autoValue: function () {
             if (this.isInsert || this.isUpdate) {
                 if (!this.isFromTrustedCode) {

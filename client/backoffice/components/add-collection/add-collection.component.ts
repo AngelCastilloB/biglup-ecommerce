@@ -22,17 +22,17 @@ import 'reflect-metadata';
 import { Component,
          OnInit,
          NgZone,
-         ViewChild }            from '@angular/core';
-import { Router }               from '@angular/router';
-import { MeteorComponent }      from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
-import { TranslatePipe }        from '../../../pipes/translate.pipe';
-import { ImagesUploader }       from '../images-uploader/images-uploader.component';
-import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
-import { NgForm }               from '@angular/forms';
-import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
-import { Categories }           from '../../../../common/collections/category.collection';
-import { ModalComponent }       from '../modal/modal.component';
+         ViewChild }                from '@angular/core';
+import { Router }                   from '@angular/router';
+import { MeteorComponent }          from 'angular2-meteor';
+import { ROUTER_DIRECTIVES }        from '@angular/router';
+import { TranslatePipe }            from '../../../pipes/translate.pipe';
+import { ImagesUploader }           from '../images-uploader/images-uploader.component';
+import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
+import { NgForm }                   from '@angular/forms';
+import { I18nSingletonService, _T } from '../../../services/l18n/I18nSingletonService';
+import { Categories }               from '../../../../common/collections/category.collection';
+import { ModalComponent }           from '../modal/modal.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -129,16 +129,16 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
                 this._waitModalResult = false;
 
                 this._modal.show(
-                    I18nSingletonService.getInstance().getText('There was an error saving the category'),
-                    I18nSingletonService.getInstance().getText('Error'));
+                    _T('There was an error saving the category'),
+                    _T('Error'));
 
                 console.error(error);
             } else {
                 this._waitModalResult = true;
 
                 this._modal.show(
-                    I18nSingletonService.getInstance().getText('Category Saved!'),
-                    I18nSingletonService.getInstance().getText('Information'));
+                    _T('Category Saved!'),
+                    _T('Information'));
             }
         });
     }
