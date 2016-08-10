@@ -6,10 +6,3 @@ css/
 !css/drag.min.css
 !css/mdb.css
 !css/mdb.min.css
-!css/style.css
-
-js/main.js
-js/main.min.js
-
-# Bootstrap 4
-js/bootstrap.*

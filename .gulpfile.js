@@ -51,13 +51,11 @@ const PATHS = {
     tether: {
         js: {src: './public/theme/js/tether.min.js'}
     },
-    jquery: {
-        js: {src: './public/theme/js/jquery-2.2.3.min.js'}
-    },
     local: {
         css: {src: './public/theme/css/style.css'}
     },
-    public: {css: './public/theme/css', js: './public/theme/js'}
+    public: {css: './public/theme/css', js: './public/theme/js'},
+    compatibility: './client/compatibility'
 };
 
 // IMPLEMENTATION *****************************************************************************************************/
@@ -122,7 +120,6 @@ gulp.task('uglify-css', function (callback) {
  */
 gulp.task('uglify-js', function (callback) {
     const files = [
-        PATHS.jquery.js.src,
         PATHS.tether.js.src,
         PATHS.public.js + 'bootstrap.min.js',
         PATHS.mdb.js.src
@@ -132,11 +129,9 @@ gulp.task('uglify-js', function (callback) {
             gulp.src(files),
             sourcemaps.init(),
             concat('main.js'),
-            gulp.dest(PATHS.public.js),
-            rename('main.min.js'),
             uglify(),
             sourcemaps.write(),
-            gulp.dest(PATHS.public.js)
+            gulp.dest(PATHS.compatibility)
         ],
         callback
     );
