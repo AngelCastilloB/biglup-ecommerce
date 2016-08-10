@@ -1,14 +1,158 @@
 [
   {
-    "key": "Change Language",
-    "value": "改變語言"
+    "key":   "Add Collection",
+    "value": "加入收藏"
   },
   {
-    "key": "Login",
-    "value": "登錄"
+    "key":   "Title",
+    "value": "標題"
   },
   {
-    "key": "Administration",
+    "key":   "Description",
+    "value": "描述"
+  },
+  {
+    "key":   "Visibility",
+    "value": "能見度"
+  },
+  {
+    "key":   "Show this category in the store",
+    "value": "顯示該類別中的商店"
+  },
+  {
+    "key":   "Save Collection",
+    "value": "保存集合"
+  },
+  {
+    "key":   "Cancel",
+    "value": "取消"
+  },
+  {
+    "key":   "There was an error saving the category",
+    "value": "有一個錯誤保存類別"
+  },
+  {
+    "key":   "Error",
+    "value": "錯誤"
+  },
+  {
+    "key":   "Category Saved!",
+    "value": "分類保存！"
+  },
+  {
+    "key":   "Information",
+    "value": "信息"
+  },
+  {
+    "key":   "Add Product",
+    "value": "添加產品"
+  },
+  {
+    "key":   "Pricing",
+    "value": "價錢"
+  },
+  {
+    "key":   "Price",
+    "value": "價錢"
+  },
+  {
+    "key":   "Discount",
+    "value": "折扣"
+  },
+  {
+    "key":   "Categories",
+    "value": "分類"
+  },
+  {
+    "key":   "Inventory",
+    "value": "庫存"
+  },
+  {
+    "key":   "SKU (Stock Keeping Unit)",
+    "value": "庫存單位"
+  },
+  {
+    "key":   "Barcode (ISBN, UPC, GTIN, etc.)",
+    "value": "條碼 (ISBN, UPC, GTIN, 等.)"
+  },
+  {
+    "key":   "Inventory Policy",
+    "value": "庫存策略"
+  },
+  {
+    "key":   "Track Inventory",
+    "value": "跟踪庫存"
+  },
+  {
+    "key":   "Quantity",
+    "value": "數量"
+  },
+  {
+    "key":   "Allow customers to purchase this product when it's out of stock",
+    "value": "讓客戶購買本產品時，它的脫銷"
+  },
+  {
+    "key":   "This product requires shipping",
+    "value": "此產品需要運輸"
+  },
+  {
+    "key":   "Show this product in the store",
+    "value": "顯示在店裡這款產品"
+  },
+  {
+    "key":   "Save Product",
+    "value": "保存產品"
+  },
+  {
+    "key":   "There was an error saving the product",
+    "value": "有一個錯誤的節能產品"
+  },
+  {
+    "key":   "Product Saved!",
+    "value": "產品保存！"
+  },
+  {
+    "key":   "Collection list",
+    "value": "收藏列表"
+  },
+  {
+    "key":   "Number of Products",
+    "value": "商品數量"
+  },
+  {
+    "key":   "Images",
+    "value": "圖片"
+  },
+  {
+    "key":   "Select Files",
+    "value": "選擇文件"
+  },
+  {
+    "key":   "Drop images to upload",
+    "value": "圖像拖放上傳"
+  },
+  {
+    "key":   "Product list",
+    "value": "產品列表"
+  },
+  {
+    "key":   "SKU",
+    "value": "庫存單位"
+  },
+  {
+    "key":   "Category",
+    "value": "類別"
+  },
+  {
+    "key":   "Color",
+    "value": "顏色"
+  },
+  {
+    "key":   "Size",
+    "value": "尺寸"
+  },
+  {
+    "key":   "Administration",
     "value": "行政"
   }
 ]
