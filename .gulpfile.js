@@ -25,6 +25,7 @@ const uglify     = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const cleanCss   = require('gulp-clean-css');
 const concatCss  = require('gulp-concat-css');
+const pump       = require('pump');
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -93,7 +94,7 @@ gulp.task('copy-bootstrap-files', function () {
 /**
  * @summary concatenates and minifies the client css files
  */
-gulp.task('uglify-css', function () {
+gulp.task('uglify-css', function (callback) {
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
@@ -101,20 +102,24 @@ gulp.task('uglify-css', function () {
         PATHS.local.css.src
     ];
 
-    return gulp.src(files)
-        .pipe(sourcemaps.init())
-        .pipe(concatCss('main.css'))
-        .pipe(gulp.dest(PATHS.public.css))
-        .pipe(rename('main.min.css'))
-        .pipe(cleanCss())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(PATHS.public.css));
+    pump([
+            gulp.src(files),
+            sourcemaps.init(),
+            concatCss('main.css'),
+            gulp.dest(PATHS.public.css),
+            rename('main.min.css'),
+            cleanCss(),
+            sourcemaps.write(),
+            gulp.dest(PATHS.public.css)
+        ],
+        callback
+    );
 });
 
 /**
  * @summary concatenates and minifies the client javascript files
  */
-gulp.task('uglify-js', function () {
+gulp.task('uglify-js', function (callback) {
     const files = [
         PATHS.jquery.js.src,
         PATHS.tether.js.src,
@@ -122,14 +127,18 @@ gulp.task('uglify-js', function () {
         PATHS.mdb.js.src
     ];
 
-    return gulp.src(files)
-        .pipe(sourcemaps.init())
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest(PATHS.public.js))
-        .pipe(rename('main.min.js'))
-        .pipe(uglify())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(PATHS.public.js));
+    pump([
+            gulp.src(files),
+            sourcemaps.init(),
+            concat('main.js'),
+            gulp.dest(PATHS.public.js),
+            rename('main.min.js'),
+            uglify(),
+            sourcemaps.write(),
+            gulp.dest(PATHS.public.js)
+        ],
+        callback
+    );
 });
 
 /**
