@@ -25,6 +25,33 @@ import { EventEmitter } from '@angular/core';
 
 const DEFAULT_LOCALE = 'en';
 
+// GLOBALS ************************************************************************************************************/
+
+let g_showWarning = true;
+
+// MACROS *************************************************************************************************************/
+
+/**
+ * @brief Gets the localized text for the given key.
+ *
+ * @param {string} key The key.
+ *
+ * @remark If the given key is not found, the returned value will be the key.
+ *
+ * This function should be used over getText. Since the _T() is used to locate translatable string in the code.
+ */
+export function _T(key: string): string {
+    let result = '';
+
+    g_showWarning = false;
+
+    result = I18nSingletonService.getInstance().getText(key);
+
+    g_showWarning = true;
+
+    return result;
+}
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -67,8 +94,15 @@ export class I18nSingletonService {
      * @param {string} key The key.
      *
      * @remark If the given key is not found, the returned value will be the key.
+     *
+     * Dont call this function directly. Instead use the _T() since it is used to locate translatable strings in the code.
      */
     public getText(key: string): string {
+
+        if (g_showWarning) {
+            console.warn('Please do not call I18nSingletonService\'s getText() method directly. Use the _T() function instead');
+        }
+
         if (!(key in this._translations[this._currentLocale])) {
             console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
             return key;

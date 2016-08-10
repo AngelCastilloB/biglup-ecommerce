@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Pipe, PipeTransform }  from  '@angular/core';
-import { I18nSingletonService } from '../services/l18n/I18nSingletonService';
+import { I18nSingletonService } from '../services/i18n/i18n-singleton.service';
 
 // EXPORTS ************************************************************************************************************/
 

@@ -17,6 +17,7 @@
 
 declare module 'meteor/jalik:ufs' {
     module UploadFS {
+        let Uploader;
         // https://github.com/jalik/jalik-ufs#plugins
         let store: {
                 Local: {new (...args): Store},
@@ -27,11 +28,9 @@ declare module 'meteor/jalik:ufs' {
             Filter: {new (...args): any};
     }
 
-    import { ReadStream } from 'fs';
-
     interface Store {
         create(file: Object): string;
-        write(file: ReadStream, id: string, callback?: Function): string;
+        write(file: any, id: string, callback?: Function): string;
     }
 }
 

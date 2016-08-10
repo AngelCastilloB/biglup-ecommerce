@@ -22,18 +22,18 @@ import 'reflect-metadata';
 import { Component,
          OnInit,
          NgZone,
-         ViewChild }            from '@angular/core';
-import { Router }               from '@angular/router';
-import { MeteorComponent }      from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
-import { TranslatePipe }        from '../../../pipes/translate.pipe';
-import { ImagesUploader }       from '../images-uploader/images-uploader.component';
-import { Categories }           from '../../../../common/collections/category.collection.ts';
-import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
-import { NgForm }               from '@angular/forms';
-import { I18nSingletonService } from '../../../services/l18n/I18nSingletonService';
-import { Products }             from '../../../../common/collections/product.collection';
-import { ModalComponent }       from '../modal/modal.component';
+         ViewChild }                from '@angular/core';
+import { Router }                   from '@angular/router';
+import { MeteorComponent }          from 'angular2-meteor';
+import { ROUTER_DIRECTIVES }        from '@angular/router';
+import { TranslatePipe }            from '../../../pipes/translate.pipe';
+import { ImagesUploader }           from '../images-uploader/images-uploader.component';
+import { Categories }               from '../../../../common/collections/category.collection.ts';
+import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
+import { NgForm }                   from '@angular/forms';
+import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
+import { Products }                 from '../../../../common/collections/product.collection';
+import { ModalComponent }           from '../modal/modal.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -173,8 +173,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
                 this._waitModalResult = false;
 
                 this._modal.show(
-                    I18nSingletonService.getInstance().getText('There was an error saving the product'),
-                    I18nSingletonService.getInstance().getText('Error'));
+                    _T('There was an error saving the product'),
+                    _T('Error'));
             } else {
                 this._imagesUploader.upload(<string>result);
             }
@@ -188,8 +188,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         this._waitModalResult = true;
 
         this._modal.show(
-            I18nSingletonService.getInstance().getText('Product Saved!'),
-            I18nSingletonService.getInstance().getText('Information'));
+            _T('Product Saved!'),
+            _T('Information'));
     }
 
     /**
@@ -199,8 +199,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         this._waitModalResult = false;
 
         this._modal.show(
-            I18nSingletonService.getInstance().getText('There was an error saving the product'),
-            I18nSingletonService.getInstance().getText('Error'));
+            _T('There was an error saving the product'),
+            _T('Error'));
 
         Products.remove(this._product); // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
         this._product._id = '';
