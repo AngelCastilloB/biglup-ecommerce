@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "start": "meteor run --settings meteor.json",
-    "postinstall": "typings i && gulp meteor-post-install"
+    "gulp:post-install": "gulp --gulpfile .gulpfile.js meteor-post-install",
+    "postinstall": "typings i && npm run gulp:post-install"
   },
   "dependencies": {
     "@angular/common": "^2.0.0-rc.4",
@@ -32,7 +33,12 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.0",
+    "gulp-concat-css": "^2.3.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
     "typings": "^1.3.2"
   }
 }
