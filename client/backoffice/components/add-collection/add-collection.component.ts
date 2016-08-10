@@ -30,7 +30,7 @@ import { TranslatePipe }            from '../../../pipes/translate.pipe';
 import { ImagesUploader }           from '../images-uploader/images-uploader.component';
 import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
-import { I18nSingletonService, _T } from '../../../services/l18n/I18nSingletonService';
+import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../modal/modal.component';
 

@@ -19,19 +19,19 @@
 
 import 'reflect-metadata';
 
-import { Component, Input, OnInit } from '@angular/core';
-import { MeteorComponent }          from 'angular2-meteor';
-import { Mongo }                    from 'meteor/mongo';
-import { Images }                   from '../../../../common/collections/image.collection';
-import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
-import { TruncateStringPipe }       from '../../../pipes/truncate-string.pipe';
-import { ROUTER_DIRECTIVES }        from '@angular/router';
+import { Component, Input, OnInit }       from '@angular/core';
+import { MeteorComponent }                from 'angular2-meteor';
+import { Mongo }                          from 'meteor/mongo';
+import { Images }                         from '../../../../common/collections/image.collection';
+import { MongoTranslatePipe }             from '../../../pipes/mongo-translate.pipe';
+import { TranslatePipe }                  from '../../../pipes/translate.pipe';
+import { TruncateStringPipe }             from '../../../pipes/truncate-string.pipe';
+import { ROUTER_DIRECTIVES }              from '@angular/router';
+import { ProductImagesCarouselComponent } from '../product/product-images-carousel/product-images-carousel';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './category-item.component.html';
-
-import { ProductImagesCarouselComponent } from '../product/product-images-carousel/product-images-carousel';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -42,7 +42,7 @@ import { ProductImagesCarouselComponent } from '../product/product-images-carous
     selector: 'category-item',
     template,
     directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe, TruncateStringPipe]
+    pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
     @Input() public model:    Product;

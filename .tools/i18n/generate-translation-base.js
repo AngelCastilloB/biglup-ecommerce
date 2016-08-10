@@ -281,7 +281,7 @@ function getAllTranslateables(fileList) {
  *
  * @return The file content.
  */
-function generetaFile(translatables) {
+function generateFile(translatables) {
     var content;
 
     content = '[' + UNIX_EOL;
@@ -346,7 +346,7 @@ console.log(Object.keys(translatables).length + " translatable strings found in 
 
 console.log('Generating file...');
 
-var content = generetaFile(translatables);
+var content = generateFile(translatables);
 
 console.log('File generated');
 

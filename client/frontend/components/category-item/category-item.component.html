@@ -10,16 +10,16 @@
         <a [routerLink]="['product', model._id]">{{ model.title | mongoTranslate }}</a>
       </h4>
       <p class="card-text">
-        <i class="fa fa-list"></i> Sku: {{ model.sku }}
+        <i class="fa fa-list"></i> {{ 'Sku:' | translate }} {{ model.sku }}
       </p>
       <p class="card-text">
         {{ model.description | mongoTranslate | truncateString }}
       </p>
       <p class="card-text">
-        Color: {{ model.color }}
+        {{ 'Color:' | translate }} {{ model.color }}
       </p>
       <p class="card-text">
-        <i class="fa fa-arrows-v"></i> Size: {{ model.size }}
+        <i class="fa fa-arrows-v"></i> {{ 'Size:' | translate }} {{ model.size }}
       </p>
       <p class="card-text">
         <i class="fa fa-usd"></i> {{ model.price }}
@@ -30,7 +30,7 @@
 
       <!-- Actions -->
       <!-- TODO improve links, add translation service -->
-      <a href="#" class="btn btn-primary">Add to Cart</a>
+      <a href="#" class="btn btn-primary">{{ 'Add to Cart' | translate }}</a>
     </div>
   </div>
 </div>

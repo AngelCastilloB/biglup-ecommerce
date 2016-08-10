@@ -31,7 +31,7 @@ import { ImagesUploader }           from '../images-uploader/images-uploader.com
 import { Categories }               from '../../../../common/collections/category.collection.ts';
 import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
-import { I18nSingletonService, _T } from '../../../services/l18n/I18nSingletonService';
+import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Products }                 from '../../../../common/collections/product.collection';
 import { ModalComponent }           from '../modal/modal.component';
 

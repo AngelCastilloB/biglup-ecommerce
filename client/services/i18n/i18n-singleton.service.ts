@@ -41,7 +41,7 @@ let g_showWarning = true;
  * This function should be used over getText. Since the _T() is used to locate translatable string in the code.
  */
 export function _T(key: string): string {
-    let result: string = '';
+    let result = '';
 
     g_showWarning = false;
 

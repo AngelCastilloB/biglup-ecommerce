@@ -17,11 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import { Component, Input } from '@angular/core';
+
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './product-images-carousel.html';
-
-import { Component, Input } from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
