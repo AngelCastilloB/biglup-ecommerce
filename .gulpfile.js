@@ -68,8 +68,7 @@ gulp.task('copy-meteor-settings', function () {
     // we have to dig with the node fs to check if the file exist to avoid overwrites
     // https://gulp.readme.io/docs/gulpdestpath-options
     fs.stat('./meteor.json', function (err, stats) {
-        // an error could mean file not found (error number -2).
-        if ((err && err.errno === -2) || !stats.isFile()) {
+        if ((err && err.code === 'ENOENT') || !stats.isFile()) {
             return gulp.src(PATHS.meteor.settings)
                 .pipe(rename('meteor.json'))
                 .pipe(gulp.dest('.', {overwrite: false}));
