@@ -113,7 +113,7 @@ gulp.task('uglify-css', ['copy-bootstrap-files'], function (callback) {
 gulp.task('concat-js', function (callback) {
     const files = [
         PATHS.tether.js.src,
-        PATHS.public.js + 'bootstrap.js',
+        PATHS.public.js + '/bootstrap.js',
         PATHS.mdb.js.src
     ];
 
