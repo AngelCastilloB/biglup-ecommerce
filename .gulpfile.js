@@ -21,7 +21,6 @@ const gulp       = require('gulp');
 const rename     = require('gulp-rename');
 const fs         = require('fs');
 const concat     = require('gulp-concat');
-const uglify     = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const cleanCss   = require('gulp-clean-css');
 const concatCss  = require('gulp-concat-css');
@@ -51,9 +50,6 @@ const PATHS = {
     tether: {
         js: {src: './public/theme/js/tether.min.js'}
     },
-    local: {
-        css: {src: './public/theme/css/style.css'}
-    },
     public: {css: './public/theme/css', js: './public/theme/js'},
     compatibility: './client/compatibility'
 };
@@ -71,7 +67,7 @@ gulp.task('copy-meteor-settings', function () {
         if ((err && err.code === 'ENOENT') || !stats.isFile()) {
             return gulp.src(PATHS.meteor.settings)
                 .pipe(rename('meteor.json'))
-                .pipe(gulp.dest('.', {overwrite: false}));
+                .pipe(gulp.dest('.'));
         } else if (err) {
             throw err;
         }
@@ -92,60 +88,54 @@ gulp.task('copy-bootstrap-files', function () {
 /**
  * @summary concatenates and minifies the client css files
  */
-gulp.task('uglify-css', function (callback) {
+gulp.task('uglify-css', ['copy-bootstrap-files'], function (callback) {
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
-        PATHS.local.css.src,
         PATHS.drag.css.src
     ];
 
     pump([
-            gulp.src(files),
-            sourcemaps.init(),
-            concatCss('main.css'),
-            gulp.dest(PATHS.public.css),
-            rename('main.min.css'),
-            cleanCss(),
-            sourcemaps.write(),
-            gulp.dest(PATHS.public.css)
-        ],
-        callback
-    );
+        gulp.src(files),
+        sourcemaps.init(),
+        concatCss('main.css'),
+        gulp.dest(PATHS.public.css),
+        rename('main.min.css'),
+        cleanCss(),
+        sourcemaps.write(),
+        gulp.dest(PATHS.public.css)
+    ], callback);
 });
 
 /**
  * @summary concatenates and minifies the client javascript files
  */
-gulp.task('uglify-js', function (callback) {
+gulp.task('concat-js', function (callback) {
     const files = [
         PATHS.tether.js.src,
-        PATHS.public.js + 'bootstrap.min.js',
+        PATHS.public.js + 'bootstrap.js',
         PATHS.mdb.js.src
     ];
 
     pump([
-            gulp.src(files),
-            sourcemaps.init(),
-            concat('main.js'),
-            uglify(),
-            sourcemaps.write(),
-            gulp.dest(PATHS.compatibility)
-        ],
-        callback
-    );
+        gulp.src(files),
+        sourcemaps.init(),
+        concat('main.js'),
+        sourcemaps.write(),
+        gulp.dest(PATHS.compatibility)
+    ], callback);
 });
 
 /**
  * @summary sugar for gulp
  */
-gulp.task('uglify', ['uglify-css', 'uglify-js']);
+gulp.task('uglify', ['uglify-css', 'concat-js']);
 
 /**
  * @summary the tasks to be run when the app installs.
  */
 gulp.task('meteor-post-install', function () {
-    sequence('copy-meteor-settings', 'copy-bootstrap-files', 'uglify');
+    sequence('copy-meteor-settings', 'uglify');
 });
 
 /**
