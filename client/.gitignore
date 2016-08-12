@@ -1,0 +1,4 @@
+!.gitignore
+
+# 3rd party bundle
+compatibility/main.js

@@ -108,7 +108,18 @@ export class ImageMigration extends AbstractMigration {
      * @private
      */
     private _getImageStream(): ReadStream {
-        const path = Assets.absoluteFilePath(this._path);
+        let path;
+        try {
+            path = Assets.absoluteFilePath(this._path);
+        } catch (err: Error) {
+            if (err.message.match(/Unknown asset/)) {
+                throw new Error('Image migration requires a placeholder set in ' +
+                    'PROJECT_ROOT/private/storage/files/placeholder.png, ' +
+                    'please read the README for more info.');
+            }
+
+            throw err;
+        }
 
         return createReadStream(path);
     }

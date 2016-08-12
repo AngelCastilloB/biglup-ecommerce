@@ -31,6 +31,9 @@ import { Images }                 from '../../common/collections/image.collectio
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary Adds the different migrations into the Migration library to be executed in main.
+ */
 export function createMigrations() {
     // TODO IOC container
     const generators = {
