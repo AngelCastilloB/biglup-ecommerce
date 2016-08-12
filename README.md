@@ -20,7 +20,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
    the "common" folder.
    
-### OOP Design
+### Object Oriented Programming Design
 ---
  * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
  * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
@@ -29,7 +29,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
  
 ### Version control agreements
 ---
- * Only make commits to the private Biglup bitbucket Git server.
+ * Only make commits to the private Biglup Git server.
  * Don't share source code over cloud services (Dropbox, etc).
  * Use Git branch naming and branch merging conventions:
      Release preparation branches must start with "release/".
