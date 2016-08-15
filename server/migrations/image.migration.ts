@@ -111,7 +111,7 @@ export class ImageMigration extends AbstractMigration {
         let path;
         try {
             path = Assets.absoluteFilePath(this._path);
-        } catch (err: Error) {
+        } catch (err) {
             if (err.message.match(/Unknown asset/)) {
                 throw new Error('Image migration requires a placeholder set in ' +
                     'PROJECT_ROOT/private/storage/files/placeholder.png, ' +
