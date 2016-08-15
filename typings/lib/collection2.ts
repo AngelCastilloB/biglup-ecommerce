@@ -17,7 +17,7 @@
  */
 
 declare module Mongo {
-    interface Collection<T> extends Mongo.Collection<T> {
+    interface Collection<T> {
         /**
          * Attaches a SimpleSchema to the collection.
          */

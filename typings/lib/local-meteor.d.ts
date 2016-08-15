@@ -22,3 +22,12 @@ declare module Assets {
 
     function absoluteFilePath(assetPath: string): string;
 }
+
+/**
+ * @summary removes the Cannot find module './x.component.html'.
+ * hack until https://github.com/Urigo/meteor-static-templates/issues/9 is resolved (if ever)
+ */
+declare module "*.html" {
+    const template: string;
+    export default template;
+}
