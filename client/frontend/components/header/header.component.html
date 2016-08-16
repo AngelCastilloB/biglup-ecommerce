@@ -15,8 +15,15 @@
         </li>
       </ul>
       <div class="pull-right">
-        <a (click)="languageChanged('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
-        <a (click)="languageChanged('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a (click)="languageChanged('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
+            <a (click)="languageChanged('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']">{{'Login' | translate}}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
