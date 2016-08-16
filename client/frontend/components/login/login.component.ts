@@ -21,8 +21,17 @@
 // noinspection TypeScriptCheckImport
 import template from './login.component.html';
 
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
+import { Component, OnInit }         from '@angular/core';
+import {
+    FormGroup,
+    FormBuilder,
+    REACTIVE_FORM_DIRECTIVES,
+    Validators
+}                                    from '@angular/forms';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { TranslatePipe }             from '../../../pipes/translate.pipe';
+import { Meteor }                    from 'meteor/meteor';
+import { MeteorComponent }           from 'angular2-meteor';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,19 +41,79 @@ import { FormGroup, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms
 @Component({
     selector: 'login-form',
     template,
-    directives: [REACTIVE_FORM_DIRECTIVES]
+    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES],
+    providers: [TranslatePipe],
+    pipes: [TranslatePipe]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends MeteorComponent implements OnInit {
 
+    /**
+     * @summary The data and other things associated with the login form.
+     */
     private _loginForm: FormGroup;
 
-    constructor(private _formBuilder: FormBuilder) {
+    /**
+     * @summary The error message the form could have.
+     */
+    private _error = {
+        message: '',
+        cssClass: '',
+        invalid: false
+    };
+
+    constructor(private _formBuilder: FormBuilder, private _router: Router, private _translatePipe: TranslatePipe) {
+        super();
     }
 
+    /**
+     * @summary Initialize the component after data-bounding.
+     */
     public ngOnInit() {
         this._loginForm = this._formBuilder.group({
-            email: [],
-            password: []
+            email: ['', Validators.required],
+            password: ['', Validators.required]
+        });
+    }
+
+    /**
+     * @summary process a new login from the html form.
+     * @private
+     */
+    private _onSubmit(event: Event): void {
+        event.preventDefault();
+
+        if (!this._loginForm.valid || this._error.invalid) {
+            console.log('invalid login form');
+            return;
+        }
+
+        Meteor.loginWithPassword(this._loginForm.value.email, this._loginForm.value.password, (err) => {
+            if (err) {
+                return this._processError(err);
+            }
+
+            this._router.navigate(['/']);
+        });
+    }
+
+    /**
+     * @summary Alters the error to a more human readable form.
+     *
+     * @param {Error} err
+     * @private
+     */
+    private _processError(err: Error): void {
+        this.autorun(() => {
+            this._error.cssClass = 'text-danger';
+            this._error.invalid  = true;
+
+            console.log(err);
+
+            if (err.message === 'User not found [403]') {
+                this._error.message = this._translatePipe.transform('The credentials provided did not match our records.');
+            } else {
+                this._error.message = err.message;
+            }
         });
     }
 }

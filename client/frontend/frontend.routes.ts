@@ -22,7 +22,7 @@ import { CategoryComponent }       from './components/category/category.componen
 import { LandingPageComponent }    from './components/landing-page/landing-page.component.ts';
 import { FrontendComponent }       from './frontend.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent }          from './components/login/login.component';
 
 /* EXPORTS ************************************************************************************************************/
 

@@ -1,20 +1,47 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <form [formGroup]="_loginForm" id="login-form">
-        <div class="md-form">
-          <input type="email" id="login-form-email" class="form-control">
-          <label for="login-form-email">Email</label>
-        </div>
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-block">
+          <form [formGroup]="_loginForm" id="login-form" (submit)="_onSubmit($event)">
+            <div class="md-form">
+              <input type="email"
+                     id="login-form-email"
+                     class="form-control"
+                     formControlName="email">
+              <label for="login-form-email">Email</label>
+            </div>
 
-        <div class="md-form">
-          <input type="password" id="login-form-password" class="form-control">
-          <label for="login-form-password">Password</label>
+            <div class="md-form">
+              <input type="password"
+                     id="login-form-password"
+                     class="form-control"
+                     formControlName="password">
+              <label for="login-form-password">Password</label>
+            </div>
+
+            <div id="login-form-error" class="font-italic" [ngClass]="_error.cssClass" *ngIf="_error.invalid">
+              <i class="fa fa-warning"></i>{{ _error.message }}
+            </div>
+
+            <div class="md-form form-group text-xs-center" id="login-form-submit">
+              <button class="btn btn-primary btn-lg" [disabled]="!_loginForm.valid">
+                {{ 'Login' | translate }}
+              </button>
+            </div>
+
+            <div class="modal-footer">
+              <div class="options">
+                <p>
+                  {{ 'Not a member' | translate }}?
+                  <a [routerLink]="['/signup']">{{ 'Sign up' | translate }}</a>
+                </p>
+                <p>{{ 'Forgot' | translate }} <a href="#">{{ 'Password' | translate }}?</a></p>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="md-form form-group">
-          <button class="btn btn-primary btn-lg">Login</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
