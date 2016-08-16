@@ -32,6 +32,7 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { TranslatePipe }             from '../../../pipes/translate.pipe';
 import { Meteor }                    from 'meteor/meteor';
 import { MeteorComponent }           from 'angular2-meteor';
+import { ValidationService }         from '../../../services/validation.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -70,7 +71,10 @@ export class LoginComponent extends MeteorComponent implements OnInit {
      */
     public ngOnInit() {
         this._loginForm = this._formBuilder.group({
-            email: ['', Validators.required],
+            email: ['', Validators.compose([
+                Validators.required,
+                ValidationService.email
+            ])],
             password: ['', Validators.required]
         });
     }
