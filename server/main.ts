@@ -20,6 +20,12 @@
 import { Meteor }           from 'meteor/meteor';
 import { createMigrations } from './migrations/create-migrations';
 
+// Publication Imports
+import './publications/category-publications.ts';
+import './publications/cart-publications.ts';
+import './publications/images-publications.ts';
+import './publications/product-publications.ts';
+
 /* CONSTANTS ***********************************************************************************************************/
 
 /**

@@ -80,16 +80,18 @@ export const ImagesStore = new UploadFS.store.Local({
     ]
 });
 
+// VALIDATORS *********************************************************************************************************/
+
 /**
  * @summary Rule validation for image insertion.
  *
  * @returns {boolean} true if the operation is allowed, otherwise, false.
  */
 function isAllowed() {
-    return true;
+    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
 }
 
-/* RULES **************************************************************************************************************/
+// RULES **************************************************************************************************************/
 
 Thumbnails.allow({
     insert: isAllowed,

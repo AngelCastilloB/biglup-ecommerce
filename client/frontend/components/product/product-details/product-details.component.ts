@@ -64,12 +64,16 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
             this._categoryId = params['categoryId'];
             this._productId  = params['productId'];
 
-            this.autorun(() => {
-                if (Meteor.status().connected) {
-                    this._product       = Products.findOne({_id: this._productId});
-                    this._productImages = Images.find({productId: this._productId});
-                    this._category      = Categories.findOne({_id: this._categoryId});
-                } // TODO: Add loading product animation on else.
+            this.subscribe('product', this._productId, () => {
+                this._product = Products.findOne({_id: this._productId});
+            }, true);
+
+            this.subscribe('category', this._categoryId, () => {
+                this._category = Categories.findOne({_id: this._categoryId});
+            }, true);
+
+            this.subscribe('product-images', this._productId, () => {
+                this._productImages = Images.find({productId: this._productId});
             }, true);
         });
     }

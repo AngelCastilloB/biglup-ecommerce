@@ -9,7 +9,7 @@
 
         <hr>
 
-        <product-images-carousel [images]="_productImages"></product-images-carousel>
+        <product-images-carousel *ngIf="_productImages" [images]="_productImages"></product-images-carousel>
       </div>
 
       <!--Second column-->
@@ -69,7 +69,7 @@
       <!--/.Second column-->
 
       <!--Third column-->
-      <div class="col-md-4">
+      <div *ngIf="_category" class="col-md-4">
         <h4>
           From
           <a [routerLink]="['/category', _categoryId]">

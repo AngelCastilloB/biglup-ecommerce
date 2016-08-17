@@ -19,15 +19,13 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit }  from '@angular/core';
-import { MeteorComponent }    from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
-import { Mongo }              from 'meteor/mongo';
-import { Tracker }            from 'meteor/tracker';
-import { Products }           from '../../../../common/collections/product.collection';
-import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }      from '../../../pipes/translate.pipe';
-import { ActivatedRoute }     from '@angular/router';
+import { Component, OnInit }         from '@angular/core';
+import { MeteorComponent }           from 'angular2-meteor';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Mongo }                     from 'meteor/mongo';
+import { Products }                  from '../../../../common/collections/product.collection';
+import { MongoTranslatePipe }        from '../../../pipes/mongo-translate.pipe';
+import { TranslatePipe }             from '../../../pipes/translate.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -41,8 +39,8 @@ import template from './products.component.html';
 @Component({
     selector: 'products',
     template,
-    directives: [ROUTER_DIRECTIVES],
-    pipes: [MongoTranslatePipe, TranslatePipe]
+    pipes: [MongoTranslatePipe, TranslatePipe],
+    directives: [ROUTER_DIRECTIVES]
 })
 export class ProductsComponent extends MeteorComponent implements OnInit  {
     private _products: Mongo.Cursor<Product>;
@@ -50,7 +48,7 @@ export class ProductsComponent extends MeteorComponent implements OnInit  {
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private _router: Router) {
         super();
     }
 
@@ -58,10 +56,9 @@ export class ProductsComponent extends MeteorComponent implements OnInit  {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
-            Tracker.autorun(() => {
-                this._products = Products.find();
-            });
-        });
+
+        this.subscribe('products', () => {
+            this._products = Products.find();
+        }, true);
     }
 }
