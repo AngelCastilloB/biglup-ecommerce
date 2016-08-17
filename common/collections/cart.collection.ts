@@ -31,7 +31,7 @@ Carts.attachSchema(CartSchema);
 // VALIDATORS *********************************************************************************************************/
 
 /**
- * @summary Rule validation for cart insert, update and delete.
+ * @summary Rule validation for cart insert and delete.
  *
  * @returns {boolean} true if the operation is allowed, otherwise, false.
  */
@@ -39,10 +39,19 @@ function isAllowed() {
     return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
 }
 
+/**
+ * @summary Rule validation for cart update.
+ *
+ * @returns {boolean} true if the operation is allowed, otherwise, false.
+ */
+function canEdit() {
+    return true; // TODO: [USER-LOGIN] The user can only edit its own cart (The admin and editor can edit all carts).
+}
+
 // API RULES **********************************************************************************************************/
 
 Carts.allow({
     insert: isAllowed,
-    update: isAllowed,
+    update: canEdit,
     remove: isAllowed
 });
