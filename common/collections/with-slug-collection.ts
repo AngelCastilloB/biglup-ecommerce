@@ -103,12 +103,14 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         // TODO: Validate preconditions on public interface input parameters. (selector, modifier)
         if (this._hasTitle(modifier, this._slugFieldTarget)) {
             const slugs    = this._createSlugs(modifier['$set'][this._slugFieldTarget]);
-            const document = this.findOne(selector); // TODO: What happens if no document is found?
-            //this._updateSlugs(slugs, document._id); // TODO: <- This will be undefined if findOne fails.
-            // TODO: This is not working properly. find and findOne always returns undefined. Even if this was working
+            const document = this.findOne(selector);
+            //this._updateSlugs(slugs, document._id); // TODO: <- This will be undefined if findOne fails (no document match the selector).
+            // This is not working properly. find and findOne always returns undefined. Even if this was working
             // there is the chance that multiple documents match the selector, but the correct one wont be updated necessarily,
             // because this always picks the first one and update the slugs on that one. Since the update could target multiple documents
             // this change would have to be applied to all of them.
+
+            // I think even tho the idea is good, this is too complex an error prone, we must find a simpler solution.
         }
 
         return super.update(selector, modifier, options, callback);
