@@ -99,7 +99,11 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
                     });
                 }
             });
-        this._categories = Categories.find();
+
+        this.subscribe('categories', () => {
+            this._categories = Categories.find();
+        }, true);
+
     }
 
     /**

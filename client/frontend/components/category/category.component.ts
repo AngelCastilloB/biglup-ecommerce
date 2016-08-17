@@ -23,7 +23,6 @@ import { Component, OnInit }     from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
 import { Mongo }                 from 'meteor/mongo';
 import { ActivatedRoute }        from '@angular/router';
-import { Tracker }               from 'meteor/tracker';
 import { Products }              from '../../../../common/collections/product.collection.ts';
 import { CategoryItemComponent } from '../category-item/category-item.component';
 
@@ -56,11 +55,17 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
+
         this.route.params.subscribe((params) => {
+
             this._categoryId = params['categoryId'];
-            Tracker.autorun(() => {
+
+            this.subscribe('category-products', this._categoryId, () => {
+
                 this._products = Products.find({categoryId: this._categoryId});
-            });
+
+            }, true);
+
         });
     }
 }

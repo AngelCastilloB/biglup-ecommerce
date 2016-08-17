@@ -27,3 +27,22 @@ export let Carts: any = new Mongo.Collection<Cart>('carts');
 // IMPLEMENTATION *****************************************************************************************************/
 
 Carts.attachSchema(CartSchema);
+
+// VALIDATORS *********************************************************************************************************/
+
+/**
+ * @summary Rule validation for cart insert, update and delete.
+ *
+ * @returns {boolean} true if the operation is allowed, otherwise, false.
+ */
+function isAllowed() {
+    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
+}
+
+// API RULES **********************************************************************************************************/
+
+Carts.allow({
+    insert: isAllowed,
+    update: isAllowed,
+    remove: isAllowed
+});

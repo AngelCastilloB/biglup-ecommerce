@@ -60,6 +60,10 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this._productImages = Images.find({productId: this.model._id});
+        this.subscribe('product-images', this.model._id, () => {
+
+            this._productImages = Images.find({productId: this.model._id});
+
+        }, true);
     }
 }

@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input } from '@angular/core';
+import { Component, Input  }  from '@angular/core';
+import { IdGeneratorService } from '../../../../services/id-generator.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -30,20 +31,20 @@ import template from './product-images-carousel.html';
  */
 @Component({
     selector: 'product-images-carousel',
-    template
+    template,
+    providers: [IdGeneratorService]
 })
 export class ProductImagesCarouselComponent {
+    @Input()
+    public images: Mongo.Cursor<Image>;
+    private _id:   string;
 
     /**
-     * @summary The images to be iterated over at the view.
-     */
-    @Input() public images: Mongo.Cursor<Image>;
-
-    /**
-     * @summary sets an unique ID for the carousel component, needed for the anchor tags.
+     * @summary Initializes a new instance of the ProductImagesCarouselComponent class.
      *
-     * @type {string}
-     * @private
+     * @param _idGenerator The unique id service generator.
      */
-    private _id: string = Math.random().toString(36).slice(-16);
+    constructor(private _idGenerator: IdGeneratorService) {
+        this._id = this._idGenerator.generate();
+    }
 }
