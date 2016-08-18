@@ -58,7 +58,9 @@ export class HeaderComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
-        this._categories = Categories.find();
+        this.subscribe('categories', () => {
+            this._categories = Categories.find();
+        }, true);
     }
 
     /**

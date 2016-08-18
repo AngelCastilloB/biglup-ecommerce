@@ -33,3 +33,22 @@ Categories.attachSchema(CategorySchema);
 // EXPORTS ************************************************************************************************************/
 
 export { Categories }
+
+// VALIDATORS *********************************************************************************************************/
+
+/**
+ * @summary Rule validation for category insert, update and delete.
+ *
+ * @returns {boolean} true if the operation is allowed, otherwise, false.
+ */
+function isAllowed() {
+    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
+}
+
+// API RULES **********************************************************************************************************/
+
+Categories.allow({
+    insert: isAllowed,
+    update: isAllowed,
+    remove: isAllowed
+});

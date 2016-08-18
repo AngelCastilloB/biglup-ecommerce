@@ -52,7 +52,7 @@ import template from './add-collection.component.html';
 })
 export class AddCollectionComponent extends MeteorComponent implements OnInit {
     @ViewChild(ModalComponent)
-    private _modal:              ModalComponent;
+    private _modal:               ModalComponent;
     private _category:            Category = <Category>{};
     private _categoryName:        string   = '';
     private _categoryDescription: string   = '';

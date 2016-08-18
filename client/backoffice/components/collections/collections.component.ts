@@ -23,7 +23,6 @@ import { Component, OnInit }  from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }  from '@angular/router';
 import { Mongo }              from 'meteor/mongo';
-import { Tracker }            from 'meteor/tracker';
 import { Categories }         from '../../../../common/collections/category.collection';
 import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
 import { TranslatePipe }      from '../../../pipes/translate.pipe';
@@ -59,10 +58,8 @@ export class CollectionsComponent extends MeteorComponent implements OnInit  {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
-            Tracker.autorun(() => {
-                this._categories = Categories.find();
-            });
-        });
+        this.subscribe('categories', () => {
+            this._categories = Categories.find();
+        }, true);
     }
 }
