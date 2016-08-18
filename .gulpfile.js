@@ -77,18 +77,20 @@ gulp.task('copy-meteor-settings', function () {
 /**
  * @summary copies related bootstrap files
  */
-gulp.task('copy-bootstrap-files', function () {
-    gulp.src(PATHS.bootstrap.css.glob)
+gulp.task('copy-bootstrap-css', function () {
+    return gulp.src(PATHS.bootstrap.css.glob)
         .pipe(gulp.dest(PATHS.public.css));
+});
 
-    gulp.src(PATHS.bootstrap.js.src)
+gulp.task('copy-bootstrap-js', function () {
+    return gulp.src(PATHS.bootstrap.js.src)
         .pipe(gulp.dest(PATHS.public.js));
 });
 
 /**
  * @summary concatenates and minifies the client css files
  */
-gulp.task('uglify-css', ['copy-bootstrap-files'], function (callback) {
+gulp.task('uglify-css', function (callback) {
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
@@ -129,7 +131,9 @@ gulp.task('concat-js', function (callback) {
 /**
  * @summary sugar for gulp
  */
-gulp.task('uglify', ['uglify-css', 'concat-js']);
+gulp.task('uglify', function () {
+    sequence('copy-bootstrap-css', 'copy-bootstrap-js', 'uglify-css', 'concat-js');
+});
 
 /**
  * @summary the tasks to be run when the app installs.
