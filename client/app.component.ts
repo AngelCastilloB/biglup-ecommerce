@@ -22,16 +22,17 @@ import 'reflect-metadata';
 import {
     provideRouter,
     RouterConfig,
-    ROUTER_DIRECTIVES }          from '@angular/router';
+    ROUTER_DIRECTIVES }                from '@angular/router';
 import { disableDeprecatedForms,
-         provideForms }          from '@angular/forms';
-import { Component, provide }    from '@angular/core';
-import { MeteorComponent }       from 'angular2-meteor';
-import { bootstrap }             from '@angular/platform-browser-dynamic';
-import { APP_BASE_HREF }         from '@angular/common';
-import { backofficeRoutes }      from './backoffice/backoffice.routes';
-import { frontendRoutes }        from './frontend/frontend.routes';
-
+         provideForms }                from '@angular/forms';
+import { Component, provide }          from '@angular/core';
+import { MeteorComponent }             from 'angular2-meteor';
+import { bootstrap }                   from '@angular/platform-browser-dynamic';
+import { APP_BASE_HREF }               from '@angular/common';
+import { backofficeRoutes }            from './backoffice/backoffice.routes';
+import { frontendRoutes }              from './frontend/frontend.routes';
+import { IsUserLoggedGuardService }    from './services/guards/is-user-logged-guard.service';
+import { IsUserLoggedOutGuardService } from './services/guards/is-user-logged-out-guard.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -74,8 +75,17 @@ const APP_ROUTER_PROVIDERS = [
     provideRouter(routes)
 ];
 
+/**
+ * @summary the Applications providers.
+ */
+const APP_PROVIDERS = [
+    IsUserLoggedGuardService,
+    IsUserLoggedOutGuardService
+];
+
 bootstrap(Application, [
     disableDeprecatedForms(),
     provideForms(),
     APP_ROUTER_PROVIDERS,
+    APP_PROVIDERS,
     provide(APP_BASE_HREF, {useValue: '/'})]);
