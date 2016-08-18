@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Injectable }      from '@angular/core';
-import { AbstractControl } from '@angular/common';
+import { AbstractControl } from '@angular/forms';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -31,12 +31,10 @@ export class ValidationService {
      * @param {AbstractControl} control
      * @returns {{email: boolean}}
      */
-    public static email(control: AbstractControl): { [s: string]: boolean } {
+    public static email(control: AbstractControl): {[key: string]: boolean} {
         /* tslint:disable:max-line-length */
         let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
-        if (!control.value.match(regex)) {
-            return {email: true};
-        }
+        return control.value.match(regex) ? null : {email: true};
     }
 }
