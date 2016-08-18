@@ -28,7 +28,6 @@ import { Products } from '../collections/product.collection';
 Meteor.methods({
     'cart.addProduct' : function (productId, quantity) {
 
-        console.error(Carts.find().fetch());
         // TODO: Product variant support will be left out to a later stage.
         check(productId, String);
         check(quantity, Number);
@@ -50,7 +49,7 @@ Meteor.methods({
 
         let item: CartItem  = { productId: productId, quantity: quantity, title: product.title };
 
-        Carts.update(cart._id, {
+        Carts.update({_id : cart._id}, {
             $push: { items: item }
         });
     }

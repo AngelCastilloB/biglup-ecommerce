@@ -26,9 +26,6 @@ import { I18nStringSchema } from './i18n-string.schema';
  * @summary Represent an item on the cart.
  */
 export let CartItemSchema: any = new SimpleSchema({
-    _id: {
-        type: String
-    },
     productId: {
         type: String
     },
