@@ -68,11 +68,12 @@ export let CartSchema: any = new SimpleSchema({
         type: String,
         autoValue: function () {
             if (this.isInsert) {
-                return this.userId;
+                return '1';
             } else {
                 this.unset();
             }
-        }
+        },
+        optional: true
     },
     items: {
         type: [CartItemSchema],

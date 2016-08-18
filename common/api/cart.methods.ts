@@ -1,7 +1,7 @@
 /**
- * @file cart-api.ts.
+ * @file cart.methods.ts.
  *
- * @summary This is the cart public API.
+ * @summary This is the cart public API (Methods).
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   August 18, 2016
@@ -20,54 +20,54 @@
 import { Carts }    from '../collections/cart.collection';
 import { Products } from '../collections/product.collection';
 
-// EXPORTS ************************************************************************************************************/
+// METHODS ************************************************************************************************************/
 
-// UNFINISHED IMPLEMENTATION
-export const addProductToCart = {
-    name: 'cart.addProduct',
+/**
+ * @summary registers the add to cart method to Meteor's DDP system.
+ */
+Meteor.methods({
+    'cart.addProduct' : function (productId, quantity) {
 
-    validate(args) {
-        new SimpleSchema({
-            productId: { type: String },
-            quantity: { type: Number }
-        }).validate(args);
-    },
+        console.error(Carts.find().fetch());
+        // TODO: Product variant support will be left out to a later stage.
+        check(productId, String);
+        check(quantity, Number);
 
-    run({ productId, quantity }) {
-        const cart = Carts.findOne( { userId: this.userId});
         const product = Products.findOne(productId);
+        const cart    = Carts.findOne({userId : '1'});
 
         if (!cart) {
-            throw new Meteor.Error('cart.addProduct.notFound',
+            throw new Meteor.Error(
+                'cart.addProduct.notFound',
                 'The cart for this user was not found.');
         }
 
         if (!product) {
-            throw new Meteor.Error('cart.addProduct.notFound',
+            throw new Meteor.Error(
+                'cart.addProduct.notFound',
                 'The product that you are trying to add to the cart does not exist');
         }
 
         let item: CartItem  = { productId: productId, quantity: quantity, title: product.title };
 
-        Carts.update(productId, {
+        Carts.update(cart._id, {
             $push: { items: item }
         });
-    },
-
-    call(args, callback) {
-        const options = {
-            returnStubValue: true,
-            throwStubExceptions: true
-        };
-
-        Meteor.apply(this.name, [args], options, callback);
     }
-};
+});
 
-// Actually register the method with Meteor's DDP system
+/**
+ * @summary registers the add cart to user method to Meteor's DDP system.
+ */
 Meteor.methods({
-    [addProductToCart.name]: function (args) {
-        addProductToCart.validate.call(this, args);
-        addProductToCart.run.call(this, args);
+    ['cart.create']: function () {
+
+        if (Carts.find({userId: '1'}).count() > 0) {
+            throw new Meteor.Error(
+                'cart.createCart.alreadyExists',
+                'This user already have a cart.');
+        }
+
+        Carts.insert({});
     }
 });
