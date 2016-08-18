@@ -87,7 +87,6 @@ export class LoginComponent extends MeteorComponent implements OnInit {
         event.preventDefault();
 
         if (!this._loginForm.valid || this._error.invalid) {
-            console.log('invalid login form');
             return;
         }
 
@@ -110,8 +109,6 @@ export class LoginComponent extends MeteorComponent implements OnInit {
         this.autorun(() => {
             this._error.cssClass = 'text-danger';
             this._error.invalid  = true;
-
-            console.log(err);
 
             if (err.message === 'User not found [403]') {
                 this._error.message = this._translatePipe.transform('The credentials provided did not match our records.');
