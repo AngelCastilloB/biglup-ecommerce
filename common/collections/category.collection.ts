@@ -36,8 +36,8 @@ export { Categories }
 
 // RULES **************************************************************************************************************/
 
-Categories.allow({
-    insert: false,
-    update: false,
-    remove: false
+Categories.deny({
+    insert() { return true; },
+    update() { return true; },
+    remove() { return true; },
 });

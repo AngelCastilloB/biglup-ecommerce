@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
+import { I18nStringSchema } from './i18n-string.schema';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,19 +39,21 @@ export let CartItemSchema: any = new SimpleSchema({
     },
     // Denormalized field: Indicates the title of this product.
     title: {
-        type: String
+        type: [I18nStringSchema]
     },
     // Denormalized field: Indicates the color variant of this product.
     color: {
         label: 'Color',
-        type: String,
-        defaultValue: ''
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
     },
     // Denormalized field: Indicates the size of this product.
     size: {
         label: 'Size',
-        type: String,
-        defaultValue: ''
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
     },
 });
 
@@ -64,36 +67,16 @@ export let CartSchema: any = new SimpleSchema({
     userId: {
         type: String,
         autoValue: function () {
-            if (this.isInsert || this.isUpdate) {
-                if (!this.isFromTrustedCode) {
-                    return this.userId;
-                }
+            if (this.isInsert) {
+                return this.userId;
             } else {
                 this.unset();
             }
         }
     },
-    sessionId: {
-        type: String,
-    },
-    email: {
-        type: String,
-        optional: true,
-        regEx: SimpleSchema.RegEx.Email
-    },
     items: {
         type: [CartItemSchema],
         optional: true
-    },
-    shipping: {
-        type: String,
-        optional: true,
-        blackbox: true
-    },
-    billing: {
-        type: String,
-        optional: true,
-        blackbox: true
     },
     updatedAt: {
         type: Date,

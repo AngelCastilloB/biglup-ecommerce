@@ -113,8 +113,16 @@ export class ProductMigration extends AbstractMigration {
                     {language: 'zh', value: this._generators.zh.paragraph()},
                     {language: 'kr', value: this._generators.kr.paragraph()},
                 ],
-                color: faker.commerce.color(),
-                size: this._getRandomSize(),
+                color: [
+                    {language: 'en', value: faker.commerce.color()},
+                    {language: 'zh', value: this._generators.zh.words(3).join(' ')},
+                    {language: 'kr', value: this._generators.kr.words(3).join(' ')},
+                ],
+                size: [
+                    {language: 'en', value: this._getRandomSize()},
+                    {language: 'zh', value: this._generators.zh.words(3).join(' ')},
+                    {language: 'kr', value: this._generators.kr.words(3).join(' ')},
+                ],
                 price: Math.floor(Math.random() * 10000),
                 discount: Math.floor(Math.random() * 100),
                 hashtags: faker.lorem.words(3).split(' '),

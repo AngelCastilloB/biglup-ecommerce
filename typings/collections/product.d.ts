@@ -24,8 +24,8 @@ interface Product extends Distinguishable, Sluggable {
     description: Array<I18nString>;
     barcode: string;
     sku: string;
-    color: string;
-    size: string;
+    color?: Array<I18nString>;
+    size?: Array<I18nString>;
     price: number;
     discount: number;
     trackInventory: boolean;

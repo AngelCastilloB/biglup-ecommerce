@@ -36,8 +36,8 @@ export { Products }
 
 // RULES **************************************************************************************************************/
 
-Products.allow({
-    insert: false,
-    update: false,
-    remove: false
+Products.deny({
+    insert() { return true; },
+    update() { return true; },
+    remove() { return true; },
 });

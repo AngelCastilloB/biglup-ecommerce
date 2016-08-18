@@ -19,16 +19,13 @@ interface CartItem extends Distinguishable {
     productId: string;
     quantity: number;
     title: Array<I18nString>;
-    color: string;
-    size: string;
+    color?: Array<I18nString>;
+    size?: Array<I18nString>;
 }
 
 interface Cart {
     _id?: string;
     userId: string;
-    sessionId: number;
     items: [CartItem];
-    shipping: string;
-    billing: string;
     updatedAt?: Date;
 }

@@ -57,13 +57,15 @@ export let ProductSchema = new SimpleSchema({
     },
     color: {
         label: 'Color',
-        type: String,
-        defaultValue: ''
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
     },
     size: {
         label: 'Size',
-        type: String,
-        defaultValue: ''
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
     },
     price: {
         label: 'Price',
@@ -121,7 +123,8 @@ export let ProductSchema = new SimpleSchema({
             } else if (this.isSet) {
                 this.unset();
             }
-        }
+        },
+        optional: true
     },
     updatedAt: {
         type: Date,
