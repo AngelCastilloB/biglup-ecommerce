@@ -23,6 +23,6 @@ aldeed:collection2
 konecty:mongo-counter
 jalik:ufs
 jalik:ufs-local
-check@1.2.3
+check
 momentjs:moment
 percolate:migrations

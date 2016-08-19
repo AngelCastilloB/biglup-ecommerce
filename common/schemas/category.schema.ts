@@ -60,14 +60,11 @@ export let CategorySchema: any = new SimpleSchema({
     },
     updated: {
         type: Date,
-        label: 'Last date this book was updated.',
+        label: 'Last date this category was updated.',
         autoValue: function () {
-            if (this.isInsert) {
-                return new Date();
-            } else if (this.isSet) {
-                this.unset();
-            }
-        }
+            return new Date();
+        },
+        optional: true
     },
     subCategories: {
         type: [Object],

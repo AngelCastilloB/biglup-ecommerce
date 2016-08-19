@@ -15,20 +15,17 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-interface CartItem extends Distinguishable {
+interface CartItem {
     productId: string;
     quantity: number;
     title: Array<I18nString>;
-    color: string;
-    size: string;
+    color?: Array<I18nString>;
+    size?: Array<I18nString>;
 }
 
 interface Cart {
     _id?: string;
     userId: string;
-    sessionId: number;
     items: [CartItem];
-    shipping: string;
-    billing: string;
     updatedAt?: Date;
 }

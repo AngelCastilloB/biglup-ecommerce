@@ -34,21 +34,10 @@ Products.attachSchema(ProductSchema);
 
 export { Products }
 
-// VALIDATORS *********************************************************************************************************/
+// RULES **************************************************************************************************************/
 
-/**
- * @summary Rule validation for product insert, update and delete.
- *
- * @returns {boolean} true if the operation is allowed, otherwise, false.
- */
-function isAllowed() {
-    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
-}
-
-// API RULES **********************************************************************************************************/
-
-Products.allow({
-    insert: isAllowed,
-    update: isAllowed,
-    remove: isAllowed
+Products.deny({
+    insert() { return true; },
+    update() { return true; },
+    remove() { return true; },
 });

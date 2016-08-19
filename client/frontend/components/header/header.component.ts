@@ -28,6 +28,8 @@ import { TranslatePipe }        from '../../../pipes/translate.pipe';
 import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
 import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.service';
 
+import '../../../../common/api/cart.methods';
+
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './header.component.html';

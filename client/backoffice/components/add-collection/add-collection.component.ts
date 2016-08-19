@@ -58,7 +58,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     private _categoryDescription: string   = '';
     private _defaultLocale:       string   = I18nSingletonService.getInstance().getDefaultLocale();
     private _waitModalResult:     boolean  = false;
-    /**
+    private _isEditMode:          boolean  = false;
+
+     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
     constructor(private _zone: NgZone, private _router: Router) {
@@ -123,6 +125,14 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      */
     private _saveCategory(): void {
 
+        if (!this._category.name || !this._category.info) {
+            this._modal.show(
+                _T('Please fill all the required fields.'),
+                _T('Information'));
+
+            return;
+        }
+
         Categories.insert(this._category, (error, result) => {
             if (error) {
                 this._waitModalResult = false;
@@ -133,7 +143,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
 
                 console.error(error);
             } else {
-                this._waitModalResult = true;
+                this._category._id = result;
+                this._isEditMode = true;
 
                 this._modal.show(
                     _T('Category Saved!'),
@@ -143,7 +154,81 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     }
 
     /**
+     * @summary Deletes the category in the database.
+     */
+    private _deleteCategory(): void {
+
+        Categories.remove(this._category._id, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error deleting the category'),
+                    _T('Error'));
+
+                console.error(error);
+            } else {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Category Deleted!'),
+                    _T('Information'));
+            }
+        });
+    }
+
+    /**
+     * @summary Saves the category in the database.
+     */
+    private _updateCategory(): void {
+
+        if (!this._category.name || !this._category.info) {
+            this._modal.show(
+                _T('Please fill all the required fields.'),
+                _T('Information'));
+
+            return;
+        }
+
+        Categories.update(
+            { _id: this._category._id }, {
+                $set: {
+                    name: this._category.name,
+                    info: this._category.info
+                }
+            },
+            (error, result) => {
+                if (error) {
+                    this._waitModalResult = false;
+
+                    this._modal.show(
+                        _T('There was an error updating the category'),
+                        _T('Error'));
+
+                    console.error(error);
+                } else {
+                    this._waitModalResult = true;
+
+                    this._modal.show(
+                        _T('Category Updated!'),
+                        _T('Information'));
+                }
+        });
+    }
+
+    /**
+     * @summary Cancels the operation
+     *
+     * @param event The modal closed event
+     */
+    private _onCancel(): void {
+        this._router.navigate(['/admin/collections']);
+    }
+
+    /**
      * @summary Handles the modal closed event.
+     *
+     * @param {any} Event The modal event.
      *
      * @param event The modal closed event
      */

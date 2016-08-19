@@ -26,6 +26,10 @@ import './publications/cart-publications.ts';
 import './publications/images-publications.ts';
 import './publications/product-publications.ts';
 
+// Method Imports
+
+import '../common/api/cart.methods';
+
 /* CONSTANTS ***********************************************************************************************************/
 
 /**

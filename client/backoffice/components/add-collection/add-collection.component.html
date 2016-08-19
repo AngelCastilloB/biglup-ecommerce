@@ -42,10 +42,12 @@
             </div>
             <br/></br>
             <hr>
-            <div class="bottom-button">
-                <button type="button" (click)="_saveCategory($event)" class="btn btn-primary save-button pull-right">{{'Save Collection' | translate }}</button>
-                <button type="button" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
-            </div>
+              <div class="bottom-button">
+                  <button *ngIf="_isEditMode" type="button" (click)="_deleteCategory()" style="margin-left: 100px" class="btn btn-danger pull-left">{{'Delete' | translate }}</button>
+                  <button *ngIf="!_isEditMode"  type="button" (click)="_saveCategory()" class="btn btn-primary save-button pull-right">{{'Create' | translate }}</button>
+                  <button *ngIf="_isEditMode" type="button" (click)="_updateCategory()" class="btn btn-primary save-button pull-right">{{'Update' | translate }}</button>
+                  <button type="button" (click)="_onCancel()" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
+              </div>
         </div>
     </form>
 </div>

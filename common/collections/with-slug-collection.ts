@@ -24,8 +24,10 @@ import { Mongo }   from 'meteor/mongo';
 
 // EXPORTS ************************************************************************************************************/
 
+// TODO: Add documentation.
 export class WithSlugCollection extends Mongo.Collection<any> {
 
+    // TODO: Improve documentation.
     /**
      * @summary Makes a new collection.
      *
@@ -44,6 +46,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         return new WithSlugCollection(name, _slugFieldTarget, _slugService, options);
     }
 
+    // TODO: Improve documentation.
     /**
      * @summary This constructor adds the slug service to the mix.
      *
@@ -62,6 +65,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         super(name, options);
     }
 
+    // TODO: Improve documentation.
     /**
      * @summary Changes the insert to add the slugsArray.
      *
@@ -70,6 +74,8 @@ export class WithSlugCollection extends Mongo.Collection<any> {
      * @returns {string}
      */
     public insert(document: DocumentWithSlug, callback: Function) {
+        // TODO: Validate preconditions on public interface input parameters. What happens if document is undefined or doesnt have the
+        // key this._slugFieldTarget?
         if (document[this._slugFieldTarget].length > 0) {
             document.slug = this._createSlugs(document[this._slugFieldTarget]);
         }
@@ -77,6 +83,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         return super.insert(document, callback);
     }
 
+    // TODO: Improve documentation.
     /**
      * @summary Changes the update to allow new slugs if title changes.
      *
@@ -92,10 +99,18 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         modifier: Mongo.Modifier,
         options?: {multi?: boolean; upsert?: boolean},
         callback?: Function): number {
+
+        // TODO: Validate preconditions on public interface input parameters. (selector, modifier)
         if (this._hasTitle(modifier, this._slugFieldTarget)) {
             const slugs    = this._createSlugs(modifier['$set'][this._slugFieldTarget]);
             const document = this.findOne(selector);
-            this._updateSlugs(slugs, document._id);
+            //this._updateSlugs(slugs, document._id); // TODO: <- This will be undefined if findOne fails (no document match the selector).
+            // This is not working properly. find and findOne always returns undefined. Even if this was working
+            // there is the chance that multiple documents match the selector, but the correct one wont be updated necessarily,
+            // because this always picks the first one and update the slugs on that one. Since the update could target multiple documents
+            // this change would have to be applied to all of them.
+
+            // I think even tho the idea is good, this is too complex an error prone, we must find a simpler solution.
         }
 
         return super.update(selector, modifier, options, callback);
@@ -109,12 +124,15 @@ export class WithSlugCollection extends Mongo.Collection<any> {
      * @private
      */
     private _updateSlugs(slugs: I18nString[], _id: string): void {
+
         // we need to update the selector to include the updated languages
         slugs.forEach((slug: I18nString) => {
             const selector = {_id, 'slug.language': slug.language};
             const modifier = {$set: {'slug.$.value': slug.value}};
 
             // tries to update array slug, if no updates, just inserts a new array item.
+            // TODO: I think this can be simplified with $addToSet, I even think that $push will do the work by
+            // itself without the need for the outer update.
             this.update(selector, modifier, {}, (err, updatedRows) => {
                 if (err) throw err;
 
@@ -129,6 +147,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         });
     }
 
+    // TODO: Improve documentation. (Mongo.Modifier and return)
     /**
      * @summary checks the modifier (mongo modifier) and determines if a new slug is needed.
      *
@@ -148,6 +167,7 @@ export class WithSlugCollection extends Mongo.Collection<any> {
         return false;
     }
 
+    // TODO: Improve documentation.
     /**
      * @summary Ask slugs from the service and check if those slugs already exist.
      *
@@ -174,5 +194,6 @@ export class WithSlugCollection extends Mongo.Collection<any> {
     }
 }
 
+// TODO: Add documentation.
 interface DocumentWithSlug extends Distinguishable, Sluggable {
 }
