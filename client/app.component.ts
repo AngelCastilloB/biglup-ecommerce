@@ -33,6 +33,7 @@ import { backofficeRoutes }            from './backoffice/backoffice.routes';
 import { frontendRoutes }              from './frontend/frontend.routes';
 import { IsUserLoggedGuardService }    from './services/guards/is-user-logged-guard.service';
 import { IsUserLoggedOutGuardService } from './services/guards/is-user-logged-out-guard.service';
+import { UserAuthService }             from './services/user-auth.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -80,7 +81,8 @@ const APP_ROUTER_PROVIDERS = [
  */
 const APP_PROVIDERS = [
     IsUserLoggedGuardService,
-    IsUserLoggedOutGuardService
+    IsUserLoggedOutGuardService,
+    UserAuthService
 ];
 
 bootstrap(Application, [

@@ -17,9 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { CanActivate, Router } from '@angular/router';
-import { Meteor }              from 'meteor/meteor';
-import { Injectable }          from '@angular/core';
+import {
+    CanActivate,
+    Router, ActivatedRouteSnapshot,
+    RouterStateSnapshot
+}                           from '@angular/router';
+import { Injectable }       from '@angular/core';
+import { UserAuthService }  from '../user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -27,26 +31,31 @@ import { Injectable }          from '@angular/core';
 export class IsUserLoggedGuardService implements CanActivate {
 
     /**
-     * @summary the user's id is needed to check if is logged in by meteor.
+     * @summary the user's log status.
      */
-    private _userId: string;
+    private _status: boolean;
 
     /**
-     * @summary constructs this with the route needed to redirect and the userId.
+     * @summary constructs this with the route needed to redirect and auth service.
      * @param {Router} router
+     * @param {UserAuthService} _userAuthService
      */
-    constructor(private router: Router) {
-        this._userId = Meteor.userId();
+    constructor(private router: Router, private _userAuthService: UserAuthService) {
+        this._userAuthService.isLogged().subscribe(status => this._status = status);
     }
 
     /**
      * @summary Allows route activation only if the user is logged in.
+     *
+     * @param {ActivatedRouteSnapshot} route
+     * @param {RouterStateSnapshot} state
      * @returns {boolean}
      */
-    public canActivate(): boolean {
-        if (this._userId) return true;
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        if (this._status) return true;
 
-        this.router.navigate(['/login']);
+        if (state.url !== '/login') this.router.navigate(['/login']);
+
         return false;
     }
 }

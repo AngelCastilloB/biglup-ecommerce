@@ -19,6 +19,7 @@
 
 import { CanActivate, Router } from '@angular/router';
 import { Injectable }          from '@angular/core';
+import { UserAuthService }     from '../user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -26,16 +27,22 @@ import { Injectable }          from '@angular/core';
 export class IsUserLoggedOutGuardService implements CanActivate {
 
     /**
-     * @summary the user's id is needed to check if is logged in by meteor.
+     * @summary the user's log status.
      */
-    private _userId: string;
+    private _status: boolean;
 
     /**
-     * @summary constructs this with the route needed to redirect and the userId.
+     * @summary constructs this with the route needed to redirect and auth service.
      * @param {Router} router
+     * @param {UserAuthService} _userAuthService
      */
-    constructor(private router: Router) {
-        this._userId = Meteor.userId();
+    constructor(private router: Router, private _userAuthService: UserAuthService) {
+        console.log('inside the isloggedoutguard constructor');
+        // this._userAuthService.isLogged().subscribe(status => this._status = status);
+        this._userAuthService.isLogged().subscribe(status => {
+            console.log('inside the _userAuthService.isLogged callback');
+            this._status = status;
+        });
     }
 
     /**
@@ -43,7 +50,7 @@ export class IsUserLoggedOutGuardService implements CanActivate {
      * @returns {boolean}
      */
     public canActivate(): boolean {
-        if (this._userId) {
+        if (this._status) {
             this.router.navigate(['/']);
 
             return false;
