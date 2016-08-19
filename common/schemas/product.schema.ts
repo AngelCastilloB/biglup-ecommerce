@@ -108,12 +108,25 @@ export let ProductSchema = new SimpleSchema({
         optional: true
     },
     hashtags: {
+        label: 'Associated hash tags',
         type: [String],
         optional: true,
     },
     isVisible: {
+        label: 'Visibility',
         type: Boolean,
         defaultValue: false,
+    },
+    isVariant: {
+        label: 'Indicates whether this product is a variant of another product.',
+        type: Boolean,
+        defaultValue: false,
+        optional: true,
+    },
+    parentProduct: {
+        type: String,
+        label: 'The parent product Id',
+        optional: true,
     },
     createdAt: {
         type: Date,

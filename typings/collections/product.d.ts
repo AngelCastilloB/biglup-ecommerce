@@ -36,6 +36,8 @@ interface Product extends Distinguishable, Sluggable {
     requiresShipping?: boolean; // defaults to true
     hashtags?: Array<string>;
     isVisible: boolean;
+    isVariant?: boolean; // defaults to false
+    parentId?: string;
     createdAt?: Date;
     updatedAt?: Date;
     publishedAt?: Date;

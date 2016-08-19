@@ -23,17 +23,22 @@ import { Products } from '../collections/product.collection';
 // METHODS ************************************************************************************************************/
 
 /**
- * @summary registers the add to cart method to Meteor's DDP system.
+ * @summary Registers the add to cart method to Meteor's DDP system.
+ *
+ * @param productId The product to be added to the cart.
+ * @param quantity  The amount of this products that wants to be added.
+ * @param set       Indicates if the amount must be increased or changed. (defaults to false).
+ *
+ * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
 Meteor.methods({
-    'cart.addProduct' : function (productId, quantity) {
+    'cart.addProduct' : function (productId: string, quantity: number, set = false) {
 
-        // TODO: Product variant support will be left out to a later stage.
         check(productId, String);
         check(quantity, Number);
 
-        const product = Products.findOne(productId);
-        const cart    = Carts.findOne({userId : '1'});
+        const product: Product = Products.findOne(productId);
+        const cart:    Cart    = Carts.findOne({userId : this.userId});
 
         if (!cart) {
             throw new Meteor.Error(
@@ -47,21 +52,61 @@ Meteor.methods({
                 'The product that you are trying to add to the cart does not exist');
         }
 
-        let item: CartItem  = { productId: productId, quantity: quantity, title: product.title };
+        let item:     CartItem = {productId: productId, quantity: quantity, title: product.title};
+        let selector: Object   = {_id : cart._id, 'items.productId': productId};
+        let modifier: Object;
 
-        Carts.update({_id : cart._id}, {
-            $push: { items: item }
-        });
+        let productIndex: number = findProduct(cart, product._id);
+        let maxQuantity:  number = product.stock;
+        let newQuantity:  number = Math.min(item.quantity, maxQuantity);
+
+        if (productIndex === -1) {
+
+            if (newQuantity < 1) {
+                return;
+            }
+
+            selector = { _id : cart._id};
+            modifier = { $push: {'items': item } };
+
+        } else {
+
+            newQuantity = Math.min(cart.items[productIndex].quantity + item.quantity, maxQuantity);
+
+            if (set) {
+
+                if (item.quantity < 1) {
+
+                    Carts.update(selector, { $pull: { items: { productId: productId} }}, { multi: true });
+
+                    return;
+                }
+
+                modifier = { $set: {'items.$.quantity': item.quantity}};
+            } else {
+
+                if (newQuantity < 1) {
+
+                    Carts.update(selector, { $pull: { items: { productId: productId} }}, { multi: true });
+
+                    return;
+                }
+
+                modifier = { $set: {'items.$.quantity': newQuantity}};
+            }
+        }
+
+        Carts.update(selector, modifier);
     }
 });
 
 /**
- * @summary registers the add cart to user method to Meteor's DDP system.
+ * @summary Registers the add cart to user method to Meteor's DDP system.
  */
 Meteor.methods({
     ['cart.create']: function () {
 
-        if (Carts.find({userId: '1'}).count() > 0) {
+        if (Carts.find({userId: this.userId}).count() > 0) {
             throw new Meteor.Error(
                 'cart.createCart.alreadyExists',
                 'This user already have a cart.');
@@ -70,3 +115,103 @@ Meteor.methods({
         Carts.insert({});
     }
 });
+
+// ADMINISTRATOR ONLY METHODS *****************************************************************************************/
+
+/**
+ * @summary Deletes the cart for the given user.
+ *
+ * @param userId The user to remove the cart from.
+ */
+Meteor.methods({
+    ['cart.delete']: function (userId: string) {
+
+        /*
+        if (!this.user.IsAdmin) {
+            throw new Meteor.Error(
+                'cart.delete.unauthorized',
+                'You are not authorized to perform this action.');
+        }
+        */
+
+        if (Carts.find({userId: userId}).count() === 0) {
+            throw new Meteor.Error(
+                'cart.delete.doesNotExists',
+                'This user does not have a cart.');
+        }
+
+        Carts.remove({userId: userId});
+    }
+});
+
+/**
+ * @summary Deletes all products from the given user cart.
+ */
+Meteor.methods({
+    ['cart.deleteAllProducts']: function (userId: string) {
+
+        /*
+         if (!this.user.IsAdmin) {
+             throw new Meteor.Error(
+                 'cart.deleteAllProducts.unauthorized',
+                 'You are not authorized to perform this action.');
+         }
+         */
+
+        if (Carts.find({userId: userId}).count() === 0) {
+            throw new Meteor.Error(
+                'cart.delete.doesNotExists',
+                'This user does not have a cart.');
+        }
+
+        Carts.update({userId: userId}, {$set : {'items': []}}, { multi: true });
+    }
+});
+
+/**
+ * @summary Deletes the given product from the given user cart.
+ *
+ *
+ */
+Meteor.methods({
+    ['cart.deleteProduct']: function (userId: string, productId: string) {
+
+        /*
+         if (!this.user.IsAdmin) {
+             throw new Meteor.Error(
+                 'cart.deleteAllProducts.unauthorized',
+                 'You are not authorized to perform this action.');
+         }
+         */
+
+        if (Carts.find({userId: userId}).count() === 0) {
+            throw new Meteor.Error(
+                'cart.delete.doesNotExists',
+                'This user does not have a cart.');
+        }
+        Carts.update({userId: userId}, { $pull: { items: { productId: productId} }}, { multi: true });
+    }
+});
+
+// FUNCTIONS **********************************************************************************************************/
+
+/**
+ * @summary search for a product inside a cart.
+ *
+ * @param cart The cart where the product will be looked for.
+ * @param productId The product to be found.
+ * @returns {number} The index of the product in the cart index collection.
+ */
+function findProduct(cart: Cart, productId: string): number {
+
+    if (!cart.items)
+        return -1;
+
+    for (let i = 0; i < cart.items.length; ++i) {
+
+        if (cart.items[i].productId === productId) {
+            return i;
+        }
+    }
+    return -1;
+}

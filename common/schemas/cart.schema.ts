@@ -65,7 +65,7 @@ export let CartSchema: any = new SimpleSchema({
         type: String,
         autoValue: function () {
             if (this.isInsert) {
-                return '1';
+                return this.userId;
             } else {
                 this.unset();
             }

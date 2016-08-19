@@ -72,17 +72,4 @@ export class HeaderComponent extends MeteorComponent implements OnInit {
     private languageChanged(language: string) {
         I18nSingletonService.getInstance().setLocale(language);
     }
-
-    private onTest() {
-        // Call the Method
-
-        this.call('cart.addProduct', 'YtaMm8BKycZYbYoRb', 10, (error) => {
-            if (error) {
-                alert(`Failed to add due to ${error}`);
-                return;
-            }
-
-            alert('User successfully invited.');
-        });
-    }
 }
