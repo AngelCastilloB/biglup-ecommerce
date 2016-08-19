@@ -1,7 +1,7 @@
 /**
- * @file user-auth.service.
+ * @file user-auth.service.ts.
  *
- * @summary TODO add summary on user-auth.service.
+ * @summary This service handles the users authentication business.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   August 18 2016
@@ -14,44 +14,76 @@
  *
  * Use of this software is subject to the terms of an end user license agreement.
  */
-import { Subject, Observable } from 'rxjs';
-import { Meteor } from 'meteor/meteor';
 
+// IMPORTS ************************************************************************************************************/
+
+import { Subject, Observable, Observer } from 'rxjs';
+import { Meteor }                        from 'meteor/meteor';
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @summary Handles the users login and logout cases with related observables.
+ */
 export class UserAuthService {
 
     /**
-     * https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#bidirectional-service
-     *
-     * @type {Subject<boolean>}
+     * @summary creates a subject related to the users login status.
+     * @see https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#bidirectional-service
      */
     private _isLoggedSubject    = new Subject<boolean>();
     private _isLoggedObservable = this._isLoggedSubject.asObservable();
 
+    /**
+     * @summary creates a subject of the Meteors user object.
+     * @see this._isLoggedSubject
+     */
     private _userSubject    = new Subject<Meteor.User>();
     private _userObservable = this._userSubject.asObservable();
 
+    /**
+     * @summary Users related login flag as an observable.
+     *
+     * @returns {Observable<boolean>}
+     */
     public isLogged(): Observable<boolean> {
         return this._isLoggedObservable;
     }
 
+    /**
+     * @summary Observable stream of the Meteor user object.
+     *
+     * @returns {Observable<Meteor.User>}
+     */
     public user(): Observable<Meteor.User> {
         return this._userObservable;
     }
 
+    /**
+     * @summary handles the users login into the application.
+     *
+     * @param {string} email the users email
+     * @param {string} password the users password, no need to bcrypt it prior.
+     * @returns {Observable<boolean>} true if login success
+     */
     public login(email: string, password: string): Observable<boolean> {
-        console.log('trying to login!');
-        return Observable.create(observer => {
+        return Observable.create((observer: Observer<boolean>) => {
             Meteor.loginWithPassword(email, password, (err) => {
-                console.log('inside loginWithPassword callback');
-                if (err) throw err;
+                if (err) {
+                    observer.next(false);
+                    observer.error(err);
+                }
 
                 this._isLoggedSubject.next(true);
                 this._userSubject.next(Meteor.user());
-                observer.onNext(true);
+                observer.next(true);
+                observer.complete();
             });
         });
     }
 
+    /**
+     * @summary handles the users logging out from the application.
+     */
     public logout() {
         Meteor.logout(() => {
             this._isLoggedSubject.next(false);

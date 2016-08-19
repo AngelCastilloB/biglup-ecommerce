@@ -27,11 +27,14 @@ import { UserAuthService }  from '../user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This guard is responsible of users access according to the login status.
+ */
 @Injectable()
 export class IsUserLoggedGuardService implements CanActivate {
 
     /**
-     * @summary the user's log status.
+     * @summary the user's login status.
      */
     private _status: boolean;
 

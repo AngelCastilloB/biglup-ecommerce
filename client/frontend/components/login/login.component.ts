@@ -33,6 +33,7 @@ import { TranslatePipe }             from '../../../pipes/translate.pipe';
 import { Meteor }                    from 'meteor/meteor';
 import { MeteorComponent }           from 'angular2-meteor';
 import { ValidationService }         from '../../../services/validation.service';
+import { UserAuthService }           from '../../../services/user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -62,7 +63,16 @@ export class LoginComponent extends MeteorComponent implements OnInit {
         invalid: false
     };
 
-    constructor(private _formBuilder: FormBuilder, private _router: Router, private _translatePipe: TranslatePipe) {
+    /**
+     * @param {FormBuilder} _formBuilder
+     * @param {Router} _router angular's router.
+     * @param {TranslatePipe} _translatePipe the locale translation is needed to change custom error messages.
+     * @param {UserAuthService} _userAuthService handler of the user login.
+     */
+    constructor(private _formBuilder: FormBuilder,
+        private _router: Router,
+        private _translatePipe: TranslatePipe,
+        private _userAuthService: UserAuthService) {
         super();
     }
 
@@ -90,13 +100,10 @@ export class LoginComponent extends MeteorComponent implements OnInit {
             return;
         }
 
-        Meteor.loginWithPassword(this._loginForm.value.email, this._loginForm.value.password, (err) => {
-            if (err) {
-                return this._processError(err);
-            }
-
-            this._router.navigate(['/']);
-        });
+        this._userAuthService.login(this._loginForm.value.email, this._loginForm.value.password)
+            .subscribe(results => {
+                return results ? this._router.navigate(['/']) : null;
+            }, err => this._processError(err));
     }
 
     /**
@@ -105,16 +112,14 @@ export class LoginComponent extends MeteorComponent implements OnInit {
      * @param {Error} err
      * @private
      */
-    private _processError(err: Error): void {
+    private _processError(err: Meteor.Error): void {
         this.autorun(() => {
             this._error.cssClass = 'text-danger';
             this._error.invalid  = true;
 
-            if (err.message === 'User not found [403]') {
-                this._error.message = this._translatePipe.transform('The credentials provided did not match our records.');
-            } else {
-                this._error.message = err.message;
-            }
+            this._error.message = err.error === 403 ?
+                this._translatePipe.transform('The credentials provided did not match our records.') :
+                err.reason;
         });
     }
 }

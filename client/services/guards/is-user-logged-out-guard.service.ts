@@ -23,11 +23,16 @@ import { UserAuthService }     from '../user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This guard is responsible of users access according to the login status.
+ * @internal This seems duplicate of IsUserLoggedGuardService, however this seems
+ * necessary to allow router navigation, ¿check if better way exist?
+ */
 @Injectable()
 export class IsUserLoggedOutGuardService implements CanActivate {
 
     /**
-     * @summary the user's log status.
+     * @summary the user's login status.
      */
     private _status: boolean;
 
@@ -37,12 +42,7 @@ export class IsUserLoggedOutGuardService implements CanActivate {
      * @param {UserAuthService} _userAuthService
      */
     constructor(private router: Router, private _userAuthService: UserAuthService) {
-        console.log('inside the isloggedoutguard constructor');
-        // this._userAuthService.isLogged().subscribe(status => this._status = status);
-        this._userAuthService.isLogged().subscribe(status => {
-            console.log('inside the _userAuthService.isLogged callback');
-            this._status = status;
-        });
+        this._userAuthService.isLogged().subscribe(status => this._status = status);
     }
 
     /**
