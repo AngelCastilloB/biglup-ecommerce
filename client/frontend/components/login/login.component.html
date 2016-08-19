@@ -20,7 +20,10 @@
               <label for="login-form-password">Password</label>
             </div>
 
-            <div id="login-form-error" class="font-italic" [ngClass]="_error.cssClass" *ngIf="_error.invalid">
+            <div id="login-form-error"
+                 class="font-italic"
+                 [ngClass]="_error.cssClass"
+                 *ngIf="!_loginForm.valid && _loginForm.errors">
               <i class="fa fa-warning"></i>{{ _error.message }}
             </div>
 

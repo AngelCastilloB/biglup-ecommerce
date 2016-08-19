@@ -21,19 +21,20 @@
 // noinspection TypeScriptCheckImport
 import template from './login.component.html';
 
-import { Component, OnInit }         from '@angular/core';
 import {
     FormGroup,
     FormBuilder,
     REACTIVE_FORM_DIRECTIVES,
     Validators
-}                                    from '@angular/forms';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { Meteor }                    from 'meteor/meteor';
-import { MeteorComponent }           from 'angular2-meteor';
-import { ValidationService }         from '../../../services/validation.service';
-import { UserAuthService }           from '../../../services/user-auth.service';
+}                                       from '@angular/forms';
+import { ROUTER_DIRECTIVES, Router }    from '@angular/router';
+import { TranslatePipe }                from '../../../pipes/translate.pipe';
+import { Meteor }                       from 'meteor/meteor';
+import { MeteorComponent }              from 'angular2-meteor';
+import { ValidationService }            from '../../../services/validation.service';
+import { UserAuthService }              from '../../../services/user-auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription }                 from 'rxjs';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -47,7 +48,7 @@ import { UserAuthService }           from '../../../services/user-auth.service';
     providers: [TranslatePipe],
     pipes: [TranslatePipe]
 })
-export class LoginComponent extends MeteorComponent implements OnInit {
+export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy {
 
     /**
      * @summary The data and other things associated with the login form.
@@ -55,13 +56,14 @@ export class LoginComponent extends MeteorComponent implements OnInit {
     private _loginForm: FormGroup;
 
     /**
-     * @summary The error message the form could have.
+     * @summary The error message the form could have, these are related to Meteor, not angular's form.
      */
-    private _error = {
-        message: '',
-        cssClass: '',
-        invalid: false
-    };
+    private _error = {message: '', cssClass: ''};
+
+    /**
+     * @summary the UserAuthService login subscription.
+     */
+    private _loginSubscription: Subscription;
 
     /**
      * @param {FormBuilder} _formBuilder
@@ -90,17 +92,25 @@ export class LoginComponent extends MeteorComponent implements OnInit {
     }
 
     /**
+     * @summary destroys unneeded subscriptions and related resources.
+     */
+    public ngOnDestroy() {
+        this._loginSubscription.unsubscribe();
+    }
+
+    /**
      * @summary process a new login from the html form.
      * @private
      */
     private _onSubmit(event: Event): void {
         event.preventDefault();
 
-        if (!this._loginForm.valid || this._error.invalid) {
+        if (!this._loginForm.valid) {
             return;
         }
 
-        this._userAuthService.login(this._loginForm.value.email, this._loginForm.value.password)
+        this._loginSubscription = this._userAuthService
+            .login(this._loginForm.value.email, this._loginForm.value.password)
             .subscribe(results => {
                 return results ? this._router.navigate(['/']) : null;
             }, err => this._processError(err));
@@ -115,7 +125,7 @@ export class LoginComponent extends MeteorComponent implements OnInit {
     private _processError(err: Meteor.Error): void {
         this.autorun(() => {
             this._error.cssClass = 'text-danger';
-            this._error.invalid  = true;
+            this._loginForm.setErrors({'external-related': true});
 
             this._error.message = err.error === 403 ?
                 this._translatePipe.transform('The credentials provided did not match our records.') :

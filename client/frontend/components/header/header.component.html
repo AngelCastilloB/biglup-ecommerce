@@ -21,7 +21,8 @@
             <a (click)="languageChanged('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/login']">{{'Login' | translate}}</a>
+            <a class="nav-link" [routerLink]="['/login']" *ngIf="!_isLogged">{{'Login' | translate}}</a>
+            <a class="nav-link" (click)="_logout()" *ngIf="_isLogged">{{'Logout' | translate}}</a>
           </li>
         </ul>
       </div>

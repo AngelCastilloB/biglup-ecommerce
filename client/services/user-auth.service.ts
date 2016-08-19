@@ -70,13 +70,12 @@ export class UserAuthService {
             Meteor.loginWithPassword(email, password, (err) => {
                 if (err) {
                     observer.next(false);
-                    observer.error(err);
+                    return observer.error(err);
                 }
 
                 this._isLoggedSubject.next(true);
                 this._userSubject.next(Meteor.user());
                 observer.next(true);
-                observer.complete();
             });
         });
     }
