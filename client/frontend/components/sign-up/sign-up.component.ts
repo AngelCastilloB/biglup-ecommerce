@@ -114,7 +114,7 @@ export class SignUpComponent implements OnInit {
         this._userAuthService.createUser({email, password}, err => {
             if (err) return this._processError(err);
 
-            this._router.navigate(['/login']);
+            this._router.navigate(['/']);
         });
     }
 
