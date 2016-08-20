@@ -30,13 +30,14 @@ import { TranslatePipe }             from '../../../pipes/translate.pipe';
 import { ROUTER_DIRECTIVES }         from '@angular/router';
 import { UserAuthService }           from '../../../services/user-auth.service';
 import { Router }                    from '@angular/router';
+import { OauthLoginComponent }       from '../oauth-login/oauth-login.component';
 
 // EXPORTS ************************************************************************************************************/
 
 @Component({
     selector: 'sign-up',
     template,
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES],
+    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES, OauthLoginComponent],
     pipes: [TranslatePipe]
 })
 export class SignUpComponent implements OnInit {
@@ -69,6 +70,7 @@ export class SignUpComponent implements OnInit {
      * @param {FormBuilder} _formBuilder
      * @param {UserAuthService} _userAuthService
      * @param {NgZone} _ngZone
+     * @param {Router} _router
      */
     constructor(private _formBuilder: FormBuilder,
         private _userAuthService: UserAuthService,
@@ -142,21 +144,5 @@ export class SignUpComponent implements OnInit {
             this._signUpForm.setErrors({'external-related': true});
             this._error.message = err.reason;
         });
-    }
-
-    private _oAuthFacebook() {
-        this._userAuthService.loginWithFacebook({}, err => {
-            if (err) return this._processError(err);
-
-            this._router.navigate(['/']);
-        });
-    }
-
-    private _oAuthGoogle() {
-        console.log('signup with google');
-    }
-
-    private _oAuthTwitter() {
-        console.log('signup with twitter');
     }
 }

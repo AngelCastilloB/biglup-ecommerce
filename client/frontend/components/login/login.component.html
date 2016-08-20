@@ -20,18 +20,21 @@
               <label for="login-form-password">Password</label>
             </div>
 
+            <!--TODO refactor into a component-->
             <div id="login-form-error"
                  class="font-italic"
                  [ngClass]="_error.cssClass"
                  *ngIf="!_loginForm.valid && _loginForm.errors">
-              <i class="fa fa-warning"></i>{{ _error.message }}
+              {{ _error.message }}
             </div>
 
             <div class="md-form form-group text-xs-center" id="login-form-submit">
-              <button class="btn btn-primary btn-lg" [disabled]="!_loginForm.valid">
+              <button class="btn btn-primary btn-lg btn-block" [disabled]="!_loginForm.valid">
                 {{ 'Login' | translate }}
               </button>
             </div>
+
+            <oauth-login (errorEvent)="_processError($event)"></oauth-login>
 
             <div class="modal-footer">
               <div class="options">

@@ -39,7 +39,7 @@
                  class="font-italic"
                  [ngClass]="_error.cssClass"
                  *ngIf="!_signUpForm.valid && _signUpForm.errors">
-              <i class="fa fa-warning"></i>{{ _error.message }}
+              {{ _error.message }}
             </div>
 
             <div class="md-form form-group text-xs-center" id="signup-form-submit">
@@ -48,40 +48,13 @@
               </button>
             </div>
 
-            <div class="modal-footer" id="signup-form-oauth">
-              <div class="options">
-                <p>
-                  {{ 'Or signup with' | translate }}
-                </p>
-
-                <p>
-                  <button class="btn btn-fb btn-lg btn-block" (click)="_oAuthFacebook()">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                    Facebook
-                  </button>
-                </p>
-
-                <p>
-                  <button class="btn btn-gplus btn-lg btn-block" (click)="_oAuthGoogle()">
-                    <i class="fa fa-google" aria-hidden="true"></i>
-                    Google
-                  </button>
-                </p>
-
-                <p>
-                  <button class="btn btn-tw btn-lg btn-block" (click)="_oAuthTwitter()">
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                    Twitter
-                  </button>
-                </p>
-              </div>
-            </div>
+            <oauth-login (errorEvent)="_processError($event)"></oauth-login>
 
             <div class="modal-footer">
               <div class="options">
                 <p>
                   {{ 'Already a member' | translate }}?
-                  <a [routerLink]="['/signup']">{{ 'Login' | translate }}</a>
+                  <a [routerLink]="['/login']">{{ 'Login' | translate }}</a>
                 </p>
               </div>
             </div>

@@ -35,6 +35,7 @@ import { ValidationService }            from '../../../services/validation.servi
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription }                 from 'rxjs';
+import { OauthLoginComponent }          from '../oauth-login/oauth-login.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -44,7 +45,7 @@ import { Subscription }                 from 'rxjs';
 @Component({
     selector: 'login-form',
     template,
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES],
+    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES, OauthLoginComponent],
     providers: [TranslatePipe],
     pipes: [TranslatePipe]
 })
