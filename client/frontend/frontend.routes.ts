@@ -24,6 +24,7 @@ import { FrontendComponent }           from './frontend.component';
 import { ProductDetailsComponent }     from './components/product/product-details/product-details.component';
 import { LoginComponent }              from './components/login/login.component';
 import { IsUserLoggedOutGuardService } from '../services/guards/is-user-logged-out-guard.service';
+import { SignUpComponent }             from './components/sign-up/sign-up.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -37,6 +38,7 @@ export const frontendRoutes: RouterConfig = [
         children: [
             {path: '', component: LandingPageComponent},
             {path: 'login', component: LoginComponent, canActivate: [IsUserLoggedOutGuardService]},
+            {path: 'signup', component: SignUpComponent, canActivate: [IsUserLoggedOutGuardService]},
             {path: 'category/:categoryId', component: CategoryComponent},
             {path: 'category/:categoryId/product/:productId', component: ProductDetailsComponent},
         ]

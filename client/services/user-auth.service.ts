@@ -19,6 +19,8 @@
 
 import { Subject, Observable, Observer } from 'rxjs';
 import { Meteor }                        from 'meteor/meteor';
+import { Accounts }                      from 'meteor/accounts-base';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -87,6 +89,25 @@ export class UserAuthService {
         Meteor.logout(() => {
             this._isLoggedSubject.next(false);
             this._userSubject.next(null);
+        });
+    }
+
+    /**
+     * @summary creates a new user from the Account system.
+     *
+     * @param {string} email
+     * @param {string} password
+     * @param {Function=} callback this callback expects an error object as an argument
+     */
+    public createUser(email: string, password: string, callback?: Function) {
+        Accounts.createUser({email, password}, err => {
+            if (err) {
+                if (callback) {
+                    return callback(err);
+                }
+
+                throw err;
+            }
         });
     }
 }
