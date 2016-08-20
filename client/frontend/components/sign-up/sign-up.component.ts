@@ -112,9 +112,9 @@ export class SignUpComponent implements OnInit {
         const email    = this._signUpForm.value.email;
         const password = this._signUpForm.value.password;
         this._userAuthService.createUser({email, password}, err => {
-            if (err) this._processError(err);
+            if (err) return this._processError(err);
 
-            this._router.navigate(['/']);
+            this._router.navigate(['/login']);
         });
     }
 
@@ -146,7 +146,7 @@ export class SignUpComponent implements OnInit {
 
     private _oAuthFacebook() {
         this._userAuthService.loginWithFacebook({}, err => {
-            if (err) this._processError(err);
+            if (err) return this._processError(err);
 
             this._router.navigate(['/']);
         });
