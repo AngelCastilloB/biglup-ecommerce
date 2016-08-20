@@ -31,13 +31,19 @@ import { ROUTER_DIRECTIVES }         from '@angular/router';
 import { UserAuthService }           from '../../../services/user-auth.service';
 import { Router }                    from '@angular/router';
 import { OauthLoginComponent }       from '../oauth-login/oauth-login.component';
+import { FormErrorComponent }        from '../form-error/form-error.component';
 
 // EXPORTS ************************************************************************************************************/
 
 @Component({
     selector: 'sign-up',
     template,
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES, OauthLoginComponent],
+    directives: [
+        REACTIVE_FORM_DIRECTIVES,
+        ROUTER_DIRECTIVES,
+        OauthLoginComponent,
+        FormErrorComponent
+    ],
     pipes: [TranslatePipe]
 })
 export class SignUpComponent implements OnInit {

@@ -27,20 +27,15 @@
                      formControlName="confirmation">
               <label for="signup-form-confirmation">Confirm password</label>
             </div>
+            <form-error [formid]="'signup-password'"
+                        class="text-danger"
+                        [message]="'The password and the confirmation provided are not matching.'"
+                        *ngIf="_hasConfirmationError()"></form-error>
 
-            <!--TODO refactor into a component-->
-            <div id="signup-form-password-error"
-                 class="font-italic text-danger"
-                 *ngIf="_hasConfirmationError()">
-              The password and the confirmation provided are not matching.
-            </div>
-
-            <div id="signup-form-error"
-                 class="font-italic"
-                 [ngClass]="_error.cssClass"
-                 *ngIf="!_signUpForm.valid && _signUpForm.errors">
-              {{ _error.message }}
-            </div>
+            <form-error [formid]="'signup-generic'"
+                        [classes]="_error.cssClass"
+                        [message]="_error.message"
+                        *ngIf="!_signUpForm.valid && _signUpForm.errors"></form-error>
 
             <div class="md-form form-group text-xs-center" id="signup-form-submit">
               <button class="btn btn-primary btn-lg btn-block" [disabled]="!_signUpForm.valid">

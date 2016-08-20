@@ -20,13 +20,9 @@
               <label for="login-form-password">Password</label>
             </div>
 
-            <!--TODO refactor into a component-->
-            <div id="login-form-error"
-                 class="font-italic"
-                 [ngClass]="_error.cssClass"
-                 *ngIf="!_loginForm.valid && _loginForm.errors">
-              {{ _error.message }}
-            </div>
+            <form-error [classes]="_error.cssClass"
+                        [message]="_error.message"
+                        *ngIf="!_loginForm.valid && _loginForm.errors"></form-error>
 
             <div class="md-form form-group text-xs-center" id="login-form-submit">
               <button class="btn btn-primary btn-lg btn-block" [disabled]="!_loginForm.valid">

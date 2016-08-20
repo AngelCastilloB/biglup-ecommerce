@@ -36,6 +36,7 @@ import { UserAuthService }              from '../../../services/user-auth.servic
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription }                 from 'rxjs';
 import { OauthLoginComponent }          from '../oauth-login/oauth-login.component';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -45,7 +46,12 @@ import { OauthLoginComponent }          from '../oauth-login/oauth-login.compone
 @Component({
     selector: 'login-form',
     template,
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES, OauthLoginComponent],
+    directives: [
+        REACTIVE_FORM_DIRECTIVES,
+        ROUTER_DIRECTIVES,
+        OauthLoginComponent,
+        FormErrorComponent
+    ],
     providers: [TranslatePipe],
     pipes: [TranslatePipe]
 })
