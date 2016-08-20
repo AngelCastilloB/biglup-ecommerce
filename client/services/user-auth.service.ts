@@ -47,7 +47,7 @@ export class UserAuthService {
      *
      * @returns {Observable<boolean>}
      */
-    public isLogged(): Observable<boolean> {
+    public isLoggedStream(): Observable<boolean> {
         return this._isLoggedObservable;
     }
 
@@ -56,7 +56,7 @@ export class UserAuthService {
      *
      * @returns {Observable<Meteor.User>}
      */
-    public user(): Observable<Meteor.User> {
+    public userStream(): Observable<Meteor.User> {
         return this._userObservable;
     }
 

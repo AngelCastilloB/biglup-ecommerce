@@ -42,7 +42,7 @@ export class IsUserLoggedOutGuardService implements CanActivate {
      * @param {UserAuthService} _userAuthService
      */
     constructor(private router: Router, private _userAuthService: UserAuthService) {
-        this._userAuthService.isLogged().subscribe(status => this._status = status);
+        this._userAuthService.isLoggedStream().subscribe(status => this._status = status);
     }
 
     /**

@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeteorComponent }             from 'angular2-meteor';
 import { Mongo }                       from 'meteor/mongo';
 import { ROUTER_DIRECTIVES }           from '@angular/router';
@@ -70,7 +70,9 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
             this._categories = Categories.find();
         }, true);
 
-        this._isLoggedSubscription = this._userAuthService.isLogged().subscribe(status => this._isLogged = status);
+        this._isLoggedSubscription = this._userAuthService
+            .isLoggedStream()
+            .subscribe(status => this._isLogged = status);
     }
 
     /**
