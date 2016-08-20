@@ -95,7 +95,7 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @summary destroys unneeded subscriptions and related resources.
      */
     public ngOnDestroy() {
-        this._loginSubscription.unsubscribe();
+        if (this._loginSubscription) this._loginSubscription.unsubscribe();
     }
 
     /**
