@@ -29,6 +29,7 @@ import { ValidationService }         from '../../../services/validation.service'
 import { TranslatePipe }             from '../../../pipes/translate.pipe';
 import { ROUTER_DIRECTIVES }         from '@angular/router';
 import { UserAuthService }           from '../../../services/user-auth.service';
+import { Router }                    from '@angular/router';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -69,7 +70,10 @@ export class SignUpComponent implements OnInit {
      * @param {UserAuthService} _userAuthService
      * @param {NgZone} _ngZone
      */
-    constructor(private _formBuilder: FormBuilder, private _userAuthService: UserAuthService, private _ngZone: NgZone) {
+    constructor(private _formBuilder: FormBuilder,
+        private _userAuthService: UserAuthService,
+        private _ngZone: NgZone,
+        private _router: Router) {
     }
 
     /**
@@ -107,7 +111,11 @@ export class SignUpComponent implements OnInit {
 
         const email    = this._signUpForm.value.email;
         const password = this._signUpForm.value.password;
-        this._userAuthService.createUser(email, password, err => this._processError(err));
+        this._userAuthService.createUser({email, password}, err => {
+            if (err) this._processError(err);
+
+            this._router.navigate(['/']);
+        });
     }
 
     /**
@@ -137,7 +145,11 @@ export class SignUpComponent implements OnInit {
     }
 
     private _oAuthFacebook() {
-        console.log('signup with facebook');
+        this._userAuthService.loginWithFacebook({}, err => {
+            if (err) this._processError(err);
+
+            this._router.navigate(['/']);
+        });
     }
 
     private _oAuthGoogle() {

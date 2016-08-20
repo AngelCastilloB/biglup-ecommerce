@@ -27,6 +27,9 @@ import './publications/cart-publications.ts';
 import './publications/images-publications.ts';
 import './publications/product-publications.ts';
 
+// services configuration
+import './services-configuration';
+
 /* METEOR SERVER START UP *********************************************************************************************/
 
 Meteor.startup(() => {

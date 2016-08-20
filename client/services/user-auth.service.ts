@@ -95,19 +95,22 @@ export class UserAuthService {
     /**
      * @summary creates a new user from the Account system.
      *
-     * @param {string} email
-     * @param {string} password
-     * @param {Function=} callback this callback expects an error object as an argument
+     * @param {object} options
+     * @param {string} options.email
+     * @param {string} options.password
+     * @param {Function} callback this callback expects an error object as an argument
      */
-    public createUser(email: string, password: string, callback?: Function) {
-        Accounts.createUser({email, password}, err => {
-            if (err) {
-                if (callback) {
-                    return callback(err);
-                }
+    public createUser(options: {email: string, password: string}, callback: (error) => void) {
+        Accounts.createUser(options, err => callback(err));
+    }
 
-                throw err;
-            }
-        });
+    /**
+     * @summary attempts to login with facebook.
+     *
+     * @param {Object} options
+     * @param {Function} callback this callback expects an error object as an argument
+     */
+    public loginWithFacebook(options: Object, callback: (error) => void) {
+        Meteor.loginWithFacebook(options, err => callback(err));
     }
 }

@@ -27,3 +27,5 @@ check@1.2.3
 momentjs:moment
 percolate:migrations
 accounts-password
+service-configuration
+accounts-facebook
