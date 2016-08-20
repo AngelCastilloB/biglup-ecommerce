@@ -109,11 +109,13 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
             return;
         }
 
-        this._loginSubscription = this._userAuthService
-            .login(this._loginForm.value.email, this._loginForm.value.password)
-            .subscribe(results => {
-                return results ? this._router.navigate(['/']) : null;
-            }, err => this._processError(err));
+        const email    = this._loginForm.value.email;
+        const password = this._loginForm.value.password;
+        this._userAuthService.login(email, password, err => {
+            if (err) return this._processError(err);
+
+            this._router.navigate(['/']);
+        });
     }
 
     /**

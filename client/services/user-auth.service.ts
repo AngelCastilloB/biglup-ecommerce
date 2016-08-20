@@ -60,11 +60,19 @@ export class UserAuthService {
     }
 
     /**
+     * @summary Returns the current user object.
+     * @returns {Meteor.User}
+     */
+    public getUser() {
+        return Meteor.user();
+    }
+
+    /**
      * @summary Observable stream of the Meteor user object.
      *
      * @returns {Observable<Meteor.User>}
      */
-    public userStream(): Observable<Meteor.User> {
+    public getUserStream(): Observable<Meteor.User> {
         return this._userObservable;
     }
 
@@ -73,21 +81,11 @@ export class UserAuthService {
      *
      * @param {string} email the users email
      * @param {string} password the users password, no need to bcrypt it prior.
+     * @param {Function} callback expects an error as parameter.
      * @returns {Observable<boolean>} true if login success
      */
-    public login(email: string, password: string): Observable<boolean> {
-        return Observable.create((observer: Observer<boolean>) => {
-            Meteor.loginWithPassword(email, password, (err) => {
-                if (err) {
-                    observer.next(false);
-                    return observer.error(err);
-                }
-
-                this._isLoggedSubject.next(true);
-                this._userSubject.next(Meteor.user());
-                observer.next(true);
-            });
-        });
+    public login(email: string, password: string, callback: (error?) => void) {
+        Meteor.loginWithPassword(email, password, err => this._updateUserLoginStreams(err, callback));
     }
 
     /**
@@ -119,13 +117,23 @@ export class UserAuthService {
      * @param {Function} callback this callback expects an error object as an argument
      */
     public loginWithFacebook(options: Object, callback: (error) => void) {
-        Meteor.loginWithFacebook(options, err => {
-            if (!err) {
-                this._isLoggedSubject.next(true);
-                this._userSubject.next(Meteor.user());
-            }
+        Meteor.loginWithFacebook(options, err => this._updateUserLoginStreams(err, callback));
+    }
 
-            callback(err);
-        });
+    /**
+     * @summary update the various observer streams with the login/logout events.
+     *
+     * @param err any external errors.
+     * @param callback the callers callback
+     * @returns {*} whatever the callback returns
+     * @private
+     */
+    private _updateUserLoginStreams(err?: any, callback?: Function) {
+        if (!err) {
+            this._isLoggedSubject.next(true);
+            this._userSubject.next(this.getUser());
+        }
+
+        if (callback) return callback(err);
     }
 }
