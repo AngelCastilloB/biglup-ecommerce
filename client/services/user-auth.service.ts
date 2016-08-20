@@ -43,6 +43,14 @@ export class UserAuthService {
     private _userObservable = this._userSubject.asObservable();
 
     /**
+     * @summary Wrapper around meteor user id, as an boolean.
+     * @returns {boolean}
+     */
+    public isLogged(): boolean {
+        return !!Meteor.userId();
+    }
+
+    /**
      * @summary Users related login flag as an observable.
      *
      * @returns {Observable<boolean>}

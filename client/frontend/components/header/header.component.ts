@@ -70,8 +70,8 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
             this._categories = Categories.find();
         }, true);
 
-        this._isLoggedSubscription = this._userAuthService
-            .isLoggedStream()
+        this._isLogged             = this._userAuthService.isLogged();
+        this._isLoggedSubscription = this._userAuthService.isLoggedStream()
             .subscribe(status => this._isLogged = status);
     }
 
