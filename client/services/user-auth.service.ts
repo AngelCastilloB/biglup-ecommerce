@@ -111,6 +111,13 @@ export class UserAuthService {
      * @param {Function} callback this callback expects an error object as an argument
      */
     public loginWithFacebook(options: Object, callback: (error) => void) {
-        Meteor.loginWithFacebook(options, err => callback(err));
+        Meteor.loginWithFacebook(options, err => {
+            if (!err) {
+                this._isLoggedSubject.next(true);
+                this._userSubject.next(Meteor.user());
+            }
+
+            callback(err);
+        });
     }
 }
