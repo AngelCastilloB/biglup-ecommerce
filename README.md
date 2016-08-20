@@ -69,6 +69,26 @@ creates the meteor.json file automatically.
 
 To use these env variables, we can do `meteor run --settings meteor.json` or even `npm start`.
 
+### OAuth API Keys
+
+To properly run this application, the OAuth API keys must exist inside the _meteor.json_ file, there are different
+objects related to this, as of now, there are facebook, google and twitter integrations, these are:
+
+```json
+{
+  "facebook": {
+      "appId": "someString",
+      "secret": "the app secret"
+    }
+} 
+```
+
+please refer to
+[https://guide.meteor.com/deployment.html#environment](https://guide.meteor.com/deployment.html#environment),
+[https://guide.meteor.com/accounts.html#oauth](https://guide.meteor.com/accounts.html#oauth) and
+[http://docs.meteor.com/api/accounts.html#requestpermissions](http://docs.meteor.com/api/accounts.html#requestpermissions)
+for more info.
+
 ### Database migrations
 
 The database migrations are controlled inside the _meteor.json_ file; the migrate allows the migration table to be created
