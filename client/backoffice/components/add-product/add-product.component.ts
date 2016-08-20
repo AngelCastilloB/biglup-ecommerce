@@ -32,8 +32,10 @@ import { Categories }               from '../../../../common/collections/categor
 import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { Products }                 from '../../../../common/collections/product.collection';
 import { ModalComponent }           from '../modal/modal.component';
+
+// Methods
+import '../../../../common/api/product.methods';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -172,16 +174,16 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      */
     private _saveProduct(): void {
 
-        Products.insert(this._product, (error, result) => {
+        this.call('products.createProduct', this._product, (error, result) => {
             if (error) {
                 this._waitModalResult = false;
 
                 this._modal.show(
                     _T('There was an error saving the product'),
                     _T('Error'));
-            } else {
-                this._imagesUploader.upload(<string>result);
             }
+
+            this._imagesUploader.upload(<string>result);
         });
     }
 
@@ -206,7 +208,13 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
             _T('There was an error saving the product'),
             _T('Error'));
 
-        Products.remove(this._product); // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+        // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+        this.call('products.deleteProduct', this._product._id, (deleteError) => {
+            if (deleteError) {
+                console.error(deleteError);
+            }
+        });
+
         this._product._id = '';
     }
 

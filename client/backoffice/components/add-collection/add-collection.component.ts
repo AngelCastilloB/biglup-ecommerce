@@ -66,9 +66,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     constructor(private _zone: NgZone, private _router: Router) {
         super();
 
-        this._category.isParentCategory = true;
-        this._categoryName              = this._getMongoTranslation(this._category.name);
-        this._categoryDescription       = this._getMongoTranslation(this._category.info);
+        this._categoryName        = this._getMongoTranslation(this._category.name);
+        this._categoryDescription = this._getMongoTranslation(this._category.info);
     }
 
     /**

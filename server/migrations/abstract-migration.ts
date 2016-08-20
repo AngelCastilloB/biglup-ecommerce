@@ -17,12 +17,20 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }                  from 'meteor/mongo';
-import { IMigratable }            from './interfaces/i-migratable';
-import {
-    SimplifiedChineseContentGenerator
-}                                 from '../../common/helpers/generator/simplified-chinese-content-generator';
-import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
+import { Mongo }                             from 'meteor/mongo';
+import { IMigratable }                       from './interfaces/i-migratable';
+import { SimplifiedChineseContentGenerator } from '../../common/helpers/generator/simplified-chinese-content-generator';
+import { KoreanContentGenerator }            from '../../common/helpers/generator/korean-content-generator';
+
+// GENERATORS**********************************************************************************************************/
+
+/**
+ * @summary The available generators.
+ */
+interface ContentGenerators {
+    zh: SimplifiedChineseContentGenerator;
+    kr: KoreanContentGenerator;
+}
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,34 +38,26 @@ import { KoreanContentGenerator } from '../../common/helpers/generator/korean-co
  * @summary sets the structure needed to add a new document to the mongo database.
  */
 export abstract class AbstractMigration implements IMigratable {
-
-    /**
-     * @summary The amount to be added by default.
-     *
-     * @type {number}
-     * @protected
-     */
     protected _amount = 10;
 
-    constructor(protected _collection: Mongo.Collection<Object>,
-        protected _generators: GeneratorsOptions) {
+    /**
+     * @summary Initializes a new instance of the class
+     * @param _collection
+     * @param _generators
+     */
+    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: ContentGenerators) {
     }
 
     /**
-     * @summary Needs to have the logic required to add a new document.
+     * @summary Migrates the documents to the database.
      */
     public abstract up(): void;
 
     /**
-     * @summary Must have the logic to undo the 'up' method without disrupting the database.
+     * @summary Un do the migration.
      */
     public down(): void {
         console.log('removing collection!');
         this._collection.remove({});
     }
-}
-
-interface GeneratorsOptions {
-    zh: SimplifiedChineseContentGenerator;
-    kr: KoreanContentGenerator;
 }

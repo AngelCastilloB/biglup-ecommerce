@@ -62,7 +62,7 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
 
             this.subscribe('category-products', this._categoryId, () => {
 
-                this._products = Products.find({categoryId: this._categoryId});
+                this._products = Products.find({categoryId: { $in: [ this._categoryId ] }});
 
             }, true);
 

@@ -17,16 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ProductSchema }      from '../schemas/product.schema';
-import { Slugifier }          from '../helpers/slugifier';
-import { slugify }            from 'transliteration';
-import { WithSlugCollection } from './with-slug-collection';
+import { ProductSchema } from '../schemas/product.schema';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-// TODO IOC container
-const slugifier     = new Slugifier(slugify);
-const Products: any = WithSlugCollection.create<Product>('products', 'title', slugifier);
+const Products: any = new Mongo.Collection<Product>('products');
 
 Products.attachSchema(ProductSchema);
 

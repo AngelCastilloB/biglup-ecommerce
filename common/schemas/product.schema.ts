@@ -23,9 +23,44 @@ import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
+ * @summary The product variant schema.
+ */
+export let ProductVariantSchema: any = new SimpleSchema({
+    color: {
+        label: 'Color',
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
+    },
+    size: {
+        label: 'Size',
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
+    },
+    stock: {
+        label: 'Stock',
+        type: Number,
+        optional: true
+    },
+    // Denormalized field: Indicates if this product stock is too low.
+    isLowQuantity: {
+        label: 'Indicates that the product quantity is too low',
+        type: Boolean,
+        optional: true
+    },
+    // Denormalized field: Indicates if this product is sold out.
+    isSoldOut: {
+        label: 'Indicates when the product quantity is zero',
+        type: Boolean,
+        optional: true
+    },
+});
+
+/**
  * @summary The product schema.
  */
-export let ProductSchema = new SimpleSchema({
+export let ProductSchema: any = new SimpleSchema({
     _id: {
         type: String,
         label: 'Product Id'
@@ -40,7 +75,9 @@ export let ProductSchema = new SimpleSchema({
         defaultValue: ''
     },
     slug: {
-        type: [I18nStringSchema]
+        label: 'The product slug',
+        type: String,
+        optional: true
     },
     sku: {
         type: String,
@@ -117,16 +154,10 @@ export let ProductSchema = new SimpleSchema({
         type: Boolean,
         defaultValue: false,
     },
-    isVariant: {
-        label: 'Indicates whether this product is a variant of another product.',
-        type: Boolean,
-        defaultValue: false,
-        optional: true,
-    },
-    parentProduct: {
-        type: String,
-        label: 'The parent product Id',
-        optional: true,
+    variantProducts: {
+        label: 'Product variants.',
+        type: [ProductVariantSchema],
+        optional: true
     },
     createdAt: {
         type: Date,

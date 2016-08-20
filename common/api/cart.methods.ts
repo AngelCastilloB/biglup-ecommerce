@@ -42,14 +42,14 @@ Meteor.methods({
 
         if (!cart) {
             throw new Meteor.Error(
-                'cart.addProduct.notFound',
+                'cart.addProduct.carNotFound',
                 'The cart for this user was not found.');
         }
 
         if (!product) {
             throw new Meteor.Error(
-                'cart.addProduct.notFound',
-                'The product that you are trying to add to the cart does not exist');
+                'cart.addProduct.productNotFound',
+                'The product that you are trying to add to the cart does not exist.');
         }
 
         let item:     CartItem = {productId: productId, quantity: quantity, title: product.title};
@@ -179,7 +179,7 @@ Meteor.methods({
         /*
          if (!this.user.IsAdmin) {
              throw new Meteor.Error(
-                 'cart.deleteAllProducts.unauthorized',
+                 'cart.deleteProduct.unauthorized',
                  'You are not authorized to perform this action.');
          }
          */

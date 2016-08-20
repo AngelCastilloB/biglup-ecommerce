@@ -23,30 +23,21 @@ import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The category schema.
+ * @summary The sub category schema.
  */
-export let CategorySchema: any = new SimpleSchema({
+export let SubCategorySchema: any = new SimpleSchema({
     name: {
         type: [I18nStringSchema],
         label: 'Name'
-    },
-    slug: {
-        type: [I18nStringSchema],
-        label: 'Slug'
     },
     info: {
         type: [I18nStringSchema],
         label: 'Info'
     },
-    isParentCategory: {
-        type: Boolean,
-        label: 'This category contains a list of subcategories',
-        defaultValue: true
-    },
-    parentCategory: {
+    slug: {
+        label: 'The category slug',
         type: String,
-        label: 'Parent Category',
-        defaultValue: ''
+        optional: true,
     },
     image: {
         type: String,
@@ -58,6 +49,65 @@ export let CategorySchema: any = new SimpleSchema({
         label: 'Active',
         defaultValue: true
     },
+    createdAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            } else if (this.isSet) {
+                this.unset();
+            }
+        },
+        optional: true
+    },
+    updated: {
+        type: Date,
+        label: 'Last date this filter was updated.',
+        autoValue: function () {
+            return new Date();
+        },
+        optional: true
+    },
+});
+
+/**
+ * @summary The category schema.
+ */
+export let CategorySchema: any = new SimpleSchema({
+    name: {
+        type: [I18nStringSchema],
+        label: 'Name'
+    },
+    slug: {
+        type: String,
+        label: 'Slug',
+        optional: true,
+    },
+    info: {
+        type: [I18nStringSchema],
+        label: 'Info'
+    },
+    image: {
+        type: String,
+        label: 'Image',
+        optional: true
+    },
+    active: {
+        type: Boolean,
+        label: 'Active',
+        defaultValue: true
+    },
+    createdAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            } else if (this.isSet) {
+                this.unset();
+            }
+        },
+        optional: true
+    },
     updated: {
         type: Date,
         label: 'Last date this category was updated.',
@@ -67,7 +117,7 @@ export let CategorySchema: any = new SimpleSchema({
         optional: true
     },
     subCategories: {
-        type: [Object],
+        type: [SubCategorySchema],
         label: 'The list of categories inside this category.',
         optional: true
     }

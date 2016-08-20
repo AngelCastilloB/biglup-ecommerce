@@ -24,6 +24,9 @@ import * as faker            from 'faker/locale/en';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This class handles all the category migrations.
+ */
 export class CategoryMigration extends AbstractMigration {
 
     /**
@@ -31,6 +34,12 @@ export class CategoryMigration extends AbstractMigration {
      */
     private _categories: Category[];
 
+    /**
+     * @summary Initializes a new instances of the class CategoryMigration.
+     *
+     * @param collection The mongo collection.
+     * @param generators The content generators.
+     */
     constructor(collection: Mongo.Collection<Category>, generators) {
         super(collection, generators);
 
@@ -44,7 +53,7 @@ export class CategoryMigration extends AbstractMigration {
      */
     public up(): void {
         console.log('Starting Default Categories.');
-        this._addCategory();
+        this._generateCategories();
 
         // for some unholy reason they didn't implement the insert according to the mongo API
         // https://docs.mongodb.com/manual/reference/method/db.collection.insert/
@@ -59,7 +68,7 @@ export class CategoryMigration extends AbstractMigration {
      *
      * @private
      */
-    private _addCategory() {
+    private _generateCategories() {
         for (let i = 0; i < this._amount; i++) {
             this._categories.push({
                 name: [

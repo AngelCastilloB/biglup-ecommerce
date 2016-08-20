@@ -18,7 +18,20 @@
 /**
  * @summary Product type definition.
  */
-interface Product extends Distinguishable, Sluggable {
+interface ProductVariant {
+    color?: Array<I18nString>;
+    size?: Array<I18nString>;
+    isLowQuantity?: boolean; // defaults to false
+    stock?: number;
+    isSoldOut?: boolean; // defaults to false
+}
+
+/**
+ * @summary Product type definition.
+ */
+interface Product {
+    _id?: string;
+    slug?: string;
     categoryId?: Array<string>;
     title: Array<I18nString>;
     description: Array<I18nString>;
@@ -26,6 +39,7 @@ interface Product extends Distinguishable, Sluggable {
     sku: string;
     color?: Array<I18nString>;
     size?: Array<I18nString>;
+    variantProducts?: Array<ProductVariant>;
     price: number;
     discount: number;
     trackInventory: boolean;
@@ -36,8 +50,6 @@ interface Product extends Distinguishable, Sluggable {
     requiresShipping?: boolean; // defaults to true
     hashtags?: Array<string>;
     isVisible: boolean;
-    isVariant?: boolean; // defaults to false
-    parentId?: string;
     createdAt?: Date;
     updatedAt?: Date;
     publishedAt?: Date;

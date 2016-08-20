@@ -18,7 +18,8 @@
 /**
  * @summary Image type definition.
  */
-interface Image extends Distinguishable {
+interface Image {
+    _id?: string;
     complete: boolean;
     extension: string;
     name: string;
