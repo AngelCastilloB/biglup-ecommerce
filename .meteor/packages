@@ -26,3 +26,8 @@ jalik:ufs-local
 check
 momentjs:moment
 percolate:migrations
+accounts-password
+service-configuration
+accounts-facebook
+accounts-google
+accounts-twitter

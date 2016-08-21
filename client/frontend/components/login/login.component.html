@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-block">
+          <form [formGroup]="_loginForm" id="login-form" (submit)="_onSubmit($event)">
+            <div class="md-form">
+              <input type="email"
+                     id="login-form-email"
+                     class="form-control"
+                     formControlName="email">
+              <label for="login-form-email">Email</label>
+            </div>
+
+            <div class="md-form">
+              <input type="password"
+                     id="login-form-password"
+                     class="form-control"
+                     formControlName="password">
+              <label for="login-form-password">Password</label>
+            </div>
+
+            <form-error [classes]="_error.cssClass"
+                        [message]="_error.message"
+                        *ngIf="!_loginForm.valid && _loginForm.errors"></form-error>
+
+            <div class="md-form form-group text-xs-center" id="login-form-submit">
+              <button class="btn btn-primary btn-lg btn-block" [disabled]="!_loginForm.valid">
+                {{ 'Login' | translate }}
+              </button>
+            </div>
+
+            <oauth-login (errorEvent)="_processError($event)"></oauth-login>
+
+            <div class="modal-footer">
+              <div class="options">
+                <p>
+                  {{ 'Not a member' | translate }}?
+                  <a [routerLink]="['/signup']">{{ 'Sign up' | translate }}</a>
+                </p>
+                <p>
+                  {{ 'Forgot' | translate }}
+                  <a [routerLink]="['/password-reset']">{{ 'Password' | translate }}?</a>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

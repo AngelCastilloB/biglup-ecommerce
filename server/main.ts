@@ -17,8 +17,9 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }           from 'meteor/meteor';
-import { createMigrations } from './migrations/create-migrations';
+import { Meteor }              from 'meteor/meteor';
+import { createMigrations }    from './migrations/create-migrations';
+import { checkMeteorSettings } from './check-meteor-settings';
 
 // Publication Imports
 import './publications/category-publications.ts';
@@ -27,23 +28,22 @@ import './publications/images-publications.ts';
 import './publications/product-publications.ts';
 
 // Method Imports
-
 import '../common/api/cart.methods';
 
-/* CONSTANTS ***********************************************************************************************************/
+// Services configuration
+import './services-configuration';
 
-/**
- * We set the settings as any because Typescript complaints about unknown types (coming from the settings file).
- * @type {Object}
- */
-const SETTINGS: any = Meteor.settings;
+// App email templates
+import './email-templates/password-reset';
 
 /* METEOR SERVER START UP *********************************************************************************************/
 
 Meteor.startup(() => {
-    if (SETTINGS.migrations && SETTINGS.migrations.migrate) {
+    checkMeteorSettings();
+
+    if (Meteor.settings.migrations.migrate) {
         createMigrations();
-        if (SETTINGS.migrations.reset) {
+        if (Meteor.settings.migrations.reset) {
             // the library doesn't provide public APIs to properly reset the collection.
             // Even though we could Migrations.migrateTo(0)
             // this fails when the migration is locked and needs to be unlocked.

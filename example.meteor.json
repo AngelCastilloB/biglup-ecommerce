@@ -1,4 +1,5 @@
 {
+  "loaded": true,
   "user": {
     "name": "username",
     "email": "user email",
@@ -7,5 +8,17 @@
   "migrations": {
     "migrate": false,
     "reset": false
+  },
+  "facebook": {
+    "appId": "",
+    "secret": ""
+  },
+  "twitter": {
+    "consumerKey": "",
+    "secret": ""
+  },
+  "google": {
+    "clientId": "",
+    "secret": ""
   }
 }
