@@ -25,6 +25,9 @@ import { ProductDetailsComponent }     from './components/product/product-detail
 import { LoginComponent }              from './components/login/login.component';
 import { IsUserLoggedOutGuardService } from '../services/guards/is-user-logged-out-guard.service';
 import { SignUpComponent }             from './components/sign-up/sign-up.component';
+import { PasswordResetComponent }      from './components/password-reset/password-reset.component';
+import { NewPasswordComponent }        from './components/new-password/new-password.component';
+import { NewPasswordGuardService }     from '../services/guards/new-password-guard.service';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -39,6 +42,15 @@ export const frontendRoutes: RouterConfig = [
             {path: '', component: LandingPageComponent},
             {path: 'login', component: LoginComponent, canActivate: [IsUserLoggedOutGuardService]},
             {path: 'signup', component: SignUpComponent, canActivate: [IsUserLoggedOutGuardService]},
+            {path: 'password-reset', component: PasswordResetComponent, canActivate: [IsUserLoggedOutGuardService]},
+            {
+                path: 'reset-password',
+                component: NewPasswordComponent,
+                canActivate: [
+                    IsUserLoggedOutGuardService,
+                    NewPasswordGuardService
+                ]
+            },
             {path: 'category/:categoryId', component: CategoryComponent},
             {path: 'category/:categoryId/product/:productId', component: ProductDetailsComponent},
         ]

@@ -104,9 +104,9 @@ export class UserAuthService {
      * @param {object} options
      * @param {string} options.email
      * @param {string} options.password
-     * @param {Function} callback this callback expects an error object as an argument
+     * @param {Function=} callback this callback expects an error object as an argument
      */
-    public createUser(options: {email: string, password: string}, callback: (error) => void) {
+    public createUser(options: {email: string, password: string}, callback?: (error) => void) {
         Accounts.createUser(options, err => callback(err));
     }
 
@@ -114,9 +114,9 @@ export class UserAuthService {
      * @summary attempts to login with facebook.
      *
      * @param {Object} options
-     * @param {Function} callback this callback expects an error object as an argument
+     * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithFacebook(options: Object, callback: (error) => void) {
+    public loginWithFacebook(options: Object, callback?: (error) => void) {
         Meteor.loginWithFacebook(options, err => this._updateUserLoginStreams(err, callback));
     }
 
@@ -124,9 +124,9 @@ export class UserAuthService {
      * @summary attempts to login with google.
      *
      * @param {Object} options
-     * @param {Function} callback this callback expects an error object as an argument
+     * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithGoogle(options: Object, callback: (error) => void) {
+    public loginWithGoogle(options: Object, callback?: (error) => void) {
         Meteor.loginWithGoogle(options, err => this._updateUserLoginStreams(err, callback));
     }
 
@@ -134,10 +134,18 @@ export class UserAuthService {
      * @summary attempts to login with twitter.
      *
      * @param {Object} options
-     * @param {Function} callback this callback expects an error object as an argument
+     * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithTwitter(options: Object, callback: (error) => void) {
+    public loginWithTwitter(options: Object, callback?: (error) => void) {
         Meteor.loginWithTwitter(options, err => this._updateUserLoginStreams(err, callback));
+    }
+
+    public forgotPassword(options: {email: string}, callback?: (err?) => void) {
+        Accounts.forgotPassword(options, callback);
+    }
+
+    public resetPassword(token: string, newPassword: string, callback?: (error) => void) {
+        Accounts.resetPassword(token, newPassword, callback);
     }
 
     /**

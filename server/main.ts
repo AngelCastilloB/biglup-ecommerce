@@ -27,8 +27,11 @@ import './publications/cart-publications.ts';
 import './publications/images-publications.ts';
 import './publications/product-publications.ts';
 
-// services configuration
+// Services configuration
 import './services-configuration';
+
+// App email templates
+import './email-templates/password-reset';
 
 /* METEOR SERVER START UP *********************************************************************************************/
 

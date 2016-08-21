@@ -32,6 +32,7 @@ import { UserAuthService }           from '../../../services/user-auth.service';
 import { Router }                    from '@angular/router';
 import { OauthLoginComponent }       from '../oauth-login/oauth-login.component';
 import { FormErrorComponent }        from '../form-error/form-error.component';
+import { NewPasswordComponent }      from '../new-password/new-password.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -63,14 +64,14 @@ export class SignUpComponent implements OnInit {
      * @type {number}
      * @private
      */
-    private _minPasswordLength = 5;
+    private _minPasswordLength = NewPasswordComponent._maxPasswordLength;
 
     /**
      * @summary the maximum size the password must be to be considered valid.
      * @type {number}
      * @private
      */
-    private _maxPasswordLength = 20;
+    private _maxPasswordLength = NewPasswordComponent._maxPasswordLength;
 
     /**
      * @param {FormBuilder} _formBuilder
@@ -134,8 +135,7 @@ export class SignUpComponent implements OnInit {
      * @private
      */
     private _hasConfirmationError() {
-        const control = this._signUpForm.controls['confirmation'];
-        return (control.hasError('notEqual') && control.value.length >= this._minPasswordLength);
+        return NewPasswordComponent.hasConfirmationError(this._signUpForm.controls['confirmation']);
     }
 
     /**

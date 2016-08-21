@@ -38,7 +38,10 @@
                   {{ 'Not a member' | translate }}?
                   <a [routerLink]="['/signup']">{{ 'Sign up' | translate }}</a>
                 </p>
-                <p>{{ 'Forgot' | translate }} <a href="#">{{ 'Password' | translate }}?</a></p>
+                <p>
+                  {{ 'Forgot' | translate }}
+                  <a [routerLink]="['/password-reset']">{{ 'Password' | translate }}?</a>
+                </p>
               </div>
             </div>
           </form>
