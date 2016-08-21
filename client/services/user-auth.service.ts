@@ -121,6 +121,26 @@ export class UserAuthService {
     }
 
     /**
+     * @summary attempts to login with google.
+     *
+     * @param {Object} options
+     * @param {Function} callback this callback expects an error object as an argument
+     */
+    public loginWithGoogle(options: Object, callback: (error) => void) {
+        Meteor.loginWithGoogle(options, err => this._updateUserLoginStreams(err, callback));
+    }
+
+    /**
+     * @summary attempts to login with twitter.
+     *
+     * @param {Object} options
+     * @param {Function} callback this callback expects an error object as an argument
+     */
+    public loginWithTwitter(options: Object, callback: (error) => void) {
+        Meteor.loginWithTwitter(options, err => this._updateUserLoginStreams(err, callback));
+    }
+
+    /**
      * @summary update the various observer streams with the login/logout events.
      *
      * @param err any external errors.

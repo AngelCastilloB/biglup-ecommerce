@@ -12,5 +12,13 @@
   "facebook": {
     "appId": "",
     "secret": ""
+  },
+  "twitter": {
+    "consumerKey": "",
+    "secret": ""
+  },
+  "google": {
+    "clientId": "",
+    "secret": ""
   }
 }

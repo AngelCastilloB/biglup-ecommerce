@@ -1,7 +1,8 @@
 /**
  * @file services-configuration.ts.
  *
- * @summary TODO add summary on services-configuration.ts.
+ * @summary Creates the database information needed for the accounts library to work
+ * properly with the external services and oauth.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @date   August 20 2016
@@ -25,8 +26,28 @@ ServiceConfiguration.configurations.upsert({
     service: 'facebook'
 }, {
     $set: {
-        appId: Meteor.settings.facebook.appId,
         loginStyle: 'popup',
+        appId: Meteor.settings.facebook.appId,
         secret: Meteor.settings.facebook.secret
+    }
+});
+
+ServiceConfiguration.configurations.upsert({
+    service: 'twitter'
+}, {
+    $set: {
+        loginStyle: 'popup',
+        consumerKey: Meteor.settings.twitter.consumerKey,
+        secret: Meteor.settings.twitter.secret
+    }
+});
+
+ServiceConfiguration.configurations.upsert({
+    service: 'google'
+}, {
+    $set: {
+        loginStyle: 'popup',
+        clientId: Meteor.settings.google.clientId,
+        secret: Meteor.settings.google.secret
     }
 });

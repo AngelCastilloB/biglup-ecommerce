@@ -48,11 +48,7 @@ export class OauthLoginComponent {
      * @private
      */
     private _loginWithFacebook() {
-        this._userAuthService.loginWithFacebook({}, err => {
-            if (err) return this._processError(err);
-
-            this._router.navigate(['/']);
-        });
+        this._userAuthService.loginWithFacebook({}, err => this._handleLogin(err));
     }
 
     /**
@@ -60,7 +56,7 @@ export class OauthLoginComponent {
      * @private
      */
     private _loginWithGoogle() {
-        console.log('login with google');
+        this._userAuthService.loginWithGoogle({}, err => this._handleLogin(err));
     }
 
     /**
@@ -68,7 +64,7 @@ export class OauthLoginComponent {
      * @private
      */
     private _loginWithTwitter() {
-        console.log('login with twitter');
+        this._userAuthService.loginWithTwitter({}, err => this._handleLogin(err));
     }
 
     /**
@@ -79,5 +75,17 @@ export class OauthLoginComponent {
      */
     private _processError(err: Meteor.Error): void {
         this.errorEvent.emit(err);
+    }
+
+    /**
+     * @summary acts when a login event is completed.
+     *
+     * @param {Meteor.Error} err
+     * @private
+     */
+    private _handleLogin(err: Meteor.Error) {
+        if (err) return this._processError(err);
+
+        this._router.navigate(['/']);
     }
 }
