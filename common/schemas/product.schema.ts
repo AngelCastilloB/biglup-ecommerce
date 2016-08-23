@@ -63,7 +63,8 @@ export let ProductVariantSchema: any = new SimpleSchema({
 export let ProductSchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'Product Id'
+        label: 'Product Id',
+        optional: true
     },
     categoryId: {
         type: [String],

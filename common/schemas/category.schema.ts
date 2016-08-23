@@ -67,13 +67,18 @@ export let SubCategorySchema: any = new SimpleSchema({
             return new Date();
         },
         optional: true
-    },
+    }
 });
 
 /**
  * @summary The category schema.
  */
 export let CategorySchema: any = new SimpleSchema({
+    _id: {
+        type: String,
+        label: 'Category Id',
+        optional: true
+    },
     name: {
         type: [I18nStringSchema],
         label: 'Name'

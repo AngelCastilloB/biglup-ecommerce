@@ -65,9 +65,9 @@ Meteor.methods({
 
         check(categoryId, String);
 
-        if (Categories.find({_id: categoryId}).count() > 0) {
+        if (Categories.find({_id: categoryId}).count() === 0) {
             throw new Meteor.Error(
-                'products.deleteProduct.productDoesNotExist',
+                'categories.deleteCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
         }
 
@@ -100,12 +100,12 @@ Meteor.methods({
                 'The id of this category is empty. You need to provide the id of an existing category in the database.');
         }
 
-        if (Categories.find({_id: Categories._id}).count() > 0) {
+        if (Categories.find({_id: category._id}).count() === 0) {
             throw new Meteor.Error(
                 'categories.updateCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
         }
 
-        Categories.update({userId: category._id}, { $set : {category}});
+        Categories.update({_id: category._id}, { $set : category });
     }
 });

@@ -132,7 +132,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
             return;
         }
 
-        Categories.insert(this._category, (error, result) => {
+        this.call('categories.createCategory', this._category, (error, result) => {
             if (error) {
                 this._waitModalResult = false;
 
@@ -157,20 +157,21 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      */
     private _deleteCategory(): void {
 
-        Categories.remove(this._category._id, (error, result) => {
+        this.call('categories.deleteCategory', this._category._id, (error, result) => {
             if (error) {
                 this._waitModalResult = false;
 
                 this._modal.show(
-                    _T('There was an error deleting the category'),
+                    _T('There was an error saving the category'),
                     _T('Error'));
 
                 console.error(error);
             } else {
-                this._waitModalResult = true;
+                this._category._id = result;
+                this._isEditMode = true;
 
                 this._modal.show(
-                    _T('Category Deleted!'),
+                    _T('Category Saved!'),
                     _T('Information'));
             }
         });
@@ -189,29 +190,22 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
             return;
         }
 
-        Categories.update(
-            { _id: this._category._id }, {
-                $set: {
-                    name: this._category.name,
-                    info: this._category.info
-                }
-            },
-            (error, result) => {
-                if (error) {
-                    this._waitModalResult = false;
+        this.call('categories.updateCategory', this._category, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
 
-                    this._modal.show(
-                        _T('There was an error updating the category'),
-                        _T('Error'));
+                this._modal.show(
+                    _T('There was an error updating the category'),
+                    _T('Error'));
 
-                    console.error(error);
-                } else {
-                    this._waitModalResult = true;
+                console.error(error);
+            } else {
+                this._waitModalResult = true;
 
-                    this._modal.show(
-                        _T('Category Updated!'),
-                        _T('Information'));
-                }
+                this._modal.show(
+                    _T('Category Updated!'),
+                    _T('Information'));
+            }
         });
     }
 

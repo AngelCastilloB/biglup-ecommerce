@@ -83,6 +83,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         this._product.trackInventory   = false;
         this._product.isVisible        = false;
         this._product.requiresShipping = false;
+        this._product.color            = [];
+        this._product.size             = [];
     }
 
     /**

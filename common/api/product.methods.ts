@@ -46,7 +46,7 @@ Meteor.methods({
 
         if (product.categoryId) {
             for (let i = 0; i < product.categoryId.length; ++i) {
-                if (Categories.find({_id: product.categoryId[i]}).count() > 0) {
+                if (Categories.find({_id: product.categoryId[i]}).count() === 0) {
                     throw new Meteor.Error(
                         'products.createProduct.categoryDoesNotExist',
                         'One of the categories for this product does not exist (' + (product.categoryId[i]) + ').');
@@ -77,7 +77,7 @@ Meteor.methods({
 
         check(productId, String);
 
-        if (Products.find({_id: productId}).count() > 0) {
+        if (Products.find({_id: productId}).count() === 0) {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
@@ -111,12 +111,12 @@ Meteor.methods({
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
         }
 
-        if (Products.find({_id: product._id}).count() > 0) {
+        if (Products.find({_id: product._id}).count() === 0) {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
         }
 
-        Products.update({userId: product._id}, { $set : {product}});
+        Products.update({_id: product._id}, { $set : product});
     }
 });
