@@ -17,26 +17,35 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }      from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { ControlGroup }    from '@angular/common';
+import { Injectable }      from '@angular/core';
+
+// CONSTANTS **********************************************************************************************************/
+
+/**
+ * @summary Regex that match a valid email.
+ */
+// tslint:disable:max-line-length
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 // EXPORTS ************************************************************************************************************/
 
 @Injectable()
+/**
+ * @summary This service performs validations on data fields.
+ */
 export class ValidationService {
 
     /**
      * @summary Checks the value and returns true if is invalid.
      *
-     * @param {AbstractControl} control
-     * @returns {{email: boolean}}
+     * @param {AbstractControl} control The control to be validated.
+     *
+     * @returns {{email: boolean}} True if the string is an email with the appropriate format, otherwise, false.
      */
     public static email(control: AbstractControl): {[key: string]: boolean} {
-        /* tslint:disable:max-line-length */
-        let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-        return control.value.match(regex) ? null : {email: true};
+        return control.value.match(EMAIL_REGEX) ? null : {email: true};
     }
 
     /**
@@ -45,7 +54,8 @@ export class ValidationService {
      *
      * @param {string} firstControlKey the first group name or key IE: name, password
      * @param {string} secondControlKey the second group name or key IE: another_name, password_confirmation
-     * @returns {(group:ControlGroup)=>void}
+     *
+     * @returns {(group:ControlGroup)=>void} The control group values validator.
      */
     public static matchControlGroupsValues(firstControlKey: string, secondControlKey: string) {
         return (group: ControlGroup) => {

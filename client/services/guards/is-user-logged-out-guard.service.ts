@@ -25,8 +25,8 @@ import { UserAuthService }     from '../user-auth.service';
 
 /**
  * @summary This guard is responsible of users access according to the login status.
- * @internal This seems duplicate of IsUserLoggedGuardService, however this seems
- * necessary to allow router navigation, ¿check if better way exist?
+ *
+ * // TODO: This seems duplicate of IsUserLoggedGuardService, however this seems necessary to allow router navigation, ¿check if better way exist?
  */
 @Injectable()
 export class IsUserLoggedOutGuardService implements CanActivate {
@@ -37,9 +37,10 @@ export class IsUserLoggedOutGuardService implements CanActivate {
     private _status: boolean;
 
     /**
-     * @summary constructs this with the route needed to redirect and auth service.
-     * @param {Router} router
-     * @param {UserAuthService} _userAuthService
+     * @summary Initializes a new instance of the IsUserLoggedOutGuardService class.
+     *
+     * @param {Router}          router           The router service.
+     * @param {UserAuthService} _userAuthService The authentication service.
      */
     constructor(private router: Router, private _userAuthService: UserAuthService) {
         this._userAuthService.isLoggedStream().subscribe(status => this._status = status);
@@ -47,10 +48,13 @@ export class IsUserLoggedOutGuardService implements CanActivate {
 
     /**
      * @summary Allows route activation only if the user is not logged in.
-     * @returns {boolean}
+     *
+     * @returns {boolean} True if the user can activate the route, otherwise, false.
      */
     public canActivate(): boolean {
+
         if (this._status) {
+
             this.router.navigate(['/']);
 
             return false;

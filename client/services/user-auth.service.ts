@@ -17,15 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Subject, Observable, Observer } from 'rxjs';
-import { Meteor }                        from 'meteor/meteor';
-import { Accounts }                      from 'meteor/accounts-base';
+import { Subject, Observable } from 'rxjs';
+import { Meteor }              from 'meteor/meteor';
+import { Accounts }            from 'meteor/accounts-base';
+import { Injectable }          from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary Handles the users login and logout cases with related observables.
  */
+@Injectable()
 export class UserAuthService {
 
     /**
@@ -61,6 +63,7 @@ export class UserAuthService {
 
     /**
      * @summary Returns the current user object.
+     *
      * @returns {Meteor.User}
      */
     public getUser() {
@@ -82,6 +85,7 @@ export class UserAuthService {
      * @param {string} email the users email
      * @param {string} password the users password, no need to bcrypt it prior.
      * @param {Function} callback expects an error as parameter.
+     *
      * @returns {Observable<boolean>} true if login success
      */
     public login(email: string, password: string, callback: (error?) => void) {
@@ -153,6 +157,7 @@ export class UserAuthService {
      *
      * @param err any external errors.
      * @param callback the callers callback
+     *
      * @returns {*} whatever the callback returns
      * @private
      */

@@ -17,13 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// noinspection TypeScriptCheckImport
-import template from './oauth-login.component.html';
-
 import { Component, Output, EventEmitter } from '@angular/core';
 import { TranslatePipe }                   from '../../../pipes/translate.pipe';
 import { UserAuthService }                 from '../../../services/user-auth.service';
 import { Router }                          from '@angular/router';
+
+// noinspection TypeScriptCheckImport
+import template from './oauth-login.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,14 +32,23 @@ import { Router }                          from '@angular/router';
     template,
     pipes: [TranslatePipe]
 })
+/**
+ * @summary This component allows the user to log in suing different oauth service providers.
+ */
 export class OauthLoginComponent {
 
     /**
      * @summary in case of an external service error, this will be fired.
-     * @type {EventEmitter}
      */
-    @Output() public errorEvent = new EventEmitter();
+    @Output()
+    public errorEvent = new EventEmitter();
 
+    /**
+     * @summary Initializes a new instance of the OauthLoginComponent class.
+     *
+     * @param _userAuthService The user authentication service.
+     * @param _router          The router service.
+     */
     constructor(private _userAuthService: UserAuthService, private _router: Router) {
     }
 
@@ -70,21 +79,24 @@ export class OauthLoginComponent {
     /**
      * @summary dispatches the local error event up the chain.
      *
-     * @param {Meteor.Error} err
+     * @param {Meteor.Error} error The error to be processed/
      * @private
      */
-    private _processError(err: Meteor.Error): void {
-        this.errorEvent.emit(err);
+    private _processError(error: Meteor.Error): void {
+        this.errorEvent.emit(error);
     }
 
     /**
-     * @summary acts when a login event is completed.
+     * @summary Acts when a login event is completed.
      *
-     * @param {Meteor.Error} err
+     * @param {Meteor.Error} error The longin error (if any).
      * @private
      */
-    private _handleLogin(err: Meteor.Error) {
-        if (err) return this._processError(err);
+    private _handleLogin(error: Meteor.Error) {
+
+        if (error) {
+            return this._processError(error);
+        }
 
         this._router.navigate(['/']);
     }

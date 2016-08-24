@@ -34,7 +34,7 @@ export class TruncateStringPipe implements PipeTransform {
      * @param {number} limit The requested size (defaults to 100)
      * @param {string} end   The string to be appended at the end (defaults to '...')
      *
-     * @returns {any} If the string length is greater than the given limit, the string is truncated to the given limit
+     * @returns {*} If the string length is greater than the given limit, the string is truncated to the given limit
      * and '...' dots are appended at the end; otherwise; the given value is returned.
      */
     public transform(value: String, limit = 100, end = '...'): any {

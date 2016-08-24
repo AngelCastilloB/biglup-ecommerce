@@ -17,18 +17,20 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// noinspection TypeScriptCheckImport
-import template                      from './password-reset.component.html';
+import { Validators,
+         FormGroup,
+         FormBuilder,
+         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
 import { Component, OnInit, NgZone } from '@angular/core';
-import {
-    Validators, FormGroup, FormBuilder,
-    REACTIVE_FORM_DIRECTIVES
-}                                    from '@angular/forms';
 import { ValidationService }         from '../../../services/validation.service';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 import { TranslatePipe }             from '../../../pipes/translate.pipe';
+import { _T }                        from '../../../services/i18n/i18n-singleton.service';
 import { FormErrorComponent }        from '../form-error/form-error.component';
 import { UserAuthService }           from '../../../services/user-auth.service';
+
+// noinspection TypeScriptCheckImport
+import template                      from './password-reset.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -36,9 +38,11 @@ import { UserAuthService }           from '../../../services/user-auth.service';
     selector: 'password-reset',
     template,
     pipes: [TranslatePipe],
-    providers: [TranslatePipe],
     directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
+/**
+ * @summary This component allows the user to reset its password.
+ */
 export class PasswordResetComponent implements OnInit {
 
     /**
@@ -51,14 +55,26 @@ export class PasswordResetComponent implements OnInit {
      */
     private _error = {message: '', cssClass: ''};
 
-    constructor(private _ngZone: NgZone,
+    /**
+     * @summary Initializes a new instance of the PasswordResetComponent class.
+     *
+     * @param _ngZone          The Angular Zone service.
+     * @param _formBuilder     The form builder service.
+     * @param _router          The router service.
+     * @param _userAuthService The user authentication service.
+     */
+    constructor(
+        private _ngZone: NgZone,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _translatePipe: TranslatePipe,
         private _userAuthService: UserAuthService) {
     }
 
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
     public ngOnInit() {
+
         this._pwResetForm = this._formBuilder.group({
             email: ['', Validators.compose([
                 Validators.required,
@@ -67,6 +83,12 @@ export class PasswordResetComponent implements OnInit {
         });
     }
 
+    /**
+     * @summary Event handler for when the submit button is clicked
+     *
+     * @param event The click event.
+     * @private
+     */
     private _onSubmit(event: Event) {
         event.preventDefault();
 
@@ -85,17 +107,17 @@ export class PasswordResetComponent implements OnInit {
     /**
      * @summary Alters the error to a more human readable form.
      *
-     * @param {Error} err
+     * @param {Error} error The error to be processed.
      * @private
      */
-    private _processError(err: Meteor.Error): void {
+    private _processError(error: Meteor.Error): void {
         this._ngZone.run(() => {
             this._error.cssClass = 'text-danger';
             this._pwResetForm.setErrors({'external-related': true});
 
-            this._error.message = err.error === 403 ?
-                this._translatePipe.transform('The Email provided did not match our records.') :
-                err.reason;
+            this._error.message = error.error === 403 ?
+                _T('The Email provided did not match our records.') :
+                error.reason;
         });
     }
 }
