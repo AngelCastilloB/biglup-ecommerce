@@ -21,6 +21,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { TranslatePipe }                   from '../../../pipes/translate.pipe';
 import { UserAuthService }                 from '../../../services/user-auth.service';
 import { Router }                          from '@angular/router';
+import { Meteor }                          from 'meteor/meteor';
 
 // noinspection TypeScriptCheckImport
 import template from './oauth-login.component.html';
@@ -44,12 +45,28 @@ export class OauthLoginComponent {
     public errorEvent = new EventEmitter();
 
     /**
+     * @summary this flag signifies the facebook settings are loaded in meteor or not, since they are optional.
+     */
+    private _hasFacebookSettings: boolean;
+
+    /**
+     * @summary this flag signifies the google settings are loaded in meteor or not, since they are optional.
+     */
+    private _hasGoogleSettings: boolean;
+
+    /**
+     * @summary this flag signifies the twitter settings are loaded in meteor or not, since they are optional.
+     */
+    private _hasTwitterSettings: boolean;
+
+    /**
      * @summary Initializes a new instance of the OauthLoginComponent class.
      *
      * @param _userAuthService The user authentication service.
      * @param _router          The router service.
      */
     constructor(private _userAuthService: UserAuthService, private _router: Router) {
+        this._checkMeteorSettings();
     }
 
     /**
@@ -99,5 +116,25 @@ export class OauthLoginComponent {
         }
 
         this._router.navigate(['/']);
+    }
+
+    /**
+     * @summary Updates the flags to show or hide the OAuth buttons.
+     * @private
+     */
+    private _checkMeteorSettings() {
+        this._hasFacebookSettings = !!Meteor.settings.public['facebook'];
+        this._hasGoogleSettings   = !!Meteor.settings.public['google'];
+        this._hasTwitterSettings  = !!Meteor.settings.public['twitter'];
+    }
+
+    /**
+     * @summary check if at least one setting is loaded to render the form's div wrapper.
+     *
+     * @returns {boolean}
+     * @private
+     */
+    private _areSettingsLoaded() {
+        return (this._hasFacebookSettings || this._hasGoogleSettings || this._hasTwitterSettings);
     }
 }

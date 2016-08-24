@@ -1,20 +1,20 @@
-<div class="modal-footer" id="signup-form-oauth">
+<div class="modal-footer" id="signup-form-oauth" *ngIf="_areSettingsLoaded()">
   <div class="options">
-    <p>
+    <p *ngIf="_hasFacebookSettings">
       <button class="btn btn-fb btn-lg btn-block" (click)="_loginWithFacebook()">
         <i class="fa fa-facebook-official" aria-hidden="true"></i>
         {{ 'Login with' | translate }} Facebook
       </button>
     </p>
 
-    <p>
+    <p *ngIf="_hasGoogleSettings">
       <button class="btn btn-gplus btn-lg btn-block" (click)="_loginWithGoogle()">
         <i class="fa fa-google" aria-hidden="true"></i>
         {{ 'Login with' | translate }} Google
       </button>
     </p>
 
-    <p>
+    <p *ngIf="_hasTwitterSettings">
       <button class="btn btn-tw btn-lg btn-block" (click)="_loginWithTwitter()">
         <i class="fa fa-twitter" aria-hidden="true"></i>
         {{ 'Login with' | translate }} Twitter

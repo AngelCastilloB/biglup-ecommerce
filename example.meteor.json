@@ -1,9 +1,8 @@
 {
-  "loaded": true,
   "user": {
-    "name": "username",
-    "email": "user email",
-    "password": "someRandomPassword"
+    "name": "",
+    "email": "",
+    "password": ""
   },
   "migrations": {
     "migrate": false,

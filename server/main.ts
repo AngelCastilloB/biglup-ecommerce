@@ -17,9 +17,10 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }              from 'meteor/meteor';
-import { createMigrations }    from './migrations/create-migrations';
-import { checkMeteorSettings } from './check-meteor-settings';
+import { Meteor }                     from 'meteor/meteor';
+import { createMigrations }           from './migrations/create-migrations';
+import { checkMeteorSettings }        from './check-meteor-settings';
+import { startServicesConfiguration } from './services-configuration';
 
 // Publication Imports
 import './publications/category-publications.ts';
@@ -30,9 +31,6 @@ import './publications/product-publications.ts';
 // Method Imports
 import '../common/api/cart.methods';
 
-// Services configuration
-import './services-configuration';
-
 // App email templates
 import './email-templates/password-reset';
 
@@ -40,10 +38,11 @@ import './email-templates/password-reset';
 
 Meteor.startup(() => {
     checkMeteorSettings();
+    startServicesConfiguration();
 
-    if (Meteor.settings.migrations.migrate) {
+    if (Meteor.settings['migrations'].migrate) {
         createMigrations();
-        if (Meteor.settings.migrations.reset) {
+        if (Meteor.settings['migrations'].reset) {
             // the library doesn't provide public APIs to properly reset the collection.
             // Even though we could Migrations.migrateTo(0)
             // this fails when the migration is locked and needs to be unlocked.

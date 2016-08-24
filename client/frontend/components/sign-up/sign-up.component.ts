@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
     /**
      * @summary the minimum size the password must be to be considered valid.
      */
-    private _minPasswordLength = NewPasswordComponent.maxPasswordLength;
+    private _minPasswordLength = NewPasswordComponent.minPasswordLength;
 
     /**
      * @summary the maximum size the password must be to be considered valid.

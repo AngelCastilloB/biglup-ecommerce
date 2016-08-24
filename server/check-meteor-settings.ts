@@ -19,32 +19,67 @@
 
 import { Meteor } from 'meteor/meteor';
 
+/* CONSTANTS **********************************************************************************************************/
+
+const USER_SETTINGS = {
+    name: 'user',
+    email: 'user@app.com',
+    password: '123'
+};
+
+const MIGRATIONS_SETTINGS = {
+    migrate: false,
+    reset: false
+};
+
+const FACEBOOK_SETTINGS = {
+    appId: '',
+    secret: ''
+};
+const GOOGLE_SETTINGS   = {
+    clientId: '',
+    secret: ''
+};
+const TWITTER_SETTINGS  = {
+    consumerKey: '',
+    secret: ''
+};
+
 /* EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary check if the different settings keys exist in the meteor settings object,
+ * if none are found, will set the defaults.
+ *
+ * The Meteor.settings.public['something'] is accessible only to the client side.
+ */
 export function checkMeteorSettings() {
-    const throwMalformedError = function (key: string) {
-        throw new Meteor.Error(`"${key.toUpperCase()}" settings could not be found.`,
-            'The meteor.json file may be malformed,' +
-            'please run "gulp --gulpfile .gulpfile.js to fix it.", if the meteor.json already exist, ' +
-            'please consider removing it and then run gulp.');
-    };
+    if (!Meteor.settings['user']) {
+        Meteor.settings['user'] = USER_SETTINGS;
+    }
 
-    if (!Meteor.settings.loaded)
-        throw new Meteor.Error('Application settings not found.',
-            'This application needs its settings loaded to properly function, please run ' +
-            'it as "meteor run --settings meteor.json" or simply run "npm start".');
+    if (!Meteor.settings['migrations']) {
+        Meteor.settings['migrations'] = MIGRATIONS_SETTINGS;
+    }
 
-    if (!Meteor.settings.user)
-        throwMalformedError('user');
+    if (!Meteor.settings['facebook']) {
+        Meteor.settings['facebook']     = FACEBOOK_SETTINGS;
+        Meteor.settings.public.facebook = false;
+    } else {
+        Meteor.settings.public.facebook = true;
+    }
 
-    if (!Meteor.settings.migrations)
-        throwMalformedError('migrations');
+    if (!Meteor.settings['google']) {
+        Meteor.settings['google']     = GOOGLE_SETTINGS;
+        Meteor.settings.public.google = false;
+    } else {
+        Meteor.settings.public.google = true;
+    }
 
-    if (!Meteor.settings.facebook)
-        throwMalformedError('facebook');
-
-    if (!Meteor.settings.facebook.appId || !Meteor.settings.facebook.secret)
-        throw new Meteor.Error('"FACEBOOK" setting details could not be found or are incomplete.',
-            'Please check inside meteor.json ' +
-            'and add them, please refer to the README for more info.');
+    if (!Meteor.settings['twitter']) {
+        Meteor.settings['twitter']     = TWITTER_SETTINGS;
+        Meteor.settings.public.twitter = false;
+    } else {
+        Meteor.settings.public.twitter = true;
+    }
 }
