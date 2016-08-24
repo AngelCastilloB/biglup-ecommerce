@@ -19,6 +19,7 @@
 
 import { AbstractControl } from '@angular/forms';
 import { ControlGroup }    from '@angular/common';
+import { Injectable }      from '@angular/core';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -30,6 +31,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 
 // EXPORTS ************************************************************************************************************/
 
+@Injectable()
 /**
  * @summary This service performs validations on data fields.
  */
