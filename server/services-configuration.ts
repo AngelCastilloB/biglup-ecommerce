@@ -20,34 +20,40 @@
 
 import { Meteor } from 'meteor/meteor';
 
-/* IMPLEMENTATION *****************************************************************************************************/
+/* EXPORTS ************************************************************************************************************/
 
-ServiceConfiguration.configurations.upsert({
-    service: 'facebook'
-}, {
-    $set: {
-        loginStyle: 'popup',
-        appId: Meteor.settings.facebook.appId,
-        secret: Meteor.settings.facebook.secret
-    }
-});
+/**
+ * @summary Sets defaults configurations needed by the different meteor services.
+ * since this uses the meteor settings, which could be undefined, we have to make this a function to let it cascade.
+ */
+export function startServicesConfiguration() {
+    ServiceConfiguration.configurations.upsert({
+        service: 'facebook'
+    }, {
+        $set: {
+            loginStyle: 'popup',
+            appId: Meteor.settings.facebook.appId,
+            secret: Meteor.settings.facebook.secret
+        }
+    });
 
-ServiceConfiguration.configurations.upsert({
-    service: 'twitter'
-}, {
-    $set: {
-        loginStyle: 'popup',
-        consumerKey: Meteor.settings.twitter.consumerKey,
-        secret: Meteor.settings.twitter.secret
-    }
-});
+    ServiceConfiguration.configurations.upsert({
+        service: 'twitter'
+    }, {
+        $set: {
+            loginStyle: 'popup',
+            consumerKey: Meteor.settings.twitter.consumerKey,
+            secret: Meteor.settings.twitter.secret
+        }
+    });
 
-ServiceConfiguration.configurations.upsert({
-    service: 'google'
-}, {
-    $set: {
-        loginStyle: 'popup',
-        clientId: Meteor.settings.google.clientId,
-        secret: Meteor.settings.google.secret
-    }
-});
+    ServiceConfiguration.configurations.upsert({
+        service: 'google'
+    }, {
+        $set: {
+            loginStyle: 'popup',
+            clientId: Meteor.settings.google.clientId,
+            secret: Meteor.settings.google.secret
+        }
+    });
+}
