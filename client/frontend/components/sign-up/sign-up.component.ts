@@ -20,10 +20,10 @@
 // noinspection TypeScriptCheckImport
 import template from './sign-up.component.html';
 
-import {
-    FormGroup, FormBuilder, Validators,
-    REACTIVE_FORM_DIRECTIVES
-}                                    from '@angular/forms';
+import { FormGroup,
+         FormBuilder,
+         Validators,
+         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ValidationService }         from '../../../services/validation.service';
 import { TranslatePipe }             from '../../../pipes/translate.pipe';
@@ -47,6 +47,9 @@ import { NewPasswordComponent }      from '../new-password/new-password.componen
     ],
     pipes: [TranslatePipe]
 })
+/**
+ * @summary This component allows the user to sign up to the site.
+ */
 export class SignUpComponent implements OnInit {
 
     /**
@@ -61,23 +64,21 @@ export class SignUpComponent implements OnInit {
 
     /**
      * @summary the minimum size the password must be to be considered valid.
-     * @type {number}
-     * @private
      */
     private _minPasswordLength = NewPasswordComponent._maxPasswordLength;
 
     /**
      * @summary the maximum size the password must be to be considered valid.
-     * @type {number}
-     * @private
      */
     private _maxPasswordLength = NewPasswordComponent._maxPasswordLength;
 
     /**
-     * @param {FormBuilder} _formBuilder
-     * @param {UserAuthService} _userAuthService
-     * @param {NgZone} _ngZone
-     * @param {Router} _router
+     * @summary Initializes a new instance of the class SignUpComponent.
+     *
+     * @param {FormBuilder}     _formBuilder     The form builder service.
+     * @param {UserAuthService} _userAuthService The user authentication service.
+     * @param {NgZone}          _ngZone          The angular zone service.
+     * @param {Router}          _router          The router service.
      */
     constructor(private _formBuilder: FormBuilder,
         private _userAuthService: UserAuthService,
@@ -89,21 +90,25 @@ export class SignUpComponent implements OnInit {
      * @summary Initialize the component after data-bounding.
      */
     public ngOnInit() {
+
         this._signUpForm = this._formBuilder.group({
+
             email: ['', Validators.compose([
                 Validators.required,
-                ValidationService.email
-            ])],
+                ValidationService.email])],
+
             password: ['', Validators.compose([
                 Validators.required,
                 Validators.minLength(this._minPasswordLength),
                 Validators.maxLength(this._maxPasswordLength)
             ])],
-            confirmation: ['', Validators.compose([
+
+            confirmation: ['',Validators.compose([
                 Validators.required,
                 Validators.minLength(this._minPasswordLength),
                 Validators.maxLength(this._maxPasswordLength)
             ])]
+
         }, {validator: ValidationService.matchControlGroupsValues('password', 'confirmation')});
     }
 
@@ -112,6 +117,7 @@ export class SignUpComponent implements OnInit {
      * @private
      */
     private _onSubmit(event: Event): void {
+
         event.preventDefault();
 
         if (!this._signUpForm.valid) {
@@ -120,8 +126,12 @@ export class SignUpComponent implements OnInit {
 
         const email    = this._signUpForm.value.email;
         const password = this._signUpForm.value.password;
-        this._userAuthService.createUser({email, password}, err => {
-            if (err) return this._processError(err);
+
+        this._userAuthService.createUser({email, password}, error => {
+
+            if (error) {
+                return this._processError(error);
+            }
 
             this._router.navigate(['/']);
         });
@@ -131,7 +141,7 @@ export class SignUpComponent implements OnInit {
      * @summary checks if the password and confirmation are valid, ignores it when
      * the confirmation is less than the minimum password length.
      *
-     * @returns {boolean}
+     * @returns {boolean} True if there is a confirmation error, otherwise, false.
      * @private
      */
     private _hasConfirmationError() {
@@ -141,14 +151,16 @@ export class SignUpComponent implements OnInit {
     /**
      * @summary Alters the error to a more human readable form.
      *
-     * @param {Error} err
+     * @param {Error} error Shows a human readable error.
      * @private
      */
-    private _processError(err: Meteor.Error): void {
+    private _processError(error: Meteor.Error): void {
+
         this._ngZone.run(() => {
+
             this._error.cssClass = 'text-danger';
             this._signUpForm.setErrors({'external-related': true});
-            this._error.message = err.reason;
+            this._error.message = error.reason;
         });
     }
 }

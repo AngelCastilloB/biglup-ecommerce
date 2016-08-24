@@ -20,15 +20,15 @@
 import 'reflect-metadata';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MeteorComponent }             from 'angular2-meteor';
-import { Mongo }                       from 'meteor/mongo';
-import { ROUTER_DIRECTIVES }           from '@angular/router';
-import { Categories }                  from '../../../../common/collections/category.collection.ts';
-import { TranslatePipe }               from '../../../pipes/translate.pipe';
-import { MongoTranslatePipe }          from '../../../pipes/mongo-translate.pipe';
-import { I18nSingletonService }        from '../../../services/i18n/i18n-singleton.service';
-import { UserAuthService }             from '../../../services/user-auth.service';
-import { Subscription }                from 'rxjs';
+import { MeteorComponent }              from 'angular2-meteor';
+import { Mongo }                        from 'meteor/mongo';
+import { ROUTER_DIRECTIVES }            from '@angular/router';
+import { Categories }                   from '../../../../common/collections/category.collection.ts';
+import { TranslatePipe }                from '../../../pipes/translate.pipe';
+import { MongoTranslatePipe }           from '../../../pipes/mongo-translate.pipe';
+import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
+import { UserAuthService }              from '../../../services/user-auth.service';
+import { Subscription }                 from 'rxjs';
 
 import '../../../../common/api/cart.methods';
 
@@ -59,6 +59,8 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
 
     /**
      * @summary Initializes a new instance of the Header class.
+     *
+     * @param {UserAuthService} _userAuthService The authentification service.
      */
     constructor(private _userAuthService: UserAuthService) {
         super();
@@ -68,13 +70,16 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
+
         this.subscribe('categories', () => {
+
             this._categories = Categories.find();
         }, true);
 
-        this._isLogged             = this._userAuthService.isLogged();
-        this._isLoggedSubscription = this._userAuthService.isLoggedStream()
-            .subscribe(status => this._isLogged = status);
+        this._isLogged = this._userAuthService.isLogged();
+
+        this._isLoggedSubscription =
+            this._userAuthService.isLoggedStream().subscribe(status => this._isLogged = status);
     }
 
     /**
@@ -86,7 +91,7 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
 
     /**
      * @summary language change event handler
-     * @param language
+     * @param language The language to se bet.
      */
     private languageChanged(language: string) {
         I18nSingletonService.getInstance().setLocale(language);

@@ -17,18 +17,20 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// noinspection TypeScriptCheckImport
-import template                                      from './new-password.component.html';
+import { Validators,
+         FormGroup,
+         FormBuilder,
+         REACTIVE_FORM_DIRECTIVES,
+         AbstractControl }                           from '@angular/forms';
 import { Component, OnInit, NgZone }                 from '@angular/core';
-import {
-    Validators, FormGroup, FormBuilder,
-    REACTIVE_FORM_DIRECTIVES, AbstractControl
-}                                                    from '@angular/forms';
 import { ValidationService }                         from '../../../services/validation.service';
 import { Router, ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 import { TranslatePipe }                             from '../../../pipes/translate.pipe';
 import { FormErrorComponent }                        from '../form-error/form-error.component';
 import { UserAuthService }                           from '../../../services/user-auth.service';
+
+// noinspection TypeScriptCheckImport
+import template                                      from './new-password.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -39,18 +41,19 @@ import { UserAuthService }                           from '../../../services/use
     providers: [TranslatePipe],
     directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
+/**
+ * @summary Component that allow the user to input a new password.
+ */
 export class NewPasswordComponent implements OnInit {
 
     /**
      * @summary the minimum size the password must be to be considered valid.
-     * @type {number}
      * @private
      */
     public static _minPasswordLength = 5;
 
     /**
      * @summary the maximum size the password must be to be considered valid.
-     * @type {number}
      * @private
      */
     public static _maxPasswordLength = 20;
@@ -74,38 +77,62 @@ export class NewPasswordComponent implements OnInit {
      * @summary checks if the password and confirmation are valid, ignores it when
      * the confirmation is less than the minimum password length.
      *
-     * @returns {boolean}
+     * @returns {boolean} True if the control has a confirmation error, otherwise, false.
      * @private
      */
     public static hasConfirmationError(control: AbstractControl): boolean {
         return (control.hasError('notEqual') && control.value.length >= NewPasswordComponent._minPasswordLength);
     }
 
-    constructor(private _ngZone: NgZone,
+    /**
+     * @summary Initializes a new instance of the NewPasswordComponent class.
+     *
+     * @param _ngZone           The angular zone service.
+     * @param _formBuilder      The form builder service.
+     * @param _router           The router service.
+     * @param _userAuthService  The user authentication service.
+     * @param _route            The router service.
+     */
+    constructor(
+        private _ngZone: NgZone,
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _userAuthService: UserAuthService,
         private _route: ActivatedRoute) {
     }
 
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
     public ngOnInit() {
+
         this._route.params.subscribe(params => this._token = params['token']);
 
         this._newPwForm = this._formBuilder.group({
+
             password: ['', Validators.compose([
                 Validators.required,
                 Validators.minLength(NewPasswordComponent._minPasswordLength),
                 Validators.maxLength(NewPasswordComponent._maxPasswordLength)
             ])],
+
             confirmation: ['', Validators.compose([
                 Validators.required,
                 Validators.minLength(NewPasswordComponent._minPasswordLength),
                 Validators.maxLength(NewPasswordComponent._maxPasswordLength)
             ])]
+
         }, {validator: ValidationService.matchControlGroupsValues('password', 'confirmation')});
     }
 
+    /**
+     * @summary Event handler for when the submit button is clicked
+     *
+     * @param event The click event.
+     * @private
+     */
     private _onSubmit(event: Event) {
+
         event.preventDefault();
 
         if (!this._newPwForm.valid) {
@@ -123,15 +150,15 @@ export class NewPasswordComponent implements OnInit {
     /**
      * @summary Alters the error to a more human readable form.
      *
-     * @param {Error} err
+     * @param {Error} error The error to be processed.
      * @private
      */
-    private _processError(err: Meteor.Error): void {
-        console.error(err);
+    private _processError(error: Meteor.Error): void {
+
         this._ngZone.run(() => {
             this._error.cssClass = 'text-danger';
             this._newPwForm.setErrors({'external-related': true});
-            this._error.message = err.reason;
+            this._error.message = error.reason;
         });
     }
 
@@ -139,7 +166,7 @@ export class NewPasswordComponent implements OnInit {
      * @summary checks if the password and confirmation are valid, ignores it when
      * the confirmation is less than the minimum password length.
      *
-     * @returns {boolean}
+     * @returns {boolean} True if has confirmation, otherwise, false.
      * @private
      */
     private _hasConfirmationError() {

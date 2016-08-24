@@ -45,9 +45,12 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
-    @Input() public model:    Product;
-    @Input() public category: string;
-    private _productImages:   Mongo.Cursor<Image>;
+
+    @Input()
+    public model: Product;
+    @Input()
+    public   category:      string;
+    private _productImages: Mongo.Cursor<Image>;
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.

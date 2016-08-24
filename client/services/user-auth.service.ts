@@ -17,15 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Subject, Observable, Observer } from 'rxjs';
-import { Meteor }                        from 'meteor/meteor';
-import { Accounts }                      from 'meteor/accounts-base';
+import { Subject, Observable } from 'rxjs';
+import { Meteor }              from 'meteor/meteor';
+import { Accounts }            from 'meteor/accounts-base';
+import { Injectable }          from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary Handles the users login and logout cases with related observables.
  */
+@Injectable()
 export class UserAuthService {
 
     /**

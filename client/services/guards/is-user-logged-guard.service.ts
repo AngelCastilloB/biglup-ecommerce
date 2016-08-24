@@ -17,13 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {
-    CanActivate,
-    Router, ActivatedRouteSnapshot,
-    RouterStateSnapshot
-}                           from '@angular/router';
-import { Injectable }       from '@angular/core';
-import { UserAuthService }  from '../user-auth.service';
+import { CanActivate,
+         Router,
+         ActivatedRouteSnapshot,
+         RouterStateSnapshot }    from '@angular/router';
+import { Injectable }             from '@angular/core';
+import { UserAuthService }        from '../user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -39,9 +38,10 @@ export class IsUserLoggedGuardService implements CanActivate {
     private _status: boolean;
 
     /**
-     * @summary constructs this with the route needed to redirect and auth service.
-     * @param {Router} router
-     * @param {UserAuthService} _userAuthService
+     * @summary Initializes a new instance of the IsUserLoggedGuardService class.
+     *
+     * @param {Router}          router           The router service.
+     * @param {UserAuthService} _userAuthService The authentication service.
      */
     constructor(private router: Router, private _userAuthService: UserAuthService) {
         this._userAuthService.isLoggedStream().subscribe(status => this._status = status);
@@ -55,7 +55,11 @@ export class IsUserLoggedGuardService implements CanActivate {
      * @returns {boolean}
      */
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (this._status) return true;
+
+        if (this._status) {
+
+            return true;
+        }
 
         if (state.url !== '/login') this.router.navigate(['/login']);
 

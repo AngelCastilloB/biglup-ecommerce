@@ -17,18 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-// noinspection TypeScriptCheckImport
-import template from './login.component.html';
-
-import {
-    FormGroup,
-    FormBuilder,
-    REACTIVE_FORM_DIRECTIVES,
-    Validators
-}                                       from '@angular/forms';
+import { FormGroup,
+         FormBuilder,
+         REACTIVE_FORM_DIRECTIVES,
+         Validators }                   from '@angular/forms';
 import { ROUTER_DIRECTIVES, Router }    from '@angular/router';
 import { TranslatePipe }                from '../../../pipes/translate.pipe';
+import { _T }                           from '../../../services/i18n/i18n-singleton.service';
 import { Meteor }                       from 'meteor/meteor';
 import { MeteorComponent }              from 'angular2-meteor';
 import { ValidationService }            from '../../../services/validation.service';
@@ -36,12 +31,16 @@ import { UserAuthService }              from '../../../services/user-auth.servic
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription }                 from 'rxjs';
 import { OauthLoginComponent }          from '../oauth-login/oauth-login.component';
-import { FormErrorComponent } from '../form-error/form-error.component';
+import { FormErrorComponent }           from '../form-error/form-error.component';
+
+// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
+// noinspection TypeScriptCheckImport
+import template from './login.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component shows the user's login form
+ * @summary This component shows the user's login form.
  */
 @Component({
     selector: 'login-form',
@@ -52,7 +51,6 @@ import { FormErrorComponent } from '../form-error/form-error.component';
         OauthLoginComponent,
         FormErrorComponent
     ],
-    providers: [TranslatePipe],
     pipes: [TranslatePipe]
 })
 export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy {
@@ -73,15 +71,17 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     private _loginSubscription: Subscription;
 
     /**
-     * @param {FormBuilder} _formBuilder
-     * @param {Router} _router angular's router.
-     * @param {TranslatePipe} _translatePipe the locale translation is needed to change custom error messages.
-     * @param {UserAuthService} _userAuthService handler of the user login.
+     * @summary Initializes a new instance of the class LoginComponent.
+     *
+     * @param {FormBuilder}     _formBuilder     The form builder service.
+     * @param {Router}          _router          Angular's router service.
+     * @param {UserAuthService} _userAuthService The user authentication service.
      */
-    constructor(private _formBuilder: FormBuilder,
+    constructor(
+        private _formBuilder: FormBuilder,
         private _router: Router,
-        private _translatePipe: TranslatePipe,
         private _userAuthService: UserAuthService) {
+
         super();
     }
 
@@ -106,10 +106,13 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     }
 
     /**
-     * @summary process a new login from the html form.
+     * @summary Event handler for the click submit click event.
+     *
+     * @param {Event} event The click event.
      * @private
      */
     private _onSubmit(event: Event): void {
+
         event.preventDefault();
 
         if (!this._loginForm.valid) {
@@ -118,8 +121,12 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
 
         const email    = this._loginForm.value.email;
         const password = this._loginForm.value.password;
+
         this._userAuthService.login(email, password, err => {
-            if (err) return this._processError(err);
+
+            if (err) {
+                return this._processError(err);
+            }
 
             this._router.navigate(['/']);
         });
@@ -128,17 +135,17 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     /**
      * @summary Alters the error to a more human readable form.
      *
-     * @param {Error} err
+     * @param {Error} error The error to be processed.
      * @private
      */
-    private _processError(err: Meteor.Error): void {
+    private _processError(error: Meteor.Error): void {
         this.autorun(() => {
             this._error.cssClass = 'text-danger';
             this._loginForm.setErrors({'external-related': true});
 
-            this._error.message = err.error === 403 ?
-                this._translatePipe.transform('The credentials provided did not match our records.') :
-                err.reason;
+            this._error.message = error.error === 403 ?
+                _T ('The credentials provided did not match our records.') :
+                error.reason;
         });
     }
 }
