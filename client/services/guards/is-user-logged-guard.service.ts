@@ -52,6 +52,7 @@ export class IsUserLoggedGuardService implements CanActivate {
      *
      * @param {ActivatedRouteSnapshot} route
      * @param {RouterStateSnapshot} state
+     *
      * @returns {boolean}
      */
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

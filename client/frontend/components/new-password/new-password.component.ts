@@ -48,15 +48,13 @@ export class NewPasswordComponent implements OnInit {
 
     /**
      * @summary the minimum size the password must be to be considered valid.
-     * @private
      */
-    public static _minPasswordLength = 5;
+    public static minPasswordLength = 5;
 
     /**
      * @summary the maximum size the password must be to be considered valid.
-     * @private
      */
-    public static _maxPasswordLength = 20;
+    public static maxPasswordLength = 20;
 
     /**
      * @summary The data and other things associated with the password reset form.
@@ -81,7 +79,7 @@ export class NewPasswordComponent implements OnInit {
      * @private
      */
     public static hasConfirmationError(control: AbstractControl): boolean {
-        return (control.hasError('notEqual') && control.value.length >= NewPasswordComponent._minPasswordLength);
+        return (control.hasError('notEqual') && control.value.length >= NewPasswordComponent.minPasswordLength);
     }
 
     /**
@@ -112,14 +110,14 @@ export class NewPasswordComponent implements OnInit {
 
             password: ['', Validators.compose([
                 Validators.required,
-                Validators.minLength(NewPasswordComponent._minPasswordLength),
-                Validators.maxLength(NewPasswordComponent._maxPasswordLength)
+                Validators.minLength(NewPasswordComponent.minPasswordLength),
+                Validators.maxLength(NewPasswordComponent.maxPasswordLength)
             ])],
 
             confirmation: ['', Validators.compose([
                 Validators.required,
-                Validators.minLength(NewPasswordComponent._minPasswordLength),
-                Validators.maxLength(NewPasswordComponent._maxPasswordLength)
+                Validators.minLength(NewPasswordComponent.minPasswordLength),
+                Validators.maxLength(NewPasswordComponent.maxPasswordLength)
             ])]
 
         }, {validator: ValidationService.matchControlGroupsValues('password', 'confirmation')});

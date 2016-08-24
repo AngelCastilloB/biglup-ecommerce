@@ -65,12 +65,12 @@ export class SignUpComponent implements OnInit {
     /**
      * @summary the minimum size the password must be to be considered valid.
      */
-    private _minPasswordLength = NewPasswordComponent._maxPasswordLength;
+    private _minPasswordLength = NewPasswordComponent.maxPasswordLength;
 
     /**
      * @summary the maximum size the password must be to be considered valid.
      */
-    private _maxPasswordLength = NewPasswordComponent._maxPasswordLength;
+    private _maxPasswordLength = NewPasswordComponent.maxPasswordLength;
 
     /**
      * @summary Initializes a new instance of the class SignUpComponent.
@@ -103,7 +103,7 @@ export class SignUpComponent implements OnInit {
                 Validators.maxLength(this._maxPasswordLength)
             ])],
 
-            confirmation: ['',Validators.compose([
+            confirmation: ['', Validators.compose([
                 Validators.required,
                 Validators.minLength(this._minPasswordLength),
                 Validators.maxLength(this._maxPasswordLength)
