@@ -34,7 +34,7 @@ import template from './frontend.component.html';
  */
 @Component({
     template,
-    directives: [HeaderComponent, ROUTER_DIRECTIVES],
+    directives: [HeaderComponent],
 })
 export class FrontendComponent {
 }

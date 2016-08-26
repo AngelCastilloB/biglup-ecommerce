@@ -17,20 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Validators,
-         FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES,
-         AbstractControl }                           from '@angular/forms';
-import { Component, OnInit, NgZone }                 from '@angular/core';
-import { ValidationService }                         from '../../../services/validation.service';
-import { Router, ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
-import { TranslatePipe }                             from '../../../pipes/translate.pipe';
-import { FormErrorComponent }                        from '../form-error/form-error.component';
-import { UserAuthService }                           from '../../../services/user-auth.service';
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Component, OnInit, NgZone }                           from '@angular/core';
+import { ValidationService }                                   from '../../../services/validation.service';
+import { Router, ActivatedRoute }                              from '@angular/router';
+import { TranslatePipe }                                       from '../../../pipes/translate.pipe';
+import { FormErrorComponent }                                  from '../form-error/form-error.component';
+import { UserAuthService }                                     from '../../../services/user-auth.service';
 
 // noinspection TypeScriptCheckImport
-import template                                      from './new-password.component.html';
+import template from './new-password.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -39,7 +35,7 @@ import template                                      from './new-password.compon
     template,
     pipes: [TranslatePipe],
     providers: [TranslatePipe],
-    directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
+    directives: [FormErrorComponent]
 })
 /**
  * @summary Component that allow the user to input a new password.
