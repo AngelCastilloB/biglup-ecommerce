@@ -23,7 +23,7 @@ import { Component,
          OnInit,
          NgZone,
          ViewChild }                from '@angular/core';
-import { Router }                   from '@angular/router';
+import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }        from '@angular/router';
 import { TranslatePipe }            from '../../../pipes/translate.pipe';
@@ -33,6 +33,7 @@ import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent }           from '../modal/modal.component';
+import { Products }                 from '../../../../common/collections/product.collection';
 
 // Methods
 import '../../../../common/api/product.methods';
@@ -63,11 +64,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     @ViewChild(ModalComponent)
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
+    private _isEditMode:         boolean = false;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router) {
+    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute) {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
@@ -108,6 +110,29 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
             this._categories = Categories.find();
         }, true);
 
+        this._route.params.subscribe((params) => {
+
+            this._product._id = params['id'];
+
+            if (!this._product._id)
+                return;
+
+            this.subscribe('products', this._product._id , () => {
+
+                this._product = Products.findOne({_id: this._product._id});
+
+                this._productTitle        = this._getMongoTranslation(this._product.title);
+                this._productDescription = this._getMongoTranslation(this._product.description);
+
+                this._zone.run(() => {
+
+                    tinymce.activeEditor.setContent(this._productDescription);
+                    tinymce.activeEditor.execCommand('mceRepaint');
+                });
+
+                this._isEditMode = true;
+            }, true);
+        });
     }
 
     /**
@@ -187,6 +212,64 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
 
             this._imagesUploader.upload(<string>result);
         });
+    }
+
+    /**
+     * @summary Deletes the product in the database.
+     */
+    private _deleteProduct(): void {
+
+        this.call('products.deleteProduct', this._product._id, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error deleting the product'),
+                    _T('Error'));
+
+                console.error(error);
+            } else {
+                this._product._id     = result;
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Deleted!'),
+                    _T('Information'));
+            }
+        });
+    }
+
+    /**
+     * @summary Updates the product in the database.
+     */
+    private _updateProduct(): void {
+
+        this.call('products.updateProduct', this._product, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error updating the product'),
+                    _T('Error'));
+
+                console.error(error);
+            } else {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Updated!'),
+                    _T('Information'));
+            }
+        });
+    }
+
+    /**
+     * @summary Cancels the operation
+     *
+     * @param event The modal closed event
+     */
+    private _onCancel(): void {
+        this._router.navigate(['/admin/products']);
     }
 
     /**

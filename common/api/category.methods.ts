@@ -111,6 +111,10 @@ Meteor.methods({
                 'This category does not exists in the database.');
         }
 
-        Categories.update({_id: category._id}, { $set : category });
+        let id = category._id;
+
+        delete category._id;
+
+        Categories.update({_id: id}, { $set : category });
     }
 });

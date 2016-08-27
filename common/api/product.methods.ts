@@ -119,7 +119,11 @@ Meteor.methods({
                 'This product does not exists in the database.');
         }
 
-        Products.update({_id: product._id}, { $set : product});
+        let id = product._id;
+
+        delete product._id;
+
+        Products.update({_id: id}, { $set : product});
     }
 });
 

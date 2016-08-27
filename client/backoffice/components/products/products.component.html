@@ -26,7 +26,7 @@
       </thead>
       <tbody class="table-striped">
 
-      <tr style="cursor: pointer" *ngFor="let product of _products">
+      <tr style="cursor: pointer" *ngFor="let product of _products" [routerLink]="['edit-product', product._id]">
         <td>{{ product.sku }}</td>
         <td>{{ product.title | mongoTranslate }}</td>
         <td>{{ product.stock }}</td>

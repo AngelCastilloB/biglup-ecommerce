@@ -123,8 +123,10 @@
       <br/></br>
       <hr>
       <div class="bottom-button">
-        <button (click)="_saveProduct()" type="button" class="btn btn-primary save-button pull-right">{{'Save Product' | translate }}</button>
-        <button type="button" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
+        <button *ngIf="_isEditMode" type="button" (click)="_deleteProduct()" style="margin-left: 100px" class="btn btn-danger pull-left">{{'Delete' | translate }}</button>
+        <button *ngIf="!_isEditMode"  type="button" (click)="_saveProduct()" class="btn btn-primary save-button pull-right">{{'Create' | translate }}</button>
+        <button *ngIf="_isEditMode" type="button" (click)="_updateProduct()" class="btn btn-primary save-button pull-right">{{'Update' | translate }}</button>
+        <button type="button" (click)="_onCancel()" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
       </div>
     </div>
   </form>
