@@ -46,7 +46,6 @@ import template from './header.component.html';
     pipes: [TranslatePipe, MongoTranslatePipe]
 })
 export class HeaderComponent extends MeteorComponent implements OnInit {
-
     private _categories: Mongo.Cursor<Category>;
 
     /**
@@ -83,15 +82,5 @@ export class HeaderComponent extends MeteorComponent implements OnInit {
 
             alert('User successfully invited.');
         });
-
-        /*
-        this.call('cart.addProduct', 'YtaMm8BKycZYbYoRb', 10, (error) => {
-            if (error) {
-                alert(`Failed to add due to ${error}`);
-                return;
-            }
-
-            alert('User successfully invited.');
-        });*/
     }
 }

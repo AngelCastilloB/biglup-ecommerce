@@ -45,10 +45,11 @@ export const backofficeRoutes: RouterConfig = [
             {path: 'customers', component: CustomersComponent},
             {path: 'products', component: ProductsComponent},
             {path: 'products/add-product', component: AddProductComponent},
-            {path: 'products/edit-product:id', component: EditProductComponent},
+            {path: 'products/edit-product/:id', component: EditProductComponent},
             {path: 'reports', component: ReportsComponent},
             {path: 'collections', component: CollectionsComponent},
             {path: 'collections/add-collection', component: AddCollectionComponent},
+            {path: 'collections/edit-collection/:id', component: AddCollectionComponent},
         ]
     },
 ];

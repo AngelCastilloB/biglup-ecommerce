@@ -23,7 +23,7 @@ import { Component,
          OnInit,
          NgZone,
          ViewChild }                from '@angular/core';
-import { Router }                   from '@angular/router';
+import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { ROUTER_DIRECTIVES }        from '@angular/router';
 import { TranslatePipe }            from '../../../pipes/translate.pipe';
@@ -31,8 +31,8 @@ import { ImagesUploader }           from '../images-uploader/images-uploader.com
 import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../modal/modal.component';
+import { Categories }               from '../../../../common/collections/category.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -63,7 +63,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router) {
+    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute) {
         super();
 
         this._categoryName        = this._getMongoTranslation(this._category.name);
@@ -74,18 +74,44 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
-        tinymce.init(
-            {
-                selector: 'textarea',
-                setup: (ed) => {
-                    ed.on('keyup change', (param, l) => {
-                        this._zone.run(() => {
-                            this._categoryDescription = tinymce.activeEditor.getContent();
-                            this._category.info       = [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
-                        });
+
+        tinymce.init({
+            selector: 'textarea',
+            setup: (ed) => {
+                ed.on('keyup change', (param, l) => {
+
+                    this._zone.run(() => {
+
+                        this._categoryDescription = tinymce.activeEditor.getContent();
+                        this._category.info       = [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
                     });
-                }
-            });
+                });
+            }
+        });
+
+        this._route.params.subscribe((params) => {
+
+            this._category._id = params['id'];
+
+            if (!this._category._id)
+                return;
+
+            this.subscribe('category', this._category._id , () => {
+
+                this._category = Categories.findOne({_id: this._category._id});
+
+                this._categoryName        = this._getMongoTranslation(this._category.name);
+                this._categoryDescription = this._getMongoTranslation(this._category.info);
+
+                this._zone.run(() => {
+
+                    tinymce.activeEditor.setContent(this._categoryDescription);
+                    tinymce.activeEditor.execCommand('mceRepaint');
+                });
+
+                this._isEditMode = true;
+            }, true);
+        });
     }
 
     /**
@@ -111,11 +137,12 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
             return '';
         }
 
-        for (let i = 0, l = messageCollection.length; i < l; i++) {
+        for (let i = 0, l = messageCollection.length; i < l; ++i) {
             if (messageCollection[i].language === this._defaultLocale) {
                 return messageCollection[i].value;
             }
         }
+
         return '';
     }
 
@@ -142,8 +169,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
 
                 console.error(error);
             } else {
-                this._category._id = result;
-                this._isEditMode = true;
+                this._category._id    = result;
+                this._waitModalResult = true;
 
                 this._modal.show(
                     _T('Category Saved!'),
@@ -167,11 +194,11 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
 
                 console.error(error);
             } else {
-                this._category._id = result;
-                this._isEditMode = true;
+                this._category._id    = result;
+                this._waitModalResult = true;
 
                 this._modal.show(
-                    _T('Category Saved!'),
+                    _T('Category Deleted!'),
                     _T('Information'));
             }
         });

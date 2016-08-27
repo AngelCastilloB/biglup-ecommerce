@@ -45,7 +45,9 @@ Meteor.methods({
         check(product, ProductSchema);
 
         if (product.categoryId) {
+
             for (let i = 0; i < product.categoryId.length; ++i) {
+
                 if (Categories.find({_id: product.categoryId[i]}).count() === 0) {
                     throw new Meteor.Error(
                         'products.createProduct.categoryDoesNotExist',
@@ -118,5 +120,28 @@ Meteor.methods({
         }
 
         Products.update({_id: product._id}, { $set : product});
+    }
+});
+
+/**
+ * @summary Registers the remove category method to Meteor's DDP system. This method remove a given category from all
+ * products.
+ *
+ * @param id The id of the category to be removed.
+ */
+Meteor.methods({
+    ['products.removeCategory']: function (id: string) {
+
+        check(id, String);
+
+        /*
+         if (!this.user.IsAdmin) {
+             throw new Meteor.Error(
+                 'products.removeCategory.unauthorized',
+                 'You are not authorized to perform this action.');
+         }
+         */
+
+        Products.update({}, { $pull: { categoryId: id }});
     }
 });

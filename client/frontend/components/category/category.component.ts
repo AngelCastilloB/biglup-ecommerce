@@ -42,12 +42,12 @@ import template from './category.component.html';
 })
 export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;
-    private _products: Mongo.Cursor<Product>;
+    private _products:   Mongo.Cursor<Product>;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private _route: ActivatedRoute) {
         super();
     }
 
@@ -56,16 +56,14 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
      */
     public ngOnInit() {
 
-        this.route.params.subscribe((params) => {
+        this._route.params.subscribe((params) => {
 
             this._categoryId = params['categoryId'];
 
             this.subscribe('category-products', this._categoryId, () => {
 
                 this._products = Products.find({categoryId: { $in: [ this._categoryId ] }});
-
             }, true);
-
         });
     }
 }

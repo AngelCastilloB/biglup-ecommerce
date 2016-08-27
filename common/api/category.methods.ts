@@ -72,6 +72,11 @@ Meteor.methods({
         }
 
         Categories.remove({_id: categoryId});
+
+        Meteor.call('products.removeCategory', categoryId, (error) => {
+            if (error)
+                console.error(error);
+        });
     }
 });
 

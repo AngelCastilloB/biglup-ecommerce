@@ -78,11 +78,11 @@ export class CategoryMigration extends AbstractMigration {
                     },
                     {
                         language: 'zh',
-                        value: this._generators.zh.words(1).toString()
+                        value: this._generators.zh.getWords(1).toString()
                     },
                     {
                         language: 'kr',
-                        value: this._generators.kr.words(1).toString()
+                        value: this._generators.kr.getWords(1).toString()
                     }
                 ],
                 info: [
@@ -92,11 +92,11 @@ export class CategoryMigration extends AbstractMigration {
                     },
                     {
                         language: 'zh',
-                        value: this._generators.zh.sentence()
+                        value: this._generators.zh.getSentence()
                     },
                     {
                         language: 'kr',
-                        value: this._generators.kr.sentence()
+                        value: this._generators.kr.getSentence()
                     }
                 ],
                 image: 'shirts.png'

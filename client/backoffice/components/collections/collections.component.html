@@ -22,7 +22,7 @@
       </thead>
       <tbody class="table-striped">
 
-      <tr style="cursor: pointer" *ngFor="let category of _categories">
+      <tr style="cursor: pointer" *ngFor="let category of _categories" [routerLink]="['edit-collection', category._id]" >
         <td>{{ category.name | mongoTranslate }}</td>
         <td>{{ category.info | mongoTranslate }}</td>
         <td> 0 </td>

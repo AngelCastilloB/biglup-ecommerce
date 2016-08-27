@@ -21,12 +21,11 @@ import 'reflect-metadata';
 
 import { Component, OnInit }  from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
 import { Mongo }              from 'meteor/mongo';
 import { Categories }         from '../../../../common/collections/category.collection';
 import { MongoTranslatePipe } from '../../../pipes/mongo-translate.pipe';
 import { TranslatePipe }      from '../../../pipes/translate.pipe';
-import { ActivatedRoute }     from '@angular/router';
+import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -50,7 +49,7 @@ export class CollectionsComponent extends MeteorComponent implements OnInit  {
     /**
      * @summary Initializes a new instance of the CollectionsComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor() {
         super();
     }
 

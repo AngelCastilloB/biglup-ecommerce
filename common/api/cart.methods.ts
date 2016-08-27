@@ -52,8 +52,8 @@ Meteor.methods({
                 'The product that you are trying to add to the cart does not exist.');
         }
 
-        let item:     CartItem = {productId: productId, quantity: quantity, title: product.title};
-        let selector: Object   = {_id : cart._id, 'items.productId': productId};
+        let item:     CartItem = { productId: productId, quantity: quantity, title: product.title };
+        let selector: Object   = { _id : cart._id, 'items.productId': productId };
         let modifier: Object;
 
         let productIndex: number = findProduct(cart, product._id);
@@ -68,7 +68,6 @@ Meteor.methods({
 
             selector = { _id : cart._id};
             modifier = { $push: {'items': item } };
-
         } else {
 
             newQuantity = Math.min(cart.items[productIndex].quantity + item.quantity, maxQuantity);
@@ -170,8 +169,6 @@ Meteor.methods({
 
 /**
  * @summary Deletes the given product from the given user cart.
- *
- *
  */
 Meteor.methods({
     ['cart.deleteProduct']: function (userId: string, productId: string) {
@@ -189,6 +186,7 @@ Meteor.methods({
                 'cart.delete.doesNotExists',
                 'This user does not have a cart.');
         }
+
         Carts.update({userId: userId}, { $pull: { items: { productId: productId} }}, { multi: true });
     }
 });
@@ -208,10 +206,10 @@ function findProduct(cart: Cart, productId: string): number {
         return -1;
 
     for (let i = 0; i < cart.items.length; ++i) {
-
-        if (cart.items[i].productId === productId) {
-            return i;
-        }
+      if (cart.items[i].productId === productId) {
+          return i;
+      }
     }
+
     return -1;
 }
