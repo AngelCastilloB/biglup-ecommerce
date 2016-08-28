@@ -73,6 +73,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
+        this._product.images           = [];
         this._product.description      = [];
         this._product.hashtags         = [];
         this._product.createdAt        = new Date();
@@ -93,14 +94,14 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
-        tinymce.init(
-            {
+        tinymce.init({
                 selector: 'textarea',
                 setup: (ed) => {
                     ed.on('keyup change', (param, l) => {
                         this._zone.run(() => {
                             this._productDescription  = tinymce.activeEditor.getContent();
-                            this._product.description = [{'language': this._defaultLocale, 'value' : this._productDescription}];
+                            this._product.description =
+                                [{'language': this._defaultLocale, 'value' : this._productDescription}];
                         });
                     });
                 }
@@ -121,7 +122,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
 
                 this._product = Products.findOne({_id: this._product._id});
 
-                this._productTitle        = this._getMongoTranslation(this._product.title);
+                this._productTitle       = this._getMongoTranslation(this._product.title);
                 this._productDescription = this._getMongoTranslation(this._product.description);
 
                 this._zone.run(() => {
@@ -193,6 +194,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
                 return messageCollection[i].value;
             }
         }
+
         return '';
     }
 
@@ -201,17 +203,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      */
     private _saveProduct(): void {
 
-        this.call('products.createProduct', this._product, (error, result) => {
-            if (error) {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error saving the product'),
-                    _T('Error'));
-            }
-
-            this._imagesUploader.upload(<string>result);
-        });
+        this._imagesUploader.upload(this._product);
     }
 
     /**
@@ -276,11 +268,22 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @summary Event Handler for when image uploading process successfully.
      */
     private _onImagesUploadedSuccessfully(result: any): void {
-        this._waitModalResult = true;
 
-        this._modal.show(
-            _T('Product Saved!'),
-            _T('Information'));
+        this.call('products.createProduct', this._product, (error, result) => {
+            if (error) {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error saving the product'),
+                    _T('Error'));
+            } else {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Saved!'),
+                    _T('Information'));
+            }
+        });
     }
 
     /**

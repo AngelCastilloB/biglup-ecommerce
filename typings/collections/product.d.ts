@@ -16,6 +16,14 @@
  */
 
 /**
+ * @brief Image order definition.
+ */
+interface OrderedImage {
+    position: number; // Since the image upload is simultaneous, this is the easier way to enforce order.
+    id: string;
+}
+
+/**
  * @summary Product type definition.
  */
 interface ProductVariant {
@@ -34,6 +42,7 @@ interface Product {
     slug?: string;
     categoryId?: Array<string>;
     title: Array<I18nString>;
+    images?: Array<OrderedImage>;
     description: Array<I18nString>;
     barcode: string;
     sku: string;

@@ -46,7 +46,7 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
     private _productId:     string;
     private _categoryId:    string;
     private _product:       Product;
-    private _productImages: Mongo.Cursor<Image>;
+    private _productImages: Array<ProductImage> = Array<ProductImage>();
     private _category:      Category;
 
     /**
@@ -66,14 +66,26 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
 
             this.subscribe('product', this._productId, () => {
                 this._product = Products.findOne({_id: this._productId});
+
+                this._product.images.sort(function(lhs, rhs) {
+                    return lhs.position - rhs.position;
+                });
+
+                this.subscribe('images', () => {
+
+                    for (let i: number = 0; i < this._product.images.length; ++i) {
+                        let image: ProductImage = Images.findOne({ _id: this._product.images[i].id });
+
+                        if (image) {
+                            this._productImages.push(image);
+                        }
+                    }
+
+                }, true);
             }, true);
 
             this.subscribe('category', this._categoryId, () => {
                 this._category = Categories.findOne({_id: this._categoryId});
-            }, true);
-
-            this.subscribe('product-images', this._productId, () => {
-                this._productImages = Images.find({productId: this._productId});
             }, true);
         });
     }

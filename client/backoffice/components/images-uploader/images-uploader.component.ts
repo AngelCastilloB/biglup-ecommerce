@@ -32,6 +32,7 @@ import { ImagesStore }             from '../../../../common/collections/image.co
 import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 import { TranslatePipe }           from '../../../pipes/translate.pipe';
+import { ProductImage }            from './internals/product-image'
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -56,22 +57,22 @@ const NUMBER_OF_COLUMNS = 5;
 })
 export class ImagesUploader  {
     @Output('onSuccess')
-    private  _onSuccess:   EventEmitter<any> = new EventEmitter<any>();
+    private  _onSuccess:   EventEmitter<any>   = new EventEmitter<any>();
     @Output('onError')
-    private _onError:      EventEmitter<any> = new EventEmitter<any>();
+    private _onError:      EventEmitter<any>   = new EventEmitter<any>();
     @ViewChild('drop')
     private _dropzone:     ElementRef;
-    private _fileIsOver:   boolean           = false;
-    private _uploading:    boolean           = false;
-    private _previewFiles: Array<File>       = [];
-    private _rows:         number            = 0;
+    private _fileIsOver:   boolean             = false;
+    private _uploading:    boolean             = false;
+    private _previewFiles: Array<ProductImage> = [];
+    private _rows:         number              = 0;
 
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
      */
     constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
 
-        _dragulaService.drop.subscribe((value) => {
+        this._dragulaService.drop.subscribe((value) => {
 
             if (this._uploading) {
                 return;
@@ -84,7 +85,7 @@ export class ImagesUploader  {
             }
 
             if (!sibling) {
-                let sourceIndex: number = parseInt(e.id);
+                let sourceIndex: number = parseInt(e.id, 10);
 
                 this._moveFile(sourceIndex, this._previewFiles.length - 1);
             } else {
@@ -94,6 +95,16 @@ export class ImagesUploader  {
                 this._moveFile(sourceIndex, sourceIndex > destinationIndex ? destinationIndex : destinationIndex - 1);
             }
         });
+    }
+
+    /**
+     * @summary Sets a lis of images to this component.
+     *
+     * @param images The images to be set.
+     */
+    public setImages(images: Array<ProductImage>) {
+
+        this._previewFiles = images;
     }
 
     /**
@@ -108,22 +119,30 @@ export class ImagesUploader  {
     /**
      * @summary Uploads all the current images to the server.
      *
-     * @param {string} id The product id to asociate the images with.
+     * @param {string} id The product id to associate the images with.
      */
-    public upload(id: string) {
+    public upload(product: Product) {
 
         this._uploading = true;
 
+        product.images = [];
+
         let count: number = 0; // HACK: This is an ugly hack *se persigna*. Will fix this in a later iteration.
         for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
-            let sourceFile: File = this._previewFiles[i];
+
+            if (this._previewFiles[i].isUploaded) {
+
+                product.images.push({position: i, id: this._previewFiles[i].databaseId});
+
+                continue;
+            }
+
+            let sourceFile: File = this._previewFiles[i].file;
 
             const picture = {
                 name: sourceFile.name,
                 type: sourceFile.type,
                 size: sourceFile.size,
-                productId: id,
-                index: i
             };
 
             let worker = new UploadFS.Uploader({
@@ -138,14 +157,18 @@ export class ImagesUploader  {
                     this._uploading = false;
                     this._onError.emit(error);
                 },
-                onComplete:  (result) => {
+                onComplete: (result) => {
+
+                    product.images.push({position: i, id: result._id});
+
                     ++count;
-                    if (count === this._previewFiles.length) { // HACK: Oh god...
-                        this._onSuccess.emit(result);
+                    if (count === this._previewFiles.length) { // HACK: remove this
+                        this._onSuccess.emit(result._id);
                         this._uploading = false;
                     }
                 }
             });
+
             worker.start();
         }
     }
@@ -185,9 +208,11 @@ export class ImagesUploader  {
             return;
         }
 
-        let newFiles: Array<File> = Array.prototype.slice.call(files);
+        let newFiles: Array<ProductImage> = Array.prototype.slice.call(files).map(function (file) {
+            return new ProductImage(file, false, '');
+        });
 
-        if (!(this._previewFiles.length > 0)) {
+        if (this._previewFiles.length === 0) {
             this._previewFiles = newFiles;
         } else {
             this._previewFiles = this._previewFiles.concat(newFiles);
@@ -201,7 +226,7 @@ export class ImagesUploader  {
      *
      * @param {File} file The file to be deleted.
      */
-    private _onImageDeleted(file: File) {
+    private _onImageDeleted(file: ProductImage) {
 
         if (this._uploading) {
             return;
@@ -209,7 +234,7 @@ export class ImagesUploader  {
 
         let index = this._previewFiles.indexOf(file);
 
-        if(index !== -1) {
+        if (index !== -1) {
             this._previewFiles.splice(index, 1);
         }
     }

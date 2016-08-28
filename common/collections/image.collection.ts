@@ -27,14 +27,14 @@ import { UploadFS } from 'meteor/jalik:ufs';
  *
  * @type {Collection<Image>}
  */
-export const Images = new Mongo.Collection<Image>('images');
+export const Images = new Mongo.Collection<ProductImage>('images');
 
 /**
  * @summary The thumbnails collection. This collection stores reduced products and categories images.
  *
  * @type {Collection<Image>}
  */
-export const Thumbnails = new Mongo.Collection<Thumbnail>('thumbnails');
+export const Thumbnails = new Mongo.Collection<ProductThumbnail>('thumbnails');
 
 /**
  * @summary The thumbnails store.

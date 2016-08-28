@@ -49,21 +49,3 @@ Meteor.publish('image', function(id: string) {
 Meteor.publish('thumbnail', function(id: string) {
     return Images.find({_id: id});
 });
-
-/**
- * @summary Publishes all the images related to a given product id.
- *
- * @param {string} id The product id.
- */
-Meteor.publish('product-images', function(productId: string) {
-    return Images.find({productId: productId});
-});
-
-/**
- * @summary Publishes all the thumbnails related to a given product id.
- *
- * @param {string} id The product id.
- */
-Meteor.publish('product-thumbnails', function(productId: string) {
-    return Images.find({productId: productId});
-});

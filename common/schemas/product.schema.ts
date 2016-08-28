@@ -23,6 +23,20 @@ import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
+ * @brief Image order schema.
+ */
+export let OrderedImageSchema: any = new SimpleSchema({
+    position: {
+        label: 'The image position', // Since the image upload is simultaneous, this is the easier way to enforce order.
+        type: Number
+    },
+    id: {
+        label: 'The id of the image in the image collection',
+        type: String
+    }
+});
+
+/**
  * @summary The product variant schema.
  */
 export let ProductVariantSchema: any = new SimpleSchema({
@@ -74,6 +88,10 @@ export let ProductSchema: any = new SimpleSchema({
     title: {
         type: [I18nStringSchema],
         defaultValue: ''
+    },
+    images: {
+        type: [OrderedImageSchema],
+        optional: true
     },
     slug: {
         label: 'The product slug',
@@ -135,7 +153,7 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     isBackorder: {
-        label: 'Indicates when the seller _has allowed the sale of product which is not in stock',
+        label: 'Indicates when the seller has allowed the sale of product which is not in stock',
         type: Boolean,
         optional: true
     },

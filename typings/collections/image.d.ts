@@ -18,7 +18,7 @@
 /**
  * @summary Image type definition.
  */
-interface Image {
+interface ProductImage {
     _id?: string;
     complete: boolean;
     extension: string;
@@ -30,15 +30,12 @@ interface Image {
     uploadedAt: Date;
     uploading: boolean;
     url: string;
-    productId?: string;
-    categoryId?: string;
-    index: number;
 }
 
 /**
- * @brief Thumbnail type definition.
+ * @brief Product Thumbnail type definition.
  */
-interface Thumbnail extends Image {
+interface ProductThumbnail extends ProductImage {
     originalStore?: string;
     originalId?: string;
 }

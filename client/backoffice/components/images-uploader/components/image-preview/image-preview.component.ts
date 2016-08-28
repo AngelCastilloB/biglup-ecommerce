@@ -26,7 +26,8 @@ import { Component,
          ViewChild,
          AfterViewInit}          from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
-import { ImageDisplayComponent } from '../image-display/image-display.component'
+import { ImageDisplayComponent } from '../image-display/image-display.component';
+import { ProductImage }          from '../../internals/product-image';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -45,9 +46,9 @@ import template from './image-preview.component.html';
 })
 export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit {
     @Input('model')
-    private _model:        File;
+    private _model:        ProductImage;
     @Output('onDeleted')
-    private _onDeleted:    EventEmitter<File>    = new EventEmitter<File>();
+    private _onDeleted:    EventEmitter<ProductImage> = new EventEmitter<ProductImage>();
     @ViewChild(ImageDisplayComponent)
     private _imageDisplay: ImageDisplayComponent;
 
@@ -77,32 +78,23 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
             }
         };
 
-        reader.readAsDataURL(this._model);
+        reader.readAsDataURL(this._model.file);
     }
 
     /**
      * #brief Runs after the view _has been completely initialized.
      */
     public ngAfterViewInit() {
-        this._imageDisplay.setImage(this._model);
+        this._imageDisplay.setImage(this._model.file);
     }
 
     /**
      * @summary Gets the on deleted event emitter.
      *
-     * @returns {EventEmitter<File>} The on deleted event emitter.
+     * @returns {EventEmitter<ProductImage>} The on deleted event emitter.
      */
-    public getOnDeleteEmitter() : EventEmitter<File> {
+    public getOnDeleteEmitter(): EventEmitter<ProductImage> {
         return this._onDeleted;
-    }
-
-    /**
-     * @summary Gets image file.
-     *
-     * @returns {File} The image file.
-     */
-    public getFile() : File {
-        return this._model;
     }
 
     /**

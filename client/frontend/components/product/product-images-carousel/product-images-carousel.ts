@@ -36,7 +36,7 @@ import template from './product-images-carousel.html';
 })
 export class ProductImagesCarouselComponent {
     @Input()
-    public images: Mongo.Cursor<Image>;
+    public images: Array<ProductImage>;
     private _id:   string;
 
     /**
