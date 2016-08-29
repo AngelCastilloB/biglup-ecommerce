@@ -32,7 +32,7 @@ import { ImagesStore }             from '../../../../common/collections/image.co
 import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 import { TranslatePipe }           from '../../../pipes/translate.pipe';
-import { ProductImage }            from './internals/product-image'
+import { UploaderImage }            from './internals/product-image'
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -57,15 +57,15 @@ const NUMBER_OF_COLUMNS = 5;
 })
 export class ImagesUploader  {
     @Output('onSuccess')
-    private  _onSuccess:   EventEmitter<any>   = new EventEmitter<any>();
+    private  _onSuccess:   EventEmitter<any>    = new EventEmitter<any>();
     @Output('onError')
-    private _onError:      EventEmitter<any>   = new EventEmitter<any>();
+    private _onError:      EventEmitter<any>    = new EventEmitter<any>();
     @ViewChild('drop')
     private _dropzone:     ElementRef;
-    private _fileIsOver:   boolean             = false;
-    private _uploading:    boolean             = false;
-    private _previewFiles: Array<ProductImage> = [];
-    private _rows:         number              = 0;
+    private _fileIsOver:   boolean              = false;
+    private _uploading:    boolean              = false;
+    private _previewFiles: Array<UploaderImage> = [];
+    private _rows:         number               = 0;
 
     /**
      * @summary Initializes a new instance of the ImagesUploader class.
@@ -102,7 +102,7 @@ export class ImagesUploader  {
      *
      * @param images The images to be set.
      */
-    public setImages(images: Array<ProductImage>) {
+    public setImages(images: Array<UploaderImage>) {
 
         this._previewFiles = images;
     }
@@ -125,9 +125,18 @@ export class ImagesUploader  {
 
         this._uploading = true;
 
-        product.images = [];
+        product.images.length = 0;
 
-        let count: number = 0; // HACK: This is an ugly hack *se persigna*. Will fix this in a later iteration.
+        let count: number = this._previewFiles.filter(function (uploaderImage: UploaderImage) {
+            return !uploaderImage.isUploaded;
+        }).length;
+
+        if (count === 0) {
+            this._onSuccess.emit({});
+
+            return;
+        }
+
         for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
 
             if (this._previewFiles[i].isUploaded) {
@@ -161,9 +170,10 @@ export class ImagesUploader  {
 
                     product.images.push({position: i, id: result._id});
 
-                    ++count;
-                    if (count === this._previewFiles.length) { // HACK: remove this
-                        this._onSuccess.emit(result._id);
+                    --count;
+                    if (count === 0) { // HACK: remove this
+                        console.error(product.images);
+                        this._onSuccess.emit({});
                         this._uploading = false;
                     }
                 }
@@ -208,8 +218,8 @@ export class ImagesUploader  {
             return;
         }
 
-        let newFiles: Array<ProductImage> = Array.prototype.slice.call(files).map(function (file) {
-            return new ProductImage(file, false, '');
+        let newFiles: Array<UploaderImage> = Array.prototype.slice.call(files).map(function (file) {
+            return new UploaderImage(file, false, '');
         });
 
         if (this._previewFiles.length === 0) {
@@ -226,7 +236,7 @@ export class ImagesUploader  {
      *
      * @param {File} file The file to be deleted.
      */
-    private _onImageDeleted(file: ProductImage) {
+    private _onImageDeleted(file: UploaderImage) {
 
         if (this._uploading) {
             return;

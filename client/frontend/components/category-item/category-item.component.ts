@@ -45,9 +45,11 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
-    @Input() public model:    Product;
-    @Input() public category: string;
-    private _productImages:   Mongo.Cursor<ProductImage>;
+    @Input()
+    public model: Product;
+    @Input()
+    public  category:       string;
+    private _productImages: Array<ProductImage> = Array<ProductImage>();
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
@@ -60,9 +62,15 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.subscribe('product-images', this.model._id, () => {
+        this.subscribe('images', () => {
 
-            this._productImages = Images.find({productId: this.model._id});
+            for (let i: number = 0; i < this.model.images.length; ++i) {
+                let image: ProductImage = Images.findOne({ _id: this.model.images[i].id });
+
+                if (image) {
+                    this._productImages.push(image);
+                }
+            }
 
         }, true);
     }

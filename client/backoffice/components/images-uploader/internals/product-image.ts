@@ -20,15 +20,20 @@
 /**
  * @summary Image model for the image uploader.
  */
-export class ProductImage {
+export class UploaderImage {
 
     /**
-     * @summary Initializes a new instance of the class ProductImage.
+     * @summary Initializes a new instance of the class UploaderImage.
      *
      * @param file        The image file.
-     * @param isUploaded  True if this image is already uploaded, otherwise, false/
-     * @param databaseId  If this is image is already uploaded this contains the satabase id.
+     * @param isUploaded  True if this image is already uploaded, otherwise, false.
+     * @param databaseId  If this image is already uploaded this contains the database id.
+     * @param remoteUrl   If this image is already uploaded this contains the remote url.
      */
-    constructor(public file: File, public isUploaded: boolean, public databaseId: string) {
+    constructor(
+        public file:       File    = <File>{},
+        public isUploaded: boolean =  false,
+        public databaseId: string  = '',
+        public remoteUrl:  string  = '') {
     }
 }

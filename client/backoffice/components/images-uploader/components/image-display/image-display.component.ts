@@ -25,6 +25,7 @@ import { Component,
          AfterViewInit}       from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { IdGeneratorService } from '../../../../../services/id-generator.service.ts';
+import { UploaderImage }      from '../../internals/product-image';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -43,10 +44,10 @@ import template from './image-display.component.html';
 })
 export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit {
     @Input('model')
-    private _model: File;
+    private _model:    UploaderImage;
     private _uniqueId: string;
     @ViewChild('display')
-    private _display: ElementRef;
+    private _display:  ElementRef;
 
     /**
      * @summary Initializes a new instance of the ImageDisplayComponent class.
@@ -82,11 +83,17 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
     /**
      * @summary Sets the image to be displayed
      */
-    public setImage(imageFile: File) {
+    public setImage(imageFile: UploaderImage) {
         this._model = imageFile;
 
         let image  = this.element.nativeElement.querySelector('.image-display');
         let reader = new FileReader();
+
+        if (this._model.isUploaded) {
+            image.src = this._model.remoteUrl;
+
+            return;
+        }
 
         reader.onload = (event: ProgressEvent) => {
             if (event.type === 'load') {
@@ -100,6 +107,6 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
             }
         };
 
-        reader.readAsDataURL(this._model);
+        reader.readAsDataURL(this._model.file);
     }
 }

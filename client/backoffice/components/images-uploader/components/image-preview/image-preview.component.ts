@@ -27,7 +27,7 @@ import { Component,
          AfterViewInit}          from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
-import { ProductImage }          from '../../internals/product-image';
+import { UploaderImage }         from '../../internals/product-image';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -46,9 +46,9 @@ import template from './image-preview.component.html';
 })
 export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit {
     @Input('model')
-    private _model:        ProductImage;
+    private _model:        UploaderImage;
     @Output('onDeleted')
-    private _onDeleted:    EventEmitter<ProductImage> = new EventEmitter<ProductImage>();
+    private _onDeleted:    EventEmitter<UploaderImage> = new EventEmitter<UploaderImage>();
     @ViewChild(ImageDisplayComponent)
     private _imageDisplay: ImageDisplayComponent;
 
@@ -65,6 +65,12 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     public ngOnInit(): any {
         let thumbnail = this.element.nativeElement.querySelector('.image-responsive');
         let reader    = new FileReader();
+
+        if (this._model.isUploaded) {
+            thumbnail.src = this._model.remoteUrl;
+
+            return;
+        }
 
         reader.onload = (event: ProgressEvent) => {
             if (event.type === 'load') {
@@ -85,15 +91,15 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
      * #brief Runs after the view _has been completely initialized.
      */
     public ngAfterViewInit() {
-        this._imageDisplay.setImage(this._model.file);
+        this._imageDisplay.setImage(this._model);
     }
 
     /**
      * @summary Gets the on deleted event emitter.
      *
-     * @returns {EventEmitter<ProductImage>} The on deleted event emitter.
+     * @returns {EventEmitter<UploaderImage>} The on deleted event emitter.
      */
-    public getOnDeleteEmitter(): EventEmitter<ProductImage> {
+    public getOnDeleteEmitter(): EventEmitter<UploaderImage> {
         return this._onDeleted;
     }
 

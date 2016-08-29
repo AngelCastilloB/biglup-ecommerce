@@ -99,6 +99,7 @@ Meteor.methods({
     ['products.updateProduct']: function (product: Product) {
 
         check(product, ProductSchema);
+
         /*
          if (!this.user.IsAdmin) {
              throw new Meteor.Error(
@@ -113,11 +114,15 @@ Meteor.methods({
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
         }
 
-        if (Products.find({_id: product._id}).count() === 0) {
+        let currentProductState: Product = Products.findOne({_id: product._id});
+
+        if (!currentProductState) {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
         }
+
+        removeUnusedImages(product, currentProductState);
 
         let id = product._id;
 
@@ -149,3 +154,29 @@ Meteor.methods({
         Products.update({}, { $pull: { categoryId: id }});
     }
 });
+
+// INNER FUNCTIONS ****************************************************************************************************/
+
+/**
+ * @summary Removes the images that are not longer in use.
+ *
+ * @param modifiedProduct The product with the modifications.
+ * @param currentProduct  The product as it currently is in the database.
+ */
+function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) {
+
+    let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage) {
+        return orderedImage.id;
+    });
+
+    let currentProductIds: Array<String> = currentProduct.images.map(function (orderedImage: OrderedImage) {
+        return orderedImage.id;
+    });
+
+    console.error(currentProductIds);
+    console.error(modifiedProductIds);
+
+    let difference: Array<String> = modifiedProductIds.filter(function (id: string) {
+        return currentProductIds.indexOf(id) < 0;
+    });
+}
