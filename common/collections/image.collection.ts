@@ -43,8 +43,8 @@ export const Thumbnails = new Mongo.Collection<ProductThumbnail>('thumbnails');
  */
 export const ThumbnailsStore = new UploadFS.store.Local({
     collection: Thumbnails,
+    path: '/home/angel/uploads',
     name: 'thumbnails',
-    path: '/uploads/thumbnails',
     mode: '0744',
     writeMode: '0744',
     transformWrite(from, to, fileId, file) {
@@ -69,7 +69,7 @@ export const ThumbnailsStore = new UploadFS.store.Local({
 export const ImagesStore = new UploadFS.store.Local({
     collection: Images,
     name: 'images',
-    path: '/uploads/images',
+    path: '/home/angel/uploads',
     mode: '0744',
     writeMode: '0744',
     filter: new UploadFS.Filter({

@@ -44,7 +44,6 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
-
     @Input()
     public model: Product;
     @Input()

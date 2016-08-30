@@ -58,11 +58,12 @@ export class IsUserLoggedGuardService implements CanActivate {
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
         if (this._status) {
-
             return true;
         }
 
-        if (state.url !== '/login') this.router.navigate(['/login']);
+        if (state.url !== '/login') {
+            this.router.navigate(['/login']);
+        }
 
         return false;
     }

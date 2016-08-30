@@ -122,6 +122,7 @@ export class I18nSingletonService {
 
     /**
      * @brief Sets the ISO 639-1 locale.
+     *
      * @param {string} locale The current locale.
      */
     public setLocale(locale: string): void {
@@ -139,6 +140,7 @@ export class I18nSingletonService {
 
     /**
      * @brief Gets the ISO 639-1 locale.
+     *
      * @returns {string} The current locale.
      */
     public getLocale(): string {
@@ -156,6 +158,7 @@ export class I18nSingletonService {
 
     /**
      * @summary Load the translations from the json file to the associative array.
+     *
      * @param json The json file with the translations.
      *
      * @returns The associative array with all the translations.

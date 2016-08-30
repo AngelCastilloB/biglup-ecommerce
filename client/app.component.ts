@@ -19,15 +19,11 @@
 
 import 'reflect-metadata';
 
-import {
-    provideRouter,
-    RouterConfig,
-    ROUTER_DIRECTIVES
-}                from '@angular/router';
-import {
-    disableDeprecatedForms,
-    provideForms
-}                from '@angular/forms';
+import { provideRouter,
+         RouterConfig,
+         ROUTER_DIRECTIVES }           from '@angular/router';
+import { disableDeprecatedForms,
+         provideForms }                from '@angular/forms';
 import { Component, provide }          from '@angular/core';
 import { MeteorComponent }             from 'angular2-meteor';
 import { bootstrap }                   from '@angular/platform-browser-dynamic';

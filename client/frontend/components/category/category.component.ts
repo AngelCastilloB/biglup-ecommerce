@@ -19,12 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit }     from '@angular/core';
-import { MeteorComponent }       from 'angular2-meteor';
-import { Mongo }                 from 'meteor/mongo';
-import { ActivatedRoute }        from '@angular/router';
-import { Products }              from '../../../../common/collections/product.collection.ts';
-import { CategoryItemComponent } from '../category-item/category-item.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MeteorComponent }              from 'angular2-meteor';
+import { ActivatedRoute }               from '@angular/router';
+import { CategoryItemComponent }        from '../category-item/category-item.component';
+import { ProductsService }              from '../../../services/products.service'
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,16 +37,16 @@ import template from './category.component.html';
 @Component({
     selector: 'category',
     template,
-    directives: [CategoryItemComponent]
+    directives: [CategoryItemComponent],
+    providers: [ProductsService]
 })
-export class CategoryComponent extends MeteorComponent implements OnInit {
+export class CategoryComponent extends MeteorComponent implements OnInit, OnDestroy {
     private _categoryId: string;
-    private _products:   Mongo.Cursor<Product>;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private _route: ActivatedRoute) {
+    constructor(private _route: ActivatedRoute, private _productsService: ProductsService) {
         super();
     }
 
@@ -57,13 +56,7 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
     public ngOnInit() {
 
         this._route.params.subscribe((params) => {
-
             this._categoryId = params['categoryId'];
-
-            this.subscribe('category-products', this._categoryId, () => {
-
-                this._products = Products.find({categoryId: { $in: [ this._categoryId ] }});
-            }, true);
         });
     }
 }
