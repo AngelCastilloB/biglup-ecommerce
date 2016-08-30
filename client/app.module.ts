@@ -28,6 +28,7 @@ import { UserAuthService }             from './services/user-auth.service';
 import { NewPasswordGuardService }     from './services/guards/new-password-guard.service';
 import { MeteorModule }                from 'angular2-meteor';
 import { FrontendModule }              from './frontend/frontend.module';
+import { BackofficeModule }            from './backoffice/backoffice.module';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -46,6 +47,7 @@ import { FrontendModule }              from './frontend/frontend.module';
         BrowserModule,
         MeteorModule,
         FrontendModule,
+        BackofficeModule,
         AppRoutesModule
     ],
     bootstrap: [AppComponent],

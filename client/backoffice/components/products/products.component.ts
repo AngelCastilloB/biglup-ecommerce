@@ -19,13 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit }         from '@angular/core';
-import { MeteorComponent }           from 'angular2-meteor';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Mongo }                     from 'meteor/mongo';
-import { Products }                  from '../../../../common/collections/product.collection';
-import { MongoTranslatePipe }        from '../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
+import { Component, OnInit } from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { Router }            from '@angular/router';
+import { Mongo }             from 'meteor/mongo';
+import { Products }          from '../../../../common/collections/product.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,9 +36,7 @@ import template from './products.component.html';
  */
 @Component({
     selector: 'products',
-    template,
-    pipes: [MongoTranslatePipe, TranslatePipe],
-    directives: [ROUTER_DIRECTIVES]
+    template
 })
 export class ProductsComponent extends MeteorComponent implements OnInit  {
     private _products: Mongo.Cursor<Product>;

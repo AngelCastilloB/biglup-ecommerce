@@ -18,7 +18,6 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Routes, RouterModule } from '@angular/router';
-import { backofficeRoutes }     from './backoffice/backoffice.routes';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -26,7 +25,6 @@ import { backofficeRoutes }     from './backoffice/backoffice.routes';
  * @summary The routes configurations.
  */
 const ROUTES: Routes = [
-    // ...backofficeRoutes,
 ];
 
 /**

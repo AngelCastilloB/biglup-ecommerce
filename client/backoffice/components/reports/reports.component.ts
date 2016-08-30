@@ -19,9 +19,8 @@
 
 import 'reflect-metadata';
 
-import { Component }         from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Component }       from '@angular/core';
+import { MeteorComponent } from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,8 +33,7 @@ import template from './reports.component.html';
  */
 @Component({
     selector: 'reports',
-    template,
-    directives: [ROUTER_DIRECTIVES]
+    template
 })
 export class ReportsComponent extends MeteorComponent {
 
