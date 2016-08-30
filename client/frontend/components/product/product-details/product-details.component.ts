@@ -20,15 +20,12 @@ import template from './product-details.component.html';
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit }                 from '@angular/core';
-import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
-import { Products }                          from '../../../../../common/collections/product.collection';
-import { Images }                            from '../../../../../common/collections/image.collection';
-import { Categories }                        from '../../../../../common/collections/category.collection';
-import { MeteorComponent }                   from 'angular2-meteor';
-import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }                     from '../../../../pipes/translate.pipe';
-import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute }    from '@angular/router';
+import { Products }          from '../../../../../common/collections/product.collection';
+import { Images }            from '../../../../../common/collections/image.collection';
+import { Categories }        from '../../../../../common/collections/category.collection';
+import { MeteorComponent }   from 'angular2-meteor';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -37,9 +34,7 @@ import { ProductImagesCarouselComponent }    from '../product-images-carousel/pr
  */
 @Component({
     selector: 'product-details',
-    template,
-    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe, TranslatePipe]
+    template
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit {
 

@@ -17,16 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Routes }           from '@angular/router';
-import { backofficeRoutes } from './backoffice/backoffice.routes';
-import { frontendRoutes }   from './frontend/frontend.routes';
+import { Routes, RouterModule } from '@angular/router';
+import { backofficeRoutes }     from './backoffice/backoffice.routes';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary The routes configurations.
  */
-export const APP_ROUTES: Routes = [
-    ...backofficeRoutes,
-    ...frontendRoutes
+const ROUTES: Routes = [
+    // ...backofficeRoutes,
 ];
+
+/**
+ * @summary generates a module object with the app root routes.
+ *
+ * @type {ModuleWithProviders}
+ */
+export const AppRoutesModule = RouterModule.forRoot(ROUTES);

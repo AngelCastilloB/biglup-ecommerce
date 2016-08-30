@@ -17,15 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeteorComponent }              from 'angular2-meteor';
 import { Mongo }                        from 'meteor/mongo';
-import { ROUTER_DIRECTIVES }            from '@angular/router';
 import { Categories }                   from '../../../../common/collections/category.collection.ts';
-import { TranslatePipe }                from '../../../pipes/translate.pipe';
-import { MongoTranslatePipe }           from '../../../pipes/mongo-translate.pipe';
 import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Subscription }                 from 'rxjs';
@@ -43,9 +38,7 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template,
-    directives: [ROUTER_DIRECTIVES],
-    pipes: [TranslatePipe, MongoTranslatePipe]
+    template
 })
 export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy {
 

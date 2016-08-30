@@ -18,7 +18,6 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, Output, EventEmitter } from '@angular/core';
-import { TranslatePipe }                   from '../../../pipes/translate.pipe';
 import { UserAuthService }                 from '../../../services/user-auth.service';
 import { Router }                          from '@angular/router';
 import { Meteor }                          from 'meteor/meteor';
@@ -28,14 +27,13 @@ import template from './oauth-login.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'oauth-login',
-    template,
-    pipes: [TranslatePipe]
-})
 /**
  * @summary This component allows the user to log in suing different oauth service providers.
  */
+@Component({
+    selector: 'oauth-login',
+    template
+})
 export class OauthLoginComponent {
 
     /**

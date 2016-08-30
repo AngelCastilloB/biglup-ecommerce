@@ -17,18 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { NgModule }                         from '@angular/core';
-import { APP_BASE_HREF }                    from '@angular/common';
-import { BrowserModule }                    from '@angular/platform-browser';
-import { AppComponent }                     from './app.component';
-import { RouterModule }                     from '@angular/router';
-import { APP_ROUTES }                       from './app.routes';
-import { IsUserLoggedGuardService }         from './services/guards/is-user-logged-guard.service';
-import { IsUserLoggedOutGuardService }      from './services/guards/is-user-logged-out-guard.service';
-import { UserAuthService }                  from './services/user-auth.service';
-import { NewPasswordGuardService }          from './services/guards/new-password-guard.service';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MeteorModule }                     from 'angular2-meteor';
+import { NgModule }                    from '@angular/core';
+import { APP_BASE_HREF }               from '@angular/common';
+import { BrowserModule }               from '@angular/platform-browser';
+import { AppComponent }                from './app.component';
+import { AppRoutesModule }             from './app.routes';
+import { IsUserLoggedGuardService }    from './services/guards/is-user-logged-guard.service';
+import { IsUserLoggedOutGuardService } from './services/guards/is-user-logged-out-guard.service';
+import { UserAuthService }             from './services/user-auth.service';
+import { NewPasswordGuardService }     from './services/guards/new-password-guard.service';
+import { MeteorModule }                from 'angular2-meteor';
+import { FrontendModule }              from './frontend/frontend.module';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -40,13 +39,14 @@ import { MeteorModule }                     from 'angular2-meteor';
         UserAuthService,
         {provide: APP_BASE_HREF, useValue: '/'}
     ],
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent
+    ],
     imports: [
         BrowserModule,
         MeteorModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule.forRoot(APP_ROUTES)
+        FrontendModule,
+        AppRoutesModule
     ],
     bootstrap: [AppComponent],
 })

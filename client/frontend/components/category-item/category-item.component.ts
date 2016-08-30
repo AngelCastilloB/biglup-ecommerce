@@ -17,17 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { Component, Input, OnInit }       from '@angular/core';
-import { MeteorComponent }                from 'angular2-meteor';
-import { Mongo }                          from 'meteor/mongo';
-import { Images }                         from '../../../../common/collections/image.collection';
-import { MongoTranslatePipe }             from '../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }                  from '../../../pipes/translate.pipe';
-import { TruncateStringPipe }             from '../../../pipes/truncate-string.pipe';
-import { ROUTER_DIRECTIVES }              from '@angular/router';
-import { ProductImagesCarouselComponent } from '../product/product-images-carousel/product-images-carousel';
+import { Component, Input, OnInit } from '@angular/core';
+import { MeteorComponent }          from 'angular2-meteor';
+import { Mongo }                    from 'meteor/mongo';
+import { Images }                   from '../../../../common/collections/image.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -40,9 +33,7 @@ import template from './category-item.component.html';
  */
 @Component({
     selector: 'category-item',
-    template,
-    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
+    template
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
 

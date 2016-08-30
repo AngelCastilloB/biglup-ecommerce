@@ -17,32 +17,25 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Validators,
-         FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { ValidationService }         from '../../../services/validation.service';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { _T }                        from '../../../services/i18n/i18n-singleton.service';
-import { FormErrorComponent }        from '../form-error/form-error.component';
-import { UserAuthService }           from '../../../services/user-auth.service';
+import { Validators, FormGroup, FormBuilder}  from '@angular/forms';
+import { Component, OnInit, NgZone }          from '@angular/core';
+import { ValidationService }                  from '../../../services/validation.service';
+import { Router }                             from '@angular/router';
+import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
 
 // noinspection TypeScriptCheckImport
-import template                      from './password-reset.component.html';
+import template from './password-reset.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'password-reset',
-    template,
-    pipes: [TranslatePipe],
-    directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
-})
 /**
  * @summary This component allows the user to reset its password.
  */
+@Component({
+    selector: 'password-reset',
+    template
+})
 export class PasswordResetComponent implements OnInit {
 
     /**

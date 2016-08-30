@@ -17,14 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { Component, OnInit }     from '@angular/core';
-import { MeteorComponent }       from 'angular2-meteor';
-import { Mongo }                 from 'meteor/mongo';
-import { ActivatedRoute }        from '@angular/router';
-import { Products }              from '../../../../common/collections/product.collection.ts';
-import { CategoryItemComponent } from '../category-item/category-item.component';
+import { Component, OnInit } from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { Mongo }             from 'meteor/mongo';
+import { ActivatedRoute }    from '@angular/router';
+import { Products }          from '../../../../common/collections/product.collection.ts';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,8 +34,7 @@ import template from './category.component.html';
  */
 @Component({
     selector: 'category',
-    template,
-    directives: [CategoryItemComponent]
+    template
 })
 export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;

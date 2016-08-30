@@ -19,7 +19,6 @@
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router }                             from '@angular/router';
-import { TranslatePipe }                      from '../../../pipes/translate.pipe';
 import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
 import { Meteor }                             from 'meteor/meteor';
 import { MeteorComponent }                    from 'angular2-meteor';
@@ -27,8 +26,6 @@ import { ValidationService }                  from '../../../services/validation
 import { UserAuthService }                    from '../../../services/user-auth.service';
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { Subscription }                       from 'rxjs';
-import { OauthLoginComponent }                from '../oauth-login/oauth-login.component';
-import { FormErrorComponent }                 from '../form-error/form-error.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -41,12 +38,7 @@ import template from './login.component.html';
  */
 @Component({
     selector: 'login-form',
-    template,
-    directives: [
-        OauthLoginComponent,
-        FormErrorComponent
-    ],
-    pipes: [TranslatePipe]
+    template
 })
 export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy {
 

@@ -17,7 +17,7 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { RouterConfig }                from '@angular/router';
+import { Routes, RouterModule }                from '@angular/router';
 import { CategoryComponent }           from './components/category/category.component.ts';
 import { LandingPageComponent }        from './components/landing-page/landing-page.component.ts';
 import { FrontendComponent }           from './frontend.component';
@@ -34,7 +34,7 @@ import { NewPasswordGuardService }     from '../services/guards/new-password-gua
 /**
  * @brief This are the front end routes.
  */
-export const frontendRoutes: RouterConfig = [
+const ROUTES: Routes = [
     {
         path: '',
         component: FrontendComponent,
@@ -56,4 +56,11 @@ export const frontendRoutes: RouterConfig = [
         ]
     }
 ];
+
+/**
+ * @summary generates a module object with the app frontend routes.
+ *
+ * @type {ModuleWithProviders}
+ */
+export const FrontendRoutesModule = RouterModule.forChild(ROUTES);
 
