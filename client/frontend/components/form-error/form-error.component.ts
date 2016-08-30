@@ -15,9 +15,16 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// IMPORTS ************************************************************************************************************/
+
 import { Component, Input, OnInit } from '@angular/core';
 import { IdGeneratorService } from '../../../services/id-generator.service';
 
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @summary custom component intended as a simple error display message in forms.
+ */
 @Component({
     selector: 'form-error',
     providers: [IdGeneratorService],
