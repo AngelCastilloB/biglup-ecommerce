@@ -19,14 +19,16 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit }    from '@angular/core';
-import { MeteorComponent }      from 'angular2-meteor';
-import { Mongo }                from 'meteor/mongo';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
-import { Categories }           from '../../../../common/collections/category.collection.ts';
-import { TranslatePipe }        from '../../../pipes/translate.pipe';
-import { MongoTranslatePipe }   from '../../../pipes/mongo-translate.pipe';
-import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MeteorComponent }              from 'angular2-meteor';
+import { Mongo }                        from 'meteor/mongo';
+import { ROUTER_DIRECTIVES }            from '@angular/router';
+import { Categories }                   from '../../../../common/collections/category.collection.ts';
+import { TranslatePipe }                from '../../../pipes/translate.pipe';
+import { MongoTranslatePipe }           from '../../../pipes/mongo-translate.pipe';
+import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
+import { UserAuthService }              from '../../../services/user-auth.service';
+import { Subscription }                 from 'rxjs';
 
 import '../../../../common/api/cart.methods';
 
@@ -45,13 +47,22 @@ import template from './header.component.html';
     directives: [ROUTER_DIRECTIVES],
     pipes: [TranslatePipe, MongoTranslatePipe]
 })
-export class HeaderComponent extends MeteorComponent implements OnInit {
+export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy {
+
     private _categories: Mongo.Cursor<Category>;
 
     /**
-     * @summary Initializes a new instance of the Header class.
+     * @summary the users login status
      */
-    constructor() {
+    private _isLogged: boolean;
+    private _isLoggedSubscription: Subscription;
+
+    /**
+     * @summary Initializes a new instance of the Header class.
+     *
+     * @param {UserAuthService} _userAuthService The authentification service.
+     */
+    constructor(private _userAuthService: UserAuthService) {
         super();
     }
 
@@ -59,28 +70,38 @@ export class HeaderComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit(): any {
+
         this.subscribe('categories', () => {
+
             this._categories = Categories.find();
         }, true);
+
+        this._isLogged = this._userAuthService.isLogged();
+
+        this._isLoggedSubscription =
+            this._userAuthService.isLoggedStream().subscribe(status => this._isLogged = status);
+    }
+
+    /**
+     * @summary destroys unneeded subscriptions and related resources.
+     */
+    public ngOnDestroy() {
+        this._isLoggedSubscription.unsubscribe();
     }
 
     /**
      * @summary language change event handler
-     * @param language
+     * @param language The language to se bet.
      */
     private languageChanged(language: string) {
         I18nSingletonService.getInstance().setLocale(language);
     }
 
-    private onTest() {
-        // Call the Method
-        this.call('cart.deleteAllProducts', '1', (error) => {
-            if (error) {
-                alert(`Failed to add due to ${error}`);
-                return;
-            }
-
-            alert('User successfully invited.');
-        });
+    /**
+     * @summary Logs the current user out of the system.
+     * @private
+     */
+    private _logout() {
+        this._userAuthService.logout();
     }
 }

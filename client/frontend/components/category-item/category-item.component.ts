@@ -21,7 +21,6 @@ import 'reflect-metadata';
 
 import { Component, Input, OnInit }       from '@angular/core';
 import { MeteorComponent }                from 'angular2-meteor';
-import { Mongo }                          from 'meteor/mongo';
 import { Images }                         from '../../../../common/collections/image.collection';
 import { MongoTranslatePipe }             from '../../../pipes/mongo-translate.pipe';
 import { TranslatePipe }                  from '../../../pipes/translate.pipe';
@@ -45,6 +44,7 @@ import template from './category-item.component.html';
     pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
+
     @Input()
     public model: Product;
     @Input()

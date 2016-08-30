@@ -1,11 +1,23 @@
 {
   "user": {
-    "name": "username",
-    "email": "user email",
-    "password": "someRandomPassword"
+    "name": "",
+    "email": "",
+    "password": ""
   },
   "migrations": {
     "migrate": false,
     "reset": false
+  },
+  "facebook": {
+    "appId": "",
+    "secret": ""
+  },
+  "twitter": {
+    "consumerKey": "",
+    "secret": ""
+  },
+  "google": {
+    "clientId": "",
+    "secret": ""
   }
 }

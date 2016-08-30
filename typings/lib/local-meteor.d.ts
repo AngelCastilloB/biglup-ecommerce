@@ -15,6 +15,18 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+/**
+ * @summary updates the meteor module according to our needs.
+ */
+declare module 'meteor/meteor' {
+    module Meteor {
+        /** Global props **/
+        // hack: We set the settings as any because Typescript complaints
+        // about unknown types (coming from the meteor.json settings file).
+        let settings: any;
+    }
+}
+
 declare module Assets {
     function getBinary(assetPath: string, asyncCallback ?: Function): EJSON;
 
@@ -27,7 +39,7 @@ declare module Assets {
  * @summary removes the Cannot find module './x.component.html'.
  * hack until https://github.com/Urigo/meteor-static-templates/issues/9 is resolved (if ever)
  */
-declare module "*.html" {
+declare module '*.html' {
     const template: string;
     export default template;
 }
