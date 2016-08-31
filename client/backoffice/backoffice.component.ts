@@ -32,7 +32,7 @@ import template from './backoffice.component.html';
  */
 @Component({
     template,
-    styleUrls: ['css/style.css']
+    styleUrls: ['backoffice.component.css']
 })
 export class BackofficeComponent {
 }
