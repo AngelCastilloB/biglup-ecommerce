@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Component, OnInit, NgZone }                           from '@angular/core';
 import { ValidationService }                                   from '../../../services/validation.service';

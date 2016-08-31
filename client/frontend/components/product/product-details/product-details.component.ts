@@ -15,10 +15,9 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// noinspection TypeScriptCheckImport
-import template from './product-details.component.html';
-
 // IMPORTS ************************************************************************************************************/
+
+import 'reflect-metadata';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
@@ -26,6 +25,9 @@ import { Products }          from '../../../../../common/collections/product.col
 import { Images }            from '../../../../../common/collections/image.collection';
 import { Categories }        from '../../../../../common/collections/category.collection';
 import { MeteorComponent }   from 'angular2-meteor';
+
+// noinspection TypeScriptCheckImport
+import template from './product-details.component.html';
 
 // EXPORTS ************************************************************************************************************/
 

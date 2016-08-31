@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Component,
          ViewChild,
          ElementRef,

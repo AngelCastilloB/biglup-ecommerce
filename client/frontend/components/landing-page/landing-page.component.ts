@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Component }       from '@angular/core';
 import { MeteorComponent } from 'angular2-meteor';
 

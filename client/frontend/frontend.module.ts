@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { NgModule }                       from '@angular/core';
 import { FrontendRoutesModule }           from './frontend.routes';
 import { HeaderComponent }                from './components/header/header.component';

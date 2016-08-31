@@ -65,6 +65,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
+        this._product.color            = [];
+        this._product.size             = [];
         this._product.description      = [];
         this._product.hashtags         = [];
         this._product.createdAt        = new Date();
@@ -172,6 +174,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
             if (error) {
                 this._waitModalResult = false;
 
+                console.error(error);
                 this._modal.show(
                     _T('There was an error saving the product'),
                     _T('Error'));

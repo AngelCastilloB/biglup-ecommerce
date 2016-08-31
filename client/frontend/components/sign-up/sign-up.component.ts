@@ -17,8 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// noinspection TypeScriptCheckImport
-import template from './sign-up.component.html';
+import 'reflect-metadata';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, NgZone }          from '@angular/core';
@@ -26,6 +25,9 @@ import { ValidationService }                  from '../../../services/validation
 import { UserAuthService }                    from '../../../services/user-auth.service';
 import { Router }                             from '@angular/router';
 import { NewPasswordComponent }               from '../new-password/new-password.component';
+
+// noinspection TypeScriptCheckImport
+import template from './sign-up.component.html';
 
 // EXPORTS ************************************************************************************************************/
 

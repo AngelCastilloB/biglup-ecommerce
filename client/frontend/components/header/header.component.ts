@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeteorComponent }              from 'angular2-meteor';
 import { Mongo }                        from 'meteor/mongo';

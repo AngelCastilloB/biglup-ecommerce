@@ -31,7 +31,6 @@ import { UploadFS }                from 'meteor/jalik:ufs';
 import { ImagesStore }             from '../../../../common/collections/image.collection.ts';
 import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
-import { TranslatePipe }           from '../../../pipes/translate.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

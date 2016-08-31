@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Router, NavigationEnd } from '@angular/router';
 import { Component }             from '@angular/core';
 
