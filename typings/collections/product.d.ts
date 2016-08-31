@@ -19,8 +19,9 @@
  * @brief Image order definition.
  */
 interface OrderedImage {
-    position: number; // Since the image upload is simultaneous, this is the easier way to enforce order.
+    position: number;
     id: string;
+    url: string;
 }
 
 /**

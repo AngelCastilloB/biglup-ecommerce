@@ -120,31 +120,30 @@ export class ImagesUploaderComponent
     /**
      * @summary Uploads all the current images to the server.
      *
-     * @param {string} id The product id to associate the images with.
+     * @param {string} product The product to be uploaded.
      */
+    // TODO: Refactor this method/Move to a service.
     public upload(product: Product)
     {
         this._uploading = true;
 
         product.images.length = 0;
 
-        let count: number = this._previewFiles.filter(function (uploaderImage: UploaderImage)
+        let toBeUploaded: number = this._previewFiles.filter(function (uploaderImage: UploaderImage)
         {
             return !uploaderImage.isUploaded;
         }).length;
 
-        if (count === 0)
-        {
-            this._onSuccess.emit({});
+        let onlyRearrenge: boolean = toBeUploaded === 0;
 
-            return;
-        }
+        let imagesId: Array<string> =  product.images.map((image) => image.id);
 
         for (let i = 0; i < this._previewFiles.length && this._uploading; ++i)
         {
             if (this._previewFiles[i].isUploaded)
             {
-                product.images.push({position: i, id: this._previewFiles[i].databaseId});
+                product.images.push(
+                    { position: i, id: this._previewFiles[i].databaseId, url: this._previewFiles[i].remoteUrl });
 
                 continue;
             }
@@ -172,13 +171,12 @@ export class ImagesUploaderComponent
                 },
                 onComplete: (result) =>
                 {
-                    product.images.push({position: i, id: result._id});
+                    product.images.push({ position: i, id: result._id, url: result.url.toString() });
 
-                    --count;
+                    --toBeUploaded;
 
-                    if (count === 0) // HACK: remove this
+                    if (toBeUploaded === 0) // HACK: remove this
                     {
-                        console.error(product.images);
                         this._onSuccess.emit({});
                         this._uploading = false;
                     }
@@ -187,6 +185,9 @@ export class ImagesUploaderComponent
 
             worker.start();
         }
+
+        if (onlyRearrenge)
+            this._onSuccess.emit({});
     }
 
     /**

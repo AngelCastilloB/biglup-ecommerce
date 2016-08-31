@@ -25,14 +25,23 @@ import { I18nStringSchema } from './i18n-string.schema';
 /**
  * @brief Image order schema.
  */
-export let OrderedImageSchema: any = new SimpleSchema({
-    position: {
+export let OrderedImageSchema: any = new SimpleSchema(
+{
+    position:
+    {
         label: 'The image position', // Since the image upload is simultaneous, this is the easier way to enforce order.
         type: Number
     },
-    id: {
+    id:
+    {
         label: 'The id of the image in the image collection',
         type: String
+    },
+    // Denormalized field: This will avoid the need to query the image collection.
+    url:
+    {
+       label: 'The url of the image',
+       type: String
     }
 });
 

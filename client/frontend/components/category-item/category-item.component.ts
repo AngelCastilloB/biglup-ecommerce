@@ -40,8 +40,7 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
     @Input()
     public model: Product;
     @Input()
-    public  category:       string;
-    private _productImages: Array<ProductImage> = Array<ProductImage>();
+    public  category: string;
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
@@ -54,16 +53,7 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
-        this.subscribe('images', () => {
-
-            for (let i: number = 0; i < this.model.images.length; ++i) {
-                let image: ProductImage = Images.findOne({ _id: this.model.images[i].id });
-
-                if (image) {
-                    this._productImages.push(image);
-                }
-            }
-        }, true);
+    public ngOnInit()
+    {
     }
 }

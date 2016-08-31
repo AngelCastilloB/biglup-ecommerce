@@ -1,7 +1,7 @@
 <div class="col-sm-4">
   <div class="card">
     <div class="view overlay hm-white-slight">
-      <product-images-carousel [images]="_productImages"></product-images-carousel>
+      <product-images-carousel [images]="model.images"></product-images-carousel>
     </div>
 
     <!-- Product info -->
@@ -16,10 +16,10 @@
         {{ model.description | mongoTranslate | truncateString }}
       </p>
       <p class="card-text">
-        {{ 'Color:' | translate }} {{ model.color }}
+        {{ 'Color:' | translate }} {{ model.color | mongoTranslate }}
       </p>
       <p class="card-text">
-        <i class="fa fa-arrows-v"></i> {{ 'Size:' | translate }} {{ model.size }}
+        <i class="fa fa-arrows-v"></i> {{ 'Size:' | translate }} {{ model.size | mongoTranslate }}
       </p>
       <p class="card-text">
         <i class="fa fa-usd"></i> {{ model.price }}

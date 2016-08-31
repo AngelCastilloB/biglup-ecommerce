@@ -167,7 +167,7 @@ Meteor.methods(
  * @param modifiedProduct The product with the modifications.
  * @param currentProduct  The product as it currently is in the database.
  */
-function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
+function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) // TODO: Remove the difference.
 {
 
     let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage)
@@ -179,9 +179,6 @@ function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
     {
         return orderedImage.id;
     });
-
-    console.error(currentProductIds);
-    console.error(modifiedProductIds);
 
     let difference: Array<String> = modifiedProductIds.filter(function (id: string)
     {

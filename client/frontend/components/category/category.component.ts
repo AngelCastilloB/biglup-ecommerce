@@ -19,7 +19,6 @@
 
 import 'reflect-metadata';
 
-
 import { Component, OnInit } from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
 import { ActivatedRoute }    from '@angular/router';
@@ -55,7 +54,6 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
      */
     public ngOnInit()
     {
-
         this._route.params.subscribe((params) =>
         {
             this._categoryId = params['categoryId'];

@@ -115,7 +115,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
                     {
                         editor.on('keyup change', (param, l) =>
                         {
-
                             this._zone.run(() =>
                             {
 
@@ -129,7 +128,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
                         {
                             this._zone.run(() =>
                             {
-
                                 tinymce.activeEditor.setContent(this._categoryDescription);
                                 tinymce.activeEditor.execCommand('mceRepaint');
                             });

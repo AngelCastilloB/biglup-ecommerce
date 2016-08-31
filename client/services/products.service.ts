@@ -32,19 +32,32 @@ import 'rxjs/add/operator/mergeMap';
  * @summary This services retrieves all the products along with its relational information from other collections.
  */
 @Injectable()
-export class ProductsService extends MeteorComponent {
+export class ProductsService extends MeteorComponent
+{
     private _products:       Array<Product>                  = Array<Product>();
     private _productsStream: BehaviorSubject<Array<Product>> = new BehaviorSubject<Array<Product>>(Array<Product>());
 
     /**
      * @summary Initializes a new instance of the ProductsService class.
      */
-    constructor() {
+    constructor()
+    {
         super();
 
-        this.subscribe('products', () => {
-            this.autorun(() => {
+        this.subscribe('products', () =>
+        {
+            this.autorun(() =>
+            {
                 this._products = Products.find().fetch();
+
+                for (let i: number = 0; i < this._products.length; ++i)
+                {
+                    this._products[i].images.sort(function(lhs, rhs)
+                    {
+                        return lhs.position - rhs.position;
+                    });
+                }
+
                 this._productsStream.next(this._products);
             });
         });
@@ -55,7 +68,8 @@ export class ProductsService extends MeteorComponent {
      *
      * @returns {Observable<Array<Product>>} The observable list of products.
      */
-    public getProducts(): Observable<Array<Product>> {
+    public getProducts(): Observable<Array<Product>>
+    {
         return new Observable<Array<Product>>(func => this._productsStream.subscribe(func));
     }
 
@@ -66,7 +80,8 @@ export class ProductsService extends MeteorComponent {
      *
      * @returns {Observable<Array<Product>>} The observable list of products.
      */
-    public getCategoryProducts(categoryId: string): Observable<Array<Product>> {
+    public getCategoryProducts(categoryId: string): Observable<Array<Product>>
+    {
         return new Observable<Array<Product>>(func => this._productsStream
             .flatMap(array => new BehaviorSubject(array.filter(product => product.categoryId.indexOf(categoryId) > -1)))
             .subscribe(func));
@@ -79,9 +94,11 @@ export class ProductsService extends MeteorComponent {
      *
      * @returns {Observable<Product>} The product observable.
      */
-    public getProduct(productId: string): Observable<Product> {
+    public getProduct(productId: string): Observable<Product>
+    {
         return new Observable<Product>(func => this._productsStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product._id.indexOf(productId) > -1))[0])
+            .flatMap(array => new BehaviorSubject(array.filter(product => product._id === productId)[0]))
+            .filter(product => !!product)
             .subscribe(func));
     }
 }
