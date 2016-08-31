@@ -26,12 +26,13 @@ import * as faker            from 'faker/locale/en';
 /**
  * @summary Handles all the product migrations.
  */
-export class ProductMigration extends AbstractMigration {
+export class ProductMigration extends AbstractMigration
+{
 
-    protected _amount:     number    = 10; // 1 to 10 products per category.
-    private   _products:   Product[] = [];
-    private   _categories: Category[];
-    private   _sizes = [
+    protected _amount: number    = 10; // 1 to 10 products per category.
+    private _products: Product[] = [];
+    private _categories: Category[];
+    private _sizes               = [
         'xs: Extra Small',
         's: Small',
         'ms: Medium Small',
@@ -48,9 +49,10 @@ export class ProductMigration extends AbstractMigration {
      * @param generators            The content generators.
      * @param _categoriesCollection The category collection.
      */
-    constructor(
-        collection: Mongo.Collection<Object>, generators,
-        private _categoriesCollection: Mongo.Collection<Category>) {
+    constructor(collection: Mongo.Collection<Object>,
+        generators,
+        private _categoriesCollection: Mongo.Collection<Category>)
+    {
         super(collection, generators);
     }
 
@@ -59,13 +61,12 @@ export class ProductMigration extends AbstractMigration {
      *
      * @see parent AbstractMigration.
      */
-    public up(): void {
+    public up(): void
+    {
         console.log('Starting Default Products.');
         this._generateProducts();
 
-        this._products.forEach(product => {
-            this._collection.insert(product);
-        });
+        this._products.forEach(product => this._collection.insert(product));
     }
 
     /**
@@ -73,14 +74,16 @@ export class ProductMigration extends AbstractMigration {
      *
      * @private
      */
-    private _generateProducts(): void {
+    private _generateProducts(): void
+    {
         this._categories = this._categoriesCollection.find({}).fetch();
 
-        for (let i = 0; i < this._categories.length; ++i) {
-
+        for (let i = 0; i < this._categories.length; ++i)
+        {
             let productCount: number = Math.max(Math.floor(Math.random() * this._amount), 1);
 
-            for (let j = 0; j < productCount; j++) {
+            for (let j = 0; j < productCount; j++)
+            {
                 this._products.push({
                     title: [
                         {language: 'en', value: faker.commerce.productName()},
@@ -124,8 +127,8 @@ export class ProductMigration extends AbstractMigration {
      *
      * @returns {string} The ranomd size.
      */
-    private _getRandomSize(): string {
-
+    private _getRandomSize(): string
+    {
         let randomIndex: number = Math.floor(Math.random() * this._sizes.length);
 
         return this._sizes[randomIndex];
@@ -134,11 +137,12 @@ export class ProductMigration extends AbstractMigration {
     /**
      * @summary Gives a random set of ids, from 1 to 5
      *
-     * @param The id of a category to be guaranteed an spot on the product.
+     * @param {string} id The id of a category to be guaranteed an spot on the product.
      * @returns {string[]} A random set of ids.
      * @private
      */
-    private _addRandomIds(id: string): string[] {
+    private _addRandomIds(id: string): string[]
+    {
         let results = [];
 
         results.push(id);

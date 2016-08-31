@@ -31,15 +31,14 @@ import { Products } from '../collections/product.collection';
  *
  * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
-Meteor.methods(
-{
-    'cart.addProduct' : function (productId: string, quantity: number, set = false)
+Meteor.methods({
+    'cart.addProduct': function (productId: string, quantity: number, set = false)
     {
         check(productId, String);
         check(quantity, Number);
 
         const product: Product = Products.findOne(productId);
-        const cart:    Cart    = Carts.findOne({userId : this.userId});
+        const cart:    Cart    = Carts.findOne({userId: this.userId});
 
         if (!cart)
         {
@@ -55,8 +54,8 @@ Meteor.methods(
                 'The product that you are trying to add to the cart does not exist.');
         }
 
-        let item:     CartItem = { productId: productId, quantity: quantity, title: product.title };
-        let selector: Object   = { _id : cart._id, 'items.productId': productId };
+        let item:     CartItem = {productId: productId, quantity: quantity, title: product.title};
+        let selector: Object   = {_id: cart._id, 'items.productId': productId};
         let modifier: Object;
 
         let productIndex: number = findProduct(cart, product._id);
@@ -66,10 +65,12 @@ Meteor.methods(
         if (productIndex === -1)
         {
             if (newQuantity < 1)
+            {
                 return;
+            }
 
-            selector = { _id : cart._id};
-            modifier = { $push: {'items': item } };
+            selector = {_id: cart._id};
+            modifier = {$push: {'items': item}};
         }
         else
         {
@@ -79,23 +80,23 @@ Meteor.methods(
             {
                 if (item.quantity < 1)
                 {
-                    Carts.update(selector, { $pull: { items: { productId: productId} }}, { multi: true });
+                    Carts.update(selector, {$pull: {items: {productId: productId}}}, {multi: true});
 
                     return;
                 }
 
-                modifier = { $set: {'items.$.quantity': item.quantity}};
+                modifier = {$set: {'items.$.quantity': item.quantity}};
             }
             else
             {
                 if (newQuantity < 1)
                 {
-                    Carts.update(selector, { $pull: { items: { productId: productId} }}, { multi: true });
+                    Carts.update(selector, {$pull: {items: {productId: productId}}}, {multi: true});
 
                     return;
                 }
 
-                modifier = { $set: {'items.$.quantity': newQuantity}};
+                modifier = {$set: {'items.$.quantity': newQuantity}};
             }
         }
 
@@ -106,8 +107,7 @@ Meteor.methods(
 /**
  * @summary Registers the add cart to user method to Meteor's DDP system.
  */
-Meteor.methods(
-{
+Meteor.methods({
     ['cart.create']: function ()
     {
         if (Carts.find({userId: this.userId}).count() > 0)
@@ -128,17 +128,16 @@ Meteor.methods(
  *
  * @param userId The user to remove the cart from.
  */
-Meteor.methods(
-{
+Meteor.methods({
     ['cart.delete']: function (userId: string)
     {
         /*
-        if (!this.user.IsAdmin) {
-            throw new Meteor.Error(
-                'cart.delete.unauthorized',
-                'You are not authorized to perform this action.');
-        }
-        */
+         if (!this.user.IsAdmin) {
+         throw new Meteor.Error(
+         'cart.delete.unauthorized',
+         'You are not authorized to perform this action.');
+         }
+         */
 
         if (Carts.find({userId: userId}).count() === 0)
         {
@@ -154,15 +153,14 @@ Meteor.methods(
 /**
  * @summary Deletes all products from the given user cart.
  */
-Meteor.methods(
-{
+Meteor.methods({
     ['cart.deleteAllProducts']: function (userId: string)
     {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'cart.deleteAllProducts.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'cart.deleteAllProducts.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
@@ -173,22 +171,21 @@ Meteor.methods(
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId: userId}, {$set : {'items': []}}, { multi: true });
+        Carts.update({userId: userId}, {$set: {'items': []}}, {multi: true});
     }
 });
 
 /**
  * @summary Deletes the given product from the given user cart.
  */
-Meteor.methods(
-{
+Meteor.methods({
     ['cart.deleteProduct']: function (userId: string, productId: string)
     {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'cart.deleteProduct.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'cart.deleteProduct.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
@@ -199,7 +196,7 @@ Meteor.methods(
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId: userId}, { $pull: { items: { productId: productId} }}, { multi: true });
+        Carts.update({userId: userId}, {$pull: {items: {productId: productId}}}, {multi: true});
     }
 });
 
@@ -215,12 +212,16 @@ Meteor.methods(
 function findProduct(cart: Cart, productId: string): number
 {
     if (!cart.items)
+    {
         return -1;
+    }
 
     for (let i = 0; i < cart.items.length; ++i)
     {
         if (cart.items[i].productId === productId)
+        {
             return i;
+        }
     }
 
     return -1;

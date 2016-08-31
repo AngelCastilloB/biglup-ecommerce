@@ -36,13 +36,17 @@ import './email-templates/password-reset';
 
 /* METEOR SERVER START UP *********************************************************************************************/
 
-Meteor.startup(() => {
+Meteor.startup(() =>
+{
     checkMeteorSettings();
     startServicesConfiguration();
 
-    if (Meteor.settings['migrations'].migrate) {
+    if (Meteor.settings['migrations'].migrate)
+    {
         createMigrations();
-        if (Meteor.settings['migrations'].reset) {
+
+        if (Meteor.settings['migrations'].reset)
+        {
             // the library doesn't provide public APIs to properly reset the collection.
             // Even though we could Migrations.migrateTo(0)
             // this fails when the migration is locked and needs to be unlocked.

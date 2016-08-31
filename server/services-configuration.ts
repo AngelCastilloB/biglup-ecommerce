@@ -26,7 +26,8 @@ import { Meteor } from 'meteor/meteor';
  * @summary Sets defaults configurations needed by the different meteor services.
  * since this uses the meteor settings, which could be undefined, we have to make this a function to let it cascade.
  */
-export function startServicesConfiguration() {
+export function startServicesConfiguration()
+{
     ServiceConfiguration.configurations.upsert({
         service: 'facebook'
     }, {

@@ -37,15 +37,11 @@ Meteor.publish('thumbnails', () => Thumbnails.find());
  *
  * @param {string} id The image id.
  */
-Meteor.publish('image', function(id: string) {
-    return Images.find({_id: id});
-});
+Meteor.publish('image', (id: string) => Images.find({_id: id}));
 
 /**
  * @summary Publishes a thumbnail given a thumbnail id.
  *
  * @param {string} id The thumbnail id.
  */
-Meteor.publish('thumbnail', function(id: string) {
-    return Images.find({_id: id});
-});
+Meteor.publish('thumbnail', (id: string) => Images.find({_id: id}));

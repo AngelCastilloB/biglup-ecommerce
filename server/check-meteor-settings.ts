@@ -53,33 +53,45 @@ const TWITTER_SETTINGS  = {
  *
  * The Meteor.settings.public['something'] is accessible only to the client side.
  */
-export function checkMeteorSettings() {
-    if (!Meteor.settings['user']) {
+export function checkMeteorSettings()
+{
+    if (!Meteor.settings['user'])
+    {
         Meteor.settings['user'] = USER_SETTINGS;
     }
 
-    if (!Meteor.settings['migrations']) {
+    if (!Meteor.settings['migrations'])
+    {
         Meteor.settings['migrations'] = MIGRATIONS_SETTINGS;
     }
 
-    if (!Meteor.settings['facebook']) {
+    if (!Meteor.settings['facebook'])
+    {
         Meteor.settings['facebook']     = FACEBOOK_SETTINGS;
         Meteor.settings.public.facebook = false;
-    } else {
+    }
+    else
+    {
         Meteor.settings.public.facebook = true;
     }
 
-    if (!Meteor.settings['google']) {
+    if (!Meteor.settings['google'])
+    {
         Meteor.settings['google']     = GOOGLE_SETTINGS;
         Meteor.settings.public.google = false;
-    } else {
+    }
+    else
+    {
         Meteor.settings.public.google = true;
     }
 
-    if (!Meteor.settings['twitter']) {
+    if (!Meteor.settings['twitter'])
+    {
         Meteor.settings['twitter']     = TWITTER_SETTINGS;
         Meteor.settings.public.twitter = false;
-    } else {
+    }
+    else
+    {
         Meteor.settings.public.twitter = true;
     }
 }

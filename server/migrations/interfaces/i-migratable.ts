@@ -20,7 +20,8 @@
 /**
  * @summary Migratable interface definition.
  */
-export interface IMigratable {
+export interface IMigratable
+{
 
     /**
      * @summary Migrates the data to the database.
