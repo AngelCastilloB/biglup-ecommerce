@@ -30,7 +30,8 @@ Carts.attachSchema(CartSchema);
 
 // RULES **************************************************************************************************************/
 
-Carts.deny({
+Carts.deny(
+{
     insert() { return true; },
     update() { return true; },
     remove() { return true; },

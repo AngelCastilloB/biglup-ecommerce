@@ -35,8 +35,8 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 /**
  * @summary This service performs validations on data fields.
  */
-export class ValidationService {
-
+export class ValidationService
+{
     /**
      * @summary Checks the value and returns true if is invalid.
      *
@@ -44,7 +44,8 @@ export class ValidationService {
      *
      * @returns {{email: boolean}} True if the string is an email with the appropriate format, otherwise, false.
      */
-    public static email(control: AbstractControl): {[key: string]: boolean} {
+    public static email(control: AbstractControl): {[key: string]: boolean}
+    {
         return control.value.match(EMAIL_REGEX) ? null : {email: true};
     }
 
@@ -57,19 +58,18 @@ export class ValidationService {
      *
      * @returns {(group:ControlGroup)=>void} The control group values validator.
      */
-    public static matchControlGroupsValues(firstControlKey: string, secondControlKey: string) {
-        return (group: ControlGroup) => {
-            if (!group.controls[firstControlKey]) {
+    public static matchControlGroupsValues(firstControlKey: string, secondControlKey: string)
+    {
+        return (group: ControlGroup) =>
+        {
+            if (!group.controls[firstControlKey])
                 throw new Error(`Control group does not posses '${firstControlKey}' as a key.`);
-            }
 
-            if (!group.controls[secondControlKey]) {
+            if (!group.controls[secondControlKey])
                 throw new Error(`Control group does not posses '${secondControlKey}' as a key.`);
-            }
 
-            if (group.controls[firstControlKey].value !== group.controls[secondControlKey].value) {
+            if (group.controls[firstControlKey].value !== group.controls[secondControlKey].value)
                 return group.controls[secondControlKey].setErrors({'notEqual': true});
-            }
         };
     }
 }

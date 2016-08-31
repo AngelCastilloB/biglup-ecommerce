@@ -52,5 +52,6 @@ import { BackofficeModule }            from './backoffice/backoffice.module';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {
+export class AppModule
+{
 }

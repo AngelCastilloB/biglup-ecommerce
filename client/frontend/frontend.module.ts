@@ -70,5 +70,6 @@ import { FrontendComponent }              from './frontend.component';
         FrontendRoutesModule
     ],
 })
-export class FrontendModule {
+export class FrontendModule
+{
 }

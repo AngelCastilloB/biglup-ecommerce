@@ -25,8 +25,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  * @summary This pipe selects a random value from an array.
  */
 @Pipe({name: 'arrayRandom'})
-export class ArrayRandomPipe implements PipeTransform {
-
+export class ArrayRandomPipe implements PipeTransform
+{
     /**
      * @summary Selects a random value from an array.
      *
@@ -36,12 +36,16 @@ export class ArrayRandomPipe implements PipeTransform {
      *
      * @Remarks If The value is empty or is not of "object" type, the value itself is returned.
      */
-    public transform(value: Array<any>): any {
+    public transform(value: Array<any>): any
+    {
         // We need to check the type because even though is strongly typed, in the view, we can ask for
         // {{ 0 | randomArray }} and will print undefined (which prints absolutely nothing).
-        if (value.length < 1) {
+        if (value.length < 1)
+        {
             return value;
-        } else if (typeof value !== 'object') {
+        }
+        else if (typeof value !== 'object')
+        {
             throw new Error(`Pipe arrayRandom expects an array, ${typeof value} given.`);
         }
 

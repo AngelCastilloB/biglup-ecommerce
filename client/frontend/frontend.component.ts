@@ -31,5 +31,6 @@ import template from './frontend.component.html';
  * @summary The front end root component.
  */
 @Component({template})
-export class FrontendComponent {
+export class FrontendComponent
+{
 }

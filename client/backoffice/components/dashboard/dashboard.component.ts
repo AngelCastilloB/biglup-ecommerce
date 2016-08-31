@@ -36,18 +36,21 @@ import template from './dashboard.component.html';
     selector: 'dashboard',
     template
 })
-export class DashboardComponent extends MeteorComponent implements AfterViewInit {
+export class DashboardComponent extends MeteorComponent implements AfterViewInit
+{
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 
     /**
      * @summary This function is called when your component's view _has been fully initialized.
      */
-    public ngAfterViewInit() {
+    public ngAfterViewInit()
+    {
     }
 }

@@ -26,8 +26,8 @@ import { Injectable }                                               from '@angul
  * @summary This guard is allows route activation only if the user provides a token (does not check if token is valid).
  */
 @Injectable()
-export class NewPasswordGuardService implements CanActivate {
-
+export class NewPasswordGuardService implements CanActivate
+{
     /**
      * @summary Initializes a new instance of the NewPasswordGuardService class.
      *
@@ -36,7 +36,8 @@ export class NewPasswordGuardService implements CanActivate {
      *
      * @returns {boolean} True if the user provided a token, otherwise, false.
      */
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean
+    {
         return route.params['token'] ? true : false;
     }
 }

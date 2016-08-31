@@ -35,12 +35,13 @@ import template from './orders.component.html';
     selector: 'orders',
     template
 })
-export class OrdersComponent extends MeteorComponent {
-
+export class OrdersComponent extends MeteorComponent
+{
     /**
      * @summary Initializes a new instance of the OrdersComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 }

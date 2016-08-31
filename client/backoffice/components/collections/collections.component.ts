@@ -39,21 +39,25 @@ import template from './collections.component.html';
     selector: 'products',
     template
 })
-export class CollectionsComponent extends MeteorComponent implements OnInit  {
+export class CollectionsComponent extends MeteorComponent implements OnInit
+{
     private _categories: Mongo.Cursor<Category>;
 
     /**
      * @summary Initializes a new instance of the CollectionsComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
-        this.subscribe('categories', () => {
+    public ngOnInit()
+    {
+        this.subscribe('categories', () =>
+        {
             this._categories = Categories.find();
         }, true);
     }

@@ -46,7 +46,8 @@ import template from './add-product.component.html';
     template,
     directives: [ImagesUploaderComponent, NgForm, ModalComponent]
 })
-export class AddProductComponent extends MeteorComponent implements OnInit {
+export class AddProductComponent extends MeteorComponent implements OnInit
+{
     private _categories:         Mongo.Cursor<Category>;
     private _product:            Product = <Product>{};
     private _productTitle:       string  = '';
@@ -61,7 +62,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router) {
+    constructor(private _zone: NgZone, private _router: Router)
+    {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
@@ -84,13 +86,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit(): any {
+    public ngOnInit(): any
+    {
         tinymce.init(
             {
                 selector: 'textarea',
-                setup: (ed) => {
-                    ed.on('keyup change', (param, l) => {
-                        this._zone.run(() => {
+                setup: (ed) =>
+                {
+                    ed.on('keyup change', (param, l) =>
+                    {
+                        this._zone.run(() =>
+                        {
                             this._productDescription  = tinymce.activeEditor.getContent();
                             this._product.description = [{'language': this._defaultLocale, 'value' : this._productDescription}];
                         });
@@ -98,7 +104,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
                 }
             });
 
-        this.subscribe('categories', () => {
+        this.subscribe('categories', () =>
+        {
             this._categories = Categories.find();
         }, true);
 
@@ -109,7 +116,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      *
      * @param newTitle The new title to be set.
      */
-    private _onTitleChange(newTitle: any): void {
+    private _onTitleChange(newTitle: any): void
+    {
         this._productTitle  = newTitle;
         this._product.title = [{'language': this._defaultLocale, 'value' : this._productTitle}];
     }
@@ -120,15 +128,21 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @param {string}   id        The id of the category that was toggled.
      * @param {booblean} isChecked True if the toggle was enabled, otherwise, false.
      */
-    private _onCategoryToggle(id: string, isChecked: boolean): void {
+    private _onCategoryToggle(id: string, isChecked: boolean): void
+    {
         let index: number = this._product.categoryId.indexOf(id);
 
-        if (isChecked) {
-            if (index === -1) {
+        if (isChecked)
+        {
+            if (index === -1)
+            {
                 this._product.categoryId.push(id);
             }
-        } else {
-            if (index > -1) {
+        }
+        else
+        {
+            if (index > -1)
+            {
                 this._product.categoryId.splice(index, 1);
             }
         }
@@ -140,7 +154,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      * @param {string} id The id of the category.
      * @returns {boolean} True if the product belongs to the current category, otherwise, false.
      */
-    private _productHasCategory(id: string) {
+    private _productHasCategory(id: string)
+    {
         return this._product.categoryId.indexOf(id) > -1;
     }
 
@@ -151,34 +166,43 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      *
      * @returns {string} The translation.
      */
-    private _getMongoTranslation(messageCollection: I18nString[]): string {
-
-        if (!messageCollection) {
+    private _getMongoTranslation(messageCollection: I18nString[]): string
+    {
+        if (!messageCollection)
+        {
             return '';
         }
 
-        for (let i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === this._defaultLocale) {
+        for (let i = 0, l = messageCollection.length; i < l; i++)
+        {
+            if (messageCollection[i].language === this._defaultLocale)
+            {
                 return messageCollection[i].value;
             }
         }
+
         return '';
     }
 
     /**
      * @summary Saves the product in the database.
      */
-    private _saveProduct(): void {
-
-        Products.insert(this._product, (error, result) => {
-            if (error) {
+    private _saveProduct(): void
+    {
+        Products.insert(this._product, (error, result) =>
+        {
+            if (error)
+            {
                 this._waitModalResult = false;
 
                 console.error(error);
+
                 this._modal.show(
                     _T('There was an error saving the product'),
                     _T('Error'));
-            } else {
+            }
+            else
+            {
                 this._imagesUploader.upload(<string>result);
             }
         });
@@ -187,7 +211,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Event Handler for when image uploading process successfully.
      */
-    private _onImagesUploadedSuccessfully(result: any): void {
+    private _onImagesUploadedSuccessfully(result: any): void
+    {
         this._waitModalResult = true;
 
         this._modal.show(
@@ -198,7 +223,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Event Handler for when image uploading process fails.
      */
-    private _onImagesUploadedFails(error: any): void {
+    private _onImagesUploadedFails(error: any): void
+    {
         this._waitModalResult = false;
 
         this._modal.show(
@@ -206,6 +232,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
             _T('Error'));
 
         Products.remove(this._product); // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+
         this._product._id = '';
     }
 
@@ -214,8 +241,10 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
      *
      * @param event The modal closed event
      */
-    private _onModalClosed(event: any): void {
-        if (this._waitModalResult) {
+    private _onModalClosed(event: any): void
+    {
+        if (this._waitModalResult)
+        {
             this._waitModalResult = false;
 
             this._router.navigate(['/admin/products']);

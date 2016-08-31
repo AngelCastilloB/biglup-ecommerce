@@ -34,5 +34,6 @@ import template from './backoffice.component.html';
     template,
     styleUrls: ['backoffice.component.css']
 })
-export class BackofficeComponent {
+export class BackofficeComponent
+{
 }

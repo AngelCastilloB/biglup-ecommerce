@@ -24,12 +24,15 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /**
  * @summary The internationalization string schema.
  */
-export let I18nStringSchema: any = new SimpleSchema({
-    language: {
+export let I18nStringSchema: any = new SimpleSchema(
+{
+    language:
+    {
         type: String,
         label: 'The ISO 639-1 code of the language',
     },
-    value: {
+    value:
+    {
         label: 'Price',
         type: String,
         defaultValue: ''

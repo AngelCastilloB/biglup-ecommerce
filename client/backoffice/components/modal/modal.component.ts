@@ -42,7 +42,8 @@ import template from './modal.component.html';
     template,
     providers: [IdGeneratorService]
 })
-export class ModalComponent extends MeteorComponent {
+export class ModalComponent extends MeteorComponent
+{
     @Output('onClose')
     private _onClose:  EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('toggleButton')
@@ -54,7 +55,8 @@ export class ModalComponent extends MeteorComponent {
     /**
      * @summary Initializes a new instance of the ImageDisplayComponent class.
      */
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _idGenerator: IdGeneratorService) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private _idGenerator: IdGeneratorService)
+    {
         super();
 
         this._uniqueId = _idGenerator.generate();
@@ -66,7 +68,8 @@ export class ModalComponent extends MeteorComponent {
      * @param {string} message The message to be shown.
      * @param {string} title   The title to be shown.
      */
-    public show(message: string, title: string) {
+    public show(message: string, title: string)
+    {
         this._title   = title;
         this._message = message;
 
@@ -80,7 +83,8 @@ export class ModalComponent extends MeteorComponent {
      *
      * @param event The event information
      */
-    private _onClick(event: any) { // HACK: This is a hack to detect when the modal window is closed. Needs to be improved.
+    private _onClick(event: any) // HACK: This is a hack to detect when the modal window is closed. Needs to be improved.
+    {
         if (event.srcElement.className === 'closing-x' ||
             event.srcElement.className === 'btn btn-primary' ||
             event.srcElement.className === 'modal fade in') {

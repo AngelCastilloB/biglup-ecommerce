@@ -25,28 +25,34 @@ import { I18nStringSchema } from './i18n-string.schema';
 /**
  * @summary Represent an item on the cart.
  */
-export let CartItemSchema: any = new SimpleSchema({
-    productId: {
+export let CartItemSchema: any = new SimpleSchema(
+{
+    productId:
+    {
         type: String
     },
-    quantity: {
+    quantity:
+    {
         label: 'Quantity',
         type: Number,
         min: 0
     },
     // Denormalized field: Indicates the title of this product.
-    title: {
+    title:
+    {
         type: [I18nStringSchema]
     },
     // Denormalized field: Indicates the color variant of this product.
-    color: {
+    color:
+    {
         label: 'Color',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     // Denormalized field: Indicates the size of this product.
-    size: {
+    size:
+    {
         label: 'Size',
         type: [I18nStringSchema],
         defaultValue: '',
@@ -57,29 +63,40 @@ export let CartItemSchema: any = new SimpleSchema({
 /**
  * @summary The cart schema.
  */
-export let CartSchema: any = new SimpleSchema({
-    _id: {
+export let CartSchema: any = new SimpleSchema(
+{
+    _id:
+    {
         type: String
     },
-    userId: {
+    userId:
+    {
         type: String,
-        autoValue: function () {
-            if (this.isInsert) {
+        autoValue: function ()
+        {
+            if (this.isInsert)
+            {
                 return this.userId;
-            } else {
+            }
+            else
+            {
                 this.unset();
             }
         },
         optional: true
     },
-    items: {
+    items:
+    {
         type: [CartItemSchema],
         optional: true
     },
-    updatedAt: {
+    updatedAt:
+    {
         type: Date,
-        autoValue: function () {
-            if (this.isUpdate || this.isUpsert) {
+        autoValue: function ()
+        {
+            if (this.isUpdate || this.isUpsert)
+            {
                 return new Date;
             }
         },

@@ -35,12 +35,14 @@ import template from './edit-product.component.html';
     selector: 'edit-products',
     template
 })
-export class EditProductComponent extends MeteorComponent {
+export class EditProductComponent extends MeteorComponent
+{
 
     /**
      * @summary Initializes a new instance of the EditProductComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 }
