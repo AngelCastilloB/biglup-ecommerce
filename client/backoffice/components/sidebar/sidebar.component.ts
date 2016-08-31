@@ -19,10 +19,8 @@
 
 import 'reflect-metadata';
 
-import { Component }         from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { TranslatePipe }     from '../../../pipes/translate.pipe';
+import { Component }       from '@angular/core';
+import { MeteorComponent } from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,12 +33,10 @@ import template from './sidebar.component.html';
  */
 @Component({
     selector: 'sidebar',
-    template,
-    pipes: [TranslatePipe],
-    directives: [ROUTER_DIRECTIVES]
+    template
 })
-export class SidebarComponent extends MeteorComponent {
-
+export class SidebarComponent extends MeteorComponent
+{
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
      */

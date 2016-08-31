@@ -17,10 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ROUTER_DIRECTIVES,
-         Router,
-         NavigationEnd }    from '@angular/router';
-import { Component }        from '@angular/core';
+import 'reflect-metadata';
+
+import { Router, NavigationEnd } from '@angular/router';
+import { Component }             from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,7 +30,6 @@ import { Component }        from '@angular/core';
  */
 @Component({
     selector: 'breadcrumb',
-    directives: [ROUTER_DIRECTIVES],
     template: `
         <nav class="navbar navbar-dark stylish-color" style="z-index: 10;">
             <ul class="breadcrumb">
@@ -46,8 +45,8 @@ import { Component }        from '@angular/core';
         </nav>
     `
 })
-export class BreadcrumbComponent {
-
+export class BreadcrumbComponent
+{
     private _urls:   string[];
     private _isBase: boolean = true;
 
@@ -56,10 +55,14 @@ export class BreadcrumbComponent {
      *
      * @param {Router} router The router dependency injection.
      */
-    constructor(private router: Router) {
+    constructor(private router: Router)
+    {
         this._urls = [];
-        this.router.events.subscribe((navigationEnd: NavigationEnd) => {
+
+        this.router.events.subscribe((navigationEnd: NavigationEnd) =>
+        {
             this._urls.length = 0;
+
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
 
             this._isBase = this._urls.length <= 0;
@@ -71,17 +74,16 @@ export class BreadcrumbComponent {
      *
      * @param {string} url The Url to generate the breadcrumbs from.
      */
-    public generateBreadcrumbTrail(url: string): void {
+    public generateBreadcrumbTrail(url: string): void
+    {
         // HACK: Remove base url. This is a temporary hack.
-        if (url === '/admin' || url === '/admin/dashboard') {
+        if (url === '/admin' || url === '/admin/dashboard')
             return;
-        }
 
         this._urls.unshift(url);
 
-        if (url.lastIndexOf('/') > 0) {
+        if (url.lastIndexOf('/') > 0)
             this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/')));
-        }
     }
 
     /**
@@ -89,17 +91,21 @@ export class BreadcrumbComponent {
      *
      * @param {string} url The Url to get the current position from.
      */
-    public getCurrentPosition(url: string): string {
-        let positions = url.split('/').filter(function (n) {
+    public getCurrentPosition(url: string): string
+    {
+        let positions = url.split('/').filter(function (n)
+        {
             return n !== '';
         });
 
         // HACK: remove the base route for the admin panel.
-        if (positions[0] === 'admin') {
+        if (positions[0] === 'admin')
+        {
             positions.splice(0, 1);
         }
 
-        if (positions.length < 1) {
+        if (positions.length < 1)
+        {
             return '';
         }
 
@@ -111,7 +117,8 @@ export class BreadcrumbComponent {
      *
      * @param {string} message The message to be fixed.
      */
-    public fixCase(message: string) {
+    public fixCase(message: string)
+    {
         return message.charAt(0).toUpperCase() + message.slice(1);
     };
 
@@ -120,7 +127,8 @@ export class BreadcrumbComponent {
      *
      * @param {string} url The url to navigate to.
      */
-    public navigateTo(url: string): void {
+    public navigateTo(url: string): void
+    {
         this.router.navigateByUrl(url);
     }
 }

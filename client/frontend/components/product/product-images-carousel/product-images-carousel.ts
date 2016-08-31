@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Component, Input  }  from '@angular/core';
 import { IdGeneratorService } from '../../../../services/id-generator.service';
 
@@ -34,7 +36,8 @@ import template from './product-images-carousel.html';
     template,
     providers: [IdGeneratorService]
 })
-export class ProductImagesCarouselComponent {
+export class ProductImagesCarouselComponent
+{
     @Input()
     public images: Array<ProductImage>;
     private _id:   string;
@@ -44,7 +47,8 @@ export class ProductImagesCarouselComponent {
      *
      * @param _idGenerator The unique id service generator.
      */
-    constructor(private _idGenerator: IdGeneratorService) {
+    constructor(private _idGenerator: IdGeneratorService)
+    {
         this._id = this._idGenerator.generate();
     }
 }

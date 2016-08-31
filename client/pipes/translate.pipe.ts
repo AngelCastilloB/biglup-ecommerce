@@ -31,9 +31,10 @@ import { I18nSingletonService, _T } from '../services/i18n/i18n-singleton.servic
     name: 'translate',
     pure: false
 })
-export class TranslatePipe implements PipeTransform {
+export class TranslatePipe implements PipeTransform
+{
     private _locale: string = '';
-    private _value: string  = '';
+    private _value:  string = '';
 
     /**
      * @summary Translate the given text.
@@ -43,13 +44,16 @@ export class TranslatePipe implements PipeTransform {
      * @returns {string} The translation result. If no translation was found for the current locale, the original message
      * is returned.
      */
-    public transform(message: string): any {
+    public transform(message: string): any
+    {
         let currentLocale: string = I18nSingletonService.getInstance().getLocale();
 
-        if (currentLocale !== this._locale) {
+        if (currentLocale !== this._locale)
+        {
             this._locale = currentLocale;
             this._value  = _T(message);
         }
+
         return !this._value ? message : this._value;
     }
 }

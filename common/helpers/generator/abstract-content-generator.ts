@@ -22,10 +22,11 @@
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This class generates different kind of random product content.
+ * @summary Base class for the content generators. A content generator can create words, sentences and paragraphs.
  */
-export abstract class AbstractContentGenerator {
-    protected _words:     string[];
+export abstract class AbstractContentGenerator
+{
+    protected _words: string[];
     protected _sentences: string[];
     protected _paragraph: string;
 
@@ -36,10 +37,10 @@ export abstract class AbstractContentGenerator {
      *
      * @returns {string[]} The collection of requested words.
      */
-    public getWords(amount: number): string[] {
-        if (amount > this._words.length) {
+    public getWords(amount: number): string[]
+    {
+        if (amount > this._words.length)
             throw new Error(`Incorrect amount ${amount}, max permitted is ${this._words.length}.`);
-        }
 
         return this._getRandomArrayIndexes(this._words, amount);
     }
@@ -49,7 +50,8 @@ export abstract class AbstractContentGenerator {
      *
      * @returns {string} The requested random sentence.
      */
-    public getSentence(): string {
+    public getSentence(): string
+    {
         return this._getRandomElement(this._sentences);
     }
 
@@ -58,7 +60,8 @@ export abstract class AbstractContentGenerator {
      *
      * @returns {string} The requested random paragraph.
      */
-    public getParagraph(): string {
+    public getParagraph(): string
+    {
         return this._paragraph;
     }
 
@@ -71,8 +74,9 @@ export abstract class AbstractContentGenerator {
      *
      * @protected
      */
-    protected _getRandomElement(elements: string[]): string{
-        return elements[Math.floor(Math.random() * elements.length)];
+    protected _getRandomElement(element: string[]): string
+    {
+        return element[Math.floor(Math.random() * element.length)];
     }
 
     /**
@@ -84,11 +88,13 @@ export abstract class AbstractContentGenerator {
      * @returns {Array} The subset of elements.
      * @private
      */
-    private _getRandomArrayIndexes(array: any[], amount: number): any[] {
+    private _getRandomArrayIndexes(array: any[], amount: number): any[]
+    {
         const data  = array.slice(0);
         let results = [];
 
-        for (let i = 0; i < (Math.ceil(Math.random() * amount) || 1); i++) {
+        for (let i = 0; i < (Math.ceil(Math.random() * amount) || 1); ++i)
+        {
             results.push(data.splice(Math.floor(Math.random() * data.length), 1)[0]);
         }
 

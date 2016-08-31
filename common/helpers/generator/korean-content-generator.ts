@@ -21,8 +21,11 @@ import { AbstractContentGenerator } from './abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
-export class KoreanContentGenerator extends AbstractContentGenerator {
-
+/**
+ * @summary This content generators creates korean content.
+ */
+export class KoreanContentGenerator extends AbstractContentGenerator
+{
     /**
      * @summary Words used to fake models in korean.
      *

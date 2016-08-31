@@ -29,9 +29,10 @@ import { I18nSingletonService } from '../services/i18n/i18n-singleton.service';
     name: 'mongoTranslate',
     pure: false
 })
-export class MongoTranslatePipe implements PipeTransform {
+export class MongoTranslatePipe implements PipeTransform
+{
     private _locale: string = '';
-    private _value: string  = '';
+    private _value:  string = '';
 
     /**
      * @summary Selects the correct translation given a I18nString collection.
@@ -41,23 +42,27 @@ export class MongoTranslatePipe implements PipeTransform {
      * @returns {string} The translation result. If no translation was found for the current locale, the translation
      * for the default language is returned instead.
      */
-    public transform(messageCollection: [I18nString]): any {
+    public transform(messageCollection: [I18nString]): any
+    {
         let defaultLocale: string = I18nSingletonService.getInstance().getDefaultLocale();
         let currentLocale: string = I18nSingletonService.getInstance().getLocale();
 
-        if (currentLocale === this._locale) {
+        if (currentLocale === this._locale)
             return this._value;
-        }
 
-        for (let i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === currentLocale) {
+        for (let i = 0, l = messageCollection.length; i < l; ++i)
+        {
+            if (messageCollection[i].language === currentLocale)
+            {
                 this._value = messageCollection[i].value;
 
                 return this._value;
             }
         }
-        for (let i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === defaultLocale) {
+        for (let i = 0, l = messageCollection.length; i < l; ++i)
+        {
+            if (messageCollection[i].language === defaultLocale)
+            {
                 this._value = messageCollection[i].value;
 
                 return this._value;

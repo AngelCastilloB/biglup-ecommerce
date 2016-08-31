@@ -19,14 +19,9 @@
 
 import 'reflect-metadata';
 
-import { Component, Input, OnInit }       from '@angular/core';
-import { MeteorComponent }                from 'angular2-meteor';
-import { Images }                         from '../../../../common/collections/image.collection';
-import { MongoTranslatePipe }             from '../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }                  from '../../../pipes/translate.pipe';
-import { TruncateStringPipe }             from '../../../pipes/truncate-string.pipe';
-import { ROUTER_DIRECTIVES }              from '@angular/router';
-import { ProductImagesCarouselComponent } from '../product/product-images-carousel/product-images-carousel';
+import { Component, Input, OnInit } from '@angular/core';
+import { MeteorComponent }          from 'angular2-meteor';
+import { Images }                   from '../../../../common/collections/image.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -39,9 +34,7 @@ import template from './category-item.component.html';
  */
 @Component({
     selector: 'category-item',
-    template,
-    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe, TranslatePipe, TruncateStringPipe]
+    template
 })
 export class CategoryItemComponent extends MeteorComponent implements OnInit {
     @Input()
@@ -53,7 +46,8 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 
@@ -70,7 +64,6 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
                     this._productImages.push(image);
                 }
             }
-
         }, true);
     }
 }

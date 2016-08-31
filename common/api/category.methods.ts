@@ -29,7 +29,8 @@ import { CategorySchema } from '../schemas/category.schema';
  *
  * @return The ID if the newly inserted category.
  */
-Meteor.methods({
+Meteor.methods(
+{
     'categories.createCategory' : function (category: Category) {
 
         /*
@@ -52,7 +53,8 @@ Meteor.methods({
  *
  * @param categoryId The category id of the categoryId to be deleted.
  */
-Meteor.methods({
+Meteor.methods(
+{
     ['categories.deleteCategory']: function (categoryId: string) {
 
         /*
@@ -86,7 +88,8 @@ Meteor.methods({
  *
  * @param category The category to be updated.
  */
-Meteor.methods({
+Meteor.methods(
+{
     ['categories.updateCategory']: function (category: Category) {
 
         check(category, CategorySchema);

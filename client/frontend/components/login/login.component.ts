@@ -17,25 +17,25 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES,
-         Validators }                   from '@angular/forms';
-import { ROUTER_DIRECTIVES, Router }    from '@angular/router';
-import { TranslatePipe }                from '../../../pipes/translate.pipe';
-import { _T }                           from '../../../services/i18n/i18n-singleton.service';
-import { Meteor }                       from 'meteor/meteor';
-import { MeteorComponent }              from 'angular2-meteor';
-import { ValidationService }            from '../../../services/validation.service';
-import { UserAuthService }              from '../../../services/user-auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription }                 from 'rxjs';
-import { OauthLoginComponent }          from '../oauth-login/oauth-login.component';
-import { FormErrorComponent }           from '../form-error/form-error.component';
+import 'reflect-metadata';
+
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router }                             from '@angular/router';
+import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { Meteor }                             from 'meteor/meteor';
+import { MeteorComponent }                    from 'angular2-meteor';
+import { ValidationService }                  from '../../../services/validation.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
+import { Component, OnInit, OnDestroy }       from '@angular/core';
+import { Subscription }                       from 'rxjs';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './login.component.html';
+
+// CONSTANTS **********************************************************************************************************/
+
+const NOT_FOUND = 403;
 
 // EXPORTS ************************************************************************************************************/
 
@@ -44,17 +44,10 @@ import template from './login.component.html';
  */
 @Component({
     selector: 'login-form',
-    template,
-    directives: [
-        REACTIVE_FORM_DIRECTIVES,
-        ROUTER_DIRECTIVES,
-        OauthLoginComponent,
-        FormErrorComponent
-    ],
-    pipes: [TranslatePipe]
+    template
 })
-export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy {
-
+export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
+{
     /**
      * @summary The data and other things associated with the login form.
      */
@@ -77,23 +70,20 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {Router}          _router          Angular's router service.
      * @param {UserAuthService} _userAuthService The user authentication service.
      */
-    constructor(
-        private _formBuilder: FormBuilder,
+    constructor(private _formBuilder: FormBuilder,
         private _router: Router,
-        private _userAuthService: UserAuthService) {
-
+        private _userAuthService: UserAuthService)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after data-bounding.
      */
-    public ngOnInit() {
+    public ngOnInit()
+    {
         this._loginForm = this._formBuilder.group({
-            email: ['', Validators.compose([
-                Validators.required,
-                ValidationService.email
-            ])],
+            email:    ['', Validators.compose([Validators.required, ValidationService.email])],
             password: ['', Validators.required]
         });
     }
@@ -101,8 +91,10 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     /**
      * @summary destroys unneeded subscriptions and related resources.
      */
-    public ngOnDestroy() {
-        if (this._loginSubscription) this._loginSubscription.unsubscribe();
+    public ngOnDestroy()
+    {
+        if (this._loginSubscription)
+            this._loginSubscription.unsubscribe();
     }
 
     /**
@@ -111,22 +103,20 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {Event} event The click event.
      * @private
      */
-    private _onSubmit(event: Event): void {
-
+    private _onSubmit(event: Event): void
+    {
         event.preventDefault();
 
-        if (!this._loginForm.valid) {
+        if (!this._loginForm.valid)
             return;
-        }
 
         const email    = this._loginForm.value.email;
         const password = this._loginForm.value.password;
 
-        this._userAuthService.login(email, password, err => {
-
-            if (err) {
+        this._userAuthService.login(email, password, err =>
+        {
+            if (err)
                 return this._processError(err);
-            }
 
             this._router.navigate(['/']);
         });
@@ -138,14 +128,22 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {Error} error The error to be processed.
      * @private
      */
-    private _processError(error: Meteor.Error): void {
-        this.autorun(() => {
+    private _processError(error: Meteor.Error): void
+    {
+        this.autorun(() =>
+        {
             this._error.cssClass = 'text-danger';
+
             this._loginForm.setErrors({'external-related': true});
 
-            this._error.message = error.error === 403 ?
-                _T ('The credentials provided did not match our records.') :
-                error.reason;
+            switch (error.error) // TODO: Handle all cases.
+            {
+                case NOT_FOUND:
+                    this._error.message = _T('The credentials provided did not match our records.');
+                    break;
+                default:
+                    this._error.message = error.reason;
+            }
         });
     }
 }

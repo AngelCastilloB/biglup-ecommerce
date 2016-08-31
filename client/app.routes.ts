@@ -1,10 +1,10 @@
 /**
- * @file frontend.component.ts
+ * @file app.routes.ts.
  *
- * @summary
+ * @summary The sugar for the application's routes.
  *
- * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @date   August 26 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,20 +17,19 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { Component } from '@angular/core';
-
-// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-// noinspection TypeScriptCheckImport
-import template from './frontend.component.html';
+import { Routes, RouterModule } from '@angular/router';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The front end root component.
+ * @summary The routes configurations.
  */
-@Component({template})
-export class FrontendComponent
-{
-}
+const ROUTES: Routes = [
+];
+
+/**
+ * @summary generates a module object with the app root routes.
+ *
+ * @type {ModuleWithProviders}
+ */
+export const AppRoutesModule = RouterModule.forRoot(ROUTES);

@@ -27,12 +27,12 @@
                      formControlName="confirmation">
               <label for="signup-form-confirmation">Confirm password</label>
             </div>
-            <form-error [formid]="'signup-password'"
+            <form-error [formId]="'signup-password'"
                         class="text-danger"
                         [message]="'The password and the confirmation provided are not matching.'"
                         *ngIf="_hasConfirmationError()"></form-error>
 
-            <form-error [formid]="'signup-generic'"
+            <form-error [formId]="'signup-generic'"
                         [classes]="_error.cssClass"
                         [message]="_error.message"
                         *ngIf="!_signUpForm.valid && _signUpForm.errors"></form-error>

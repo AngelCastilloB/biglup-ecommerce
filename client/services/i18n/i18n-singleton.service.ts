@@ -40,7 +40,8 @@ let g_showWarning = true;
  *
  * This function should be used over getText. Since the _T() is used to locate translatable string in the code.
  */
-export function _T(key: string): string {
+export function _T(key: string): string
+{
     let result = '';
 
     g_showWarning = false;
@@ -57,10 +58,11 @@ export function _T(key: string): string {
 /**
  * @summary Serves localised text.
  */
-export class I18nSingletonService {
-    private static _instance: I18nSingletonService = new I18nSingletonService();
-    public _localeChanged: EventEmitter<string>    = new EventEmitter<string>();
-    private _currentLocale: string                 = DEFAULT_LOCALE;
+export class I18nSingletonService
+{
+    private static _instance:      I18nSingletonService = new I18nSingletonService();
+    public         _localeChanged: EventEmitter<string> = new EventEmitter<string>();
+    private        _currentLocale: string               = DEFAULT_LOCALE;
 
     private _translations: {[key: string]: {[key: string]: string}} = {};
 
@@ -69,17 +71,18 @@ export class I18nSingletonService {
      *
      * @returns {I18nSingletonService} The singleton instance.
      */
-    public static getInstance(): I18nSingletonService {
+    public static getInstance(): I18nSingletonService
+    {
         return I18nSingletonService._instance;
     }
 
     /**
      * @summary Lazy initialise a new instance of the I18nSingletonService singleton class.
      */
-    constructor() {
-        if (I18nSingletonService._instance) {
+    constructor()
+    {
+        if (I18nSingletonService._instance)
             throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
-        }
 
         // Add supported languages
         this._translations['en'] = this.loadTranslations(require('./translations/en.json')); // english
@@ -97,14 +100,15 @@ export class I18nSingletonService {
      *
      * Dont call this function directly. Instead use the _T() since it is used to locate translatable strings in the code.
      */
-    public getText(key: string): string {
-
-        if (g_showWarning) {
+    public getText(key: string): string
+    {
+        if (g_showWarning)
             console.warn('Please do not call I18nSingletonService\'s getText() method directly. Use the _T() function instead');
-        }
 
-        if (!(key in this._translations[this._currentLocale])) {
+        if (!(key in this._translations[this._currentLocale]))
+        {
             console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
+
             return key;
         }
 
@@ -116,7 +120,8 @@ export class I18nSingletonService {
      *
      * @returns {string} The default locale.
      */
-    public getDefaultLocale(): string {
+    public getDefaultLocale(): string
+    {
         return DEFAULT_LOCALE;
     }
 
@@ -125,14 +130,13 @@ export class I18nSingletonService {
      *
      * @param {string} locale The current locale.
      */
-    public setLocale(locale: string): void {
-        if (locale === this._currentLocale) {
+    public setLocale(locale: string): void
+    {
+        if (locale === this._currentLocale)
             return;
-        }
 
-        if (!(locale in this._translations)) {
+        if (!(locale in this._translations))
             console.error(`Locale ${locale} not supported.`);
-        }
 
         this._currentLocale = locale;
         this._localeChanged.emit(locale);
@@ -143,7 +147,8 @@ export class I18nSingletonService {
      *
      * @returns {string} The current locale.
      */
-    public getLocale(): string {
+    public getLocale(): string
+    {
         return this._currentLocale;
     }
 
@@ -152,7 +157,8 @@ export class I18nSingletonService {
      *
      * @returns {EventEmitter<string>} The emitter.
      */
-    public getLocaleChangeEmitter() {
+    public getLocaleChangeEmitter()
+    {
         return this._localeChanged;
     }
 
@@ -163,10 +169,12 @@ export class I18nSingletonService {
      *
      * @returns The associative array with all the translations.
      */
-    public loadTranslations(json): {[key: string]: string} {
+    public loadTranslations(json): {[key: string]: string}
+    {
         let map: {[key: string]: string} = {};
 
-        for (let i = 0, l = json.length; i < l; i++) {
+        for (let i = 0, l = json.length; i < l; ++i)
+        {
             map[json[i].key] = json[i].value;
         }
 

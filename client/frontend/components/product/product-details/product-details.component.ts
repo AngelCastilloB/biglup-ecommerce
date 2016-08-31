@@ -15,20 +15,19 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// noinspection TypeScriptCheckImport
-import template from './product-details.component.html';
-
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit }                 from '@angular/core';
-import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
-import { Products }                          from '../../../../../common/collections/product.collection';
-import { Images }                            from '../../../../../common/collections/image.collection';
-import { Categories }                        from '../../../../../common/collections/category.collection';
-import { MeteorComponent }                   from 'angular2-meteor';
-import { MongoTranslatePipe }                from '../../../../pipes/mongo-translate.pipe';
-import { TranslatePipe }                     from '../../../../pipes/translate.pipe';
-import { ProductImagesCarouselComponent }    from '../product-images-carousel/product-images-carousel';
+import 'reflect-metadata';
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute }    from '@angular/router';
+import { Products }          from '../../../../../common/collections/product.collection';
+import { Images }            from '../../../../../common/collections/image.collection';
+import { Categories }        from '../../../../../common/collections/category.collection';
+import { MeteorComponent }   from 'angular2-meteor';
+
+// noinspection TypeScriptCheckImport
+import template from './product-details.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -37,12 +36,10 @@ import { ProductImagesCarouselComponent }    from '../product-images-carousel/pr
  */
 @Component({
     selector: 'product-details',
-    template,
-    directives: [ROUTER_DIRECTIVES, ProductImagesCarouselComponent],
-    pipes: [MongoTranslatePipe, TranslatePipe]
+    template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit {
-
+export class ProductDetailsComponent extends MeteorComponent implements OnInit
+{
     private _productId:     string;
     private _categoryId:    string;
     private _product:       Product;
@@ -52,7 +49,8 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute)
+    {
         super();
     }
 
@@ -60,11 +58,13 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
+        this.route.params.subscribe((params) =>
+        {
             this._categoryId = params['categoryId'];
             this._productId  = params['productId'];
 
-            this.subscribe('product', this._productId, () => {
+            this.subscribe('product', this._productId, () =>
+            {
                 this._product = Products.findOne({_id: this._productId});
 
                 this._product.images.sort(function(lhs, rhs) {
@@ -84,7 +84,8 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
                 }, true);
             }, true);
 
-            this.subscribe('category', this._categoryId, () => {
+            this.subscribe('category', this._categoryId, () =>
+            {
                 this._category = Categories.findOne({_id: this._categoryId});
             }, true);
         });

@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import {Directive, ElementRef, EventEmitter} from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
@@ -30,7 +32,8 @@ import {Directive, ElementRef, EventEmitter} from '@angular/core';
     outputs: ['onSelected'],
     host: { '(change)': 'onFilesSelected()' }
 })
-export class FileSelectDirective {
+export class FileSelectDirective
+{
     public onSelected: EventEmitter<FileList> = new EventEmitter<FileList>();
 
     /**
@@ -38,13 +41,15 @@ export class FileSelectDirective {
      *
      * @param el The parent element.
      */
-    constructor(public el: ElementRef) {
+    constructor(public el: ElementRef)
+    {
     }
 
     /**
      * @summary Event handler for the 'change' event on the parent element.
      */
-    private onFilesSelected(): void {
+    private onFilesSelected(): void
+    {
         let files: FileList = this.el.nativeElement.files;
 
         if (files.length) {

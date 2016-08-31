@@ -31,8 +31,7 @@ import { UploadFS }                from 'meteor/jalik:ufs';
 import { ImagesStore }             from '../../../../common/collections/image.collection.ts';
 import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
-import { TranslatePipe }           from '../../../pipes/translate.pipe';
-import { UploaderImage }            from './internals/product-image'
+import { UploaderImage }           from './internals/product-image'
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -52,10 +51,10 @@ const NUMBER_OF_COLUMNS = 5;
     template,
     styleUrls: ['./images-uploader.component.css'],
     viewProviders: [DragulaService],
-    pipes: [TranslatePipe],
     directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
 })
-export class ImagesUploader  {
+export class ImagesUploaderComponent
+{
     @Output('onSuccess')
     private  _onSuccess:   EventEmitter<any>    = new EventEmitter<any>();
     @Output('onError')
@@ -68,27 +67,28 @@ export class ImagesUploader  {
     private _rows:         number               = 0;
 
     /**
-     * @summary Initializes a new instance of the ImagesUploader class.
+     * @summary Initializes a new instance of the ImagesUploaderComponent class.
      */
-    constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
-
-        this._dragulaService.drop.subscribe((value) => {
-
-            if (this._uploading) {
+    constructor(private _renderer: Renderer, private _dragulaService: DragulaService)
+    {
+        this._dragulaService.drop.subscribe((value) =>
+        {
+            if (this._uploading)
                 return;
-            }
 
             let [bag, e, target, source, sibling] = value;
 
-            if (this._previewFiles.length < 2) {
+            if (this._previewFiles.length < 2)
                 return;
-            }
 
-            if (!sibling) {
+            if (!sibling)
+            {
                 let sourceIndex: number = parseInt(e.id, 10);
 
                 this._moveFile(sourceIndex, this._previewFiles.length - 1);
-            } else {
+            }
+            else
+            {
                 let sourceIndex:      number = parseInt(e.id, 10);
                 let destinationIndex: number = parseInt(sibling.id, 10);
 
@@ -112,7 +112,8 @@ export class ImagesUploader  {
      *
      * @param fileIsOver True if the upload is over, otherwise, false.
      */
-    public fileOver(fileIsOver: boolean): void {
+    public fileOver(fileIsOver: boolean): void
+    {
         this._fileIsOver = fileIsOver;
     }
 
@@ -121,26 +122,28 @@ export class ImagesUploader  {
      *
      * @param {string} id The product id to associate the images with.
      */
-    public upload(product: Product) {
-
+    public upload(product: Product)
+    {
         this._uploading = true;
 
         product.images.length = 0;
 
-        let count: number = this._previewFiles.filter(function (uploaderImage: UploaderImage) {
+        let count: number = this._previewFiles.filter(function (uploaderImage: UploaderImage)
+        {
             return !uploaderImage.isUploaded;
         }).length;
 
-        if (count === 0) {
+        if (count === 0)
+        {
             this._onSuccess.emit({});
 
             return;
         }
 
-        for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
-
-            if (this._previewFiles[i].isUploaded) {
-
+        for (let i = 0; i < this._previewFiles.length && this._uploading; ++i)
+        {
+            if (this._previewFiles[i].isUploaded)
+            {
                 product.images.push({position: i, id: this._previewFiles[i].databaseId});
 
                 continue;
@@ -148,7 +151,8 @@ export class ImagesUploader  {
 
             let sourceFile: File = this._previewFiles[i].file;
 
-            const picture = {
+            const picture =
+            {
                 name: sourceFile.name,
                 type: sourceFile.type,
                 size: sourceFile.size,
@@ -158,20 +162,22 @@ export class ImagesUploader  {
                 store: ImagesStore,
                 data: sourceFile,
                 file: picture,
-                onError: (error) => {
-                    if (!this._uploading) { // HACK: remove this
+                onError: (error) =>
+                {
+                    if (!this._uploading) // HACK: remove this
                         return;
-                    }
 
                     this._uploading = false;
                     this._onError.emit(error);
                 },
-                onComplete: (result) => {
-
+                onComplete: (result) =>
+                {
                     product.images.push({position: i, id: result._id});
 
                     --count;
-                    if (count === 0) { // HACK: remove this
+
+                    if (count === 0) // HACK: remove this
+                    {
                         console.error(product.images);
                         this._onSuccess.emit({});
                         this._uploading = false;
@@ -188,7 +194,8 @@ export class ImagesUploader  {
      *
      * @param event The drop event.
      */
-    private _onDropStart(event: any): void {
+    private _onDropStart(event: any): void
+    {
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', true);
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', false);
     }
@@ -198,7 +205,8 @@ export class ImagesUploader  {
      *
      * @param event The drop event.
      */
-    private _onDropEnds(event: any): void {
+    private _onDropEnds(event: any): void
+    {
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', true);
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', false);
     }
@@ -208,23 +216,24 @@ export class ImagesUploader  {
      *
      * @param file The file to be uploaded.
      */
-    private _onFileDrop(files: FileList): void {
-
-        if (this._uploading) {
+    private _onFileDrop(files: FileList): void
+    {
+        if (this._uploading)
             return;
-        }
 
-        if (!files.length) {
+        if (!files.length)
             return;
-        }
 
         let newFiles: Array<UploaderImage> = Array.prototype.slice.call(files).map(function (file) {
             return new UploaderImage(file, false, '');
         });
 
-        if (this._previewFiles.length === 0) {
+        if (this._previewFiles.length === 0)
+        {
             this._previewFiles = newFiles;
-        } else {
+        }
+        else
+        {
             this._previewFiles = this._previewFiles.concat(newFiles);
         }
 
@@ -236,44 +245,40 @@ export class ImagesUploader  {
      *
      * @param {File} file The file to be deleted.
      */
-    private _onImageDeleted(file: UploaderImage) {
-
-        if (this._uploading) {
+    private _onImageDeleted(file: UploaderImage)
+    {
+        if (this._uploading)
             return;
-        }
 
         let index = this._previewFiles.indexOf(file);
 
-        if (index !== -1) {
+        if (index !== -1)
             this._previewFiles.splice(index, 1);
-        }
     }
 
-   /**
-    * @brief Move one file from the source index to the destination index.
-    *
-    * @param {number} source The source index.
-    * @param { number} destination The destination index.
-    */
-    private _moveFile(source: number, destination: number): void  {
-       if (this._uploading) {
-           return;
-       }
+        /**
+         * @brief Move one file from the source index to the destination index.
+         *
+         * @param {number} source The source index.
+         * @param { number} destination The destination index.
+         */
+    private _moveFile(source: number, destination: number): void
+    {
+        if (this._uploading)
+            return;
 
-        while (source < 0) {
+        while (source < 0)
             source += this._previewFiles.length;
-        }
 
-        while (destination < 0) {
+        while (destination < 0)
             destination += this._previewFiles.length;
-        }
 
-        if (destination >= this._previewFiles.length) {
+        if (destination >= this._previewFiles.length)
+        {
             let k: number = destination - this._previewFiles.length;
 
-            while ((k--) + 1) {
+            while ((k--) + 1)
                 this._previewFiles.push(undefined);
-            }
         }
 
         this._previewFiles.splice(destination, 0, this._previewFiles.splice(source, 1)[0]);

@@ -15,9 +15,18 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
-import { IdGeneratorService } from '../../../services/id-generator.service';
+// IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
+import { Component, Input, OnInit } from '@angular/core';
+import { IdGeneratorService }       from '../../../services/id-generator.service';
+
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @summary custom component intended as a simple error display message in forms.
+ */
 @Component({
     selector: 'form-error',
     providers: [IdGeneratorService],
@@ -25,32 +34,37 @@ import { IdGeneratorService } from '../../../services/id-generator.service';
                   {{ message }}
                </div>`
 })
-export class FormErrorComponent implements OnInit {
-
+export class FormErrorComponent implements OnInit
+{
     /**
      * @summary custom id when provided, appended with -form-error.
      */
-    @Input() public formId: string;
+    @Input()
+    public formId: string;
 
     /**
      * @summary custom classes from up the chain.
      */
-    @Input() public classes: string;
+    @Input()
+    public classes: string;
 
     /**
      * @summary the error message in clear text.
      */
-    @Input() public message: string;
+    @Input()
+    public message: string;
 
     /**
      * @summary random id in case none is provided.
      */
     private _randomId: string;
 
-    constructor(private _idGenerator: IdGeneratorService) {
+    constructor(private _idGenerator: IdGeneratorService)
+    {
     }
 
-    public ngOnInit() {
+    public ngOnInit()
+    {
         this._randomId = this._idGenerator.generate();
     }
 
@@ -60,8 +74,10 @@ export class FormErrorComponent implements OnInit {
      * @returns {string}
      * @private
      */
-    private _getId() {
+    private _getId()
+    {
         const id = this.formId || this._randomId;
+
         return `${id}-form-error`;
     }
 }

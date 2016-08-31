@@ -28,8 +28,8 @@ import { Injectable }          from '@angular/core';
  * @summary Handles the users login and logout cases with related observables.
  */
 @Injectable()
-export class UserAuthService {
-
+export class UserAuthService
+{
     /**
      * @summary creates a subject related to the users login status.
      * @see https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#bidirectional-service
@@ -48,7 +48,8 @@ export class UserAuthService {
      * @summary Wrapper around meteor user id, as an boolean.
      * @returns {boolean}
      */
-    public isLogged(): boolean {
+    public isLogged(): boolean
+    {
         return !!Meteor.userId();
     }
 
@@ -57,7 +58,8 @@ export class UserAuthService {
      *
      * @returns {Observable<boolean>}
      */
-    public isLoggedStream(): Observable<boolean> {
+    public isLoggedStream(): Observable<boolean>
+    {
         return this._isLoggedObservable;
     }
 
@@ -66,7 +68,8 @@ export class UserAuthService {
      *
      * @returns {Meteor.User}
      */
-    public getUser() {
+    public getUser()
+    {
         return Meteor.user();
     }
 
@@ -75,7 +78,8 @@ export class UserAuthService {
      *
      * @returns {Observable<Meteor.User>}
      */
-    public getUserStream(): Observable<Meteor.User> {
+    public getUserStream(): Observable<Meteor.User>
+    {
         return this._userObservable;
     }
 
@@ -88,15 +92,18 @@ export class UserAuthService {
      *
      * @returns {Observable<boolean>} true if login success
      */
-    public login(email: string, password: string, callback: (error?) => void) {
+    public login(email: string, password: string, callback: (error?) => void)
+    {
         Meteor.loginWithPassword(email, password, err => this._updateUserLoginStreams(err, callback));
     }
 
     /**
      * @summary handles the users logging out from the application.
      */
-    public logout() {
-        Meteor.logout(() => {
+    public logout()
+    {
+        Meteor.logout(() =>
+        {
             this._isLoggedSubject.next(false);
             this._userSubject.next(null);
         });
@@ -110,7 +117,8 @@ export class UserAuthService {
      * @param {string} options.password
      * @param {Function=} callback this callback expects an error object as an argument
      */
-    public createUser(options: {email: string, password: string}, callback?: (error) => void) {
+    public createUser(options: {email: string, password: string}, callback?: (error) => void)
+    {
         Accounts.createUser(options, err => callback(err));
     }
 
@@ -120,7 +128,8 @@ export class UserAuthService {
      * @param {Object} options
      * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithFacebook(options: Object, callback?: (error) => void) {
+    public loginWithFacebook(options: Object, callback?: (error) => void)
+    {
         Meteor.loginWithFacebook(options, err => this._updateUserLoginStreams(err, callback));
     }
 
@@ -130,7 +139,8 @@ export class UserAuthService {
      * @param {Object} options
      * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithGoogle(options: Object, callback?: (error) => void) {
+    public loginWithGoogle(options: Object, callback?: (error) => void)
+    {
         Meteor.loginWithGoogle(options, err => this._updateUserLoginStreams(err, callback));
     }
 
@@ -140,15 +150,31 @@ export class UserAuthService {
      * @param {Object} options
      * @param {Function=} callback this callback expects an error object as an argument
      */
-    public loginWithTwitter(options: Object, callback?: (error) => void) {
+    public loginWithTwitter(options: Object, callback?: (error) => void)
+    {
         Meteor.loginWithTwitter(options, err => this._updateUserLoginStreams(err, callback));
     }
 
-    public forgotPassword(options: {email: string}, callback?: (err?) => void) {
+    /**
+     * @summary Triggers the forgot password functionality.
+     *
+     * @param options  The email of the user.
+     * @param callback The callback function.
+     */
+    public forgotPassword(options: {email: string}, callback?: (err?) => void)
+    {
         Accounts.forgotPassword(options, callback);
     }
 
-    public resetPassword(token: string, newPassword: string, callback?: (error) => void) {
+    /**
+     * @summary Triggers the reset password functionality.
+     *
+     * @param token        //TODO: Document
+     * @param newPassword The new password.
+     * @param callback    The callback function.
+     */
+    public resetPassword(token: string, newPassword: string, callback?: (error) => void)
+    {
         Accounts.resetPassword(token, newPassword, callback);
     }
 
@@ -161,12 +187,15 @@ export class UserAuthService {
      * @returns {*} whatever the callback returns
      * @private
      */
-    private _updateUserLoginStreams(err?: any, callback?: Function) {
-        if (!err) {
+    private _updateUserLoginStreams(error?: any, callback?: Function)
+    {
+        if (!error)
+        {
             this._isLoggedSubject.next(true);
             this._userSubject.next(this.getUser());
         }
 
-        if (callback) return callback(err);
+        if (callback)
+            return callback(error);
     }
 }

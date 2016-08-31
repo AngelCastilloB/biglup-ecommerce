@@ -19,10 +19,9 @@
 
 import 'reflect-metadata';
 
-import { AfterViewInit }     from '@angular/core';
-import { Component }         from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { AfterViewInit }   from '@angular/core';
+import { Component }       from '@angular/core';
+import { MeteorComponent } from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,21 +34,23 @@ import template from './dashboard.component.html';
  */
 @Component({
     selector: 'dashboard',
-    template,
-    directives: [ROUTER_DIRECTIVES]
+    template
 })
-export class DashboardComponent extends MeteorComponent implements AfterViewInit {
+export class DashboardComponent extends MeteorComponent implements AfterViewInit
+{
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 
     /**
      * @summary This function is called when your component's view _has been fully initialized.
      */
-    public ngAfterViewInit() {
+    public ngAfterViewInit()
+    {
     }
 }

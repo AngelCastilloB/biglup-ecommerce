@@ -17,6 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
 import { Component,
          ElementRef,
          Input,
@@ -44,7 +46,8 @@ import template from './image-preview.component.html';
     styleUrls: ['./images-preview.component.css'],
     directives: [ImageDisplayComponent],
 })
-export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit {
+export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit
+{
     @Input('model')
     private _model:        UploaderImage;
     @Output('onDeleted')
@@ -55,31 +58,36 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
      */
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit(): any {
+    public ngOnInit(): any
+    {
         let thumbnail = this.element.nativeElement.querySelector('.image-responsive');
         let reader    = new FileReader();
 
-        if (this._model.isUploaded) {
+        if (this._model.isUploaded)
+        {
             thumbnail.src = this._model.remoteUrl;
 
             return;
         }
 
-        reader.onload = (event: ProgressEvent) => {
-            if (event.type === 'load') {
-
+        reader.onload = (event: ProgressEvent) =>
+        {
+            if (event.type === 'load')
+            {
                 let src = event.target.result;
 
                 thumbnail.src = src;
-
-            } else if (event.type === 'error') {
+            }
+            else if (event.type === 'error')
+            {
                 console.error('Could not read file.');
             }
         };
@@ -90,7 +98,8 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     /**
      * #brief Runs after the view _has been completely initialized.
      */
-    public ngAfterViewInit() {
+    public ngAfterViewInit()
+    {
         this._imageDisplay.setImage(this._model);
     }
 
@@ -99,21 +108,24 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
      *
      * @returns {EventEmitter<UploaderImage>} The on deleted event emitter.
      */
-    public getOnDeleteEmitter(): EventEmitter<UploaderImage> {
+    public getOnDeleteEmitter(): EventEmitter<UploaderImage>
+    {
         return this._onDeleted;
     }
 
     /**
      * @summary Emits the the on deleted event.
      */
-    private _emitDeleted() {
+    private _emitDeleted()
+    {
         this._onDeleted.emit(this._model);
     }
 
     /**
      * @summary Shows the fill size display.
      */
-    private _showImageDisplay() {
+    private _showImageDisplay()
+    {
         this._imageDisplay.show();
     }
 }

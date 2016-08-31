@@ -21,8 +21,11 @@ import { AbstractContentGenerator } from './abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
-export class SimplifiedChineseContentGenerator extends AbstractContentGenerator {
-
+/**
+ * @summary This content generators creates simplified chinese content.
+ */
+export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
+{
     /**
      * @summary Words used to fake models in chinese.
      *

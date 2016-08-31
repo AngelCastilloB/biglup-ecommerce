@@ -30,8 +30,8 @@ import { UserAuthService }        from '../user-auth.service';
  * @summary This guard is responsible of users access according to the login status.
  */
 @Injectable()
-export class IsUserLoggedGuardService implements CanActivate {
-
+export class IsUserLoggedGuardService implements CanActivate
+{
     /**
      * @summary the user's login status.
      */
@@ -43,7 +43,8 @@ export class IsUserLoggedGuardService implements CanActivate {
      * @param {Router}          router           The router service.
      * @param {UserAuthService} _userAuthService The authentication service.
      */
-    constructor(private router: Router, private _userAuthService: UserAuthService) {
+    constructor(private router: Router, private _userAuthService: UserAuthService)
+    {
         this._userAuthService.isLoggedStream().subscribe(status => this._status = status);
     }
 
@@ -55,15 +56,13 @@ export class IsUserLoggedGuardService implements CanActivate {
      *
      * @returns {boolean}
      */
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
-        if (this._status) {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean
+    {
+        if (this._status)
             return true;
-        }
 
-        if (state.url !== '/login') {
+        if (state.url !== '/login')
             this.router.navigate(['/login']);
-        }
 
         return false;
     }

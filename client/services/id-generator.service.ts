@@ -29,7 +29,8 @@ import { Injectable } from '@angular/core';
  * @summary Service that returns unrepeated new identifiers.
  */
 @Injectable()
-export class IdGeneratorService {
+export class IdGeneratorService
+{
     private static s_count: number = 0;
 
     /**
@@ -37,8 +38,10 @@ export class IdGeneratorService {
      *
      * @returns {string} The new unique id.
      */
-    generate(): string {
+    generate(): string
+    {
         ++IdGeneratorService.s_count;
+
         return PREFIX + IdGeneratorService.s_count;
     }
 }

@@ -17,34 +17,33 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Validators,
-         FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { ValidationService }         from '../../../services/validation.service';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { _T }                        from '../../../services/i18n/i18n-singleton.service';
-import { FormErrorComponent }        from '../form-error/form-error.component';
-import { UserAuthService }           from '../../../services/user-auth.service';
+import 'reflect-metadata';
+
+import { Validators, FormGroup, FormBuilder}  from '@angular/forms';
+import { Component, OnInit, NgZone }          from '@angular/core';
+import { ValidationService }                  from '../../../services/validation.service';
+import { Router }                             from '@angular/router';
+import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
 
 // noinspection TypeScriptCheckImport
-import template                      from './password-reset.component.html';
+import template from './password-reset.component.html';
+
+// CONSTANTS **********************************************************************************************************/
+
+const NOT_FOUND = 403;
 
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'password-reset',
-    template,
-    pipes: [TranslatePipe],
-    directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
-})
 /**
  * @summary This component allows the user to reset its password.
  */
-export class PasswordResetComponent implements OnInit {
-
+@Component({
+    selector: 'password-reset',
+    template
+})
+export class PasswordResetComponent implements OnInit
+{
     /**
      * @summary The data and other things associated with the password reset form.
      */
@@ -67,14 +66,15 @@ export class PasswordResetComponent implements OnInit {
         private _ngZone: NgZone,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _userAuthService: UserAuthService) {
+        private _userAuthService: UserAuthService)
+    {
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
-
+    public ngOnInit()
+    {
         this._pwResetForm = this._formBuilder.group({
             email: ['', Validators.compose([
                 Validators.required,
@@ -89,15 +89,17 @@ export class PasswordResetComponent implements OnInit {
      * @param event The click event.
      * @private
      */
-    private _onSubmit(event: Event) {
+    private _onSubmit(event: Event)
+    {
         event.preventDefault();
 
-        if (!this._pwResetForm.valid) {
+        if (!this._pwResetForm.valid)
             return;
-        }
 
-        this._userAuthService.forgotPassword({email: this._pwResetForm.value.email}, err => {
-            if (err) return this._processError(err);
+        this._userAuthService.forgotPassword({email: this._pwResetForm.value.email}, error =>
+        {
+            if (error)
+                return this._processError(error);
 
             // TODO show user success message after password reset
             this._router.navigate(['/login']);
@@ -110,14 +112,21 @@ export class PasswordResetComponent implements OnInit {
      * @param {Error} error The error to be processed.
      * @private
      */
-    private _processError(error: Meteor.Error): void {
-        this._ngZone.run(() => {
+    private _processError(error: Meteor.Error): void
+    {
+        this._ngZone.run(() =>
+        {
             this._error.cssClass = 'text-danger';
             this._pwResetForm.setErrors({'external-related': true});
 
-            this._error.message = error.error === 403 ?
-                _T('The Email provided did not match our records.') :
-                error.reason;
+            switch (error.error) // TODO: Handle all cases.
+            {
+                case NOT_FOUND:
+                    this._error.message = _T('The Email provided did not match our records.')
+                    break;
+                default:
+                    this._error.message = error.reason;
+            }
         });
     }
 }

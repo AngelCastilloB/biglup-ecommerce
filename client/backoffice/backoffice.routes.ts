@@ -17,7 +17,7 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { RouterConfig }           from '@angular/router';
+import { Routes, RouterModule }   from '@angular/router';
 import { DashboardComponent }     from './components/dashboard/dashboard.component';
 import { OrdersComponent }        from './components/orders/orders.component';
 import { CustomersComponent }     from './components/customers/customers.component';
@@ -33,7 +33,7 @@ import { AddCollectionComponent } from './components/add-collection/add-collecti
 /**
  * @brief This are the back office routes.
  */
-export const backofficeRoutes: RouterConfig = [
+const ROUTES: Routes = [
     {
         path: 'admin',
         component: BackofficeComponent,
@@ -52,3 +52,10 @@ export const backofficeRoutes: RouterConfig = [
         ]
     },
 ];
+
+/**
+ * @summary generates a module object with the app backoffice routes.
+ *
+ * @type {ModuleWithProviders}
+ */
+export const BackofficeRoutesModule = RouterModule.forChild(ROUTES);

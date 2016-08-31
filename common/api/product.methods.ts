@@ -31,7 +31,8 @@ import { ProductSchema } from '../schemas/product.schema';
  *
  * @return The ID if the newly inserted product.
  */
-Meteor.methods({
+Meteor.methods(
+{
     'products.createProduct' : function (product: Product) {
 
         /*
@@ -66,7 +67,8 @@ Meteor.methods({
  *
  * @param product The product id of the product to be deleted.
  */
-Meteor.methods({
+Meteor.methods(
+{
     ['products.deleteProduct']: function (productId: string) {
 
         /*
@@ -95,7 +97,8 @@ Meteor.methods({
  *
  * @param product The product to be updated.
  */
-Meteor.methods({
+Meteor.methods(
+{
     ['products.updateProduct']: function (product: Product) {
 
         check(product, ProductSchema);
@@ -138,7 +141,8 @@ Meteor.methods({
  *
  * @param id The id of the category to be removed.
  */
-Meteor.methods({
+Meteor.methods(
+{
     ['products.removeCategory']: function (id: string) {
 
         check(id, String);
@@ -163,20 +167,24 @@ Meteor.methods({
  * @param modifiedProduct The product with the modifications.
  * @param currentProduct  The product as it currently is in the database.
  */
-function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) {
+function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
+{
 
-    let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage) {
+    let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage)
+    {
         return orderedImage.id;
     });
 
-    let currentProductIds: Array<String> = currentProduct.images.map(function (orderedImage: OrderedImage) {
+    let currentProductIds: Array<String> = currentProduct.images.map(function (orderedImage: OrderedImage)
+    {
         return orderedImage.id;
     });
 
     console.error(currentProductIds);
     console.error(modifiedProductIds);
 
-    let difference: Array<String> = modifiedProductIds.filter(function (id: string) {
+    let difference: Array<String> = modifiedProductIds.filter(function (id: string)
+    {
         return currentProductIds.indexOf(id) < 0;
     });
 }

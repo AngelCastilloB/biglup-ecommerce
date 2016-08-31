@@ -17,41 +17,29 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, NgZone }          from '@angular/core';
+import { ValidationService }                  from '../../../services/validation.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
+import { Router }                             from '@angular/router';
+import { NewPasswordComponent }               from '../new-password/new-password.component';
+
 // noinspection TypeScriptCheckImport
 import template from './sign-up.component.html';
 
-import { FormGroup,
-         FormBuilder,
-         Validators,
-         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { ValidationService }         from '../../../services/validation.service';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { ROUTER_DIRECTIVES }         from '@angular/router';
-import { UserAuthService }           from '../../../services/user-auth.service';
-import { Router }                    from '@angular/router';
-import { OauthLoginComponent }       from '../oauth-login/oauth-login.component';
-import { FormErrorComponent }        from '../form-error/form-error.component';
-import { NewPasswordComponent }      from '../new-password/new-password.component';
-
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'sign-up',
-    template,
-    directives: [
-        REACTIVE_FORM_DIRECTIVES,
-        ROUTER_DIRECTIVES,
-        OauthLoginComponent,
-        FormErrorComponent
-    ],
-    pipes: [TranslatePipe]
-})
 /**
  * @summary This component allows the user to sign up to the site.
  */
-export class SignUpComponent implements OnInit {
-
+@Component({
+    selector: 'sign-up',
+    template
+})
+export class SignUpComponent implements OnInit
+{
     /**
      * @summary The data and other things associated with the login form.
      */
@@ -89,8 +77,8 @@ export class SignUpComponent implements OnInit {
     /**
      * @summary Initialize the component after data-bounding.
      */
-    public ngOnInit() {
-
+    public ngOnInit()
+    {
         this._signUpForm = this._formBuilder.group({
 
             email: ['', Validators.compose([
@@ -116,22 +104,20 @@ export class SignUpComponent implements OnInit {
      * @summary process a new login from the html form.
      * @private
      */
-    private _onSubmit(event: Event): void {
-
+    private _onSubmit(event: Event): void
+    {
         event.preventDefault();
 
-        if (!this._signUpForm.valid) {
+        if (!this._signUpForm.valid)
             return;
-        }
 
         const email    = this._signUpForm.value.email;
         const password = this._signUpForm.value.password;
 
-        this._userAuthService.createUser({email, password}, error => {
-
-            if (error) {
+        this._userAuthService.createUser({email, password}, error =>
+        {
+            if (error)
                 return this._processError(error);
-            }
 
             this._router.navigate(['/']);
         });
@@ -144,7 +130,8 @@ export class SignUpComponent implements OnInit {
      * @returns {boolean} True if there is a confirmation error, otherwise, false.
      * @private
      */
-    private _hasConfirmationError() {
+    private _hasConfirmationError()
+    {
         return NewPasswordComponent.hasConfirmationError(this._signUpForm.controls['confirmation']);
     }
 
@@ -154,10 +141,10 @@ export class SignUpComponent implements OnInit {
      * @param {Error} error Shows a human readable error.
      * @private
      */
-    private _processError(error: Meteor.Error): void {
-
-        this._ngZone.run(() => {
-
+    private _processError(error: Meteor.Error): void
+    {
+        this._ngZone.run(() =>
+        {
             this._error.cssClass = 'text-danger';
             this._signUpForm.setErrors({'external-related': true});
             this._error.message = error.reason;

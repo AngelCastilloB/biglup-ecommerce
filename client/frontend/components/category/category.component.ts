@@ -19,11 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MeteorComponent }              from 'angular2-meteor';
-import { ActivatedRoute }               from '@angular/router';
-import { CategoryItemComponent }        from '../category-item/category-item.component';
-import { ProductsService }              from '../../../services/products.service'
+
+import { Component, OnInit } from '@angular/core';
+import { MeteorComponent }   from 'angular2-meteor';
+import { ActivatedRoute }    from '@angular/router';
+import { ProductsService }   from '../../../services/products.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,25 +37,27 @@ import template from './category.component.html';
 @Component({
     selector: 'category',
     template,
-    directives: [CategoryItemComponent],
     providers: [ProductsService]
 })
-export class CategoryComponent extends MeteorComponent implements OnInit, OnDestroy {
+export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private _route: ActivatedRoute, private _productsService: ProductsService) {
+    constructor(private _route: ActivatedRoute, private _productsService: ProductsService)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
+    public ngOnInit()
+    {
 
-        this._route.params.subscribe((params) => {
+        this._route.params.subscribe((params) =>
+        {
             this._categoryId = params['categoryId'];
         });
     }

@@ -41,13 +41,15 @@ export const Thumbnails = new Mongo.Collection<ProductThumbnail>('thumbnails');
  *
  * @type {UploadFS.store.Local} The thumbnail store.
  */
-export const ThumbnailsStore = new UploadFS.store.Local({
+export const ThumbnailsStore = new UploadFS.store.Local(
+{
     collection: Thumbnails,
     path: '/home/angel/uploads',
     name: 'thumbnails',
     mode: '0744',
     writeMode: '0744',
-    transformWrite(from, to, fileId, file) {
+    transformWrite(from, to, fileId, file)
+    {
         // Resize to 32x32
         const gm = require('gm');
 
@@ -66,13 +68,15 @@ export const ThumbnailsStore = new UploadFS.store.Local({
  *
  * @type {UploadFS.store.Local} The image store
  */
-export const ImagesStore = new UploadFS.store.Local({
+export const ImagesStore = new UploadFS.store.Local(
+{
     collection: Images,
     name: 'images',
     path: '/home/angel/uploads',
     mode: '0744',
     writeMode: '0744',
-    filter: new UploadFS.Filter({
+    filter: new UploadFS.Filter(
+    {
         contentTypes: ['image/*']
     }),
     copyTo: [
@@ -87,19 +91,22 @@ export const ImagesStore = new UploadFS.store.Local({
  *
  * @returns {boolean} true if the operation is allowed, otherwise, false.
  */
-function isAllowed() {
+function isAllowed()
+{
     return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
 }
 
 // RULES **************************************************************************************************************/
 
-Thumbnails.allow({
+Thumbnails.allow(
+{
     insert: isAllowed,
     update: isAllowed,
     remove: isAllowed
 });
 
-Images.allow({
+Images.allow(
+{
     insert: isAllowed,
     update: isAllowed,
     remove: isAllowed
