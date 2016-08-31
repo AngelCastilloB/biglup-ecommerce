@@ -25,10 +25,7 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router }                   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }        from '@angular/router';
-import { TranslatePipe }            from '../../../pipes/translate.pipe';
-import { ImagesUploader }           from '../images-uploader/images-uploader.component';
-import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
+import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Categories }               from '../../../../common/collections/category.collection';
@@ -47,8 +44,7 @@ import template from './add-collection.component.html';
 @Component({
     selector: 'add-collection',
     template,
-    pipes: [TranslatePipe, MongoTranslatePipe],
-    directives: [ROUTER_DIRECTIVES, ImagesUploader, NgForm, ModalComponent]
+    directives: [ImagesUploaderComponent, NgForm, ModalComponent]
 })
 export class AddCollectionComponent extends MeteorComponent implements OnInit {
     @ViewChild(ModalComponent)

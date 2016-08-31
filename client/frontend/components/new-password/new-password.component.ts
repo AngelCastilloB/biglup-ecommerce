@@ -17,33 +17,26 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Validators,
-         FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES,
-         AbstractControl }                           from '@angular/forms';
-import { Component, OnInit, NgZone }                 from '@angular/core';
-import { ValidationService }                         from '../../../services/validation.service';
-import { Router, ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
-import { TranslatePipe }                             from '../../../pipes/translate.pipe';
-import { FormErrorComponent }                        from '../form-error/form-error.component';
-import { UserAuthService }                           from '../../../services/user-auth.service';
+import 'reflect-metadata';
+
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Component, OnInit, NgZone }                           from '@angular/core';
+import { ValidationService }                                   from '../../../services/validation.service';
+import { Router, ActivatedRoute }                              from '@angular/router';
+import { UserAuthService }                                     from '../../../services/user-auth.service';
 
 // noinspection TypeScriptCheckImport
-import template                                      from './new-password.component.html';
+import template from './new-password.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'new-password',
-    template,
-    pipes: [TranslatePipe],
-    providers: [TranslatePipe],
-    directives: [FormErrorComponent, ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
-})
 /**
  * @summary Component that allow the user to input a new password.
  */
+@Component({
+    selector: 'new-password',
+    template
+})
 export class NewPasswordComponent implements OnInit {
 
     /**

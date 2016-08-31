@@ -17,10 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ROUTER_DIRECTIVES,
-         Router,
-         NavigationEnd }    from '@angular/router';
-import { Component }        from '@angular/core';
+import 'reflect-metadata';
+
+import { Router, NavigationEnd } from '@angular/router';
+import { Component }             from '@angular/core';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,7 +30,6 @@ import { Component }        from '@angular/core';
  */
 @Component({
     selector: 'breadcrumb',
-    directives: [ROUTER_DIRECTIVES],
     template: `
         <nav class="navbar navbar-dark stylish-color" style="z-index: 10;">
             <ol class="breadcrumb">

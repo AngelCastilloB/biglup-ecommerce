@@ -17,39 +17,27 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import 'reflect-metadata';
+
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, NgZone }          from '@angular/core';
+import { ValidationService }                  from '../../../services/validation.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
+import { Router }                             from '@angular/router';
+import { NewPasswordComponent }               from '../new-password/new-password.component';
+
 // noinspection TypeScriptCheckImport
 import template from './sign-up.component.html';
 
-import { FormGroup,
-         FormBuilder,
-         Validators,
-         REACTIVE_FORM_DIRECTIVES }  from '@angular/forms';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { ValidationService }         from '../../../services/validation.service';
-import { TranslatePipe }             from '../../../pipes/translate.pipe';
-import { ROUTER_DIRECTIVES }         from '@angular/router';
-import { UserAuthService }           from '../../../services/user-auth.service';
-import { Router }                    from '@angular/router';
-import { OauthLoginComponent }       from '../oauth-login/oauth-login.component';
-import { FormErrorComponent }        from '../form-error/form-error.component';
-import { NewPasswordComponent }      from '../new-password/new-password.component';
-
 // EXPORTS ************************************************************************************************************/
 
-@Component({
-    selector: 'sign-up',
-    template,
-    directives: [
-        REACTIVE_FORM_DIRECTIVES,
-        ROUTER_DIRECTIVES,
-        OauthLoginComponent,
-        FormErrorComponent
-    ],
-    pipes: [TranslatePipe]
-})
 /**
  * @summary This component allows the user to sign up to the site.
  */
+@Component({
+    selector: 'sign-up',
+    template
+})
 export class SignUpComponent implements OnInit {
 
     /**

@@ -31,7 +31,6 @@ import { UploadFS }                from 'meteor/jalik:ufs';
 import { ImagesStore }             from '../../../../common/collections/image.collection.ts';
 import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
-import { TranslatePipe }           from '../../../pipes/translate.pipe';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -51,10 +50,9 @@ const NUMBER_OF_COLUMNS = 5;
     template,
     styleUrls: ['./images-uploader.component.css'],
     viewProviders: [DragulaService],
-    pipes: [TranslatePipe],
     directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
 })
-export class ImagesUploader  {
+export class ImagesUploaderComponent  {
     @Output('onSuccess')
     private  _onSuccess:   EventEmitter<any> = new EventEmitter<any>();
     @Output('onError')
@@ -67,7 +65,7 @@ export class ImagesUploader  {
     private _rows:         number            = 0;
 
     /**
-     * @summary Initializes a new instance of the ImagesUploader class.
+     * @summary Initializes a new instance of the ImagesUploaderComponent class.
      */
     constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
 

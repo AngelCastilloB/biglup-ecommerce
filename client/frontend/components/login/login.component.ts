@@ -17,21 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { FormGroup,
-         FormBuilder,
-         REACTIVE_FORM_DIRECTIVES,
-         Validators }                   from '@angular/forms';
-import { ROUTER_DIRECTIVES, Router }    from '@angular/router';
-import { TranslatePipe }                from '../../../pipes/translate.pipe';
-import { _T }                           from '../../../services/i18n/i18n-singleton.service';
-import { Meteor }                       from 'meteor/meteor';
-import { MeteorComponent }              from 'angular2-meteor';
-import { ValidationService }            from '../../../services/validation.service';
-import { UserAuthService }              from '../../../services/user-auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription }                 from 'rxjs';
-import { OauthLoginComponent }          from '../oauth-login/oauth-login.component';
-import { FormErrorComponent }           from '../form-error/form-error.component';
+import 'reflect-metadata';
+
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router }                             from '@angular/router';
+import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { Meteor }                             from 'meteor/meteor';
+import { MeteorComponent }                    from 'angular2-meteor';
+import { ValidationService }                  from '../../../services/validation.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
+import { Component, OnInit, OnDestroy }       from '@angular/core';
+import { Subscription }                       from 'rxjs';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -44,14 +40,7 @@ import template from './login.component.html';
  */
 @Component({
     selector: 'login-form',
-    template,
-    directives: [
-        REACTIVE_FORM_DIRECTIVES,
-        ROUTER_DIRECTIVES,
-        OauthLoginComponent,
-        FormErrorComponent
-    ],
-    pipes: [TranslatePipe]
+    template
 })
 export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy {
 
@@ -77,8 +66,7 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {Router}          _router          Angular's router service.
      * @param {UserAuthService} _userAuthService The user authentication service.
      */
-    constructor(
-        private _formBuilder: FormBuilder,
+    constructor(private _formBuilder: FormBuilder,
         private _router: Router,
         private _userAuthService: UserAuthService) {
 
@@ -144,7 +132,7 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
             this._loginForm.setErrors({'external-related': true});
 
             this._error.message = error.error === 403 ?
-                _T ('The credentials provided did not match our records.') :
+                _T('The credentials provided did not match our records.') :
                 error.reason;
         });
     }

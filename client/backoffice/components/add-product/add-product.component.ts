@@ -25,11 +25,8 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router }                   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
-import { ROUTER_DIRECTIVES }        from '@angular/router';
-import { TranslatePipe }            from '../../../pipes/translate.pipe';
-import { ImagesUploader }           from '../images-uploader/images-uploader.component';
+import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { Categories }               from '../../../../common/collections/category.collection.ts';
-import { MongoTranslatePipe }       from '../../../pipes/mongo-translate.pipe';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Products }                 from '../../../../common/collections/product.collection';
@@ -47,8 +44,7 @@ import template from './add-product.component.html';
 @Component({
     selector: 'add-products',
     template,
-    pipes: [TranslatePipe, MongoTranslatePipe],
-    directives: [ROUTER_DIRECTIVES, ImagesUploader, NgForm, ModalComponent]
+    directives: [ImagesUploaderComponent, NgForm, ModalComponent]
 })
 export class AddProductComponent extends MeteorComponent implements OnInit {
     private _categories:         Mongo.Cursor<Category>;
@@ -57,7 +53,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
     private _productDescription: string  = '';
     private _defaultLocale:      string  = I18nSingletonService.getInstance().getDefaultLocale();
     @ViewChild('imagesUploader')
-    private _imagesUploader:     ImagesUploader;
+    private _imagesUploader:     ImagesUploaderComponent;
     @ViewChild(ModalComponent)
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
@@ -69,6 +65,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
+        this._product.color            = [];
+        this._product.size             = [];
         this._product.description      = [];
         this._product.hashtags         = [];
         this._product.createdAt        = new Date();
@@ -176,6 +174,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit {
             if (error) {
                 this._waitModalResult = false;
 
+                console.error(error);
                 this._modal.show(
                     _T('There was an error saving the product'),
                     _T('Error'));
