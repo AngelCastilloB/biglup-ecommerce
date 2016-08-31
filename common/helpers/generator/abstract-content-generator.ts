@@ -21,8 +21,8 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export abstract class AbstractContentGenerator {
-
+export abstract class AbstractContentGenerator
+{
     /**
      * @summary Words used to fake models in korean.
      *
@@ -52,10 +52,10 @@ export abstract class AbstractContentGenerator {
      * @param {number} amount  the amount to return.
      * @returns {string[]}
      */
-    public words(amount: number): string[] {
-        if (amount > this._words.length) {
+    public words(amount: number): string[]
+    {
+        if (amount > this._words.length)
             throw new Error(`Incorrect amount ${amount}, max permitted is ${this._words.length}.`);
-        }
 
         return this._getRandomArrayIndexes(this._words, amount);
     }
@@ -65,7 +65,8 @@ export abstract class AbstractContentGenerator {
      *
      * @returns {string}
      */
-    public sentence(): string {
+    public sentence(): string
+    {
         return this._getRandomElement(this._sentences);
     }
 
@@ -74,7 +75,8 @@ export abstract class AbstractContentGenerator {
      *
      * @returns {string}
      */
-    public paragraph(): string {
+    public paragraph(): string
+    {
         return this._paragraph;
     }
 
@@ -85,7 +87,8 @@ export abstract class AbstractContentGenerator {
      * @returns {string}
      * @protected
      */
-    protected _getRandomElement(element: string[]): string {
+    protected _getRandomElement(element: string[]): string
+    {
         return element[Math.floor(Math.random() * element.length)];
     }
 
@@ -97,11 +100,13 @@ export abstract class AbstractContentGenerator {
      * @returns {Array}
      * @private
      */
-    private _getRandomArrayIndexes(array: any[], amount: number): any[] {
+    private _getRandomArrayIndexes(array: any[], amount: number): any[]
+    {
         const data  = array.slice(0);
         let results = [];
 
-        for (let i = 0; i < (Math.ceil(Math.random() * amount) || 1); i++) {
+        for (let i = 0; i < (Math.ceil(Math.random() * amount) || 1); ++i)
+        {
             results.push(data.splice(Math.floor(Math.random() * data.length), 1)[0]);
         }
 

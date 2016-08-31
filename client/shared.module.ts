@@ -46,6 +46,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         TruncateStringPipe
     ]
 })
-export class SharedModule {
+export class SharedModule
+{
 }
 

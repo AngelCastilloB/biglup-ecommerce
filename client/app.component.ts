@@ -34,5 +34,6 @@ import template from './app.component.html';
     selector: 'app',
     template
 })
-export class AppComponent {
+export class AppComponent
+{
 }

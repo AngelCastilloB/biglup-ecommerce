@@ -29,7 +29,8 @@ import {Directive, ElementRef, EventEmitter} from '@angular/core';
     selector: '[file-drop]',
     outputs: ['onFileDrop', 'onDropStart', 'onDropEnds']
 })
-export class FileDropDirective {
+export class FileDropDirective
+{
     public onFileDrop:  EventEmitter<FileList> = new EventEmitter<FileList>();
     public onDropStart: EventEmitter<any>      = new EventEmitter();
     public onDropEnds:  EventEmitter<any>      = new EventEmitter();
@@ -39,7 +40,8 @@ export class FileDropDirective {
    *
    * @param el The parent element.
    */
-    constructor(public el: ElementRef) {
+    constructor(public el: ElementRef)
+    {
         this._subscribeEvents();
     }
 
@@ -47,43 +49,48 @@ export class FileDropDirective {
        * @summary Subscribes this directive to the drop, dragenter, dragover, dragleave and dragend
        * events of the parent element.
        */
-      private _subscribeEvents(): void {
-        this.el.nativeElement.addEventListener('drop', (event: any) => {
+      private _subscribeEvents(): void
+      {
+        this.el.nativeElement.addEventListener('drop', (event: any) =>
+        {
             event.stopPropagation();
             event.preventDefault();
 
             let dataTransfer: DataTransfer = event.dataTransfer;
             let files:        FileList     = dataTransfer.files;
 
-            if (files.length) {
+            if (files.length)
                 this.onFileDrop.emit(files);
-            }
 
             this.onDropEnds.emit({});
         }, false);
 
-        this.el.nativeElement.addEventListener('dragenter', (e: DragEvent) => {
+        this.el.nativeElement.addEventListener('dragenter', (e: DragEvent) =>
+        {
             e.stopPropagation();
             e.preventDefault();
 
             this.onDropStart.emit({});
         }, false);
 
-        this.el.nativeElement.addEventListener('dragover', (e: DragEvent) => {
+        this.el.nativeElement.addEventListener('dragover', (e: DragEvent) =>
+        {
             e.stopPropagation();
             e.preventDefault();
 
             this.onDropStart.emit({});
         }, false);
 
-          this.el.nativeElement.addEventListener('dragleave', (e: DragEvent) => {
+          this.el.nativeElement.addEventListener('dragleave', (e: DragEvent) =>
+          {
               e.stopPropagation();
               e.preventDefault();
 
               this.onDropEnds.emit({});
           }, false);
 
-          this.el.nativeElement.addEventListener('dragend', (e: DragEvent) => {
+          this.el.nativeElement.addEventListener('dragend', (e: DragEvent) =>
+          {
               e.stopPropagation();
               e.preventDefault();
 

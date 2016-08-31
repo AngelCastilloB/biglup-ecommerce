@@ -38,8 +38,8 @@ import template from './product-details.component.html';
     selector: 'product-details',
     template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit {
-
+export class ProductDetailsComponent extends MeteorComponent implements OnInit
+{
     private _productId:     string;
     private _categoryId:    string;
     private _product:       Product;
@@ -49,7 +49,8 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute)
+    {
         super();
     }
 
@@ -57,19 +58,23 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit {
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
+        this.route.params.subscribe((params) =>
+        {
             this._categoryId = params['categoryId'];
             this._productId  = params['productId'];
 
-            this.subscribe('product', this._productId, () => {
+            this.subscribe('product', this._productId, () =>
+            {
                 this._product = Products.findOne({_id: this._productId});
             }, true);
 
-            this.subscribe('category', this._categoryId, () => {
+            this.subscribe('category', this._categoryId, () =>
+            {
                 this._category = Categories.findOne({_id: this._categoryId});
             }, true);
 
-            this.subscribe('product-images', this._productId, () => {
+            this.subscribe('product-images', this._productId, () =>
+            {
                 this._productImages = Images.find({productId: this._productId});
             }, true);
         });

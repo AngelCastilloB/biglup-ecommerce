@@ -36,7 +36,8 @@ export { Products }
 
 // RULES **************************************************************************************************************/
 
-Products.deny({
+Products.deny(
+{
     insert() { return true; },
     update() { return true; },
     remove() { return true; },

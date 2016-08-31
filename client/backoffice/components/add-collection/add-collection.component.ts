@@ -46,7 +46,8 @@ import template from './add-collection.component.html';
     template,
     directives: [ImagesUploaderComponent, NgForm, ModalComponent]
 })
-export class AddCollectionComponent extends MeteorComponent implements OnInit {
+export class AddCollectionComponent extends MeteorComponent implements OnInit
+{
     @ViewChild(ModalComponent)
     private _modal:               ModalComponent;
     private _category:            Category = <Category>{};
@@ -59,7 +60,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router) {
+    constructor(private _zone: NgZone, private _router: Router)
+     {
         super();
 
         this._category.isParentCategory = true;
@@ -70,13 +72,17 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit(): any {
+    public ngOnInit(): any
+    {
         tinymce.init(
             {
                 selector: 'textarea',
-                setup: (ed) => {
-                    ed.on('keyup change', (param, l) => {
-                        this._zone.run(() => {
+                setup: (ed) =>
+                {
+                    ed.on('keyup change', (param, l) =>
+                    {
+                        this._zone.run(() =>
+                        {
                             this._categoryDescription = tinymce.activeEditor.getContent();
                             this._category.info       = [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
                         });
@@ -90,7 +96,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      *
      * @param newName The new name to be set.
      */
-    private _onNameChange(newName: any): void {
+    private _onNameChange(newName: any): void
+    {
         this._categoryName = newName;
         this._category.name = [{'language': this._defaultLocale, 'value' : this._categoryName}];
     }
@@ -102,26 +109,32 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      *
      * @returns {string} The translation.
      */
-    private _getMongoTranslation(messageCollection: I18nString[]): string {
+    private _getMongoTranslation(messageCollection: I18nString[]): string
+    {
 
-        if (!messageCollection) {
+        if (!messageCollection)
+        {
             return '';
         }
 
-        for (let i = 0, l = messageCollection.length; i < l; i++) {
-            if (messageCollection[i].language === this._defaultLocale) {
+        for (let i = 0, l = messageCollection.length; i < l; i++)
+        {
+            if (messageCollection[i].language === this._defaultLocale)
+            {
                 return messageCollection[i].value;
             }
         }
+
         return '';
     }
 
     /**
      * @summary Saves the category in the database.
      */
-    private _saveCategory(): void {
-
-        if (!this._category.name || !this._category.info) {
+    private _saveCategory(): void
+    {
+        if (!this._category.name || !this._category.info)
+        {
             this._modal.show(
                 _T('Please fill all the required fields.'),
                 _T('Information'));
@@ -129,8 +142,10 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
             return;
         }
 
-        Categories.insert(this._category, (error, result) => {
-            if (error) {
+        Categories.insert(this._category, (error, result) =>
+        {
+            if (error)
+            {
                 this._waitModalResult = false;
 
                 this._modal.show(
@@ -138,7 +153,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
                     _T('Error'));
 
                 console.error(error);
-            } else {
+            }
+            else
+            {
                 this._category._id = result;
                 this._isEditMode = true;
 
@@ -152,10 +169,12 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Deletes the category in the database.
      */
-    private _deleteCategory(): void {
-
-        Categories.remove(this._category._id, (error, result) => {
-            if (error) {
+    private _deleteCategory(): void
+    {
+        Categories.remove(this._category._id, (error, result) =>
+        {
+            if (error)
+            {
                 this._waitModalResult = false;
 
                 this._modal.show(
@@ -163,7 +182,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
                     _T('Error'));
 
                 console.error(error);
-            } else {
+            }
+            else
+            {
                 this._waitModalResult = true;
 
                 this._modal.show(
@@ -176,9 +197,11 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Saves the category in the database.
      */
-    private _updateCategory(): void {
+    private _updateCategory(): void
+    {
 
-        if (!this._category.name || !this._category.info) {
+        if (!this._category.name || !this._category.info)
+        {
             this._modal.show(
                 _T('Please fill all the required fields.'),
                 _T('Information'));
@@ -187,14 +210,18 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
         }
 
         Categories.update(
-            { _id: this._category._id }, {
-                $set: {
+            { _id: this._category._id },
+            {
+                $set:
+                {
                     name: this._category.name,
                     info: this._category.info
                 }
             },
-            (error, result) => {
-                if (error) {
+            (error, result) =>
+            {
+                if (error)
+                {
                     this._waitModalResult = false;
 
                     this._modal.show(
@@ -202,7 +229,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
                         _T('Error'));
 
                     console.error(error);
-                } else {
+                }
+                else
+                {
                     this._waitModalResult = true;
 
                     this._modal.show(
@@ -217,7 +246,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      *
      * @param event The modal closed event
      */
-    private _onCancel(): void {
+    private _onCancel(): void
+    {
         this._router.navigate(['/admin/collections']);
     }
 
@@ -228,8 +258,10 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit {
      *
      * @param event The modal closed event
      */
-    private _onModalClosed(event: any): void {
-        if (this._waitModalResult) {
+    private _onModalClosed(event: any): void
+    {
+        if (this._waitModalResult)
+        {
             this._waitModalResult = false;
 
             this._router.navigate(['/admin/collections']);

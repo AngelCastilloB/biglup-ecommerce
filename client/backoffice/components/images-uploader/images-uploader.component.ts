@@ -52,7 +52,8 @@ const NUMBER_OF_COLUMNS = 5;
     viewProviders: [DragulaService],
     directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
 })
-export class ImagesUploaderComponent  {
+export class ImagesUploaderComponent
+{
     @Output('onSuccess')
     private  _onSuccess:   EventEmitter<any> = new EventEmitter<any>();
     @Output('onError')
@@ -67,25 +68,26 @@ export class ImagesUploaderComponent  {
     /**
      * @summary Initializes a new instance of the ImagesUploaderComponent class.
      */
-    constructor(private _renderer: Renderer, private _dragulaService: DragulaService) {
-
-        _dragulaService.drop.subscribe((value) => {
-
-            if (this._uploading) {
+    constructor(private _renderer: Renderer, private _dragulaService: DragulaService)
+    {
+        _dragulaService.drop.subscribe((value) =>
+        {
+            if (this._uploading)
                 return;
-            }
 
             let [bag, e, target, source, sibling] = value;
 
-            if (this._previewFiles.length < 2) {
+            if (this._previewFiles.length < 2)
                 return;
-            }
 
-            if (!sibling) {
+            if (!sibling)
+            {
                 let sourceIndex: number = parseInt(e.id);
 
                 this._moveFile(sourceIndex, this._previewFiles.length - 1);
-            } else {
+            }
+            else
+            {
                 let sourceIndex:      number = parseInt(e.id, 10);
                 let destinationIndex: number = parseInt(sibling.id, 10);
 
@@ -99,7 +101,8 @@ export class ImagesUploaderComponent  {
      *
      * @param fileIsOver True if the upload is over, otherwise, false.
      */
-    public fileOver(fileIsOver: boolean): void {
+    public fileOver(fileIsOver: boolean): void
+    {
         this._fileIsOver = fileIsOver;
     }
 
@@ -108,12 +111,13 @@ export class ImagesUploaderComponent  {
      *
      * @param {string} id The product id to asociate the images with.
      */
-    public upload(id: string) {
-
+    public upload(id: string)
+    {
         this._uploading = true;
 
         let count: number = 0; // HACK: This is an ugly hack *se persigna*. Will fix this in a later iteration.
-        for (let i = 0; i < this._previewFiles.length && this._uploading; ++i) {
+        for (let i = 0; i < this._previewFiles.length && this._uploading; ++i)
+        {
             let sourceFile: File = this._previewFiles[i];
 
             const picture = {
@@ -128,15 +132,16 @@ export class ImagesUploaderComponent  {
                 store: ImagesStore,
                 data: sourceFile,
                 file: picture,
-                onError: (error) => {
-                    if (!this._uploading) { // HACK: remove this
+                onError: (error) =>
+                {
+                    if (!this._uploading) // HACK: remove this
                         return;
-                    }
 
                     this._uploading = false;
                     this._onError.emit(error);
                 },
-                onComplete:  (result) => {
+                onComplete:  (result) =>
+                {
                     ++count;
                     if (count === this._previewFiles.length) { // HACK: Oh god...
                         this._onSuccess.emit(result);
@@ -153,7 +158,8 @@ export class ImagesUploaderComponent  {
      *
      * @param event The drop event.
      */
-    private _onDropStart(event: any): void {
+    private _onDropStart(event: any): void
+    {
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', true);
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', false);
     }
@@ -163,7 +169,8 @@ export class ImagesUploaderComponent  {
      *
      * @param event The drop event.
      */
-    private _onDropEnds(event: any): void {
+    private _onDropEnds(event: any): void
+    {
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-inactive', true);
         this._renderer.setElementClass(this._dropzone.nativeElement, 'dropzone-active', false);
     }
@@ -173,21 +180,23 @@ export class ImagesUploaderComponent  {
      *
      * @param file The file to be uploaded.
      */
-    private _onFileDrop(files: FileList): void {
+    private _onFileDrop(files: FileList): void
+    {
 
-        if (this._uploading) {
+        if (this._uploading)
             return;
-        }
 
-        if (!files.length) {
+        if (!files.length)
             return;
-        }
 
         let newFiles: Array<File> = Array.prototype.slice.call(files);
 
-        if (!(this._previewFiles.length > 0)) {
+        if (!(this._previewFiles.length > 0))
+        {
             this._previewFiles = newFiles;
-        } else {
+        }
+        else
+        {
             this._previewFiles = this._previewFiles.concat(newFiles);
         }
 
@@ -199,17 +208,15 @@ export class ImagesUploaderComponent  {
      *
      * @param {File} file The file to be deleted.
      */
-    private _onImageDeleted(file: File) {
-
-        if (this._uploading) {
+    private _onImageDeleted(file: File)
+    {
+        if (this._uploading)
             return;
-        }
 
         let index = this._previewFiles.indexOf(file);
 
-        if(index !== -1) {
+        if (index !== -1)
             this._previewFiles.splice(index, 1);
-        }
     }
 
    /**
@@ -218,23 +225,27 @@ export class ImagesUploaderComponent  {
     * @param {number} source The source index.
     * @param { number} destination The destination index.
     */
-    private _moveFile(source: number, destination: number): void  {
-       if (this._uploading) {
+    private _moveFile(source: number, destination: number): void
+    {
+       if (this._uploading)
            return;
-       }
 
-        while (source < 0) {
+        while (source < 0)
+        {
             source += this._previewFiles.length;
         }
 
-        while (destination < 0) {
+        while (destination < 0)
+        {
             destination += this._previewFiles.length;
         }
 
-        if (destination >= this._previewFiles.length) {
+        if (destination >= this._previewFiles.length)
+        {
             let k: number = destination - this._previewFiles.length;
 
-            while ((k--) + 1) {
+            while ((k--) + 1)
+            {
                 this._previewFiles.push(undefined);
             }
         }

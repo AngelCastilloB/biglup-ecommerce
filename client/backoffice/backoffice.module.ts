@@ -76,6 +76,7 @@ import { ReportsComponent }        from './components/reports/reports.component'
         BackofficeRoutesModule
     ],
 })
-export class BackofficeModule {
+export class BackofficeModule
+{
 }
 

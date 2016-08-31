@@ -38,32 +38,33 @@ import template from './category.component.html';
     selector: 'category',
     template
 })
-export class CategoryComponent extends MeteorComponent implements OnInit {
+export class CategoryComponent extends MeteorComponent implements OnInit
+{
     private _categoryId: string;
     private _products: Mongo.Cursor<Product>;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
+    public ngOnInit()
+    {
 
-        this.route.params.subscribe((params) => {
-
+        this.route.params.subscribe((params) =>
+        {
             this._categoryId = params['categoryId'];
 
-            this.subscribe('category-products', this._categoryId, () => {
-
+            this.subscribe('category-products', this._categoryId, () =>
+            {
                 this._products = Products.find({categoryId: this._categoryId});
-
             }, true);
-
         });
     }
 }

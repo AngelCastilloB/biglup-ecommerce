@@ -36,8 +36,8 @@ import template from './oauth-login.component.html';
     selector: 'oauth-login',
     template
 })
-export class OauthLoginComponent {
-
+export class OauthLoginComponent
+{
     /**
      * @summary in case of an external service error, this will be fired.
      */
@@ -65,7 +65,8 @@ export class OauthLoginComponent {
      * @param _userAuthService The user authentication service.
      * @param _router          The router service.
      */
-    constructor(private _userAuthService: UserAuthService, private _router: Router) {
+    constructor(private _userAuthService: UserAuthService, private _router: Router)
+    {
         this._checkMeteorSettings();
     }
 
@@ -73,7 +74,8 @@ export class OauthLoginComponent {
      * @summary uses Oauth and attempts to login with facebook's help.
      * @private
      */
-    private _loginWithFacebook() {
+    private _loginWithFacebook()
+    {
         this._userAuthService.loginWithFacebook({}, err => this._handleLogin(err));
     }
 
@@ -81,7 +83,8 @@ export class OauthLoginComponent {
      * @summary uses Oauth and attempts to login with google's help.
      * @private
      */
-    private _loginWithGoogle() {
+    private _loginWithGoogle()
+    {
         this._userAuthService.loginWithGoogle({}, err => this._handleLogin(err));
     }
 
@@ -89,7 +92,8 @@ export class OauthLoginComponent {
      * @summary uses Oauth and attempts to login with twitter's help.
      * @private
      */
-    private _loginWithTwitter() {
+    private _loginWithTwitter()
+    {
         this._userAuthService.loginWithTwitter({}, err => this._handleLogin(err));
     }
 
@@ -99,7 +103,8 @@ export class OauthLoginComponent {
      * @param {Meteor.Error} error The error to be processed/
      * @private
      */
-    private _processError(error: Meteor.Error): void {
+    private _processError(error: Meteor.Error): void
+    {
         this.errorEvent.emit(error);
     }
 
@@ -109,11 +114,10 @@ export class OauthLoginComponent {
      * @param {Meteor.Error} error The longin error (if any).
      * @private
      */
-    private _handleLogin(error: Meteor.Error) {
-
-        if (error) {
+    private _handleLogin(error: Meteor.Error)
+    {
+        if (error)
             return this._processError(error);
-        }
 
         this._router.navigate(['/']);
     }
@@ -122,7 +126,8 @@ export class OauthLoginComponent {
      * @summary Updates the flags to show or hide the OAuth buttons.
      * @private
      */
-    private _checkMeteorSettings() {
+    private _checkMeteorSettings()
+    {
         this._hasFacebookSettings = !!Meteor.settings.public['facebook'];
         this._hasGoogleSettings   = !!Meteor.settings.public['google'];
         this._hasTwitterSettings  = !!Meteor.settings.public['twitter'];
@@ -134,7 +139,8 @@ export class OauthLoginComponent {
      * @returns {boolean}
      * @private
      */
-    private _areSettingsLoaded() {
+    private _areSettingsLoaded()
+    {
         return (this._hasFacebookSettings || this._hasGoogleSettings || this._hasTwitterSettings);
     }
 }

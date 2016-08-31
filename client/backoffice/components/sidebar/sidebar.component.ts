@@ -35,8 +35,8 @@ import template from './sidebar.component.html';
     selector: 'sidebar',
     template
 })
-export class SidebarComponent extends MeteorComponent {
-
+export class SidebarComponent extends MeteorComponent
+{
     /**
      * @summary Initializes a new instance of the DashboardComponent class.
      */

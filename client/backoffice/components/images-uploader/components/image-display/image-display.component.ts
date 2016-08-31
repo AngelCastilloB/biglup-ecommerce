@@ -43,7 +43,8 @@ import template from './image-display.component.html';
     styleUrls: ['./images-display.component.css'],
     providers: [IdGeneratorService]
 })
-export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit {
+export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit
+{
     @Input('model')
     private _model: File;
     private _uniqueId: string;
@@ -53,7 +54,8 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
     /**
      * @summary Initializes a new instance of the ImageDisplayComponent class.
      */
-    constructor(private _renderer: Renderer, private _idGenerator: IdGeneratorService, private element: ElementRef) {
+    constructor(private _renderer: Renderer, private _idGenerator: IdGeneratorService, private element: ElementRef)
+    {
         super();
 
         this._uniqueId = _idGenerator.generate();
@@ -62,7 +64,8 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
     /**
      * #brief Runs after the view _has been completely initialized.
      */
-    public ngAfterViewInit() {
+    public ngAfterViewInit()
+    {
         this._renderer.setElementStyle(this._display.nativeElement, 'height', '0%');
         this._renderer.setElementStyle(this._display.nativeElement, 'width', '100%');
     }
@@ -70,34 +73,39 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
     /**
      * @summary Closes the display.
      */
-    public hide() {
+    public hide()
+    {
         this._renderer.setElementStyle(this._display.nativeElement, 'height', '0%');
     }
 
     /**
      * @summary Shows the display.
      */
-    public show() {
+    public show()
+    {
         this._renderer.setElementStyle(this._display.nativeElement, 'height', '100%');
     }
 
     /**
      * @summary Sets the image to be displayed
      */
-    public setImage(imageFile: File) {
+    public setImage(imageFile: File)
+    {
         this._model = imageFile;
 
         let image  = this.element.nativeElement.querySelector('.image-display');
         let reader = new FileReader();
 
-        reader.onload = (event: ProgressEvent) => {
-            if (event.type === 'load') {
-
+        reader.onload = (event: ProgressEvent) =>
+        {
+            if (event.type === 'load')
+            {
                 let src = event.target.result;
 
                 image.src = src;
-
-            } else if (event.type === 'error') {
+            }
+            else if (event.type === 'error')
+            {
                 console.error('Could not read file.');
             }
         };

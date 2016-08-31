@@ -38,22 +38,26 @@ import template from './products.component.html';
     selector: 'products',
     template
 })
-export class ProductsComponent extends MeteorComponent implements OnInit  {
+export class ProductsComponent extends MeteorComponent implements OnInit
+{
     private _products: Mongo.Cursor<Product>;
 
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
-    constructor(private _router: Router) {
+    constructor(private _router: Router)
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
+    public ngOnInit()
+    {
 
-        this.subscribe('products', () => {
+        this.subscribe('products', () =>
+        {
             this._products = Products.find();
         }, true);
     }

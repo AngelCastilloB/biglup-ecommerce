@@ -35,12 +35,13 @@ import template from './landing-page.component.html';
     selector: 'landing-page',
     template
 })
-export class LandingPageComponent extends MeteorComponent {
-
+export class LandingPageComponent extends MeteorComponent
+{
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 }

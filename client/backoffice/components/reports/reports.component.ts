@@ -35,12 +35,13 @@ import template from './reports.component.html';
     selector: 'reports',
     template
 })
-export class ReportsComponent extends MeteorComponent {
-
+export class ReportsComponent extends MeteorComponent
+{
     /**
      * @summary Initializes a new instance of the ReportsComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 }

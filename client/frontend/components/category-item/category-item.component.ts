@@ -37,8 +37,8 @@ import template from './category-item.component.html';
     selector: 'category-item',
     template
 })
-export class CategoryItemComponent extends MeteorComponent implements OnInit {
-
+export class CategoryItemComponent extends MeteorComponent implements OnInit
+{
     @Input()
     public model: Product;
     @Input()
@@ -48,18 +48,19 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
-        this.subscribe('product-images', this.model._id, () => {
-
+    public ngOnInit()
+    {
+        this.subscribe('product-images', this.model._id, () =>
+        {
             this._productImages = Images.find({productId: this.model._id});
-
         }, true);
     }
 }
