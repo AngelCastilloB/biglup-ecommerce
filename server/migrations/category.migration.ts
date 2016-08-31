@@ -27,7 +27,8 @@ import * as faker            from 'faker/locale/en';
 /**
  * @summary This class handles all the category migrations.
  */
-export class CategoryMigration extends AbstractMigration {
+export class CategoryMigration extends AbstractMigration
+{
 
     /**
      * @summary All the categories to be inserted.
@@ -40,7 +41,8 @@ export class CategoryMigration extends AbstractMigration {
      * @param collection The mongo collection.
      * @param generators The content generators.
      */
-    constructor(collection: Mongo.Collection<Category>, generators) {
+    constructor(collection: Mongo.Collection<Category>, generators)
+    {
         super(collection, generators);
 
         this._categories = defaults;
@@ -51,16 +53,15 @@ export class CategoryMigration extends AbstractMigration {
      *
      * @see parent AbstractMigration.
      */
-    public up(): void {
+    public up(): void
+    {
         console.log('Starting Default Categories.');
         this._generateCategories();
 
         // for some unholy reason they didn't implement the insert according to the mongo API
         // https://docs.mongodb.com/manual/reference/method/db.collection.insert/
         // which accepts an array of documents, so we have to insert each one like animals.
-        this._categories.forEach((category) => {
-            this._collection.insert(category);
-        });
+        this._categories.forEach(category => this._collection.insert(category));
     }
 
     /**
@@ -68,8 +69,10 @@ export class CategoryMigration extends AbstractMigration {
      *
      * @private
      */
-    private _generateCategories() {
-        for (let i = 0; i < this._amount; i++) {
+    private _generateCategories()
+    {
+        for (let i = 0; i < this._amount; i++)
+        {
             this._categories.push({
                 name: [
                     {

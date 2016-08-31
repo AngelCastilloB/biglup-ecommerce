@@ -27,7 +27,8 @@ import { KoreanContentGenerator }            from '../../common/helpers/generato
 /**
  * @summary The available generators.
  */
-interface ContentGenerators {
+interface ContentGenerators
+{
     zh: SimplifiedChineseContentGenerator;
     kr: KoreanContentGenerator;
 }
@@ -37,7 +38,8 @@ interface ContentGenerators {
 /**
  * @summary sets the structure needed to add a new document to the mongo database.
  */
-export abstract class AbstractMigration implements IMigratable {
+export abstract class AbstractMigration implements IMigratable
+{
     protected _amount = 10;
 
     /**
@@ -45,7 +47,8 @@ export abstract class AbstractMigration implements IMigratable {
      * @param _collection
      * @param _generators
      */
-    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: ContentGenerators) {
+    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: ContentGenerators)
+    {
     }
 
     /**
@@ -56,7 +59,8 @@ export abstract class AbstractMigration implements IMigratable {
     /**
      * @summary Un do the migration.
      */
-    public down(): void {
+    public down(): void
+    {
         console.log('removing collection!');
         this._collection.remove({});
     }

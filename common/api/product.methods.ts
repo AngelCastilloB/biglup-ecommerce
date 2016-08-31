@@ -31,25 +31,25 @@ import { ProductSchema } from '../schemas/product.schema';
  *
  * @return The ID if the newly inserted product.
  */
-Meteor.methods(
-{
-    'products.createProduct' : function (product: Product) {
-
+Meteor.methods({
+    'products.createProduct': function (product: Product)
+    {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'products.createProduct.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'products.createProduct.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
         check(product, ProductSchema);
 
-        if (product.categoryId) {
-
-            for (let i = 0; i < product.categoryId.length; ++i) {
-
-                if (Categories.find({_id: product.categoryId[i]}).count() === 0) {
+        if (product.categoryId)
+        {
+            for (let i = 0; i < product.categoryId.length; ++i)
+            {
+                if (Categories.find({_id: product.categoryId[i]}).count() === 0)
+                {
                     throw new Meteor.Error(
                         'products.createProduct.categoryDoesNotExist',
                         'One of the categories for this product does not exist (' + (product.categoryId[i]) + ').');
@@ -67,21 +67,21 @@ Meteor.methods(
  *
  * @param product The product id of the product to be deleted.
  */
-Meteor.methods(
-{
-    ['products.deleteProduct']: function (productId: string) {
-
+Meteor.methods({
+    ['products.deleteProduct']: function (productId: string)
+    {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'products.deleteProduct.unauthorized',
-                 'You are not authorized to perform this action.');
-             }
+         throw new Meteor.Error(
+         'products.deleteProduct.unauthorized',
+         'You are not authorized to perform this action.');
+         }
          */
 
         check(productId, String);
 
-        if (Products.find({_id: productId}).count() === 0) {
+        if (Products.find({_id: productId}).count() === 0)
+        {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
@@ -97,21 +97,21 @@ Meteor.methods(
  *
  * @param product The product to be updated.
  */
-Meteor.methods(
-{
-    ['products.updateProduct']: function (product: Product) {
-
+Meteor.methods({
+    ['products.updateProduct']: function (product: Product)
+    {
         check(product, ProductSchema);
 
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'products.updateProduct.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'products.updateProduct.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
-        if (!product._id || product._id === '') {
+        if (!product._id || product._id === '')
+        {
             throw new Meteor.Error(
                 'products.updateProduct.idIsEmpty',
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
@@ -119,7 +119,8 @@ Meteor.methods(
 
         let currentProductState: Product = Products.findOne({_id: product._id});
 
-        if (!currentProductState) {
+        if (!currentProductState)
+        {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
@@ -131,7 +132,7 @@ Meteor.methods(
 
         delete product._id;
 
-        Products.update({_id: id}, { $set : product});
+        Products.update({_id: id}, {$set: product});
     }
 });
 
@@ -141,21 +142,21 @@ Meteor.methods(
  *
  * @param id The id of the category to be removed.
  */
-Meteor.methods(
-{
-    ['products.removeCategory']: function (id: string) {
+Meteor.methods({
+    ['products.removeCategory']: function (id: string)
+    {
 
         check(id, String);
 
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'products.removeCategory.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'products.removeCategory.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
-        Products.update({}, { $pull: { categoryId: id }});
+        Products.update({}, {$pull: {categoryId: id}});
     }
 });
 
@@ -169,7 +170,6 @@ Meteor.methods(
  */
 function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) // TODO: Remove the difference.
 {
-
     let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage)
     {
         return orderedImage.id;

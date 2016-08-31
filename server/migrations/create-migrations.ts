@@ -34,7 +34,8 @@ import { Images }                 from '../../common/collections/image.collectio
 /**
  * @summary Adds the different migrations into the Migration library to be executed in main.
  */
-export function createMigrations() {
+export function createMigrations()
+{
     // TODO IOC container
     const generators = {
         zh: new SimplifiedChineseContentGenerator(),
@@ -58,16 +59,10 @@ export function createMigrations() {
         version: 1,
         name: 'Add default documents.',
         up() {
-            migrations.forEach((migration: IMigratable) => {
-                migration.up();
-            });
-            console.log('Migration completed.');
+            migrations.forEach((migration: IMigratable) => migration.up());
         },
         down() {
-            migrations.forEach((migration: IMigratable) => {
-                migration.down();
-            });
-            console.log('Migration reset.');
+            migrations.forEach((migration: IMigratable) => migration.down());
         }
     });
 }

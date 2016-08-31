@@ -32,6 +32,4 @@ Meteor.publish('categories', () => Categories.find());
  *
  * @param {string} id The category id.
  */
-Meteor.publish('category', function(id: string) {
-    return Categories.find({_id: id});
-});
+Meteor.publish('category', (id: string) => Categories.find({_id: id}));

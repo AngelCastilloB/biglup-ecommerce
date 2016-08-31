@@ -25,7 +25,8 @@ import { Meteor } from 'meteor/meteor';
 /**
  * @summary Publishes all carts.
  */
-Meteor.publish('carts', function() {
+Meteor.publish('carts', function ()
+{
 
     // if (this.user.isAdmin())
     //    return Cart.find(); TODO: [USER-LOGIN] Only the admin can fetch all carts content.
@@ -38,15 +39,11 @@ Meteor.publish('carts', function() {
  *
  * @param {string} id The cart id.
  */
-Meteor.publish('cart', function(id: string) {
-    return Carts.find({_id: id});
-});
+Meteor.publish('cart', (id: string) => Carts.find({_id: id}));
 
 /**
  * @summary Publishes the cart of the given user id.
  *
  * @param {string} id The user id.
  */
-Meteor.publish('user-cart', function(userId: string) {
-    return Carts.find({userId: userId});
-});
+Meteor.publish('user-cart', (userId: string) => Carts.find({userId}));

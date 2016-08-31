@@ -30,7 +30,8 @@ import { Meteor } from 'meteor/meteor';
  * @param {string} url
  * @returns {string}
  */
-Accounts.emailTemplates.resetPassword.text = (user: Meteor.User, url: string) => {
+Accounts.emailTemplates.resetPassword.text = (user: Meteor.User, url: string) =>
+{
     let newUrl = url.replace('#/', '');
     newUrl     = newUrl.replace(/\/(?=\w)([\w\-]+)$/, ';token=$1');
 

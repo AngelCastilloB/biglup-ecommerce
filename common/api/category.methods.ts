@@ -29,15 +29,14 @@ import { CategorySchema } from '../schemas/category.schema';
  *
  * @return The ID if the newly inserted category.
  */
-Meteor.methods(
-{
-    'categories.createCategory' : function (category: Category) {
-
+Meteor.methods({
+    'categories.createCategory': function (category: Category)
+    {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'categories.createCategory.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'categories.createCategory.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
@@ -53,21 +52,21 @@ Meteor.methods(
  *
  * @param categoryId The category id of the categoryId to be deleted.
  */
-Meteor.methods(
-{
-    ['categories.deleteCategory']: function (categoryId: string) {
-
+Meteor.methods({
+    ['categories.deleteCategory']: function (categoryId: string)
+    {
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'categories.deleteCategory.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'categories.deleteCategory.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
         check(categoryId, String);
 
-        if (Categories.find({_id: categoryId}).count() === 0) {
+        if (Categories.find({_id: categoryId}).count() === 0)
+        {
             throw new Meteor.Error(
                 'categories.deleteCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
@@ -75,9 +74,12 @@ Meteor.methods(
 
         Categories.remove({_id: categoryId});
 
-        Meteor.call('products.removeCategory', categoryId, (error) => {
+        Meteor.call('products.removeCategory', categoryId, (error) =>
+        {
             if (error)
+            {
                 console.error(error);
+            }
         });
     }
 });
@@ -88,27 +90,28 @@ Meteor.methods(
  *
  * @param category The category to be updated.
  */
-Meteor.methods(
-{
-    ['categories.updateCategory']: function (category: Category) {
-
+Meteor.methods({
+    ['categories.updateCategory']: function (category: Category)
+    {
         check(category, CategorySchema);
 
         /*
          if (!this.user.IsAdmin) {
-             throw new Meteor.Error(
-                 'categories.updateCategory.unauthorized',
-                 'You are not authorized to perform this action.');
+         throw new Meteor.Error(
+         'categories.updateCategory.unauthorized',
+         'You are not authorized to perform this action.');
          }
          */
 
-        if (!category._id || category._id === '') {
+        if (!category._id || category._id === '')
+        {
             throw new Meteor.Error(
                 'categories.updateCategory.idIsEmpty',
                 'The id of this category is empty. You need to provide the id of an existing category in the database.');
         }
 
-        if (Categories.find({_id: category._id}).count() === 0) {
+        if (Categories.find({_id: category._id}).count() === 0)
+        {
             throw new Meteor.Error(
                 'categories.updateCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
@@ -118,6 +121,6 @@ Meteor.methods(
 
         delete category._id;
 
-        Categories.update({_id: id}, { $set : category });
+        Categories.update({_id: id}, {$set: category});
     }
 });

@@ -59,16 +59,21 @@ const PATHS = {
 /**
  * @summary copies the example meteor setting with a new name.
  */
-gulp.task('copy-meteor-settings', function () {
+gulp.task('copy-meteor-settings', function ()
+{
     // since gulp.dest('.', {overwrite: false}) doesn't work for some reason
     // we have to dig with the node fs to check if the file exist to avoid overwrites
     // https://gulp.readme.io/docs/gulpdestpath-options
-    fs.stat('./meteor.json', function (err, stats) {
-        if ((err && err.code === 'ENOENT') || !stats.isFile()) {
+    fs.stat('./meteor.json', function (err, stats)
+    {
+        if ((err && err.code === 'ENOENT') || !stats.isFile())
+        {
             return gulp.src(PATHS.meteor.settings)
                 .pipe(rename('meteor.json'))
                 .pipe(gulp.dest('.'));
-        } else if (err) {
+        }
+        else if (err)
+        {
             throw err;
         }
     });
@@ -77,12 +82,14 @@ gulp.task('copy-meteor-settings', function () {
 /**
  * @summary copies related bootstrap files
  */
-gulp.task('copy-bootstrap-css', function () {
+gulp.task('copy-bootstrap-css', function ()
+{
     return gulp.src(PATHS.bootstrap.css.glob)
         .pipe(gulp.dest(PATHS.public.css));
 });
 
-gulp.task('copy-bootstrap-js', function () {
+gulp.task('copy-bootstrap-js', function ()
+{
     return gulp.src(PATHS.bootstrap.js.src)
         .pipe(gulp.dest(PATHS.public.js));
 });
@@ -90,7 +97,8 @@ gulp.task('copy-bootstrap-js', function () {
 /**
  * @summary concatenates and minifies the client css files
  */
-gulp.task('uglify-css', function (callback) {
+gulp.task('uglify-css', function (callback)
+{
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
@@ -112,7 +120,8 @@ gulp.task('uglify-css', function (callback) {
 /**
  * @summary concatenates and minifies the client javascript files
  */
-gulp.task('concat-js', function (callback) {
+gulp.task('concat-js', function (callback)
+{
     const files = [
         PATHS.tether.js.src,
         PATHS.public.js + '/bootstrap.js',
@@ -131,14 +140,16 @@ gulp.task('concat-js', function (callback) {
 /**
  * @summary sugar for gulp
  */
-gulp.task('uglify', function () {
+gulp.task('uglify', function ()
+{
     sequence('copy-bootstrap-css', 'copy-bootstrap-js', 'uglify-css', 'concat-js');
 });
 
 /**
  * @summary the tasks to be run when the app installs.
  */
-gulp.task('meteor-post-install', function () {
+gulp.task('meteor-post-install', function ()
+{
     sequence('copy-meteor-settings', 'uglify');
 });
 
