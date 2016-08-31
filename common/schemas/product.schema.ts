@@ -23,14 +23,72 @@ import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
+ * @brief Image order schema.
+ */
+export let OrderedImageSchema: any = new SimpleSchema(
+{
+    position:
+    {
+        label: 'The image position', // Since the image upload is simultaneous, this is the easier way to enforce order.
+        type: Number
+    },
+    id:
+    {
+        label: 'The id of the image in the image collection',
+        type: String
+    },
+    // Denormalized field: This will avoid the need to query the image collection.
+    url:
+    {
+       label: 'The url of the image',
+       type: String
+    }
+});
+
+/**
+ * @summary The product variant schema.
+ */
+export let ProductVariantSchema: any = new SimpleSchema({
+    color: {
+        label: 'Color',
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
+    },
+    size: {
+        label: 'Size',
+        type: [I18nStringSchema],
+        defaultValue: '',
+        optional: true
+    },
+    stock: {
+        label: 'Stock',
+        type: Number,
+        optional: true
+    },
+    // Denormalized field: Indicates if this product stock is too low.
+    isLowQuantity: {
+        label: 'Indicates that the product quantity is too low',
+        type: Boolean,
+        optional: true
+    },
+    // Denormalized field: Indicates if this product is sold out.
+    isSoldOut: {
+        label: 'Indicates when the product quantity is zero',
+        type: Boolean,
+        optional: true
+    },
+});
+
+/**
  * @summary The product schema.
  */
-export let ProductSchema = new SimpleSchema(
-{
+export let ProductSchema: any = new SimpleSchema({
     _id:
     {
         type: String,
-        label: 'Product Id'
+        label: 'Product Id',
+        optional: true
     },
     categoryId:
     {
@@ -43,9 +101,16 @@ export let ProductSchema = new SimpleSchema(
         type: [I18nStringSchema],
         defaultValue: ''
     },
+    images:
+    {
+        type: [OrderedImageSchema],
+        optional: true
+    },
     slug:
     {
-        type: [I18nStringSchema]
+        label: 'The product slug',
+        type: String,
+        optional: true
     },
     sku:
     {
@@ -112,9 +177,8 @@ export let ProductSchema = new SimpleSchema(
         type: Boolean,
         optional: true
     },
-    isBackorder:
-    {
-        label: 'Indicates when the seller _has allowed the sale of product which is not in stock',
+    isBackorder: {
+        label: 'Indicates when the seller has allowed the sale of product which is not in stock',
         type: Boolean,
         optional: true
     },
@@ -137,18 +201,11 @@ export let ProductSchema = new SimpleSchema(
         type: Boolean,
         defaultValue: false,
     },
-    isVariant:
+    variantProducts:
     {
-        label: 'Indicates whether this product is a variant of another product.',
-        type: Boolean,
-        defaultValue: false,
-        optional: true,
-    },
-    parentProduct:
-    {
-        type: String,
-        label: 'The parent product Id',
-        optional: true,
+        label: 'Product variants.',
+        type: [ProductVariantSchema],
+        optional: true
     },
     createdAt:
     {

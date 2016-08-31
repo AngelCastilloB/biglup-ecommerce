@@ -25,8 +25,6 @@ import { UserAuthService }     from '../user-auth.service';
 
 /**
  * @summary This guard is responsible of users access according to the login status.
- *
- * // TODO: This seems duplicate of IsUserLoggedGuardService, however this seems necessary to allow router navigation, ¿check if better way exist?
  */
 @Injectable()
 export class IsUserLoggedOutGuardService implements CanActivate

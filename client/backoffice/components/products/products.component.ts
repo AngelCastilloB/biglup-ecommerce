@@ -19,11 +19,10 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit } from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { Router }            from '@angular/router';
-import { Mongo }             from 'meteor/mongo';
-import { Products }          from '../../../../common/collections/product.collection';
+import { Component }       from '@angular/core';
+import { MeteorComponent } from 'angular2-meteor';
+import { Router }          from '@angular/router';
+import { ProductsService } from '../../../services/products.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,29 +35,16 @@ import template from './products.component.html';
  */
 @Component({
     selector: 'products',
-    template
+    template,
+    providers: [ProductsService]
 })
-export class ProductsComponent extends MeteorComponent implements OnInit
+export class ProductsComponent extends MeteorComponent
 {
-    private _products: Mongo.Cursor<Product>;
-
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
-    constructor(private _router: Router)
+    constructor(private _router: Router, private _productsService: ProductsService)
     {
         super();
-    }
-
-    /**
-     * @summary Initialize the component after Angular initializes the data-bound input properties.
-     */
-    public ngOnInit()
-    {
-
-        this.subscribe('products', () =>
-        {
-            this._products = Products.find();
-        }, true);
     }
 }

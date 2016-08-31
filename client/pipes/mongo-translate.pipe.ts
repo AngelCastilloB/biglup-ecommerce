@@ -69,6 +69,6 @@ export class MongoTranslatePipe implements PipeTransform
             }
         }
 
-        return 'STRING_NOT_FOUND';
+        return '';
     }
 }

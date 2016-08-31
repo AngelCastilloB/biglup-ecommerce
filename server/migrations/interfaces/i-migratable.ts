@@ -17,7 +17,18 @@
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary Migratable interface definition.
+ */
 export interface IMigratable {
+
+    /**
+     * @summary Migrates the data to the database.
+     */
     up();
+
+    /**
+     * @summary Undoes the migration.
+     */
     down();
 }

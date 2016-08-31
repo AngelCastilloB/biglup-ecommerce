@@ -24,29 +24,25 @@ import { ReadStream, createReadStream } from 'fs';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary Handles the image migrations. Each collection will have at least 4 images.
+ */
 export class ImageMigration extends AbstractMigration {
 
-    /**
-     * @summary Each collection will have at least 4 images.
-     *
-     * @type {number}
-     * @private
-     */
     protected _amount = 4;
-
-    private _productsIds: Array<Distinguishable>   = [];
-    private _categoriesIds: Array<Distinguishable> = [];
-
-    private _path = 'storage/files/placeholder.png';
-    private _type = 'image/png';
+    private   _productsIds: Array<string>   = [];
+    private   _categoriesIds: Array<string> = [];
+    private   _path                         = 'storage/files/placeholder.png';
+    private   _type                         = 'image/png';
 
     /**
-     * @param collection the related image collection
-     * @param generators
+     * @summary Initializes a new instance of the class ImageMigration.
+     *
+     * @param collection   The related image collection
+     * @param generators   The content generators.
      * @param _collections The collections that want images to be associated
      */
-    constructor(collection: Mongo.Collection<Object>,
-        generators,
+    constructor(collection: Mongo.Collection<Object>, generators,
         private _collections: {
             products: Mongo.Collection<Product>,
             categories: Mongo.Collection<Category>
@@ -61,14 +57,15 @@ export class ImageMigration extends AbstractMigration {
      */
     public up(): void {
         console.log('Adding Images.');
-        this._getIds();
 
-        this._productsIds.forEach((obj: Distinguishable) => {
-            this._addImage('productId', obj._id);
+        this._generateIds();
+
+        this._productsIds.forEach((id: string) => {
+            this._addImage('productId', id);
         });
 
-        this._categoriesIds.forEach((obj: Distinguishable) => {
-            this._addImage('categoryId', obj._id);
+        this._categoriesIds.forEach((id: string) => {
+            this._addImage('categoryId', id);
         });
     }
 
@@ -79,16 +76,15 @@ export class ImageMigration extends AbstractMigration {
      * @param {Distinguishable} id
      * @private
      */
-    private _addImage(field: string, id: Distinguishable) {
-        for (let i = 1; i <= this._amount; i++) {
-            const fileId = ImagesStore.create({
-                name: `${id}-${i}`,
-                [field]: id,
-                type: this._type
-            });
+    private _addImage(field: string, id: string) {
 
-            ImagesStore.write(this._getImageStream(), fileId, err => {
-                if (err) console.log(err);
+        for (let i = 1; i <= this._amount; ++i) {
+            const fileId = ImagesStore.create({name: `${id}-${i}`, [field]: id, type: this._type});
+
+            ImagesStore.write(this._getImageStream(), fileId, error => {
+                if (error) {
+                    console.log(error);
+                }
             });
         }
     }
@@ -97,9 +93,16 @@ export class ImageMigration extends AbstractMigration {
      * @summary Gets the models ids that need images from the database.
      * @private
      */
-    private _getIds(): void {
-        this._productsIds   = this._collections.products.find({}, {fields: {_id: 1}}).fetch();
-        this._categoriesIds = this._collections.categories.find({}, {fields: {_id: 1}}).fetch();
+    private _generateIds(): void {
+        this._productsIds   = <string[]>this._collections.products.find({}, {fields: {_id: 1}}).fetch().map(
+            (obj: any) => {
+                return obj._id;
+            });
+
+        this._categoriesIds = <string[]>this._collections.categories.find({}, {fields: {_id: 1}}).fetch().map(
+            (obj: any) => {
+                return obj._id;
+            });
     }
 
     /**
@@ -111,14 +114,14 @@ export class ImageMigration extends AbstractMigration {
         let path;
         try {
             path = Assets.absoluteFilePath(this._path);
-        } catch (err) {
-            if (err.message.match(/Unknown asset/)) {
+        } catch (error) {
+            if (error.message.match(/Unknown asset/)) {
                 throw new Error('Image migration requires a placeholder set in ' +
                     'PROJECT_ROOT/private/storage/files/placeholder.png, ' +
                     'please read the README for more info.');
             }
 
-            throw err;
+            throw error;
         }
 
         return createReadStream(path);

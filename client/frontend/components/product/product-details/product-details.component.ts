@@ -19,12 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute }    from '@angular/router';
-import { Products }          from '../../../../../common/collections/product.collection';
-import { Images }            from '../../../../../common/collections/image.collection';
-import { Categories }        from '../../../../../common/collections/category.collection';
-import { MeteorComponent }   from 'angular2-meteor';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute }               from '@angular/router';
+import { MeteorComponent }              from 'angular2-meteor';
+import { ProductsService }              from '../../../../services/products.service';
+import { CategoriesService }            from '../../../../services/categories.service';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
@@ -36,20 +35,27 @@ import template from './product-details.component.html';
  */
 @Component({
     selector: 'product-details',
-    template
+    template,
+    providers: [ProductsService, CategoriesService]
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit
+export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy
 {
-    private _productId:     string;
-    private _categoryId:    string;
-    private _product:       Product;
-    private _productImages: Mongo.Cursor<Image>;
-    private _category:      Category;
+    private _product:  Product;
+    private _category: Category;
+    private _productSubscription;
+    private _categorySubscription;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
+     *
+     * @param _route             The active route.
+     * @param _productsService   The product service.
+     * @param _categoriesService The category service.
      */
-    constructor(private route: ActivatedRoute)
+    constructor(
+        private _route: ActivatedRoute,
+        private _productsService: ProductsService,
+        private _categoriesService: CategoriesService)
     {
         super();
     }
@@ -57,26 +63,31 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit() {
-        this.route.params.subscribe((params) =>
+    public ngOnInit()
+    {
+        this._route.params.subscribe((params) =>
         {
-            this._categoryId = params['categoryId'];
-            this._productId  = params['productId'];
+            let categoryId: string = params['categoryId'];
+            let productId:  string = params['productId'];
 
-            this.subscribe('product', this._productId, () =>
-            {
-                this._product = Products.findOne({_id: this._productId});
-            }, true);
+            this._productSubscription = this._productsService.getProduct(productId)
+                .subscribe((product: Product) => { this._product = product; });
 
-            this.subscribe('category', this._categoryId, () =>
-            {
-                this._category = Categories.findOne({_id: this._categoryId});
-            }, true);
-
-            this.subscribe('product-images', this._productId, () =>
-            {
-                this._productImages = Images.find({productId: this._productId});
-            }, true);
+            this._categorySubscription = this._categoriesService.getCategory(categoryId)
+                .subscribe((category: Category) => { this._category = category; });
         });
+    }
+
+    /**
+     * @summary Cleanup just before Angular destroys the directive/component. Unsubscribe observables and detach event
+     * handlers to avoid memory leaks.
+     */
+    public ngOnDestroy()
+    {
+        if (this._productSubscription)
+            this._productSubscription.unsubscribe();
+
+        if (this._categorySubscription)
+            this._categorySubscription.unsubscribe();
     }
 }

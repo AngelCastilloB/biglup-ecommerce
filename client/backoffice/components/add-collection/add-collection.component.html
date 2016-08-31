@@ -30,7 +30,7 @@
                                     <b>{{ 'Visibility' | translate }}</b><br/><br/>
                                     <div class="row">
                                         <div class="col-md-12 checkbox-container">
-                                            <input type="checkbox" [checked]="_category.isVisible" [(ngModel)]="_category.isVisible"  name="is-visible" id="is-visible" class="checkbox"/>
+                                            <input class='hidden' type="checkbox" [checked]="_category.active" [(ngModel)]="_category.active"  name="is-visible" id="is-visible" class="checkbox"/>
                                             <label for="is-visible" class="checkbox-text">{{ "Show this category in the store" | translate }}</label>
                                         </div>
                                     </div>

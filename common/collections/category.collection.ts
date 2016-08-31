@@ -17,16 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { CategorySchema }     from '../schemas/category.schema';
-import { slugify }            from 'transliteration';
-import { Slugifier }          from '../helpers/slugifier';
-import { WithSlugCollection } from './with-slug-collection';
+import { CategorySchema } from '../schemas/category.schema';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-// TODO IOC container
-const slugifier     = new Slugifier(slugify);
-let Categories: any = WithSlugCollection.create<Category>('categories', 'name', slugifier);
+const Categories: any = new Mongo.Collection<Category>('categories');
 
 Categories.attachSchema(CategorySchema);
 

@@ -23,13 +23,13 @@ import { Component,
          OnInit,
          NgZone,
          ViewChild }                from '@angular/core';
-import { Router }                   from '@angular/router';
+import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../modal/modal.component';
+import { Categories }               from '../../../../common/collections/category.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -60,13 +60,12 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router)
-     {
+    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute)
+    {
         super();
 
-        this._category.isParentCategory = true;
-        this._categoryName              = this._getMongoTranslation(this._category.name);
-        this._categoryDescription       = this._getMongoTranslation(this._category.info);
+        this._categoryName        = this._getMongoTranslation(this._category.name);
+        this._categoryDescription = this._getMongoTranslation(this._category.info);
     }
 
     /**
@@ -74,21 +73,71 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     public ngOnInit(): any
     {
-        tinymce.init(
+        this._route.params.subscribe((params) =>
+        {
+            this._category._id = params['id'];
+
+            if (!this._category._id)
             {
-                selector: 'textarea',
-                setup: (ed) =>
-                {
-                    ed.on('keyup change', (param, l) =>
+                // TODO: Remove tinyMCE.
+                tinymce.init(
+                 {
+                    selector: 'textarea',
+                    setup: (editor) =>
                     {
-                        this._zone.run(() =>
+                        editor.on('keyup change', (param, l) =>
                         {
-                            this._categoryDescription = tinymce.activeEditor.getContent();
-                            this._category.info       = [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
+                            this._zone.run(() =>
+                            {
+                                this._categoryDescription = tinymce.activeEditor.getContent();
+                                this._category.info       =
+                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
+
+                return;
+            }
+
+            this.subscribe('category', this._category._id , () =>
+            {
+                this._category = Categories.findOne({_id: this._category._id});
+
+                this._categoryName        = this._getMongoTranslation(this._category.name);
+                this._categoryDescription = this._getMongoTranslation(this._category.info);
+
+                // TODO: Remove tinyMCE.
+                tinymce.init(
+                 {
+                    selector: 'textarea',
+                    setup: (editor) =>
+                    {
+                        editor.on('keyup change', (param, l) =>
+                        {
+                            this._zone.run(() =>
+                            {
+
+                                this._categoryDescription = tinymce.activeEditor.getContent();
+                                this._category.info       =
+                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
+                            });
+                        });
+
+                        editor.on('init', (param, l) =>
+                        {
+                            this._zone.run(() =>
+                            {
+                                tinymce.activeEditor.setContent(this._categoryDescription);
+                                tinymce.activeEditor.execCommand('mceRepaint');
+                            });
+                        });
+                    }
+                });
+
+                this._isEditMode = true;
+            }, true);
+        });
     }
 
     /**
@@ -111,18 +160,13 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     private _getMongoTranslation(messageCollection: I18nString[]): string
     {
-
         if (!messageCollection)
-        {
             return '';
-        }
 
-        for (let i = 0, l = messageCollection.length; i < l; i++)
+        for (let i = 0, l = messageCollection.length; i < l; ++i)
         {
             if (messageCollection[i].language === this._defaultLocale)
-            {
                 return messageCollection[i].value;
-            }
         }
 
         return '';
@@ -142,7 +186,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             return;
         }
 
-        Categories.insert(this._category, (error, result) =>
+        this.call('categories.createCategory', this._category, (error, result) =>
         {
             if (error)
             {
@@ -156,8 +200,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             }
             else
             {
-                this._category._id = result;
-                this._isEditMode = true;
+                this._category._id    = result;
+                this._waitModalResult = true;
 
                 this._modal.show(
                     _T('Category Saved!'),
@@ -171,20 +215,22 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     private _deleteCategory(): void
     {
-        Categories.remove(this._category._id, (error, result) =>
+
+        this.call('categories.deleteCategory', this._category._id, (error, result) =>
         {
             if (error)
             {
                 this._waitModalResult = false;
 
                 this._modal.show(
-                    _T('There was an error deleting the category'),
+                    _T('There was an error saving the category'),
                     _T('Error'));
 
                 console.error(error);
             }
             else
             {
+                this._category._id    = result;
                 this._waitModalResult = true;
 
                 this._modal.show(
@@ -209,35 +255,26 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             return;
         }
 
-        Categories.update(
-            { _id: this._category._id },
+        this.call('categories.updateCategory', this._category, (error, result) =>
+        {
+            if (error)
             {
-                $set:
-                {
-                    name: this._category.name,
-                    info: this._category.info
-                }
-            },
-            (error, result) =>
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error updating the category'),
+                    _T('Error'));
+
+                console.error(error);
+            }
+            else
             {
-                if (error)
-                {
-                    this._waitModalResult = false;
+                this._waitModalResult = true;
 
-                    this._modal.show(
-                        _T('There was an error updating the category'),
-                        _T('Error'));
-
-                    console.error(error);
-                }
-                else
-                {
-                    this._waitModalResult = true;
-
-                    this._modal.show(
-                        _T('Category Updated!'),
-                        _T('Information'));
-                }
+                this._modal.show(
+                    _T('Category Updated!'),
+                    _T('Information'));
+            }
         });
     }
 

@@ -21,9 +21,8 @@ import 'reflect-metadata';
 
 import { Component, OnInit } from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
-import { Mongo }             from 'meteor/mongo';
 import { ActivatedRoute }    from '@angular/router';
-import { Products }          from '../../../../common/collections/product.collection.ts';
+import { ProductsService }   from '../../../services/products.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,17 +35,16 @@ import template from './category.component.html';
  */
 @Component({
     selector: 'category',
-    template
+    template,
+    providers: [ProductsService]
 })
-export class CategoryComponent extends MeteorComponent implements OnInit
-{
+export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;
-    private _products: Mongo.Cursor<Product>;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private route: ActivatedRoute)
+    constructor(private _route: ActivatedRoute, private _productsService: ProductsService)
     {
         super();
     }
@@ -56,15 +54,9 @@ export class CategoryComponent extends MeteorComponent implements OnInit
      */
     public ngOnInit()
     {
-
-        this.route.params.subscribe((params) =>
+        this._route.params.subscribe((params) =>
         {
             this._categoryId = params['categoryId'];
-
-            this.subscribe('category-products', this._categoryId, () =>
-            {
-                this._products = Products.find({categoryId: this._categoryId});
-            }, true);
         });
     }
 }

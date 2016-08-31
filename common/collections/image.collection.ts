@@ -27,14 +27,14 @@ import { UploadFS } from 'meteor/jalik:ufs';
  *
  * @type {Collection<Image>}
  */
-export const Images = new Mongo.Collection<Image>('images');
+export const Images = new Mongo.Collection<ProductImage>('images');
 
 /**
  * @summary The thumbnails collection. This collection stores reduced products and categories images.
  *
  * @type {Collection<Image>}
  */
-export const Thumbnails = new Mongo.Collection<Thumbnail>('thumbnails');
+export const Thumbnails = new Mongo.Collection<ProductThumbnail>('thumbnails');
 
 /**
  * @summary The thumbnails store.
@@ -44,8 +44,8 @@ export const Thumbnails = new Mongo.Collection<Thumbnail>('thumbnails');
 export const ThumbnailsStore = new UploadFS.store.Local(
 {
     collection: Thumbnails,
+    path: '/uploads',
     name: 'thumbnails',
-    path: '/uploads/thumbnails',
     mode: '0744',
     writeMode: '0744',
     transformWrite(from, to, fileId, file)
@@ -72,7 +72,7 @@ export const ImagesStore = new UploadFS.store.Local(
 {
     collection: Images,
     name: 'images',
-    path: '/uploads/images',
+    path: '/uploads',
     mode: '0744',
     writeMode: '0744',
     filter: new UploadFS.Filter(

@@ -21,7 +21,6 @@ import 'reflect-metadata';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { MeteorComponent }          from 'angular2-meteor';
-import { Mongo }                    from 'meteor/mongo';
 import { Images }                   from '../../../../common/collections/image.collection';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -37,13 +36,11 @@ import template from './category-item.component.html';
     selector: 'category-item',
     template
 })
-export class CategoryItemComponent extends MeteorComponent implements OnInit
-{
+export class CategoryItemComponent extends MeteorComponent implements OnInit {
     @Input()
     public model: Product;
     @Input()
-    public   category:      string;
-    private _productImages: Mongo.Cursor<Image>;
+    public  category: string;
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
@@ -58,9 +55,5 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit
      */
     public ngOnInit()
     {
-        this.subscribe('product-images', this.model._id, () =>
-        {
-            this._productImages = Images.find({productId: this.model._id});
-        }, true);
     }
 }

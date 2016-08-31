@@ -21,11 +21,10 @@ import 'reflect-metadata';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeteorComponent }              from 'angular2-meteor';
-import { Mongo }                        from 'meteor/mongo';
-import { Categories }                   from '../../../../common/collections/category.collection.ts';
 import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Subscription }                 from 'rxjs';
+import { CategoriesService }            from '../../../services/categories.service';
 
 import '../../../../common/api/cart.methods';
 
@@ -40,24 +39,20 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template
+    template,
+    providers: [CategoriesService]
 })
 export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
 {
-    private _categories: Mongo.Cursor<Category>;
-
-    /**
-     * @summary the users login status
-     */
     private _isLogged:             boolean;
     private _isLoggedSubscription: Subscription;
 
     /**
      * @summary Initializes a new instance of the Header class.
      *
-     * @param {UserAuthService} _userAuthService The authentification service.
+     * @param {UserAuthService} _userAuthService The authentication service.
      */
-    constructor(private _userAuthService: UserAuthService)
+    constructor(private _userAuthService: UserAuthService, private _categoriesService: CategoriesService)
     {
         super();
     }
@@ -67,12 +62,6 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      */
     public ngOnInit(): any
     {
-
-        this.subscribe('categories', () =>
-        {
-            this._categories = Categories.find();
-        }, true);
-
         this._isLogged = this._userAuthService.isLogged();
 
         this._isLoggedSubscription =

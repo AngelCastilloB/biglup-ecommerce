@@ -23,14 +23,19 @@ import { Component,
          OnInit,
          NgZone,
          ViewChild }                from '@angular/core';
-import { Router }                   from '@angular/router';
+import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { Categories }               from '../../../../common/collections/category.collection.ts';
 import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { Products }                 from '../../../../common/collections/product.collection';
 import { ModalComponent }           from '../modal/modal.component';
+import { Products }                 from '../../../../common/collections/product.collection';
+import { Images }                   from '../../../../common/collections/image.collection';
+import { UploaderImage }            from '../images-uploader/internals/product-image';
+
+// Methods
+import '../../../../common/api/product.methods';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -58,17 +63,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     @ViewChild(ModalComponent)
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
+    private _isEditMode:         boolean = false;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router)
+    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute)
     {
         super();
         this._product.categoryId       = [];
         this._product.title            = [];
-        this._product.color            = [];
-        this._product.size             = [];
+        this._product.images           = [];
         this._product.description      = [];
         this._product.hashtags         = [];
         this._product.createdAt        = new Date();
@@ -81,6 +86,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         this._product.trackInventory   = false;
         this._product.isVisible        = false;
         this._product.requiresShipping = false;
+        this._product.color            = [];
+        this._product.size             = [];
     }
 
     /**
@@ -88,27 +95,97 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     public ngOnInit(): any
     {
-        tinymce.init(
-            {
-                selector: 'textarea',
-                setup: (ed) =>
-                {
-                    ed.on('keyup change', (param, l) =>
-                    {
-                        this._zone.run(() =>
-                        {
-                            this._productDescription  = tinymce.activeEditor.getContent();
-                            this._product.description = [{'language': this._defaultLocale, 'value' : this._productDescription}];
-                        });
-                    });
-                }
-            });
-
         this.subscribe('categories', () =>
         {
             this._categories = Categories.find();
         }, true);
 
+        this._route.params.subscribe((params) => {
+
+            this._product._id = params['id'];
+
+            if (!this._product._id) {
+
+                // TODO: Remove tinyMCE.
+                tinymce.init({
+                    selector: 'textarea',
+                    setup: (editor) => {
+                        editor.on('keyup change', (param, l) => {
+                            this._zone.run(() => {
+                                this._productDescription  = tinymce.activeEditor.getContent();
+                                this._product.description =
+                                    [{'language': this._defaultLocale, 'value' : this._productDescription}];
+                            });
+                        });
+                    }
+                });
+
+                return;
+            }
+
+            this.subscribe('products', this._product._id , () =>
+            {
+
+                this._product = Products.findOne({_id: this._product._id});
+
+                this._productTitle       = this._getMongoTranslation(this._product.title);
+                this._productDescription = this._getMongoTranslation(this._product.description);
+
+                this._isEditMode = true;
+
+                this.subscribe('images', () =>
+                {
+                    let uploaderImages: Array<UploaderImage> = Array<UploaderImage>();
+
+                    for (let i: number = 0; i < this._product.images.length; ++i)
+                    {
+                        let image: ProductImage = Images.findOne({ _id: this._product.images[i].id });
+
+                        if (image)
+                        {
+                            let uploaderImage: UploaderImage = new UploaderImage();
+
+                            uploaderImage.isUploaded = true;
+                            uploaderImage.databaseId = image._id;
+                            uploaderImage.remoteUrl  = image.url;
+
+                            uploaderImages.push(uploaderImage);
+                        }
+                    }
+
+                    this._imagesUploader.setImages(uploaderImages);
+
+                }, true);
+
+                // TODO: Remove tinyMCE.
+                tinymce.init(
+                {
+                    selector: 'textarea',
+                    setup: (editor) =>
+                    {
+                        editor.on('keyup change', (param, l) =>
+                        {
+                            this._zone.run(() =>
+                            {
+                                this._productDescription  = tinymce.activeEditor.getContent();
+                                this._product.description =
+                                    [{'language': this._defaultLocale, 'value' : this._productDescription}];
+                            });
+                        });
+
+                        editor.on('init', (param, l) =>
+                        {
+                            this._zone.run(() =>
+                            {
+
+                                tinymce.activeEditor.setContent(this._productDescription);
+                                tinymce.activeEditor.execCommand('mceRepaint');
+                            });
+                        });
+                    }
+                });
+            }, true);
+        });
     }
 
     /**
@@ -125,8 +202,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     /**
      * @summary Event triggered when a category is toggled.
      *
-     * @param {string}   id        The id of the category that was toggled.
-     * @param {booblean} isChecked True if the toggle was enabled, otherwise, false.
+     * @param {string}  id        The id of the category that was toggled.
+     * @param {boolean} isChecked True if the toggle was enabled, otherwise, false.
      */
     private _onCategoryToggle(id: string, isChecked: boolean): void
     {
@@ -187,10 +264,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     /**
      * @summary Saves the product in the database.
      */
-    private _saveProduct(): void
-    {
-        Products.insert(this._product, (error, result) =>
-        {
+    private _saveProduct(): void {
+
+        this._imagesUploader.upload(this._product);
+    }
+
+    /**
+     * @summary Deletes the product in the database.
+     */
+    private _deleteProduct(): void {
+
+        this.call('products.deleteProduct', this._product._id, (error, result) => {
             if (error)
             {
                 this._waitModalResult = false;
@@ -198,14 +282,40 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                 console.error(error);
 
                 this._modal.show(
-                    _T('There was an error saving the product'),
+                    _T('There was an error deleting the product'),
                     _T('Error'));
+
+                console.error(error);
             }
             else
             {
-                this._imagesUploader.upload(<string>result);
+                this._product._id     = result;
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Deleted!'),
+                    _T('Information'));
             }
         });
+    }
+
+    /**
+     * @summary Updates the product in the database.
+     */
+    private _updateProduct(): void
+    {
+
+        this._imagesUploader.upload(this._product);
+    }
+
+    /**
+     * @summary Cancels the operation
+     *
+     * @param event The modal closed event
+     */
+    private _onCancel(): void
+    {
+        this._router.navigate(['/admin/products']);
     }
 
     /**
@@ -213,11 +323,52 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _onImagesUploadedSuccessfully(result: any): void
     {
-        this._waitModalResult = true;
+        if (!this._isEditMode)
+        {
+            this.call('products.createProduct', this._product, (error, result) =>
+            {
+                if (error)
+                {
+                    this._waitModalResult = false;
 
-        this._modal.show(
-            _T('Product Saved!'),
-            _T('Information'));
+                    this._modal.show(
+                        _T('There was an error saving the product'),
+                        _T('Error'));
+                }
+                else
+                {
+                    this._waitModalResult = true;
+
+                    this._modal.show(
+                        _T('Product Saved!'),
+                        _T('Information'));
+                }
+            });
+        }
+        else
+        {
+            this.call('products.updateProduct', this._product, (error, result) =>
+            {
+                if (error)
+                {
+                    this._waitModalResult = false;
+
+                    this._modal.show(
+                        _T('There was an error updating the product'),
+                        _T('Error'));
+
+                    console.error(error);
+                }
+                else
+                {
+                    this._waitModalResult = true;
+
+                    this._modal.show(
+                        _T('Product Updated!'),
+                        _T('Information'));
+                }
+            });
+        }
     }
 
     /**
@@ -231,7 +382,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             _T('There was an error saving the product'),
             _T('Error'));
 
-        Products.remove(this._product); // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+        // HACK: Remove the product if the uploading of the images fails. This needs to be improved.
+        this.call('products.deleteProduct', this._product._id, (deleteError) =>
+        {
+            if (deleteError)
+                console.error(deleteError);
+        });
 
         this._product._id = '';
     }

@@ -21,38 +21,23 @@
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary Base class for the content generators. A content generator can create words, sentences and paragraphs.
+ */
 export abstract class AbstractContentGenerator
 {
-    /**
-     * @summary Words used to fake models in korean.
-     *
-     * @type {string[]}
-     * @protected
-     */
     protected _words: string[];
-
-    /**
-     * @summary Sentences used to fake models in korean.
-     *
-     * @type {string[]}
-     * @protected
-     */
     protected _sentences: string[];
-
-    /**
-     *
-     * @type {string}
-     * @protected
-     */
     protected _paragraph: string;
 
     /**
      * @summary Returns an array of words in a given language.
      *
      * @param {number} amount  the amount to return.
-     * @returns {string[]}
+     *
+     * @returns {string[]} The collection of requested words.
      */
-    public words(amount: number): string[]
+    public getWords(amount: number): string[]
     {
         if (amount > this._words.length)
             throw new Error(`Incorrect amount ${amount}, max permitted is ${this._words.length}.`);
@@ -63,9 +48,9 @@ export abstract class AbstractContentGenerator
     /**
      * @summary Gives a random sentence in a given language.
      *
-     * @returns {string}
+     * @returns {string} The requested random sentence.
      */
-    public sentence(): string
+    public getSentence(): string
     {
         return this._getRandomElement(this._sentences);
     }
@@ -73,9 +58,9 @@ export abstract class AbstractContentGenerator
     /**
      * @summary Gives a random Paragraph in a given language.
      *
-     * @returns {string}
+     * @returns {string} The requested random paragraph.
      */
-    public paragraph(): string
+    public getParagraph(): string
     {
         return this._paragraph;
     }
@@ -83,8 +68,10 @@ export abstract class AbstractContentGenerator
     /**
      * @summary returns a random element from an array.
      *
-     * @param {string[]} element
-     * @returns {string}
+     * @param {string[]} elements The element collection
+     *
+     * @returns {string} The selected element.
+     *
      * @protected
      */
     protected _getRandomElement(element: string[]): string
@@ -95,9 +82,10 @@ export abstract class AbstractContentGenerator
     /**
      * @summary Gives back a random set from an array.
      *
-     * @param {*[]} array
-     * @param {number} amount
-     * @returns {Array}
+     * @param {*[]} array The array to get the set from.
+     * @param {number} amount The amount of elements to select from the array.
+     *
+     * @returns {Array} The subset of elements.
      * @private
      */
     private _getRandomArrayIndexes(array: any[], amount: number): any[]

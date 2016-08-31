@@ -19,11 +19,9 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit } from '@angular/core';
+import { Component }         from '@angular/core';
 import { MeteorComponent }   from 'angular2-meteor';
-import { Mongo }             from 'meteor/mongo';
-import { Categories }        from '../../../../common/collections/category.collection';
-import { ActivatedRoute }    from '@angular/router';
+import { CategoriesService } from '../../../services/categories.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,29 +34,19 @@ import template from './collections.component.html';
  * @summary This component displays all the collections of the site.
  */
 @Component({
-    selector: 'products',
-    template
+    selector: 'categories',
+    template,
+    providers: [CategoriesService]
 })
-export class CollectionsComponent extends MeteorComponent implements OnInit
+export class CollectionsComponent extends MeteorComponent
 {
-    private _categories: Mongo.Cursor<Category>;
-
     /**
      * @summary Initializes a new instance of the CollectionsComponent class.
+     *
+     * @param _categoriesService The category service.
      */
-    constructor(private route: ActivatedRoute)
+    constructor(private _categoriesService: CategoriesService)
     {
         super();
-    }
-
-    /**
-     * @summary Initialize the component after Angular initializes the data-bound input properties.
-     */
-    public ngOnInit()
-    {
-        this.subscribe('categories', () =>
-        {
-            this._categories = Categories.find();
-        }, true);
     }
 }

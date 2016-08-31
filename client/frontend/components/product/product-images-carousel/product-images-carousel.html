@@ -6,9 +6,9 @@
     <template ngFor
               [ngForOf]="images"
               let-image="$implicit"
-              let-last="last">
+              let-first="first">
       <div class="carousel-item"
-           [ngClass]="{active: last}">
+           [ngClass]="{active: first}">
         <!-- TODO set images to same height -->
         <img src="{{ image.url }}">
       </div>

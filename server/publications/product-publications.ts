@@ -44,5 +44,5 @@ Meteor.publish('product', function(id: string) {
  * @param {string} id The category id.
  */
 Meteor.publish('category-products', function(categoryId: string) {
-    return Products.find({ categoryId: categoryId });
+    return Products.find({categoryId: { $in: [ categoryId ] }});
 });

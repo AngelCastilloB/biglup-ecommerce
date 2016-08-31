@@ -28,7 +28,8 @@ import { Component,
          ViewChild,
          AfterViewInit}          from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
-import { ImageDisplayComponent } from '../image-display/image-display.component'
+import { ImageDisplayComponent } from '../image-display/image-display.component';
+import { UploaderImage }         from '../../internals/product-image';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -48,9 +49,9 @@ import template from './image-preview.component.html';
 export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit
 {
     @Input('model')
-    private _model:        File;
+    private _model:        UploaderImage;
     @Output('onDeleted')
-    private _onDeleted:    EventEmitter<File>    = new EventEmitter<File>();
+    private _onDeleted:    EventEmitter<UploaderImage> = new EventEmitter<UploaderImage>();
     @ViewChild(ImageDisplayComponent)
     private _imageDisplay: ImageDisplayComponent;
 
@@ -70,22 +71,28 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
         let thumbnail = this.element.nativeElement.querySelector('.image-responsive');
         let reader    = new FileReader();
 
+        if (this._model.isUploaded)
+        {
+            thumbnail.src = this._model.remoteUrl;
+
+            return;
+        }
+
         reader.onload = (event: ProgressEvent) =>
         {
             if (event.type === 'load')
             {
-
                 let src = event.target.result;
 
                 thumbnail.src = src;
-
-            } else if (event.type === 'error')
+            }
+            else if (event.type === 'error')
             {
                 console.error('Could not read file.');
             }
         };
 
-        reader.readAsDataURL(this._model);
+        reader.readAsDataURL(this._model.file);
     }
 
     /**
@@ -99,21 +106,11 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     /**
      * @summary Gets the on deleted event emitter.
      *
-     * @returns {EventEmitter<File>} The on deleted event emitter.
+     * @returns {EventEmitter<UploaderImage>} The on deleted event emitter.
      */
-    public getOnDeleteEmitter(): EventEmitter<File>
+    public getOnDeleteEmitter(): EventEmitter<UploaderImage>
     {
         return this._onDeleted;
-    }
-
-    /**
-     * @summary Gets image file.
-     *
-     * @returns {File} The image file.
-     */
-    public getFile(): File
-    {
-        return this._model;
     }
 
     /**
