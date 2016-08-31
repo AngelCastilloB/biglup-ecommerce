@@ -26,9 +26,6 @@
  */
 export abstract class AbstractContentGenerator
 {
-    protected _words: string[];
-    protected _sentences: string[];
-    protected _paragraph: string;
 
     /**
      * @summary Returns an array of words in a given language.
@@ -37,33 +34,21 @@ export abstract class AbstractContentGenerator
      *
      * @returns {string[]} The collection of requested words.
      */
-    public getWords(amount: number): string[]
-    {
-        if (amount > this._words.length)
-            throw new Error(`Incorrect amount ${amount}, max permitted is ${this._words.length}.`);
-
-        return this._getRandomArrayIndexes(this._words, amount);
-    }
+    public abstract getWords(amount: number): string[];
 
     /**
      * @summary Gives a random sentence in a given language.
      *
      * @returns {string} The requested random sentence.
      */
-    public getSentence(): string
-    {
-        return this._getRandomElement(this._sentences);
-    }
+    public abstract getSentence(): string;
 
     /**
      * @summary Gives a random Paragraph in a given language.
      *
      * @returns {string} The requested random paragraph.
      */
-    public getParagraph(): string
-    {
-        return this._paragraph;
-    }
+    public abstract getParagraph(): string;
 
     /**
      * @summary returns a random element from an array.
@@ -74,9 +59,9 @@ export abstract class AbstractContentGenerator
      *
      * @protected
      */
-    protected _getRandomElement(element: string[]): string
+    protected _getRandomElement(elements: string[]): string
     {
-        return element[Math.floor(Math.random() * element.length)];
+        return elements[Math.floor(Math.random() * elements.length)];
     }
 
     /**
@@ -86,9 +71,8 @@ export abstract class AbstractContentGenerator
      * @param {number} amount The amount of elements to select from the array.
      *
      * @returns {Array} The subset of elements.
-     * @private
      */
-    private _getRandomArrayIndexes(array: any[], amount: number): any[]
+    protected _getRandomArrayIndexes(array: any[], amount: number): any[]
     {
         const data  = array.slice(0);
         let results = [];
@@ -99,5 +83,16 @@ export abstract class AbstractContentGenerator
         }
 
         return results;
+    }
+
+    /**
+     * @summary Throws an error mentioning the amount requested is more than what exist.
+     *
+     * @param {number} amount the amount requested
+     * @param {number} actual the actual amount
+     */
+    protected _throwGetLengthError(amount: number, actual: number)
+    {
+        throw new Error(`Incorrect amount ${amount}, max permitted is ${actual}.`);
     }
 }

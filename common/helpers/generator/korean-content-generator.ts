@@ -30,9 +30,9 @@ export class KoreanContentGenerator extends AbstractContentGenerator
      * @summary Words used to fake models in korean.
      *
      * @type {string[]}
-     * @protected
+     * @private
      */
-    protected _words = [
+    private _words = [
         '텍스트',
         '뿐만',
         '아니라',
@@ -52,9 +52,9 @@ export class KoreanContentGenerator extends AbstractContentGenerator
      * @summary Sentences used to fake models in korean.
      *
      * @type {string[]}
-     * @protected
+     * @private
      */
-    protected _sentences = [
+    private _sentences = [
         '텍스트 뿐만 아니라, 이미지, 동영상까지. 온라인에선 다양한 컨셉이 존재하는 만큼',
         '로렌임숨도 다양한 모습이 필요했습니다.',
         '오늘은 이러한 로렌임숨의 여러 스타일을 소개하고',
@@ -66,9 +66,46 @@ export class KoreanContentGenerator extends AbstractContentGenerator
      * @summary Paragraph used to fake models in korean.
      *
      * @type {string}
-     * @protected
+     * @private
      */
-    protected _paragraph = '텍스트 뿐만 아니라, 이미지, 동영상까지. 온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한' +
+    private _paragraph = '텍스트 뿐만 아니라, 이미지, 동영상까지. 온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한' +
         ' 모습이 필요했습니다. 오늘은 이러한 로렌임숨의 여러 스타일을 소개하고, 디자이너들의 시간을 절약해주는 다양한 툴을 소개해보고자 ' +
         '합니다, 온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한 모습이 필요했습니다.';
+
+    /**
+     * @summary Returns an array of words in a given language.
+     *
+     * @param {number} amount  the amount to return.
+     *
+     * @returns {string[]} The collection of requested words.
+     */
+    public getWords(amount: number): string[]
+    {
+        if (amount > this._words.length)
+        {
+            this._throwGetLengthError(amount, this._words.length);
+        }
+
+        return this._getRandomArrayIndexes(this._words, amount);
+    }
+
+    /**
+     * @summary Gives a random sentence in a given language.
+     *
+     * @returns {string} The requested random sentence.
+     */
+    public getSentence(): string
+    {
+        return this._getRandomElement(this._sentences);
+    }
+
+    /**
+     * @summary Gives a random Paragraph in a given language.
+     *
+     * @returns {string} The requested random paragraph.
+     */
+    public getParagraph(): string
+    {
+        return this._paragraph;
+    }
 }

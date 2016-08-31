@@ -74,4 +74,41 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
         '鋱鋟鋈窞綆腤  蓪 踄鄜, 鋑鋡髬 珋疧眅 儮嬼懫 蓪 詏貁 謕豲 燲獯璯 氃濈瀄 邆錉霋 觢 餖駜 惝掭掝 揯揳揓 蒏, 壾 鳼鳹鴅溮煡煟 ' +
         '犕瘑 蝺 瑐瑍 鋱鋟鋈 廦廥彋, 抏旲 銇 碢禗禈 鞈頨頧 虰豖阹 熿熼燛 忕汌卣 觢 笢笣, 蚔趵郚 藽轚酁 蒰裧頖 澉 坽姎, 襛襡襙 ' +
         '撌斳暩 熿熼 滈 箄縴儳 毊灚襳 岯岪弨 摿 隒雸, 皵碡碙 觶譈譀 輣鋄銶 趍 榾毄 葮 縢羱 萆覕貹棷棫椓 紏蚙迻';
+
+    /**
+     * @summary Returns an array of words in a given language.
+     *
+     * @param {number} amount  the amount to return.
+     *
+     * @returns {string[]} The collection of requested words.
+     */
+    public getWords(amount: number): string[]
+    {
+        if (amount > this._words.length)
+        {
+            this._throwGetLengthError(amount, this._words.length);
+        }
+
+        return this._getRandomArrayIndexes(this._words, amount);
+    }
+
+    /**
+     * @summary Gives a random sentence in a given language.
+     *
+     * @returns {string} The requested random sentence.
+     */
+    public getSentence(): string
+    {
+        return this._getRandomElement(this._sentences);
+    }
+
+    /**
+     * @summary Gives a random Paragraph in a given language.
+     *
+     * @returns {string} The requested random paragraph.
+     */
+    public getParagraph(): string
+    {
+        return this._paragraph;
+    }
 }
