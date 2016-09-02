@@ -30,40 +30,6 @@ import { UploadFS } from 'meteor/jalik:ufs';
 export const Images = new Mongo.Collection<ProductImage>('images');
 
 /**
- * @summary The thumbnails collection. This collection stores reduced products and categories images.
- *
- * @type {Collection<Image>}
- */
-export const Thumbnails = new Mongo.Collection<ProductThumbnail>('thumbnails');
-
-/**
- * @summary The thumbnails store.
- *
- * @type {UploadFS.store.Local} The thumbnail store.
- */
-export const ThumbnailsStore = new UploadFS.store.Local(
-{
-    collection: Thumbnails,
-    path: '/uploads',
-    name: 'thumbnails',
-    mode: '0744',
-    writeMode: '0744',
-    transformWrite(from, to, fileId, file)
-    {
-        // Resize to 32x32
-        const gm = require('gm');
-
-        gm(from, file.name)
-            .resize(32, 32)
-            .gravity('Center')
-            .extent(32, 32)
-            .quality(75)
-            .stream()
-            .pipe(to);
-    }
-});
-
-/**
  * @summary The images store.
  *
  * @type {UploadFS.store.Local} The image store
@@ -71,17 +37,15 @@ export const ThumbnailsStore = new UploadFS.store.Local(
 export const ImagesStore = new UploadFS.store.Local(
 {
     collection: Images,
+    path: '/uploads/images',
+    storesPath: 'images',
     name: 'images',
-    path: '/uploads',
     mode: '0744',
     writeMode: '0744',
     filter: new UploadFS.Filter(
     {
         contentTypes: ['image/*']
     }),
-    copyTo: [
-        ThumbnailsStore
-    ]
 });
 
 // VALIDATORS *********************************************************************************************************/
@@ -97,13 +61,6 @@ function isAllowed()
 }
 
 // RULES **************************************************************************************************************/
-
-Thumbnails.allow(
-{
-    insert: isAllowed,
-    update: isAllowed,
-    remove: isAllowed
-});
 
 Images.allow(
 {
