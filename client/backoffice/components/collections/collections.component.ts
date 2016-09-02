@@ -35,8 +35,7 @@ import template from './collections.component.html';
  */
 @Component({
     selector: 'categories',
-    template,
-    providers: [CategoriesService]
+    template
 })
 export class CollectionsComponent extends MeteorComponent
 {

@@ -36,6 +36,14 @@ import { OrdersComponent }         from './components/orders/orders.component';
 import { ProductsComponent }       from './components/products/products.component';
 import { ImagesUploaderComponent } from './components/images-uploader/images-uploader.component';
 import { ReportsComponent }        from './components/reports/reports.component';
+import { CategoriesService }       from '../services/categories.service';
+import { ProductsService }         from '../services/products.service';
+import { IdGeneratorService }      from '../services/id-generator.service.ts';
+import { ImageDisplayComponent }   from './components/images-uploader/components/image-display/image-display.component';
+import { ImagePreviewComponent }   from './components/images-uploader/components/image-preview/image-preview.component';
+import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
+import { FileDropDirective }       from './components/images-uploader/directives/file-drop.directive';
+import { FileSelectDirective }     from './components/images-uploader/directives/file-select.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -67,6 +75,11 @@ import { ReportsComponent }        from './components/reports/reports.component'
 
         // images uploader
         ImagesUploaderComponent,
+        ImageDisplayComponent,
+        ImagePreviewComponent,
+        FileDropDirective,
+        FileSelectDirective,
+        Dragula,
 
         // reports
         ReportsComponent
@@ -75,6 +88,12 @@ import { ReportsComponent }        from './components/reports/reports.component'
         SharedModule,
         BackofficeRoutesModule
     ],
+    providers: [
+        CategoriesService,
+        ProductsService,
+        IdGeneratorService,
+        DragulaService
+    ]
 })
 export class BackofficeModule
 {

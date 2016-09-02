@@ -41,8 +41,7 @@ import template from './image-display.component.html';
 @Component({
     selector: 'image-display',
     template,
-    styleUrls: ['./images-display.component.css'],
-    providers: [IdGeneratorService]
+    styleUrls: ['./images-display.component.css']
 })
 export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit
 {

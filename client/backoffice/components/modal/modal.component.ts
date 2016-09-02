@@ -39,8 +39,7 @@ import template from './modal.component.html';
  */
 @Component({
     selector: 'modal-message',
-    template,
-    providers: [IdGeneratorService]
+    template
 })
 export class ModalComponent extends MeteorComponent
 {

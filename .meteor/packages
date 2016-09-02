@@ -16,7 +16,7 @@ standard-minifier-js       # JS minifier run for production mode
 es5-shim                   # ECMAScript 5 compatibility for older browsers.
 ecmascript                 # Enable ECMAScript2015+ syntax in app code
 
-angular2-compilers         # Modified Angular 2 compilers
+angular2-compilers@=0.6.0  # Modified Angular 2 compilers
 barbatus:angular2-runtime  #
 
 aldeed:simple-schema       # Enables use of Schemas in the app Collections

@@ -33,8 +33,7 @@ import template from './product-images-carousel.html';
  */
 @Component({
     selector: 'product-images-carousel',
-    template,
-    providers: [IdGeneratorService]
+    template
 })
 export class ProductImagesCarouselComponent
 {

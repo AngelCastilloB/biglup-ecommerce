@@ -25,11 +25,9 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
-import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
-import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { ModalComponent }           from '../modal/modal.component';
 import { Categories }               from '../../../../common/collections/category.collection';
+import { ModalComponent }           from '../../components/modal/modal.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -43,8 +41,7 @@ import template from './add-collection.component.html';
  */
 @Component({
     selector: 'add-collection',
-    template,
-    directives: [ImagesUploaderComponent, NgForm, ModalComponent]
+    template
 })
 export class AddCollectionComponent extends MeteorComponent implements OnInit
 {

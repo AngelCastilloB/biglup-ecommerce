@@ -19,6 +19,7 @@
 
 import { Products }      from '../collections/product.collection';
 import { Categories }    from '../collections/category.collection';
+import { Images }        from '../collections/image.collection';
 import { ProductSchema } from '../schemas/product.schema';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
@@ -80,14 +81,19 @@ Meteor.methods({
 
         check(productId, String);
 
-        if (Products.find({_id: productId}).count() === 0)
+        let product: Product = Products.findOne({_id: productId});
+
+        if (!product)
         {
             throw new Meteor.Error(
                 'products.deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
         }
 
+        // Try to remove the product first since once we start to delete the images there is no way to rollback.
         Products.remove({_id: productId});
+
+        removeAllImages(product.images);
     }
 });
 
@@ -128,7 +134,7 @@ Meteor.methods({
 
         removeUnusedImages(product, currentProductState);
 
-        let id = product._id;
+        let id: string = product._id;
 
         delete product._id;
 
@@ -145,7 +151,6 @@ Meteor.methods({
 Meteor.methods({
     ['products.removeCategory']: function (id: string)
     {
-
         check(id, String);
 
         /*
@@ -168,7 +173,7 @@ Meteor.methods({
  * @param modifiedProduct The product with the modifications.
  * @param currentProduct  The product as it currently is in the database.
  */
-function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) // TODO: Remove the difference.
+function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
 {
     let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage)
     {
@@ -180,8 +185,22 @@ function removeUnusedImages(modifiedProduct: Product, currentProduct: Product) /
         return orderedImage.id;
     });
 
-    let difference: Array<String> = modifiedProductIds.filter(function (id: string)
+    let difference: Array<String> = currentProductIds.filter(function (id: string)
     {
-        return currentProductIds.indexOf(id) < 0;
+        return modifiedProductIds.indexOf(id) < 0;
     });
+
+    for (let i: number = 0; i < difference.length; ++i)
+        Images.remove({_id: difference[i]});
+}
+
+/**
+ * @summary Removes all the images related to a product.
+ *
+ * @param images The images to be removed.
+ */
+function removeAllImages(images: Array<OrderedImage>)
+{
+    for (let i: number = 0; i < images.length; ++i)
+        Images.remove({_id: images[i].id});
 }
