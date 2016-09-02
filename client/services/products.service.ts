@@ -20,6 +20,7 @@
 import { Injectable }      from '@angular/core';
 import { Products }        from '../../common/collections/product.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject }         from 'rxjs/Subject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
 
@@ -51,12 +52,7 @@ export class ProductsService extends MeteorComponent
                 this._products = Products.find().fetch();
 
                 for (let i: number = 0; i < this._products.length; ++i)
-                {
-                    this._products[i].images.sort(function(lhs, rhs)
-                    {
-                        return lhs.position - rhs.position;
-                    });
-                }
+                    this._products[i].images.sort(function(lhs, rhs) { return lhs.position - rhs.position; });
 
                 this._productsStream.next(this._products);
             });
@@ -100,5 +96,29 @@ export class ProductsService extends MeteorComponent
             .flatMap(array => new BehaviorSubject(array.filter(product => product._id === productId)[0]))
             .filter(product => !!product)
             .subscribe(func));
+    }
+
+    /**
+     * @summary Deletes the given product from the database.
+     *
+     * @param productId The product Id.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deteleProduct(productId: string): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('products.deleteProduct', productId, (error, result) => {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
     }
 }

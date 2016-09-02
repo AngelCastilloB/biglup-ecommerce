@@ -32,6 +32,7 @@ import { ModalComponent }           from '../modal/modal.component';
 import { Products }                 from '../../../../common/collections/product.collection';
 import { Images }                   from '../../../../common/collections/image.collection';
 import { UploaderImage }            from '../images-uploader/internals/product-image';
+import { ProductsService }          from '../../../services/products.service.ts';
 
 // Methods
 import '../../../../common/api/product.methods';
@@ -66,7 +67,11 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute)
+    constructor(
+        private _zone: NgZone,
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _productsService: ProductsService)
     {
         super();
         this._product.categoryId       = [];
@@ -262,18 +267,27 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     /**
      * @summary Saves the product in the database.
      */
-    private _saveProduct(): void {
-
+    private _saveProduct(): void
+    {
         this._imagesUploader.upload(this._product);
     }
 
     /**
      * @summary Deletes the product in the database.
      */
-    private _deleteProduct(): void {
+    private _deleteProduct(): void
+    {
+        this._productsService.deteleProduct(this._product._id).subscribe(
+            (id) =>
+            {
+                this._product._id     = id;
+                this._waitModalResult = true;
 
-        this.call('products.deleteProduct', this._product._id, (error, result) => {
-            if (error)
+                this._modal.show(
+                    _T('Product Deleted!'),
+                    _T('Information'));
+            },
+            (error) =>
             {
                 this._waitModalResult = false;
 
@@ -285,16 +299,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
                 console.error(error);
             }
-            else
-            {
-                this._product._id     = result;
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Product Deleted!'),
-                    _T('Information'));
-            }
-        });
+        );
     }
 
     /**
@@ -302,7 +307,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _updateProduct(): void
     {
-
         this._imagesUploader.upload(this._product);
     }
 

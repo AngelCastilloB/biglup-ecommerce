@@ -181,7 +181,7 @@ export class UserAuthService
     /**
      * @summary update the various observer streams with the login/logout events.
      *
-     * @param err any external errors.
+     * @param error any external errors.
      * @param callback the callers callback
      *
      * @returns {*} whatever the callback returns
