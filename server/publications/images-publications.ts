@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Images, Thumbnails } from '../../common/collections/image.collection';
-import { Meteor }             from 'meteor/meteor';
+import { Images } from '../../common/collections/image.collection';
+import { Meteor } from 'meteor/meteor';
 
 // PUBLICATIONS *******************************************************************************************************/
 
@@ -28,20 +28,8 @@ import { Meteor }             from 'meteor/meteor';
 Meteor.publish('images', () => Images.find());
 
 /**
- * @summary Publishes all thumbnails.
- */
-Meteor.publish('thumbnails', () => Thumbnails.find());
-
-/**
  * @summary Publishes a image given an image id.
  *
  * @param {string} id The image id.
  */
 Meteor.publish('image', (id: string) => Images.find({_id: id}));
-
-/**
- * @summary Publishes a thumbnail given a thumbnail id.
- *
- * @param {string} id The thumbnail id.
- */
-Meteor.publish('thumbnail', (id: string) => Images.find({_id: id}));

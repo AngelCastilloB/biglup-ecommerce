@@ -75,7 +75,7 @@ mongo@1.1.12
 mongo-id@1.0.5
 mongo-livedata@1.0.12
 npm-bcrypt@0.9.1
-npm-mongo@1.5.48
+npm-mongo@1.5.49
 oauth@1.1.11
 oauth1@1.1.10
 oauth2@1.1.10
