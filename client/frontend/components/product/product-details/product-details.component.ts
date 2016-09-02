@@ -19,11 +19,11 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute }               from '@angular/router';
-import { MeteorComponent }              from 'angular2-meteor';
-import { ProductsService }              from '../../../../services/products.service';
-import { CategoriesService }            from '../../../../services/categories.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute }    from '@angular/router';
+import { MeteorComponent }   from 'angular2-meteor';
+import { ProductsService }   from '../../../../services/products.service';
+import { CategoriesService } from '../../../../services/categories.service';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
@@ -37,12 +37,10 @@ import template from './product-details.component.html';
     selector: 'product-details',
     template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy
+export class ProductDetailsComponent extends MeteorComponent implements OnInit
 {
     private _product:  Product;
     private _category: Category;
-    private _productSubscription;
-    private _categorySubscription;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
@@ -69,24 +67,11 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
             let categoryId: string = params['categoryId'];
             let productId:  string = params['productId'];
 
-            this._productSubscription = this._productsService.getProduct(productId)
+            this._productsService.getProduct(productId)
                 .subscribe((product: Product) => { this._product = product; });
 
-            this._categorySubscription = this._categoriesService.getCategory(categoryId)
+            this._categoriesService.getCategory(categoryId)
                 .subscribe((category: Category) => { this._category = category; });
         });
-    }
-
-    /**
-     * @summary Cleanup just before Angular destroys the directive/component. Unsubscribe observables and detach event
-     * handlers to avoid memory leaks.
-     */
-    public ngOnDestroy()
-    {
-        if (this._productSubscription)
-            this._productSubscription.unsubscribe();
-
-        if (this._categorySubscription)
-            this._categorySubscription.unsubscribe();
     }
 }

@@ -50,7 +50,7 @@
                 <li class="list-group-item">
                   <div class="card-block">
                     <b>{{ 'Categories' | translate }}</b><br/><br/>
-                    <div class="row" *ngFor="let category of _categories">
+                    <div class="row" *ngFor="let category of _categoriesService.getCategories() | async">
                       <div class="col-md-6 checkbox-container">
                         <input [checked]="_productHasCategory(category._id)" type="checkbox" [attr.id]="category._id" name="track-inventory" class="checkbox"
                            (change)="_onCategoryToggle($event.target.id, $event.target.checked)"/>

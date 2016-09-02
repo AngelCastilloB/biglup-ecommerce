@@ -20,7 +20,6 @@
 import { Injectable }      from '@angular/core';
 import { Products }        from '../../common/collections/product.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject }         from 'rxjs/Subject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
 
@@ -92,10 +91,67 @@ export class ProductsService extends MeteorComponent
      */
     public getProduct(productId: string): Observable<Product>
     {
-        return new Observable<Product>(func => this._productsStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product._id === productId)[0]))
-            .filter(product => !!product)
-            .subscribe(func));
+        return Observable.create(observer => {
+            this.subscribe('products', productId , () =>
+            {
+                let product: Product = Products.findOne({_id: productId});
+
+                if (!product)
+                {
+                    observer.error('Product not found');
+                    return;
+                }
+
+                observer.next(product);
+                observer.complete();
+            });
+        });
+    }
+
+    /**
+     * @summary Creates a new product.
+     *
+     * @param product The product to be created in the database.
+     */
+    public createProduct(product: Product): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('products.createProduct', product, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Updates a product.
+     *
+     * @param product The product to be updated in the database.
+     */
+    public updateProduct(product: Product): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('products.updateProduct', product, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
     }
 
     /**
@@ -108,7 +164,8 @@ export class ProductsService extends MeteorComponent
     public deteleProduct(productId: string): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('products.deleteProduct', productId, (error, result) => {
+            this.call('products.deleteProduct', productId, (error, result) =>
+            {
                 if (error)
                 {
                     observer.error(error);
