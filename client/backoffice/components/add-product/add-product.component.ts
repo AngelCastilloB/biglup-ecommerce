@@ -27,7 +27,6 @@ import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { Categories }               from '../../../../common/collections/category.collection.ts';
-import { NgForm }                   from '@angular/forms';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent }           from '../modal/modal.component';
 import { Products }                 from '../../../../common/collections/product.collection';
@@ -48,8 +47,7 @@ import template from './add-product.component.html';
  */
 @Component({
     selector: 'add-products',
-    template,
-    directives: [ImagesUploaderComponent, NgForm, ModalComponent]
+    template
 })
 export class AddProductComponent extends MeteorComponent implements OnInit
 {

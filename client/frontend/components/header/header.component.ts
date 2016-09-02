@@ -39,8 +39,7 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template,
-    providers: [CategoriesService]
+    template
 })
 export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
 {

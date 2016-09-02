@@ -43,8 +43,7 @@ import template from './image-preview.component.html';
 @Component({
     selector: 'image-preview',
     template,
-    styleUrls: ['./images-preview.component.css'],
-    directives: [ImageDisplayComponent],
+    styleUrls: ['./images-preview.component.css']
 })
 export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit
 {
