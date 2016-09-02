@@ -26,8 +26,6 @@ import { UserAuthService }              from '../../../services/user-auth.servic
 import { Subscription }                 from 'rxjs';
 import { CategoriesService }            from '../../../services/categories.service';
 
-import '../../../../common/api/cart.methods';
-
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './header.component.html';
@@ -39,7 +37,8 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template
+    template,
+    styleUrls: ['header.component.css']
 })
 export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
 {
@@ -50,6 +49,7 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      * @summary Initializes a new instance of the Header class.
      *
      * @param {UserAuthService} _userAuthService The authentication service.
+     * @param {CategoriesService} _categoriesService The categories collection service.
      */
     constructor(private _userAuthService: UserAuthService, private _categoriesService: CategoriesService)
     {
@@ -79,7 +79,7 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      * @summary language change event handler
      * @param language The language to se bet.
      */
-    private languageChanged(language: string)
+    private _changeLanguage(language: string)
     {
         I18nSingletonService.getInstance().setLocale(language);
     }
