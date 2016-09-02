@@ -24,14 +24,11 @@ import { Component,
          ElementRef,
          Renderer,
          EventEmitter,
-         Output }                  from '@angular/core';
-import { FileDropDirective }       from './directives/file-drop.directive';
-import { FileSelectDirective }     from './directives/file-select.directive';
-import { UploadFS }                from 'meteor/jalik:ufs';
-import { ImagesStore }             from '../../../../common/collections/image.collection.ts';
-import { ImagePreviewComponent }   from './components/image-preview/image-preview.component';
-import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
-import { UploaderImage }           from './internals/product-image'
+         Output }         from '@angular/core';
+import { UploadFS }       from 'meteor/jalik:ufs';
+import { ImagesStore }    from '../../../../common/collections/image.collection.ts';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import { UploaderImage }  from './internals/product-image';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -49,9 +46,7 @@ const NUMBER_OF_COLUMNS = 5;
 @Component({
     selector: 'images-uploader',
     template,
-    styleUrls: ['./images-uploader.component.css'],
-    viewProviders: [DragulaService],
-    directives: [FileDropDirective, FileSelectDirective, ImagePreviewComponent, Dragula]
+    styleUrls: ['./images-uploader.component.css']
 })
 export class ImagesUploaderComponent
 {

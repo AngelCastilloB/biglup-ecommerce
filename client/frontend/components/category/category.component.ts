@@ -35,8 +35,7 @@ import template from './category.component.html';
  */
 @Component({
     selector: 'category',
-    template,
-    providers: [ProductsService]
+    template
 })
 export class CategoryComponent extends MeteorComponent implements OnInit {
     private _categoryId: string;

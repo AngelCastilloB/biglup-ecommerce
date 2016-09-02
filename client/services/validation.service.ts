@@ -17,9 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractControl } from '@angular/forms';
-import { ControlGroup }    from '@angular/common';
-import { Injectable }      from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { Injectable }                 from '@angular/core';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -56,11 +55,11 @@ export class ValidationService
      * @param {string} firstControlKey the first group name or key IE: name, password
      * @param {string} secondControlKey the second group name or key IE: another_name, password_confirmation
      *
-     * @returns {(group:ControlGroup)=>void} The control group values validator.
+     * @returns {(group:FormGroup)=>void} The control group values validator.
      */
     public static matchControlGroupsValues(firstControlKey: string, secondControlKey: string)
     {
-        return (group: ControlGroup) =>
+        return (group: FormGroup) =>
         {
             if (!group.controls[firstControlKey])
                 throw new Error(`Control group does not posses '${firstControlKey}' as a key.`);

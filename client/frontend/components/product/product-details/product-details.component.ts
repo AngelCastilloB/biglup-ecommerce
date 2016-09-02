@@ -35,8 +35,7 @@ import template from './product-details.component.html';
  */
 @Component({
     selector: 'product-details',
-    template,
-    providers: [ProductsService, CategoriesService]
+    template
 })
 export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy
 {

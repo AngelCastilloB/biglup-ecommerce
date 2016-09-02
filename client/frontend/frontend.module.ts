@@ -35,6 +35,11 @@ import { CategoryItemComponent }          from './components/category-item/categ
 import { CategoryComponent }              from './components/category/category.component';
 import { SharedModule }                   from '../shared.module';
 import { FrontendComponent }              from './frontend.component';
+import { CategoriesService }              from '../services/categories.service';
+import { ProductsService }                from '../services/products.service';
+import { IdGeneratorService }             from '../services/id-generator.service.ts';
+import { ValidationService }              from '../services/validation.service';
+import { UserAuthService }                from '../services/user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -69,6 +74,13 @@ import { FrontendComponent }              from './frontend.component';
         SharedModule,
         FrontendRoutesModule
     ],
+    providers: [
+        CategoriesService,
+        ProductsService,
+        ValidationService,
+        UserAuthService,
+        IdGeneratorService
+    ]
 })
 export class FrontendModule
 {

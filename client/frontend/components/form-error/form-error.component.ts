@@ -29,7 +29,6 @@ import { IdGeneratorService }       from '../../../services/id-generator.service
  */
 @Component({
     selector: 'form-error',
-    providers: [IdGeneratorService],
     template: `<div [id]="_getId()" class="font-italic" [ngClass]="classes">
                   {{ message }}
                </div>`

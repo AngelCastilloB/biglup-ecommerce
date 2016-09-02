@@ -36,7 +36,6 @@ import template from './products.component.html';
 @Component({
     selector: 'products',
     template,
-    providers: [ProductsService]
 })
 export class ProductsComponent extends MeteorComponent
 {
