@@ -43,6 +43,7 @@ import { ImagePreviewComponent }   from './components/images-uploader/components
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }       from './components/images-uploader/directives/file-drop.directive';
 import { FileSelectDirective }     from './components/images-uploader/directives/file-select.directive';
+import { TextEditorComponent }     from './components/text-editor/text-editor.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -56,6 +57,7 @@ import { FileSelectDirective }     from './components/images-uploader/directives
         BreadcrumbComponent,
         DashboardComponent,
         ModalComponent,
+        TextEditorComponent,
 
         // collection
         AddCollectionComponent,

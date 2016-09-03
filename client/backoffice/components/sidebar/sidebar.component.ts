@@ -38,7 +38,7 @@ import template from './sidebar.component.html';
 export class SidebarComponent extends MeteorComponent
 {
     /**
-     * @summary Initializes a new instance of the DashboardComponent class.
+     * @summary Initializes a new instance of the SidebarComponent class.
      */
     constructor() {
         super();

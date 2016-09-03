@@ -1,0 +1,29 @@
+<div class="text-editor">
+  <div class="buttons">
+    <button (click)="_onBold()" [ngClass]="_boldToggle ? 'active': 'inactive'" class="fa fa-bold"  aria-hidden="true"></button>
+    <button (click)="_onItalic()" [ngClass]="_italicToggle ? 'active': 'inactive'" class="fa fa-italic"  aria-hidden="true"></button>
+    <button (click)="_onUnderline()" [ngClass]="_underlineToggle ? 'active': 'inactive'" class="fa fa-underline"  aria-hidden="true"></button>
+    <button (click)="_onStrikethrough()" [ngClass]="_strikethroughToggle ? 'active': 'inactive'" class="fa fa-strikethrough"  aria-hidden="true"></button>
+
+    <div class="btn-group sizes-menu">
+      <button type="button" class="fa fa-text-height" data-toggle="dropdown"></button>
+      <ul class="dropdown-menu scrollable-menu sizes-menu"  role="menu">
+        <li class="sizes-menu" *ngFor="let size of _sizes"><button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button></li>
+      </ul>
+    </div>
+
+    <div class="vr"></div>
+
+    <button (click)="_onJustifyLeft()" [ngClass]="_justifyLeftToggle ? 'active': 'inactive'" class="fa fa-align-left"  aria-hidden="true"></button>
+    <button (click)="_onJustifyCenter()" [ngClass]="_justifyCenterToggle ? 'active': 'inactive'" class="fa fa-align-center"  aria-hidden="true"></button>
+    <button (click)="_onJustifyRight()" [ngClass]="_justifyRightToggle ? 'active': 'inactive'" class="fa fa-align-right"  aria-hidden="true"></button>
+    <button (click)="_onJustifyFull()" [ngClass]="_justifyFullToggle ? 'active': 'inactive'" class="fa fa-align-justify"  aria-hidden="true"></button>
+
+    <div class="vr"></div>
+
+  </div>
+  <div #editable id="editable-area" contenteditable (click)="_onEditableClick()">
+    Select some text and click the button to make it bold...
+    <br>Or write your own text
+  </div>
+</div>

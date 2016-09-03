@@ -19,9 +19,9 @@
 
 import 'reflect-metadata';
 
-import { AfterViewInit }   from '@angular/core';
-import { Component }       from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
+import { AfterViewInit }       from '@angular/core';
+import { Component }           from '@angular/core';
+import { MeteorComponent }     from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
