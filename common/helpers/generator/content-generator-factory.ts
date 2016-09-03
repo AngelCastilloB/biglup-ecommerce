@@ -19,6 +19,8 @@
 
 import { Meteor }                            from 'meteor/meteor';
 import { KoreanContentGenerator }            from './korean-content-generator';
+import { EnglishContentGenerator }           from './english-content-generator';
+import { SpanishContentGenerator }           from './spanish-content-generator';
 import { AbstractContentGenerator }          from './abstract-content-generator';
 import { SimplifiedChineseContentGenerator } from './simplified-chinese-content-generator';
 
@@ -72,7 +74,9 @@ export class ContentGeneratorFactory
      */
     public static init()
     {
+        ContentGeneratorFactory.register('en', EnglishContentGenerator.getFactoryMethod());
         ContentGeneratorFactory.register('zh', SimplifiedChineseContentGenerator.getFactoryMethod());
         ContentGeneratorFactory.register('kr', KoreanContentGenerator.getFactoryMethod());
+        ContentGeneratorFactory.register('es', SpanishContentGenerator.getFactoryMethod());
     }
 }
