@@ -30,7 +30,7 @@ const USER_SETTINGS = {
 const MIGRATIONS_SETTINGS = {
     migrate: false,
     reset: false,
-    locales: ['en', 'zh', 'kr']
+    locales: ['en', 'zh', 'kr', 'es']
 };
 
 const FACEBOOK_SETTINGS = {
