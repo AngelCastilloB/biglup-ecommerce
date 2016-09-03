@@ -17,9 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration } from './abstract-migration';
-import { Mongo }             from 'meteor/mongo';
-import * as faker            from 'faker/locale/en';
+import { Mongo }                    from 'meteor/mongo';
+import * as faker                   from 'faker/locale/en';
+import { AbstractMigration }        from './abstract-migration';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,15 +33,6 @@ export class ProductMigration extends AbstractMigration
     protected _amount: number    = 10; // 1 to 10 products per category.
     private _products: Product[] = [];
     private _categories: Category[];
-    private _sizes               = [
-        'xs: Extra Small',
-        's: Small',
-        'ms: Medium Small',
-        'm: Medium',
-        'ml: Medium Large',
-        'l: Large',
-        'xl: Extra Large',
-    ];
 
     /**
      * @summary Initializes a new instance of the class ProductMigration.
@@ -85,39 +77,46 @@ export class ProductMigration extends AbstractMigration
 
             for (let j = 0; j < productCount; j++)
             {
-                this._products.push({
-                    title: this._getI18nStringArray('word', 3),
-                    sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
-                    barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
-                    categoryId: this._addRandomIds(this._categories[i]._id),
-                    description: this._getI18nStringArray('paragraph'),
-                    color: this._getI18nStringArray('color'),
-                    size: this._getI18nStringArray('size'),
-                    price: Math.floor(Math.random() * 10000),
-                    discount: Math.floor(Math.random() * 100),
-                    // TODO refactor into content generator
-                    hashtags: faker.lorem.words(3).split(' '),
-                    isVisible: faker.random.boolean(),
-                    trackInventory: true,
-                    isLowQuantity: faker.random.boolean(),
-                    stock: Math.floor(Math.random() * 500),
-                    isBackorder: faker.random.boolean(),
-                    requiresShipping: faker.random.boolean()
+                const product = this._createPartialProduct(i);
+
+                this._generators.forEach((generator: AbstractContentGenerator) =>
+                {
+                    product.title.push({language: generator.getLocale(), value: generator.getWords(3)});
+                    product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
+                    product.color.push({language: generator.getLocale(), value: generator.getColor()});
+                    product.size.push({language: generator.getLocale(), value: generator.getSize()});
                 });
+
+                this._products.push(product);
             }
         }
     }
 
     /**
-     * @summary Returns a random size from the array.
+     * @summary creates an incomplete product object, this lacks title, color, size and other fields.
      *
-     * @returns {string} The ranomd size.
+     * @param index The category index this new product will be guaranteed to have.
+     *
+     * @returns {Product} The new product partial.
+     * @private
      */
-    private _getRandomSize(): string
+    private _createPartialProduct(index: number): Product
     {
-        let randomIndex: number = Math.floor(Math.random() * this._sizes.length);
-
-        return this._sizes[randomIndex];
+        return <Product>{
+            sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
+            barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
+            categoryId: this._addRandomIds(this._categories[index]._id),
+            price: Math.floor(Math.random() * 10000),
+            discount: Math.floor(Math.random() * 100),
+            // TODO refactor into content generator
+            hashtags: faker.lorem.words(3).split(' '),
+            isVisible: faker.random.boolean(),
+            trackInventory: true,
+            isLowQuantity: faker.random.boolean(),
+            stock: Math.floor(Math.random() * 500),
+            isBackorder: faker.random.boolean(),
+            requiresShipping: faker.random.boolean()
+        };
     }
 
     /**

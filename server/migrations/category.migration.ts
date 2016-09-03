@@ -17,9 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration } from './abstract-migration';
-import { Mongo }             from 'meteor/mongo';
-import defaults              from './defaults/category';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
+import { AbstractMigration }        from './abstract-migration';
+import { Mongo }                    from 'meteor/mongo';
+import defaults                     from './defaults/category';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -72,11 +73,15 @@ export class CategoryMigration extends AbstractMigration
     {
         for (let i = 0; i < this._amount; i++)
         {
-            this._categories.push({
-                name: this._getI18nStringArray('word'),
-                info: this._getI18nStringArray('word', 10),
-                image: 'shirts.png'
+            const category: Category = <Category>{image: 'shirts.png'};
+
+            this._generators.forEach((generator: AbstractContentGenerator) =>
+            {
+                category.name.push({language: generator.getLocale(), value: generator.getWords(1)});
+                category.info.push({language: generator.getLocale(), value: generator.getWords(10)});
             });
+
+            this._categories.push(category);
         }
     }
 }
