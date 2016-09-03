@@ -38,6 +38,7 @@ import template from './dashboard.component.html';
 })
 export class DashboardComponent extends MeteorComponent implements AfterViewInit
 {
+    private _content: string = 'sssss';
 
     /**
      * @summary Initializes a new instance of the DashboardComponent class.

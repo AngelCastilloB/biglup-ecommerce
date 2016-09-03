@@ -75,27 +75,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             this._category._id = params['id'];
 
             if (!this._category._id)
-            {
-                // TODO: Remove tinyMCE.
-                tinymce.init(
-                 {
-                    selector: 'textarea',
-                    setup: (editor) =>
-                    {
-                        editor.on('keyup change', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-                                this._categoryDescription = tinymce.activeEditor.getContent();
-                                this._category.info       =
-                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
-                            });
-                        });
-                    }
-                });
-
                 return;
-            }
 
             this.subscribe('category', this._category._id , () =>
             {
@@ -103,36 +83,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
                 this._categoryName        = this._getMongoTranslation(this._category.name);
                 this._categoryDescription = this._getMongoTranslation(this._category.info);
-
-                // TODO: Remove tinyMCE.
-                tinymce.init(
-                 {
-                    selector: 'textarea',
-                    setup: (editor) =>
-                    {
-                        editor.on('keyup change', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-
-                                this._categoryDescription = tinymce.activeEditor.getContent();
-                                this._category.info       =
-                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
-                            });
-                        });
-
-                        editor.on('init', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-                                tinymce.activeEditor.setContent(this._categoryDescription);
-                                tinymce.activeEditor.execCommand('mceRepaint');
-                            });
-                        });
-                    }
-                });
-
-                this._isEditMode = true;
+                this._isEditMode          = true;
             }, true);
         });
     }
@@ -146,6 +97,17 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     {
         this._categoryName = newName;
         this._category.name = [{'language': this._defaultLocale, 'value' : this._categoryName}];
+    }
+
+    /**
+     * @summary Event triggered when the description has changed.
+     *
+     * @param newDescription The new description to be set.
+     */
+    private _onDescriptionChange(newDescription: any): void
+    {
+        this._categoryDescription = newDescription;
+        this._category.info = [{'language': this._defaultLocale, 'value' : newDescription}];
     }
 
     /**

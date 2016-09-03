@@ -44,6 +44,7 @@ import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }       from './components/images-uploader/directives/file-drop.directive';
 import { FileSelectDirective }     from './components/images-uploader/directives/file-select.directive';
 import { TextEditorComponent }     from './components/text-editor/text-editor.component';
+import { ColorPickerComponent }    from './components/text-editor/components/color-picker.component'
 
 // EXPORTS ************************************************************************************************************/
 
@@ -58,6 +59,7 @@ import { TextEditorComponent }     from './components/text-editor/text-editor.co
         DashboardComponent,
         ModalComponent,
         TextEditorComponent,
+        ColorPickerComponent,
 
         // collection
         AddCollectionComponent,

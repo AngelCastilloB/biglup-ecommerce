@@ -1,29 +1,102 @@
 <div class="text-editor">
   <div class="buttons">
-    <button (click)="_onBold()" [ngClass]="_boldToggle ? 'active': 'inactive'" class="fa fa-bold"  aria-hidden="true"></button>
-    <button (click)="_onItalic()" [ngClass]="_italicToggle ? 'active': 'inactive'" class="fa fa-italic"  aria-hidden="true"></button>
-    <button (click)="_onUnderline()" [ngClass]="_underlineToggle ? 'active': 'inactive'" class="fa fa-underline"  aria-hidden="true"></button>
-    <button (click)="_onStrikethrough()" [ngClass]="_strikethroughToggle ? 'active': 'inactive'" class="fa fa-strikethrough"  aria-hidden="true"></button>
+    <button (click)="_onBold()"
+            [ngClass]="_boldToggle ? 'active': 'inactive'"
+            class="fa fa-bold"
+            aria-hidden="true"
+            title="{{ 'Bold' | translate }}">
+    </button>
 
-    <div class="btn-group sizes-menu">
-      <button type="button" class="fa fa-text-height" data-toggle="dropdown"></button>
+    <button (click)="_onItalic()"
+            [ngClass]="_italicToggle ? 'active': 'inactive'"
+            class="fa fa-italic" aria-hidden="true"
+            title="{{ 'Italic' | translate }}">
+    </button>
+
+    <button (click)="_onUnderline()"
+            [ngClass]="_underlineToggle ? 'active': 'inactive'"
+            class="fa fa-underline" aria-hidden="true"
+            title="{{ 'Underline' | translate }}">
+    </button>
+
+    <button (click)="_onStrikethrough()"
+            [ngClass]="_strikethroughToggle ? 'active': 'inactive'"
+            class="fa fa-strikethrough"
+            aria-hidden="true"
+            title="{{ 'Strikethrough' | translate }}">
+    </button>
+
+    <div class="btn-group">
+      <button type="button" class="fa fa-font" data-toggle="dropdown" title="{{ 'Font Family' | translate }}"></button>
+      <ul class="dropdown-menu scrollable-menu font-menu" role="menu">
+        <li class="font-menu font-menu-entry" *ngFor="let font of _fonts">
+          <button class="font-menu font-menu-entry" (click)="_changeFontType($event.srcElement.textContent)">
+            <font style="margin-left: 10px;" face="{{font}}">{{font}}</font>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="fa fa-text-height" data-toggle="dropdown" title="{{ 'Font Size' | translate }}"></button>
       <ul class="dropdown-menu scrollable-menu sizes-menu"  role="menu">
         <li class="sizes-menu" *ngFor="let size of _sizes"><button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button></li>
       </ul>
     </div>
 
+    <button (click)="_onTextFontColor($event)" type="button" class="fa fa-pencil" data-toggle="dropdown" title="{{ 'Text Color' | translate }}"></button>
+    <color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></color-picker>
+
+    <button (click)="_onTextBackgroundColor($event)" type="button" class="fa fa-tint" data-toggle="dropdown" title="{{ 'Background Color' | translate }}"></button>
+    <color-picker #backgroundColor (onClear)="_onBackgroundColorClear()" (onColorPicked)="_onBackgroundColorChanged($event)"></color-picker>
+
     <div class="vr"></div>
 
-    <button (click)="_onJustifyLeft()" [ngClass]="_justifyLeftToggle ? 'active': 'inactive'" class="fa fa-align-left"  aria-hidden="true"></button>
-    <button (click)="_onJustifyCenter()" [ngClass]="_justifyCenterToggle ? 'active': 'inactive'" class="fa fa-align-center"  aria-hidden="true"></button>
-    <button (click)="_onJustifyRight()" [ngClass]="_justifyRightToggle ? 'active': 'inactive'" class="fa fa-align-right"  aria-hidden="true"></button>
-    <button (click)="_onJustifyFull()" [ngClass]="_justifyFullToggle ? 'active': 'inactive'" class="fa fa-align-justify"  aria-hidden="true"></button>
+    <button (click)="_onJustifyLeft()"
+            [ngClass]="_justifyLeftToggle ? 'active': 'inactive'"
+            class="fa fa-align-left"
+            aria-hidden="true"
+            title="{{ 'Align Left' | translate }}">
+    </button>
+
+    <button (click)="_onJustifyCenter()"
+            [ngClass]="_justifyCenterToggle ? 'active': 'inactive'"
+            class="fa fa-align-center"
+            aria-hidden="true"
+            title="{{ 'Align Center' | translate }}">
+    </button>
+
+    <button (click)="_onJustifyRight()"
+            [ngClass]="_justifyRightToggle ? 'active': 'inactive'"
+            class="fa fa-align-right"
+            aria-hidden="true"
+            title="{{ 'Align Right' | translate }}">
+    </button>
+
+    <button (click)="_onJustifyFull()"
+            [ngClass]="_justifyFullToggle ? 'active': 'inactive'"
+            class="fa fa-align-justify"
+            aria-hidden="true"
+            title="{{ 'Align Justify' | translate }}">
+    </button>
 
     <div class="vr"></div>
+
+    <button (click)="_onOrderedList()"
+            [ngClass]="_orderedListToggle ? 'active': 'inactive'"
+            class="fa fa fa-list-ol"
+            aria-hidden="true"
+            title="{{ 'Ordered List' | translate }}">
+    </button>
+
+    <button (click)="_onUnorderedList()"
+            [ngClass]="_unorderedListToggle ? 'active': 'inactive'"
+            class="fa fa fa-list-ul"
+            aria-hidden="true"
+            title="{{ 'Unordered List' | translate }}">
+    </button>
 
   </div>
-  <div #editable id="editable-area" contenteditable (click)="_onEditableClick()">
-    Select some text and click the button to make it bold...
-    <br>Or write your own text
+  <div #editable id="editable-area" contenteditable (click)="_onEditableClick()" (blur)="_onContentChange()">
   </div>
 </div>
