@@ -95,6 +95,28 @@ export abstract class AbstractContentGenerator
     public abstract getProductTitle(): string;
 
     /**
+     * @summary Returns a random true or false boolean
+     *
+     * @returns {boolean}
+     */
+    public getRandomBoolean(): boolean
+    {
+        return Math.random() < .5 ? true : false;
+    }
+
+    /**
+     * @summary Returns a number between 0 and 100 or the max if provided.
+     *
+     * @param {number} max The maximum the number can be.
+     *
+     * @returns {number}
+     */
+    public getRandomNumber(max = 100): number
+    {
+        return Math.floor(Math.random() * max);
+    }
+
+    /**
      * @summary returns a random element from an array.
      *
      * @param {string[]} elements The element collection

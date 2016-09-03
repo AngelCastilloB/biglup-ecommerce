@@ -102,24 +102,25 @@ export class ProductMigration extends AbstractMigration
      */
     private _createPartialProduct(index: number): Product
     {
+        const generator = this._generators[0];
+
         return {
             title: [],
             description: [],
             color: [],
             size: [],
-            sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
-            barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
+            sku: generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000),
+            barcode: generator.getWords(1).replace(' ', '=').concat('.').toLowerCase(),
             categoryId: this._addRandomIds(this._categories[index]._id),
-            price: Math.floor(Math.random() * 10000),
-            discount: Math.floor(Math.random() * 100),
-            // TODO refactor into content generator
-            hashtags: faker.lorem.words(3).split(' '),
-            isVisible: faker.random.boolean(),
-            trackInventory: true,
-            isLowQuantity: faker.random.boolean(),
-            stock: Math.floor(Math.random() * 500),
-            isBackorder: faker.random.boolean(),
-            requiresShipping: faker.random.boolean()
+            price: generator.getRandomNumber(10000),
+            discount: generator.getRandomNumber(),
+            hashtags: generator.getWordsArray(3),
+            isVisible: generator.getRandomBoolean(),
+            trackInventory: generator.getRandomBoolean(),
+            isLowQuantity: generator.getRandomBoolean(),
+            stock: generator.getRandomNumber(500),
+            isBackorder: generator.getRandomBoolean(),
+            requiresShipping: generator.getRandomBoolean()
         };
     }
 
