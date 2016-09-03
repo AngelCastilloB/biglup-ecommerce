@@ -17,21 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }                             from 'meteor/mongo';
-import { IMigratable }                       from './interfaces/i-migratable';
-import { SimplifiedChineseContentGenerator } from '../../common/helpers/generator/simplified-chinese-content-generator';
-import { KoreanContentGenerator }            from '../../common/helpers/generator/korean-content-generator';
-
-// GENERATORS**********************************************************************************************************/
-
-/**
- * @summary The available generators.
- */
-interface ContentGenerators
-{
-    zh: SimplifiedChineseContentGenerator;
-    kr: KoreanContentGenerator;
-}
+import { Mongo }                    from 'meteor/mongo';
+import { IMigratable }              from './interfaces/i-migratable';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -43,11 +31,12 @@ export abstract class AbstractMigration implements IMigratable
     protected _amount = 10;
 
     /**
-     * @summary Initializes a new instance of the class
-     * @param _collection
-     * @param _generators
+     * @summary Initializes a new instance of the class.
+     *
+     * @param {Mongo.Collection<{}>} _collection The mongo collection to associate with this migration class.
+     * @param {AbstractContentGenerator[]} _generators The fake language content generator.
      */
-    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: ContentGenerators)
+    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: AbstractContentGenerator[])
     {
     }
 
@@ -63,5 +52,56 @@ export abstract class AbstractMigration implements IMigratable
     {
         console.log('removing collection!');
         this._collection.remove({});
+    }
+
+    /**
+     * @summary creates a I18nString type compatible array according to enabled locales in settings.
+     *
+     * @param type The type of element to give back, IE: word, sentence, color, etc.
+     * @param amount The quantity to generate.
+     *
+     * @returns {I18nString[]}
+     */
+    protected _getI18nStringArray(type: string, amount = 1): I18nString[]
+    {
+        let data: I18nString[] = [];
+
+        this._generators.forEach((generator: AbstractContentGenerator) =>
+        {
+            let func = this._getStringGeneratorFunction(type, generator);
+            data.push({
+                language: generator.getLocale(),
+                value: func(amount)
+            });
+        });
+
+        return data;
+    }
+
+    /**
+     * @summary Finds the proper function according to the type.
+     *
+     * @param type the simplified function name, IE: word, sentence, paragraph, color, etc.
+     * @param generator the Content generator instance.
+     * @returns {Function}
+     * @private
+     */
+    private _getStringGeneratorFunction(type: string, generator: AbstractContentGenerator): Function
+    {
+        switch (type)
+        {
+            case 'word':
+                return generator.getWords.bind(generator);
+            case 'sentence':
+                return generator.getSentence.bind(generator);
+            case 'paragraph':
+                return generator.getParagraph.bind(generator);
+            case 'color':
+                return generator.getColor.bind(generator);
+            case 'size':
+                return generator.getSize.bind(generator);
+            default:
+                throw new Error(`Unable to find proper generator function, '${type}' is invalid.`);
+        }
     }
 }

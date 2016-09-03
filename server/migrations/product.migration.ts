@@ -49,7 +49,8 @@ export class ProductMigration extends AbstractMigration
      * @param generators            The content generators.
      * @param _categoriesCollection The category collection.
      */
-    constructor(collection: Mongo.Collection<Object>,
+    constructor(
+        collection: Mongo.Collection<Object>,
         generators,
         private _categoriesCollection: Mongo.Collection<Category>)
     {
@@ -85,31 +86,16 @@ export class ProductMigration extends AbstractMigration
             for (let j = 0; j < productCount; j++)
             {
                 this._products.push({
-                    title: [
-                        {language: 'en', value: faker.commerce.productName()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
+                    title: this._getI18nStringArray('word', 3),
                     sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
                     barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
                     categoryId: this._addRandomIds(this._categories[i]._id),
-                    description: [
-                        {language: 'en', value: faker.lorem.paragraph(3)},
-                        {language: 'zh', value: this._generators.zh.getParagraph()},
-                        {language: 'kr', value: this._generators.kr.getParagraph()},
-                    ],
-                    color: [
-                        {language: 'en', value: faker.commerce.color()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
-                    size: [
-                        {language: 'en', value: this._getRandomSize()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
+                    description: this._getI18nStringArray('paragraph'),
+                    color: this._getI18nStringArray('color'),
+                    size: this._getI18nStringArray('size'),
                     price: Math.floor(Math.random() * 10000),
                     discount: Math.floor(Math.random() * 100),
+                    // TODO refactor into content generator
                     hashtags: faker.lorem.words(3).split(' '),
                     isVisible: faker.random.boolean(),
                     trackInventory: true,

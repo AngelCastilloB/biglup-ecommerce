@@ -29,7 +29,8 @@ const USER_SETTINGS = {
 
 const MIGRATIONS_SETTINGS = {
     migrate: false,
-    reset: false
+    reset: false,
+    locales: ['en', 'zh', 'kr']
 };
 
 const FACEBOOK_SETTINGS = {

@@ -20,7 +20,6 @@
 import { AbstractMigration } from './abstract-migration';
 import { Mongo }             from 'meteor/mongo';
 import defaults              from './defaults/category';
-import * as faker            from 'faker/locale/en';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -74,34 +73,8 @@ export class CategoryMigration extends AbstractMigration
         for (let i = 0; i < this._amount; i++)
         {
             this._categories.push({
-                name: [
-                    {
-                        language: 'en',
-                        value: faker.lorem.words(1)
-                    },
-                    {
-                        language: 'zh',
-                        value: this._generators.zh.getWords(1).toString()
-                    },
-                    {
-                        language: 'kr',
-                        value: this._generators.kr.getWords(1).toString()
-                    }
-                ],
-                info: [
-                    {
-                        language: 'en',
-                        value: faker.lorem.words(10)
-                    },
-                    {
-                        language: 'zh',
-                        value: this._generators.zh.getSentence()
-                    },
-                    {
-                        language: 'kr',
-                        value: this._generators.kr.getSentence()
-                    }
-                ],
+                name: this._getI18nStringArray('word'),
+                info: this._getI18nStringArray('word', 10),
                 image: 'shirts.png'
             });
         }

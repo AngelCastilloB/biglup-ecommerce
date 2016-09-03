@@ -26,13 +26,14 @@ import { AbstractContentGenerator } from './abstract-content-generator';
  */
 export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
 {
+
     /**
      * @summary Words used to fake models in chinese.
      *
      * @type {string[]}
-     * @protected
+     * @private
      */
-    protected _words = [
+    private _words = [
         '垥娀庣',
         '瘑睯碫',
         '姌弣抶',
@@ -53,9 +54,9 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
      * @summary Sentences used to fake models in chinese.
      *
      * @type {string[]}
-     * @protected
+     * @private
      */
-    protected _sentences = [
+    private _sentences = [
         '垥娀庣 瘑睯碫 姌弣抶 鈖嗋 誙, 骱 騩鰒 灡蠵讔 俶倗 墐墆墏 斪昮朐 騔鯬鶄 潣 顃餭.',
         '鮂鮐嚃 巘斖蘱 憃撊 嘽 鮥鴮 驨訑紱楩, 箷箯 鸃鼞欘翬膞 檌檒濦 煃, 禖穊稯 騔鯬鶄 鸙讟钃 壿 磑禠 鋱鋟鋈.',
         '窞綆腤 蓪 踄鄜, 鋑鋡髬 珋疧眅儮嬼懫 蓪 詏貁 謕豲 燲獯璯 氃濈瀄 邆錉霋 觢 餖駜 惝掭掝 揯揳揓 蒏.',
@@ -67,13 +68,86 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
      * @summary Paragraph used to fake models in chinese.
      *
      * @type {string}
-     * @protected
+     * @private
      */
-    protected _paragraph = '垥娀庣 瘑睯碫 姌弣抶 鈖嗋 誙, 骱 騩鰒鰔 萷葋蒎 灡蠵讔 俶倗 墐墆墏 斪昮朐 騔鯬鶄 潣 顃餭, ' +
+    private _paragraph = '垥娀庣 瘑睯碫 姌弣抶 鈖嗋 誙, 骱 騩鰒鰔 萷葋蒎 灡蠵讔 俶倗 墐墆墏 斪昮朐 騔鯬鶄 潣 顃餭, ' +
         '諙 橍殧澞鮂鮐嚃 巘斖蘱 憃撊 嘽 鮥鴮 驨訑紱 椸楢楩, 箷箯 鸃鼞欘 緱翬膞 檌檒濦 煃, 禖穊稯 騔鯬鶄 鸙讟钃 壿 磑禠 ' +
         '鋱鋟鋈窞綆腤  蓪 踄鄜, 鋑鋡髬 珋疧眅 儮嬼懫 蓪 詏貁 謕豲 燲獯璯 氃濈瀄 邆錉霋 觢 餖駜 惝掭掝 揯揳揓 蒏, 壾 鳼鳹鴅溮煡煟 ' +
         '犕瘑 蝺 瑐瑍 鋱鋟鋈 廦廥彋, 抏旲 銇 碢禗禈 鞈頨頧 虰豖阹 熿熼燛 忕汌卣 觢 笢笣, 蚔趵郚 藽轚酁 蒰裧頖 澉 坽姎, 襛襡襙 ' +
         '撌斳暩 熿熼 滈 箄縴儳 毊灚襳 岯岪弨 摿 隒雸, 皵碡碙 觶譈譀 輣鋄銶 趍 榾毄 葮 縢羱 萆覕貹棷棫椓 紏蚙迻';
+
+    /**
+     * @summary Colors used to fake models in chinese.
+     *
+     * @type {string[]}
+     * @private
+     */
+    private _colors = [
+        '白色',
+        '红色',
+        '黄色',
+        '绿色',
+        '蓝色',
+        '褐色',
+        '橙色',
+        '灰色'
+    ];
+
+    /**
+     * @summary non-numeric numbers used to fake models in chinese.
+     *
+     * @type {string[]}
+     * @private
+     */
+    private _numbers = [
+        '〇',
+        '一',
+        '二',
+        '三',
+        '四',
+        '五',
+        '六',
+        '七',
+        '八',
+        '九',
+        '十'
+    ];
+
+    /**
+     * @summary Clothes sizes used to fake models in chinese.
+     *
+     * @type {string[]}
+     * @private
+     */
+    private _sizes = [
+        'xs: 超小',
+        's: 小',
+        'ms: 中小',
+        'm: 中',
+        'ml: 中大',
+        'l: 大',
+        'xl: 特大号',
+    ];
+
+    /**
+     * @summary Gets the factory method for the simplified chinese content generator.
+     *
+     * @returns {() => AbstractContentGenerator} The translator factory method.
+     */
+    public static getFactoryMethod(): () => AbstractContentGenerator
+    {
+        return (() => new SimplifiedChineseContentGenerator());
+    }
+
+    /**
+     * @summary Returns the locale of the instance.
+     *
+     * @returns {string} The locale.
+     */
+    public getLocale()
+    {
+        return 'zh';
+    }
 
     /**
      * @summary Returns an array of words in a given language.
@@ -82,14 +156,14 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
      *
      * @returns {string[]} The collection of requested words.
      */
-    public getWords(amount: number): string[]
+    public getWords(amount: number): string
     {
         if (amount > this._words.length)
         {
             this._throwGetLengthError(amount, this._words.length);
         }
 
-        return this._getRandomArrayIndexes(this._words, amount);
+        return this._getRandomArrayIndexes(this._words, amount).join(' ');
     }
 
     /**
@@ -110,5 +184,35 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
     public getParagraph(): string
     {
         return this._paragraph;
+    }
+
+    /**
+     * @summary Gives a random color in simplified chinese language.
+     *
+     * @returns {string} The requested random color in simplified chinese.
+     */
+    public getColor(): string
+    {
+        return this._getRandomArrayIndexes(this._colors, 1).toString();
+    }
+
+    /**
+     * @summary Gives a random number in simplified chinese language.
+     *
+     * @returns {string} The requested random number in simplified chinese.
+     */
+    public getNumber(): string
+    {
+        return this._getRandomArrayIndexes(this._numbers, 1).toString();
+    }
+
+    /**
+     * @summary Gives a random size in chinese language.
+     *
+     * @returns {string} The requested random size.
+     */
+    public getSize(): string
+    {
+        return this._getRandomArrayIndexes(this._sizes, 1).toString();
     }
 }
