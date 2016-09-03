@@ -81,7 +81,7 @@ export class ProductMigration extends AbstractMigration
 
                 this._generators.forEach((generator: AbstractContentGenerator) =>
                 {
-                    product.title.push({language: generator.getLocale(), value: generator.getWords(3)});
+                    product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
                     product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
                     product.color.push({language: generator.getLocale(), value: generator.getColor()});
                     product.size.push({language: generator.getLocale(), value: generator.getSize()});

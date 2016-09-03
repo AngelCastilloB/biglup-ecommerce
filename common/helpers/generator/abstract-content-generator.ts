@@ -35,13 +35,22 @@ export abstract class AbstractContentGenerator
     public abstract getLocale(): string;
 
     /**
+     * @summary Returns an string of words in a given language.
+     *
+     * @param {number} amount  the amount to return.
+     *
+     * @returns {string} The requested words.
+     */
+    public abstract getWords(amount: number): string;
+
+    /**
      * @summary Returns an array of words in a given language.
      *
      * @param {number} amount  the amount to return.
      *
      * @returns {string[]} The collection of requested words.
      */
-    public abstract getWords(amount: number): string;
+    public abstract getWordsArray(amount: number): string[];
 
     /**
      * @summary Gives a random sentence in a given language.
@@ -77,6 +86,13 @@ export abstract class AbstractContentGenerator
      * @returns {string} The requested random size.
      */
     public abstract getSize(): string;
+
+    /**
+     * @summary Returns an string resembling a title in a given language.
+     *
+     * @returns {string} The requested title.
+     */
+    public abstract getProductTitle(): string;
 
     /**
      * @summary returns a random element from an array.

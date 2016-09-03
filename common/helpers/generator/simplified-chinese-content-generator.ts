@@ -158,12 +158,24 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
      */
     public getWords(amount: number): string
     {
+        return this.getWordsArray(amount).join(' ');
+    }
+
+    /**
+     * @summary Returns an array of words in a chinese.
+     *
+     * @param {number} amount  the amount to return.
+     *
+     * @returns {string[]} The collection of requested words.
+     */
+    public getWordsArray(amount: number): string[]
+    {
         if (amount > this._words.length)
         {
             this._throwGetLengthError(amount, this._words.length);
         }
 
-        return this._getRandomArrayIndexes(this._words, amount).join(' ');
+        return this._getRandomArrayIndexes(this._words, amount);
     }
 
     /**
@@ -214,5 +226,15 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
     public getSize(): string
     {
         return this._getRandomArrayIndexes(this._sizes, 1).toString();
+    }
+
+    /**
+     * @summary Returns an string resembling a title in a chinese.
+     *
+     * @returns {string} The requested title.
+     */
+    public getProductTitle(): string
+    {
+        return this.getWords(3);
     }
 }
