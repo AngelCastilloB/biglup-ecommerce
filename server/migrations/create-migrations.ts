@@ -17,17 +17,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import {
-    SimplifiedChineseContentGenerator
-}                                 from '../../common/helpers/generator/simplified-chinese-content-generator';
-import { KoreanContentGenerator } from '../../common/helpers/generator/korean-content-generator';
-import { CategoryMigration }      from './category.migration';
-import { Categories }             from '../../common/collections/category.collection';
-import { ProductMigration }       from './product.migration';
-import { Products }               from '../../common/collections/product.collection';
-import { IMigratable }            from './interfaces/i-migratable';
-import { ImageMigration }         from './image.migration';
-import { Images }                 from '../../common/collections/image.collection';
+import { CategoryMigration }        from './category.migration';
+import { Categories }               from '../../common/collections/category.collection';
+import { ProductMigration }         from './product.migration';
+import { Products }                 from '../../common/collections/product.collection';
+import { IMigratable }              from './interfaces/i-migratable';
+import { ImageMigration }           from './image.migration';
+import { Images }                   from '../../common/collections/image.collection';
+import { ContentGeneratorFactory }  from '../../common/helpers/generator/content-generator-factory';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -36,11 +34,7 @@ import { Images }                 from '../../common/collections/image.collectio
  */
 export function createMigrations()
 {
-    // TODO IOC container
-    const generators = {
-        zh: new SimplifiedChineseContentGenerator(),
-        kr: new KoreanContentGenerator()
-    };
+    let generators: AbstractContentGenerator[] = createGenerators();
 
     // the migrations to be called by the migrate function (order matters).
     let migrations = [
@@ -65,4 +59,23 @@ export function createMigrations()
             migrations.forEach((migration: IMigratable) => migration.down());
         }
     });
+}
+
+/**
+ * @summary creates all the content generators according to the meteor.json file settings.
+ *
+ * @returns {AbstractContentGenerator[]} all the created content generators.
+ */
+function createGenerators(): AbstractContentGenerator[]
+{
+    ContentGeneratorFactory.init();
+
+    const data = [];
+
+    Meteor.settings['migrations']['locales'].forEach((locale: string) =>
+    {
+        data.push(ContentGeneratorFactory.create(locale));
+    });
+
+    return data;
 }

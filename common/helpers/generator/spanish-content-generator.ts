@@ -1,10 +1,10 @@
 /**
- * @file kr.generator.ts.
+ * @file spanish-content-generator.ts.
  *
- * @summary Produces pseudo-random words / sentences / paragraphs in korean.
+ * @summary Produces pseudo-random words / sentences / paragraphs in spanish.
  *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @date   August 03 2016
+ * @date   September 03 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -22,116 +22,119 @@ import { AbstractContentGenerator } from './abstract-content-generator';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This content generators creates korean content.
+ * @summary This content generators creates spanish content.
+ *
+ * @see https://www.youtube.com/watch?v=77Ms1oCiDH4
  */
-export class KoreanContentGenerator extends AbstractContentGenerator
+export class SpanishContentGenerator extends AbstractContentGenerator
 {
 
     /**
-     * @summary Words used to fake models in korean.
+     * @summary Words used to fake models in spanish.
      *
      * @type {string[]}
      * @private
      */
     private _words = [
-        '텍스트',
-        '뿐만',
-        '아니라',
-        '동영상까지',
-        '스타일을',
-        '소개하고',
-        '모습이',
-        '만큼',
-        '합니다',
-        '컨셉이',
-        '오늘은',
-        '툴을',
-        '필요했습니다'
+        'salsa',
+        'tequila',
+        'corazon',
+        'te quiero',
+        'muy bueno',
+        'calamares',
+        'costa',
+        'chorizo',
+        'sombrero',
+        'gato',
+        'negro',
+        'gasolina',
+        'desesperado'
     ];
 
     /**
-     * @summary Sentences used to fake models in korean.
+     * @summary Sentences used to fake models in spanish.
      *
      * @type {string[]}
      * @private
      */
     private _sentences = [
-        '텍스트 뿐만 아니라, 이미지, 동영상까지. 온라인에선 다양한 컨셉이 존재하는 만큼.',
-        '로렌임숨도 다양한 모습이 필요했습니다.',
-        '오늘은 이러한 로렌임숨의 여러 스타일을 소개하고.',
-        '디자이너들의 시간을 절약해주는 다양한 툴을 소개해보고자 합니다.',
-        '온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한 모습이 필요했습니다.'
+        'Salsa, tequila, corazón cerveza, muy bueno.',
+        'Las ketchup, desesperado, Mallorca, si cortado.',
+        'Corazón, La Bamba, arriba, Carlos Santana.',
+        'Selena Gomez, porque machete, enchilada, uno, dos, tres, cuatro.',
+        'Guacamole, jalapeño Salma Hayek, Ricki Martin.'
     ];
 
     /**
-     * @summary Paragraph used to fake models in korean.
+     * @summary Paragraph used to fake models in spanish.
      *
      * @type {string}
      * @private
      */
-    private _paragraph = '텍스트 뿐만 아니라, 이미지, 동영상까지. 온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한' +
-        ' 모습이 필요했습니다. 오늘은 이러한 로렌임숨의 여러 스타일을 소개하고, 디자이너들의 시간을 절약해주는 다양한 툴을 소개해보고자 ' +
-        '합니다, 온라인에선 다양한 컨셉이 존재하는 만큼, 로렌임숨도 다양한 모습이 필요했습니다.';
+    private _paragraph = 'Madrid, Chihuahua, Adelén, por favor bailando Guacamole, ' +
+        'jalapeño Salma Hayek, Ricki Martin Balacao muy bueno Mariachi, ' +
+        'gasolina, calamari, muchas gracias Macarena mi amigo Living la vida loca ' +
+        'Antonio Banderas, dale.';
 
     /**
-     * @summary Colors used to fake models in korean.
+     * @summary Colors used to fake models in spanish.
      *
      * @type {string[]}
      * @private
      */
     private _colors = [
-        '검정색',
-        '하얀색',
-        '빨간색',
-        '노란색',
-        '초록색',
-        '주황색',
-        '보라색'
+        'blanco',
+        'negro',
+        'gris',
+        'azul',
+        'amarillo',
+        'naranja',
+        'rojo'
     ];
 
     /**
-     * @summary non-numeric numbers used to fake models in korean.
+     * @summary non-numeric numbers used to fake models in spanish.
      *
      * @type {string[]}
      * @private
      */
     private _numbers = [
-        '하나',
-        '둘',
-        '셋',
-        '넷',
-        '다섯',
-        '여섯',
-        '일곱',
-        '여덟',
-        '아홉',
-        '열'
+        'uno',
+        'dos',
+        'tres',
+        'cuatro',
+        'cinco',
+        'seis',
+        'siete',
+        'ocho',
+        'nueve',
+        'diez'
     ];
 
     /**
-     * @summary Clothes sizes used to fake models in korean.
+     * @summary Clothes sizes used to fake models in spanish.
      *
      * @type {string[]}
      * @private
      */
     private _sizes = [
-        'xs: 추가 작은',
-        's: 작은',
-        'ms: 중소',
-        'm: 매질',
-        'ml: 대 중',
-        'l: 큰',
-        'xl: 특대',
+        'xs: Extra pequeño',
+        's: Pequeño',
+        'ms: Pequeño Mediano',
+        'm: Mediano',
+        'ml: Mediano Grande',
+        'l: Grande',
+        'xl: Extra Grande'
     ];
 
     /**
-     * @summary Gets the factory method for the korean content generator.
+     * @summary Gets the factory method for the spanish content generator.
      *
      * @returns {() => AbstractContentGenerator} The translator factory method.
      */
     public static getFactoryMethod(): () => AbstractContentGenerator
     {
-        return (() => new KoreanContentGenerator());
+        return (() => new SpanishContentGenerator());
     }
 
     /**
@@ -141,11 +144,11 @@ export class KoreanContentGenerator extends AbstractContentGenerator
      */
     public getLocale()
     {
-        return 'kr';
+        return 'es';
     }
 
     /**
-     * @summary Returns an string of words in korean.
+     * @summary Returns an string of words in spanish.
      *
      * @param {number} amount  the amount to return.
      *
@@ -157,7 +160,7 @@ export class KoreanContentGenerator extends AbstractContentGenerator
     }
 
     /**
-     * @summary Returns an array of words in a korean.
+     * @summary Returns an array of words in a spanish.
      *
      * @param {number} amount  the amount to return.
      *
@@ -194,9 +197,9 @@ export class KoreanContentGenerator extends AbstractContentGenerator
     }
 
     /**
-     * @summary Gives a random color in korean language.
+     * @summary Gives a random color in spanish language.
      *
-     * @returns {string} The requested random color in korean.
+     * @returns {string} The requested random color in spanish.
      */
     public getColor(): string
     {
@@ -204,9 +207,9 @@ export class KoreanContentGenerator extends AbstractContentGenerator
     }
 
     /**
-     * @summary Gives a random number in korean language.
+     * @summary Gives a random number in spanish language.
      *
-     * @returns {string} The requested random number in korean.
+     * @returns {string} The requested random number in spanish.
      */
     public getNumber(): string
     {
@@ -214,7 +217,7 @@ export class KoreanContentGenerator extends AbstractContentGenerator
     }
 
     /**
-     * @summary Gives a random size in korean language.
+     * @summary Gives a random size in spanish language.
      *
      * @returns {string} The requested random size.
      */
@@ -224,7 +227,7 @@ export class KoreanContentGenerator extends AbstractContentGenerator
     }
 
     /**
-     * @summary Returns an string resembling a title in a korean.
+     * @summary Returns an string resembling a title in a spanish.
      *
      * @returns {string} The requested title.
      */

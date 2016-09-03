@@ -17,10 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration } from './abstract-migration';
-import { Mongo }             from 'meteor/mongo';
-import defaults              from './defaults/category';
-import * as faker            from 'faker/locale/en';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
+import { AbstractMigration }        from './abstract-migration';
+import { Mongo }                    from 'meteor/mongo';
+import defaults                     from './defaults/category';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -73,37 +73,19 @@ export class CategoryMigration extends AbstractMigration
     {
         for (let i = 0; i < this._amount; i++)
         {
-            this._categories.push({
-                name: [
-                    {
-                        language: 'en',
-                        value: faker.lorem.words(1)
-                    },
-                    {
-                        language: 'zh',
-                        value: this._generators.zh.getWords(1).toString()
-                    },
-                    {
-                        language: 'kr',
-                        value: this._generators.kr.getWords(1).toString()
-                    }
-                ],
-                info: [
-                    {
-                        language: 'en',
-                        value: faker.lorem.words(10)
-                    },
-                    {
-                        language: 'zh',
-                        value: this._generators.zh.getSentence()
-                    },
-                    {
-                        language: 'kr',
-                        value: this._generators.kr.getSentence()
-                    }
-                ],
-                image: 'shirts.png'
+            const category: Category = {
+                image: 'shirts.png',
+                name: [],
+                info: []
+            };
+
+            this._generators.forEach((generator: AbstractContentGenerator) =>
+            {
+                category.name.push({language: generator.getLocale(), value: generator.getWords(1)});
+                category.info.push({language: generator.getLocale(), value: generator.getWords(10)});
             });
+
+            this._categories.push(category);
         }
     }
 }

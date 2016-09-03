@@ -17,9 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration } from './abstract-migration';
-import { Mongo }             from 'meteor/mongo';
-import * as faker            from 'faker/locale/en';
+import { Mongo }                    from 'meteor/mongo';
+import { AbstractMigration }        from './abstract-migration';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,15 +32,6 @@ export class ProductMigration extends AbstractMigration
     protected _amount: number    = 10; // 1 to 10 products per category.
     private _products: Product[] = [];
     private _categories: Category[];
-    private _sizes               = [
-        'xs: Extra Small',
-        's: Small',
-        'ms: Medium Small',
-        'm: Medium',
-        'ml: Medium Large',
-        'l: Large',
-        'xl: Extra Large',
-    ];
 
     /**
      * @summary Initializes a new instance of the class ProductMigration.
@@ -49,7 +40,8 @@ export class ProductMigration extends AbstractMigration
      * @param generators            The content generators.
      * @param _categoriesCollection The category collection.
      */
-    constructor(collection: Mongo.Collection<Object>,
+    constructor(
+        collection: Mongo.Collection<Object>,
         generators,
         private _categoriesCollection: Mongo.Collection<Category>)
     {
@@ -84,54 +76,51 @@ export class ProductMigration extends AbstractMigration
 
             for (let j = 0; j < productCount; j++)
             {
-                this._products.push({
-                    title: [
-                        {language: 'en', value: faker.commerce.productName()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
-                    sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
-                    barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
-                    categoryId: this._addRandomIds(this._categories[i]._id),
-                    description: [
-                        {language: 'en', value: faker.lorem.paragraph(3)},
-                        {language: 'zh', value: this._generators.zh.getParagraph()},
-                        {language: 'kr', value: this._generators.kr.getParagraph()},
-                    ],
-                    color: [
-                        {language: 'en', value: faker.commerce.color()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
-                    size: [
-                        {language: 'en', value: this._getRandomSize()},
-                        {language: 'zh', value: this._generators.zh.getWords(3).join(' ')},
-                        {language: 'kr', value: this._generators.kr.getWords(3).join(' ')},
-                    ],
-                    price: Math.floor(Math.random() * 10000),
-                    discount: Math.floor(Math.random() * 100),
-                    hashtags: faker.lorem.words(3).split(' '),
-                    isVisible: faker.random.boolean(),
-                    trackInventory: true,
-                    isLowQuantity: faker.random.boolean(),
-                    stock: Math.floor(Math.random() * 500),
-                    isBackorder: faker.random.boolean(),
-                    requiresShipping: faker.random.boolean()
+                const product = this._createPartialProduct(i);
+
+                this._generators.forEach((generator: AbstractContentGenerator) =>
+                {
+                    product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
+                    product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
+                    product.color.push({language: generator.getLocale(), value: generator.getColor()});
+                    product.size.push({language: generator.getLocale(), value: generator.getSize()});
                 });
+
+                this._products.push(product);
             }
         }
     }
 
     /**
-     * @summary Returns a random size from the array.
+     * @summary creates an incomplete product object, this lacks title, color, size and other fields.
      *
-     * @returns {string} The ranomd size.
+     * @param index The category index this new product will be guaranteed to have.
+     *
+     * @returns {Product} The new product partial.
+     * @private
      */
-    private _getRandomSize(): string
+    private _createPartialProduct(index: number): Product
     {
-        let randomIndex: number = Math.floor(Math.random() * this._sizes.length);
+        const generator = this._generators[0];
 
-        return this._sizes[randomIndex];
+        return {
+            title: [],
+            description: [],
+            color: [],
+            size: [],
+            sku: generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000),
+            barcode: generator.getWords(1).replace(' ', '=').concat('.').toLowerCase(),
+            categoryId: this._addRandomIds(this._categories[index]._id),
+            price: generator.getRandomNumber(10000),
+            discount: generator.getRandomNumber(),
+            hashtags: generator.getWordsArray(3),
+            isVisible: generator.getRandomBoolean(),
+            trackInventory: generator.getRandomBoolean(),
+            isLowQuantity: generator.getRandomBoolean(),
+            stock: generator.getRandomNumber(500),
+            isBackorder: generator.getRandomBoolean(),
+            requiresShipping: generator.getRandomBoolean()
+        };
     }
 
     /**
