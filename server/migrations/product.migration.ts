@@ -18,7 +18,6 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Mongo }                    from 'meteor/mongo';
-import * as faker                   from 'faker/locale/en';
 import { AbstractMigration }        from './abstract-migration';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
