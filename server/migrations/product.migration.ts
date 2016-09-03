@@ -102,7 +102,11 @@ export class ProductMigration extends AbstractMigration
      */
     private _createPartialProduct(index: number): Product
     {
-        return <Product>{
+        return {
+            title: [],
+            description: [],
+            color: [],
+            size: [],
             sku: faker.lorem.words(1).toLowerCase() + Math.floor(Math.random() * 10000),
             barcode: faker.lorem.words(2).replace(' ', '=').concat('.').toLowerCase(),
             categoryId: this._addRandomIds(this._categories[index]._id),

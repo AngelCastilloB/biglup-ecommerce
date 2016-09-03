@@ -73,7 +73,11 @@ export class CategoryMigration extends AbstractMigration
     {
         for (let i = 0; i < this._amount; i++)
         {
-            const category: Category = <Category>{image: 'shirts.png'};
+            const category: Category = {
+                image: 'shirts.png',
+                name: [],
+                info: []
+            };
 
             this._generators.forEach((generator: AbstractContentGenerator) =>
             {
