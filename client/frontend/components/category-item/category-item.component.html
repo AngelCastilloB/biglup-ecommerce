@@ -13,9 +13,6 @@
         <i class="fa fa-list"></i> {{ 'Sku:' | translate }} {{ model.sku }}
       </p>
       <p class="card-text">
-        {{ model.description | mongoTranslate | truncateString }}
-      </p>
-      <p class="card-text">
         {{ 'Color:' | translate }} {{ model.color | mongoTranslate }}
       </p>
       <p class="card-text">

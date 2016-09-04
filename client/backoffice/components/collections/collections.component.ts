@@ -19,9 +19,10 @@
 
 import 'reflect-metadata';
 
-import { Component }         from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
-import { CategoriesService } from '../../../services/categories.service';
+import { Component }            from '@angular/core';
+import { MeteorComponent }      from 'angular2-meteor';
+import { CategoriesService }    from '../../../services/categories.service';
+import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -39,6 +40,8 @@ import template from './collections.component.html';
 })
 export class CollectionsComponent extends MeteorComponent
 {
+    private _i18nService: I18nSingletonService = I18nSingletonService.getInstance();
+
     /**
      * @summary Initializes a new instance of the CollectionsComponent class.
      *

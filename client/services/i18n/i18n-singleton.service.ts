@@ -116,6 +116,27 @@ export class I18nSingletonService
     }
 
     /**
+     * @summary Gets the correct translation out of a I18nString collection.
+     *
+     * @param messageCollection The message collection with all the translations.
+     *
+     * @returns {string} The translation.
+     */
+    public getMongoText(messageCollection: I18nString[]): string
+    {
+        if (!messageCollection)
+            return '';
+
+        for (let i = 0, l = messageCollection.length; i < l; ++i)
+        {
+            if (messageCollection[i].language === this._currentLocale)
+                return messageCollection[i].value;
+        }
+
+        return '';
+    }
+
+    /**
      * @summary Gets the default locale.
      *
      * @returns {string} The default locale.

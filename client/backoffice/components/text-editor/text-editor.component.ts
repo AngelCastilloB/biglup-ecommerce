@@ -46,7 +46,7 @@ import template    from './text-editor.component.html';
 export class TextEditorComponent extends MeteorComponent implements OnChanges
 {
     @ViewChild('editable')
-    private _editableArea
+    private _editableArea;
     @ViewChild('fontColor')
     private _fontColorPicker: ColorPickerComponent;
     @ViewChild('backgroundColor')

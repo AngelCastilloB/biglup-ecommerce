@@ -12,13 +12,11 @@
           <div class="col-md-8">
             <div class="card">
               <div class="card-block">
+                {{ 'Title' | translate }}
+                <input type="text" id="title" name="title" class="form-control" required
+                       [value]="_productTitle"
+                       (change)="_onTitleChange($event.target.value)">
 
-                <div class="md-form">
-                  <input type="text" id="title" name="title" class="form-control" required
-                         [value]="_productTitle"
-                         (change)="_onTitleChange($event.target.value)">
-                  <label for="title" class="">{{ 'Title' | translate }}</label>
-                </div>
                 {{ 'Description' | translate }}
                 <text-editor [model]="_productDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
               </div>
@@ -33,16 +31,12 @@
                     <b>{{ 'Pricing' | translate }}</b><br/><br/>
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="md-form">
-                          <input type="number" id="price"  [(ngModel)]="_product.price" name="price" class="form-control">
-                          <label for="price" class="">{{ 'Price' | translate }}</label>
-                        </div>
+                        {{ 'Price' | translate }}
+                        <input type="number" id="price"  [(ngModel)]="_product.price" name="price" class="form-control">
                       </div>
                       <div class="col-md-6">
-                        <div class="md-form">
-                          <input type="number" id="discount" [(ngModel)]="_product.discount" name="discount" class="form-control">
-                          <label for="discount" class="">{{ 'Discount' | translate }}</label>
-                        </div>
+                        {{ 'Discount' | translate }}
+                        <input type="number" id="discount" [(ngModel)]="_product.discount" name="discount" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -64,16 +58,12 @@
                     <b>{{ 'Inventory' | translate }}</b><br/><br/>
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="md-form">
+                         {{ 'SKU (Stock Keeping Unit)' | translate }}
                           <input type="text" [(ngModel)]="_product.sku" name="sku" id="sku" class="form-control">
-                          <label for="sku" class="">{{ 'SKU (Stock Keeping Unit)' | translate }}</label>
-                        </div>
                       </div>
                       <div class="col-md-6">
-                        <div class="md-form">
-                          <input type="text" id="barcode" [(ngModel)]="_product.barcode" name="barcode" id="barcode" class="form-control">
-                          <label for="barcode" class="">{{ 'Barcode (ISBN, UPC, GTIN, etc.)' | translate }}</label>
-                        </div>
+                        {{ 'Barcode (ISBN, UPC, GTIN, etc.)' | translate }}
+                        <input type="text" id="barcode" [(ngModel)]="_product.barcode" name="barcode" id="barcode" class="form-control">
                       </div>
                     </div>
 

@@ -19,11 +19,16 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute }    from '@angular/router';
-import { MeteorComponent }   from 'angular2-meteor';
-import { ProductsService }   from '../../../../services/products.service';
-import { CategoriesService } from '../../../../services/categories.service';
+import { Component,
+         OnInit,
+         ViewChild,
+         OnChanges,
+         SimpleChanges }        from '@angular/core';
+import { ActivatedRoute }       from '@angular/router';
+import { MeteorComponent }      from 'angular2-meteor';
+import { ProductsService }      from '../../../../services/products.service';
+import { CategoriesService }    from '../../../../services/categories.service';
+import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
@@ -37,10 +42,11 @@ import template from './product-details.component.html';
     selector: 'product-details',
     template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit
+export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnChanges
 {
-    private _product:  Product;
-    private _category: Category;
+    private _i18nService: I18nSingletonService = I18nSingletonService.getInstance();
+    private _product:     Product;
+    private _category:    Category;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
@@ -67,11 +73,25 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit
             let categoryId: string = params['categoryId'];
             let productId:  string = params['productId'];
 
-            this._productsService.getProduct(productId)
-                .subscribe((product: Product) => { this._product = product; });
+            this._productsService.getProduct(productId).subscribe((product: Product) =>
+            {
+                this._product = product;
+            });
 
             this._categoriesService.getCategory(categoryId)
                 .subscribe((category: Category) => { this._category = category; });
         });
+    }
+
+    /**
+     * @summary This method is called right after the data-bound properties have been checked and before view and
+     * content children are checked if at least one of them has changed.
+     *
+     * The changes parameter contains an entry for each of the changed data-bound property.
+     * The key is the property name and the value is an instance of SimpleChange.
+     * @param changes
+     */
+    public ngOnChanges(changes: SimpleChanges)
+    {
     }
 }

@@ -76,8 +76,7 @@
             {{ _category.name | mongoTranslate }}
           </a>
         </h4>
-        <p>{{ _product.description | mongoTranslate }}</p>
-        <a class="btn btn-primary">{{ 'Some Action!' | translate }}</a>
+        <div [innerHTML]=_i18nService.getMongoText(_product.description)></div>
       </div>
     </div>
   </div>

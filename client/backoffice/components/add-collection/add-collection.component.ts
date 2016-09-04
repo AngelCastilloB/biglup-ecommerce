@@ -46,12 +46,12 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 {
     @ViewChild(ModalComponent)
     private _modal:               ModalComponent;
-    private _category:            Category = <Category>{};
-    private _categoryName:        string   = '';
-    private _categoryDescription: string   = '';
-    private _defaultLocale:       string   = I18nSingletonService.getInstance().getDefaultLocale();
-    private _waitModalResult:     boolean  = false;
-    private _isEditMode:          boolean  = false;
+    private _category:            Category             = <Category>{};
+    private _categoryName:        string               = '';
+    private _categoryDescription: string               = '';
+    private _i18nService:         I18nSingletonService = I18nSingletonService.getInstance();
+    private _waitModalResult:     boolean              = false;
+    private _isEditMode:          boolean              = false;
 
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -60,8 +60,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     {
         super();
 
-        this._categoryName        = this._getMongoTranslation(this._category.name);
-        this._categoryDescription = this._getMongoTranslation(this._category.info);
+        this._categoryName        = this._i18nService.getMongoText(this._category.name);
+        this._categoryDescription = this._i18nService.getMongoText(this._category.info);
     }
 
     /**
@@ -80,8 +80,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             {
                 this._category = Categories.findOne({_id: this._category._id});
 
-                this._categoryName        = this._getMongoTranslation(this._category.name);
-                this._categoryDescription = this._getMongoTranslation(this._category.info);
+                this._categoryName        = this._i18nService.getMongoText(this._category.name);
+                this._categoryDescription = this._i18nService.getMongoText(this._category.info);
                 this._isEditMode          = true;
             }, true);
         });
@@ -95,7 +95,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     private _onNameChange(newName: string): void
     {
         this._categoryName = newName;
-        this._category.name = [{'language': this._defaultLocale, 'value' : this._categoryName}];
+        this._category.name = [{'language': this._i18nService.getLocale(), 'value' : this._categoryName}];
     }
 
     /**
@@ -106,28 +106,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     private _onDescriptionChange(newDescription: string): void
     {
         this._categoryDescription = newDescription;
-        this._category.info = [{'language': this._defaultLocale, 'value' : newDescription}];
-    }
-
-    /**
-     * @summary Gets the correct translation out of a I18nString collection.
-     *
-     * @param messageCollection The message collection with all the translations.
-     *
-     * @returns {string} The translation.
-     */
-    private _getMongoTranslation(messageCollection: I18nString[]): string
-    {
-        if (!messageCollection)
-            return '';
-
-        for (let i = 0, l = messageCollection.length; i < l; ++i)
-        {
-            if (messageCollection[i].language === this._defaultLocale)
-                return messageCollection[i].value;
-        }
-
-        return '';
+        this._category.info = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
     }
 
     /**
@@ -143,8 +122,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
             return;
         }
-
-        console.error(this._category);
 
         this.call('categories.createCategory', this._category, (error, result) =>
         {
