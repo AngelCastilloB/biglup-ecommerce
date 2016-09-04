@@ -73,9 +73,20 @@ export class CategoriesService extends MeteorComponent
      */
     public getCategory(categoryId: string): Observable<Category>
     {
-        return new Observable<Category>(func => this._categoriesStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product._id === categoryId)[0]))
-            .filter(category => !!category)
-            .subscribe(func));
+        return Observable.create(observer => {
+            this.subscribe('categories', categoryId , () =>
+            {
+                let category: Category = Categories.findOne({_id: categoryId});
+
+                if (!category)
+                {
+                    observer.error('Category not found');
+                    return;
+                }
+
+                observer.next(category);
+                observer.complete();
+            });
+        });
     }
 }

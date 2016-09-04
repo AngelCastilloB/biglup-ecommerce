@@ -28,12 +28,12 @@ export let I18nStringSchema: any = new SimpleSchema(
 {
     language:
     {
-        type: String,
         label: 'The ISO 639-1 code of the language',
+        type: String,
     },
     value:
     {
-        label: 'Price',
+        label: 'The translation string',
         type: String,
         defaultValue: ''
     }
