@@ -1,4 +1,4 @@
-<div class="text-editor">
+<div class="text-editor" (click)="_onTextEditorClick()">
   <div class="buttons">
     <button (click)="_onBold()"
             [ngClass]="_boldToggle ? 'active': 'inactive'"
@@ -21,12 +21,12 @@
 
     <button (click)="_onStrikethrough()"
             [ngClass]="_strikethroughToggle ? 'active': 'inactive'"
-            class="fa fa-strikethrough"
+            class="fa fa-strikethrough dispensable"
             aria-hidden="true"
             title="{{ 'Strikethrough' | translate }}">
     </button>
 
-    <div class="btn-group">
+    <div class="btn-group dispensable">
       <button type="button" class="fa fa-font" data-toggle="dropdown" title="{{ 'Font Family' | translate }}"></button>
       <ul class="dropdown-menu scrollable-menu font-menu" role="menu">
         <li class="font-menu font-menu-entry" *ngFor="let font of _fonts">
@@ -37,66 +37,68 @@
       </ul>
     </div>
 
-    <div class="btn-group">
+    <div class="btn-group dispensable">
       <button type="button" class="fa fa-text-height" data-toggle="dropdown" title="{{ 'Font Size' | translate }}"></button>
       <ul class="dropdown-menu scrollable-menu sizes-menu"  role="menu">
-        <li class="sizes-menu" *ngFor="let size of _sizes"><button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button></li>
+        <li class="sizes-menu" *ngFor="let size of _sizes">
+          <button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button>
+        </li>
       </ul>
     </div>
 
     <button (click)="_onTextFontColor($event)" type="button" class="fa fa-pencil" data-toggle="dropdown" title="{{ 'Text Color' | translate }}"></button>
     <color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></color-picker>
 
-    <button (click)="_onTextBackgroundColor($event)" type="button" class="fa fa-tint" data-toggle="dropdown" title="{{ 'Background Color' | translate }}"></button>
+    <button (click)="_onTextBackgroundColor($event)" type="button" class="fa fa-tint dispensable" data-toggle="dropdown" title="{{ 'Background Color' | translate }}"></button>
     <color-picker #backgroundColor (onClear)="_onBackgroundColorClear()" (onColorPicked)="_onBackgroundColorChanged($event)"></color-picker>
 
-    <div class="vr"></div>
+    <div class="vr dispensable"></div>
 
     <button (click)="_onJustifyLeft()"
             [ngClass]="_justifyLeftToggle ? 'active': 'inactive'"
-            class="fa fa-align-left"
+            class="fa fa-align-left dispensable"
             aria-hidden="true"
             title="{{ 'Align Left' | translate }}">
     </button>
 
     <button (click)="_onJustifyCenter()"
             [ngClass]="_justifyCenterToggle ? 'active': 'inactive'"
-            class="fa fa-align-center"
+            class="fa fa-align-center dispensable"
             aria-hidden="true"
             title="{{ 'Align Center' | translate }}">
     </button>
 
     <button (click)="_onJustifyRight()"
             [ngClass]="_justifyRightToggle ? 'active': 'inactive'"
-            class="fa fa-align-right"
+            class="fa fa-align-right dispensable"
             aria-hidden="true"
             title="{{ 'Align Right' | translate }}">
     </button>
 
     <button (click)="_onJustifyFull()"
             [ngClass]="_justifyFullToggle ? 'active': 'inactive'"
-            class="fa fa-align-justify"
+            class="fa fa-align-justify dispensable"
             aria-hidden="true"
             title="{{ 'Align Justify' | translate }}">
     </button>
 
-    <div class="vr"></div>
+    <div class="vr dispensable"></div>
 
     <button (click)="_onOrderedList()"
             [ngClass]="_orderedListToggle ? 'active': 'inactive'"
-            class="fa fa fa-list-ol"
+            class="fa fa fa-list-ol dispensable"
             aria-hidden="true"
             title="{{ 'Ordered List' | translate }}">
     </button>
 
     <button (click)="_onUnorderedList()"
             [ngClass]="_unorderedListToggle ? 'active': 'inactive'"
-            class="fa fa fa-list-ul"
+            class="fa fa fa-list-ul dispensable"
             aria-hidden="true"
             title="{{ 'Unordered List' | translate }}">
     </button>
 
   </div>
-  <div #editable id="editable-area" contenteditable (click)="_onEditableClick()" (blur)="_onContentChange()">
+  <div class="editablearea" #editable id="editable-area" contenteditable (click)="_onEditableClick()" (blur)="_onContentChange()">
   </div>
 </div>

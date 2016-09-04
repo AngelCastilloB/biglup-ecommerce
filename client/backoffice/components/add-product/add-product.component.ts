@@ -21,7 +21,6 @@ import 'reflect-metadata';
 
 import { Component,
          OnInit,
-         NgZone,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
@@ -65,7 +64,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      * @summary Initializes a new instance of the AddProductComponent class.
      */
     constructor(
-        private _zone: NgZone,
         private _router: Router,
         private _route: ActivatedRoute,
         private _productsService: ProductsService,
@@ -96,28 +94,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     public ngOnInit(): any
     {
-        this._route.params.subscribe((params) => {
-
+        this._route.params.subscribe((params) =>
+        {
             this._product._id = params['id'];
 
             if (!this._product._id)
-            {
-                // TODO: Remove tinyMCE.
-                tinymce.init({
-                    selector: 'textarea',
-                    setup: (editor) => {
-                        editor.on('keyup change', (param, l) => {
-                            this._zone.run(() => {
-                                this._productDescription  = tinymce.activeEditor.getContent();
-                                this._product.description =
-                                    [{'language': this._defaultLocale, 'value' : this._productDescription}];
-                            });
-                        });
-                    }
-                });
-
                 return;
-            }
 
             this._productsService.getProduct(this._product._id).subscribe(
                 (product: Product) =>
@@ -126,50 +108,10 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
                     this._productTitle       = this._getMongoTranslation(this._product.title);
                     this._productDescription = this._getMongoTranslation(this._product.description);
+                    this._isEditMode         = true;
 
-                    this._isEditMode = true;
-
-                    let uploaderImages: Array<UploaderImage> = Array<UploaderImage>();
-
-                    for (let i: number = 0; i < this._product.images.length; ++i)
-                    {
-                        let uploaderImage: UploaderImage = new UploaderImage();
-
-                        uploaderImage.isUploaded = true;
-                        uploaderImage.databaseId = this._product.images[i].id;
-                        uploaderImage.remoteUrl  = this._product.images[i].url;
-
-                        uploaderImages.push(uploaderImage);
-                    }
-
-                    this._imagesUploader.setImages(uploaderImages);
-
-                    // TODO: Remove tinyMCE.
-                    tinymce.init(
-                    {
-                        selector: 'textarea',
-                        setup: (editor) =>
-                        {
-                            editor.on('keyup change', (param, l) =>
-                            {
-                                this._zone.run(() =>
-                                {
-                                    this._productDescription  = tinymce.activeEditor.getContent();
-                                    this._product.description =
-                                        [{'language': this._defaultLocale, 'value' : this._productDescription}];
-                                });
-                            });
-
-                            editor.on('init', (param, l) =>
-                            {
-                                this._zone.run(() =>
-                                {
-                                    tinymce.activeEditor.setContent(this._productDescription);
-                                    tinymce.activeEditor.execCommand('mceRepaint');
-                                });
-                            });
-                        }
-                    });
+                    this._imagesUploader.setImages(this._product.images.map(
+                        (image: OrderedImage) => new UploaderImage(<File>{}, true, image.id, image.url)));
                 });
         });
     }
@@ -183,6 +125,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     {
         this._productTitle  = newTitle;
         this._product.title = [{'language': this._defaultLocale, 'value' : this._productTitle}];
+    }
+
+    /**
+     * @summary Event triggered when the description has changed.
+     *
+     * @param newDescription The new description to be set.
+     */
+    private _onDescriptionChange(newDescription: string): void
+    {
+        this._productDescription  = newDescription;
+        this._product.description = [{'language': this._defaultLocale, 'value' : newDescription}];
     }
 
     /**

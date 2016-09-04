@@ -21,7 +21,6 @@ import 'reflect-metadata';
 
 import { Component,
          OnInit,
-         NgZone,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
@@ -57,7 +56,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute)
+    constructor(private _router: Router, private _route: ActivatedRoute)
     {
         super();
 
@@ -93,7 +92,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      *
      * @param newName The new name to be set.
      */
-    private _onNameChange(newName: any): void
+    private _onNameChange(newName: string): void
     {
         this._categoryName = newName;
         this._category.name = [{'language': this._defaultLocale, 'value' : this._categoryName}];
@@ -104,7 +103,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      *
      * @param newDescription The new description to be set.
      */
-    private _onDescriptionChange(newDescription: any): void
+    private _onDescriptionChange(newDescription: string): void
     {
         this._categoryDescription = newDescription;
         this._category.info = [{'language': this._defaultLocale, 'value' : newDescription}];
@@ -144,6 +143,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
             return;
         }
+
+        console.error(this._category);
 
         this.call('categories.createCategory', this._category, (error, result) =>
         {

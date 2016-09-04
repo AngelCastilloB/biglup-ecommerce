@@ -1,11 +1,11 @@
-table {
+.color-picker table {
     border: 1px solid #f0f0ee;
 }
-th, td {
+.color-picker th, td {
     border: none;
 }
 
-td {
+.color-picker td {
     height: 30px;
     width: 30px;
 }
@@ -18,11 +18,11 @@ td {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.09);
 }
 
-td:hover {
+.color-picker td:hover {
     border: 1px solid #2b2e32;
 }
 
-.color {
+.color-picker .color {
     background-color: Transparent;
     background-repeat: no-repeat;
     border: none;
@@ -34,6 +34,6 @@ td:hover {
     padding: 0!important;
 }
 
-button:hover {
+.color-picker button:hover {
     background-color: Transparent!important;
 }

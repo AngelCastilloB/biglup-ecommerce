@@ -395,4 +395,13 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
         this._model = this._editableArea.nativeElement.innerHTML;
         this._update.emit(this._model);
     }
+
+    /**
+     * @summary Event handler for when the text editor is clicked.
+     * @private
+     */
+    private _onTextEditorClick()
+    {
+        this._editableArea.nativeElement.focus();
+    }
 }

@@ -20,7 +20,7 @@
                                 <label for="title" class="">{{ 'Title' | translate }}</label>
                             </div>
                           {{ 'Description' | translate }}
-                          <text-editor [model]="_categoryDescription" (modelChange)="_onDescriptionChange(model)"></text-editor>
+                          <text-editor [model]="_categoryDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
                         </div>
                     </div>
                     <div class="card">
