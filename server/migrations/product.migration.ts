@@ -20,8 +20,8 @@
 import { Mongo }                    from 'meteor/mongo';
 import { AbstractMigration }        from './abstract-migration';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
-import { Category, Product }
-from '../../common/models/models';
+import { Category, Product }        from '../../common/models/models';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -29,7 +29,6 @@ from '../../common/models/models';
  */
 export class ProductMigration extends AbstractMigration
 {
-
     protected _amount:     number     = 10; // 1 to 10 products per category.
     private   _products:   Product[]  = [];
     private   _categories: Category[] = [];
@@ -95,7 +94,7 @@ export class ProductMigration extends AbstractMigration
     /**
      * @summary creates an incomplete product object, this lacks title, color, size and other fields.
      *
-     * @param index The category index this new product will be guaranteed to have.
+     * @param categoryId The category id this new product will be guaranteed to have.
      *
      * @returns {Product} The new product partial.
      * @private
