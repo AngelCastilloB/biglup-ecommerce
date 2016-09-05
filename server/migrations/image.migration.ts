@@ -17,11 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration }            from './abstract-migration';
-import { Mongo }                        from 'meteor/mongo';
-import { ImagesStore }                  from '../../common/collections/image.collection';
-import { ReadStream, createReadStream } from 'fs';
-import { Category, Product }            from '../../common/models/models';
+import { AbstractMigration }               from './abstract-migration';
+import { Mongo }                           from 'meteor/mongo';
+import { ImagesStore }                     from '../../common/collections/image.collection';
+import { ReadStream, createReadStream }    from 'fs';
+import { Category, Product, OrderedImage } from '../../common/models/models';
+import { Images }                          from '../../common/collections/image.collection';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,11 +31,11 @@ import { Category, Product }            from '../../common/models/models';
  */
 export class ImageMigration extends AbstractMigration
 {
-    protected _amount                       = 4;
-    private   _productsIds: Array<string>   = [];
-    private   _categoriesIds: Array<string> = [];
-    private   _path                         = 'storage/files/placeholder.png';
-    private   _type                         = 'image/png';
+    protected _amount                      = 1;
+    private   _products:   Array<Product>  = [];
+    private   _categories: Array<Category> = [];
+    private   _path                        = 'storage/files/placeholder.png';
+    private   _type                        = 'image/png';
 
     /**
      * @summary Initializes a new instance of the class ImageMigration.
@@ -44,9 +45,9 @@ export class ImageMigration extends AbstractMigration
      * @param _collections The collections that want images to be associated
      */
     constructor(
-        private _collection: Mongo.Collection<Object>,
-        private _generators,
-        private _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
+        protected _collection: Mongo.Collection<Object>,
+        protected _generators,
+        private   _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
     {
         super(_collection, _generators);
     }
@@ -60,49 +61,22 @@ export class ImageMigration extends AbstractMigration
     {
         console.log('Adding Images.');
 
-        this._generateIds();
+        this._products   = this._collections.products.find({}).fetch();
+        this._categories = this._collections.categories.find({}).fetch();
 
-        this._productsIds.forEach((id: string) => this._addImage('productId', id));
-
-        this._categoriesIds.forEach((id: string) => this._addImage('categoryId', id));
+        console.error(this._products.length);
+        //this._products.forEach((product: Product) => this._addProductImage(product));
     }
 
     /**
      * @summary adds an image related to the document given.
      *
-     * @param {string} field the database field, IE: productId
-     * @param {string} id
+     * @param {string} product The product to add the image to.
      * @private
      */
-    private _addImage(field: string, id: string)
+    private _addProductImage(product: Product)
     {
-        for (let i = 1; i <= this._amount; ++i)
-        {
-            const fileId = ImagesStore.create({name: `${id}-${i}`, [field]: id, type: this._type});
-
-            ImagesStore.write(this._getImageStream(), fileId, error =>
-            {
-                if (error)
-                    console.log(error);
-            });
-        }
-    }
-
-    /**
-     * @summary Gets the models ids that need images from the database.
-     * @private
-     */
-    private _generateIds(): void
-    {
-        this._productsIds = this._collections.products
-            .find({}, {fields: {_id: 1}})
-            .fetch()
-            .map((obj: any) => obj._id);
-
-        this._categoriesIds = this._collections.categories
-            .find({}, {fields: {_id: 1}})
-            .fetch()
-            .map((obj: any) => obj._id);
+        console.error(this._amount);
     }
 
     /**

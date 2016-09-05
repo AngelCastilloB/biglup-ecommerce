@@ -32,7 +32,7 @@ export class CategoryMigration extends AbstractMigration
     /**
      * @summary All the categories to be inserted.
      */
-    private _categories: Category[];
+    private _categories: Array<Category> = Array<Category>();
 
     /**
      * @summary Initializes a new instances of the class CategoryMigration.

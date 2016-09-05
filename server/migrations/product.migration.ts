@@ -29,7 +29,7 @@ import { Category, Product }        from '../../common/models/models';
  */
 export class ProductMigration extends AbstractMigration
 {
-    protected _amount:     number     = 10; // 1 to 10 products per category.
+    protected _amount:     number     = 1; // 1 to 10 products per category.
     private   _products:   Product[]  = [];
     private   _categories: Category[] = [];
 
@@ -68,9 +68,7 @@ export class ProductMigration extends AbstractMigration
      */
     private _generateProducts(): void
     {
-        this._categories = this._categoriesCollection.find({}).fetch();
-
-        this._categories.forEach(function (category: Category)
+        this._categories.forEach((category: Category) =>
         {
             let productCount: number = Math.max(Math.floor(Math.random() * this._amount), 1);
 

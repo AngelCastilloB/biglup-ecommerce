@@ -215,7 +215,7 @@ export class I18nSingletonService
      * @returns {string} The translation (undefined if no translation is found).
      * @private
      */
-    private _getLocaleString(i18nStrings: [I18nString], locale: string)
+    private _getLocaleString(i18nStrings: I18nString[], locale: string)
     {
         let value: string;
 

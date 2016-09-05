@@ -47,7 +47,7 @@ export class Product
      * @param isLowQuantity    Indicates if this product is in low quantity (denormalization field).
      * @param isSoldOut        Indicates if this product is already sold out (denormalization field).
      * @param isBackorder      Indicates if this product can be ordered even if its out of stock.
-     * @param requiresShipping Indicates if this product requieres shipping.
+     * @param requiresShipping Indicates if this product requires shipping.
      * @param hashtags         The hashtags list associated with this product.
      * @param isVisible        Indicates if this product is visible in the store.
      * @param createdAt        The creation date of the product.
