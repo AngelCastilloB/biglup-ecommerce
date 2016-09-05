@@ -134,7 +134,7 @@ Meteor.methods({
 
         removeUnusedImages(product, currentProductState);
 
-        let id: string = product._id;
+        let id = product._id;
 
         delete product._id;
 
