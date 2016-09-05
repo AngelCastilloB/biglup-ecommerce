@@ -24,7 +24,7 @@
 
       <tr style="cursor: pointer" *ngFor="let category of _categoriesService.getCategories() | async" [routerLink]="['edit-collection', category._id]" >
         <td>{{ category.name | mongoTranslate }}</td>
-        <td>{{ category.info | mongoTranslate }}</td>
+        <td><div [innerHTML]=_i18nService.getMongoText(category.info)></div></td>
         <td> 0 </td>
       </tr>
       </tbody>

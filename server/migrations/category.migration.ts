@@ -29,7 +29,6 @@ import defaults                     from './defaults/category';
  */
 export class CategoryMigration extends AbstractMigration
 {
-
     /**
      * @summary All the categories to be inserted.
      */

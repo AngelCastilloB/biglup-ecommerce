@@ -49,10 +49,10 @@ import template from './add-product.component.html';
 })
 export class AddProductComponent extends MeteorComponent implements OnInit
 {
-    private _product:            Product = <Product>{};
-    private _productTitle:       string  = '';
-    private _productDescription: string  = '';
-    private _defaultLocale:      string  = I18nSingletonService.getInstance().getDefaultLocale();
+    private _i18nService:        I18nSingletonService = I18nSingletonService.getInstance();
+    private _product:            Product              = <Product>{};
+    private _productTitle:       string               = '';
+    private _productDescription: string               = '';
     @ViewChild('imagesUploader')
     private _imagesUploader:     ImagesUploaderComponent;
     @ViewChild(ModalComponent)
@@ -77,8 +77,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         this._product.hashtags         = [];
         this._product.createdAt        = new Date();
         this._product.updatedAt        = new Date();
-        this._productTitle             = this._getMongoTranslation(this._product.title);
-        this._productDescription       = this._getMongoTranslation(this._product.description);
+        this._productTitle             = this._i18nService.getMongoText(this._product.title);
+        this._productDescription       = this._i18nService.getMongoText(this._product.description);
         this._product.price            = 0;
         this._product.discount         = 0;
         this._product.stock            = 0;
@@ -106,8 +106,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                 {
                     this._product = product;
 
-                    this._productTitle       = this._getMongoTranslation(this._product.title);
-                    this._productDescription = this._getMongoTranslation(this._product.description);
+                    this._productTitle       = this._i18nService.getMongoText(this._product.title);
+                    this._productDescription = this._i18nService.getMongoText(this._product.description);
                     this._isEditMode         = true;
 
                     this._imagesUploader.setImages(this._product.images.map(
@@ -124,7 +124,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onTitleChange(newTitle: any): void
     {
         this._productTitle  = newTitle;
-        this._product.title = [{'language': this._defaultLocale, 'value' : this._productTitle}];
+        this._product.title = [{'language': this._i18nService.getLocale(), 'value' : this._productTitle}];
     }
 
     /**
@@ -135,7 +135,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onDescriptionChange(newDescription: string): void
     {
         this._productDescription  = newDescription;
-        this._product.description = [{'language': this._defaultLocale, 'value' : newDescription}];
+        this._product.description = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
     }
 
     /**
@@ -169,27 +169,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _productHasCategory(id: string)
     {
         return this._product.categoryId.indexOf(id) > -1;
-    }
-
-    /**
-     * @summary Gets the correct translation out of a I18nString collection.
-     *
-     * @param messageCollection The message collection with all the translations.
-     *
-     * @returns {string} The translation.
-     */
-    private _getMongoTranslation(messageCollection: I18nString[]): string
-    {
-        if (!messageCollection)
-            return '';
-
-        for (let i = 0, l = messageCollection.length; i < l; i++)
-        {
-            if (messageCollection[i].language === this._defaultLocale)
-                return messageCollection[i].value;
-        }
-
-        return '';
     }
 
     /**

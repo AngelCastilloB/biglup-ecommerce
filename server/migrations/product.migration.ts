@@ -70,13 +70,13 @@ export class ProductMigration extends AbstractMigration
     {
         this._categories = this._categoriesCollection.find({}).fetch();
 
-        for (let i = 0; i < this._categories.length; ++i)
+        this._categories.forEach(function (category: Category)
         {
             let productCount: number = Math.max(Math.floor(Math.random() * this._amount), 1);
 
             for (let j = 0; j < productCount; j++)
             {
-                const product = this._createPartialProduct(i);
+                const product = this._createPartialProduct(category._id);
 
                 this._generators.forEach((generator: AbstractContentGenerator) =>
                 {
@@ -88,7 +88,7 @@ export class ProductMigration extends AbstractMigration
 
                 this._products.push(product);
             }
-        }
+        });
     }
 
     /**
@@ -99,7 +99,7 @@ export class ProductMigration extends AbstractMigration
      * @returns {Product} The new product partial.
      * @private
      */
-    private _createPartialProduct(index: number): Product
+    private _createPartialProduct(categoryId: string): Product
     {
         const generator = this._generators[0];
 
@@ -110,7 +110,7 @@ export class ProductMigration extends AbstractMigration
             size: [],
             sku: generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000),
             barcode: generator.getWords(1).replace(' ', '=').concat('.').toLowerCase(),
-            categoryId: this._addRandomIds(this._categories[index]._id),
+            categoryId: this._addRandomIds(categoryId),
             price: generator.getRandomNumber(10000),
             discount: generator.getRandomNumber(),
             hashtags: generator.getWordsArray(3),
