@@ -20,7 +20,7 @@
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 import { AbstractMigration }        from './abstract-migration';
 import { Mongo }                    from 'meteor/mongo';
-import defaults                     from './defaults/category';
+import { Category }                 from '../../common/models/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -44,8 +44,6 @@ export class CategoryMigration extends AbstractMigration
     constructor(collection: Mongo.Collection<Category>, generators)
     {
         super(collection, generators);
-
-        this._categories = defaults;
     }
 
     /**
@@ -73,11 +71,7 @@ export class CategoryMigration extends AbstractMigration
     {
         for (let i = 0; i < this._amount; i++)
         {
-            const category: Category = {
-                image: 'shirts.png',
-                name: [],
-                info: []
-            };
+            const category: Category = new Category();
 
             this._generators.forEach((generator: AbstractContentGenerator) =>
             {

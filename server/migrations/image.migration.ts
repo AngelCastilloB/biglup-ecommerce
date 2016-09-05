@@ -21,6 +21,7 @@ import { AbstractMigration }            from './abstract-migration';
 import { Mongo }                        from 'meteor/mongo';
 import { ImagesStore }                  from '../../common/collections/image.collection';
 import { ReadStream, createReadStream } from 'fs';
+import { Category, Product }            from '../../common/models/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,11 +31,11 @@ import { ReadStream, createReadStream } from 'fs';
 export class ImageMigration extends AbstractMigration
 {
 
-    protected _amount                     = 4;
-    private _productsIds: Array<string>   = [];
-    private _categoriesIds: Array<string> = [];
-    private _path                         = 'storage/files/placeholder.png';
-    private _type                         = 'image/png';
+    protected _amount                       = 4;
+    private   _productsIds: Array<string>   = [];
+    private   _categoriesIds: Array<string> = [];
+    private   _path                         = 'storage/files/placeholder.png';
+    private   _type                         = 'image/png';
 
     /**
      * @summary Initializes a new instance of the class ImageMigration.

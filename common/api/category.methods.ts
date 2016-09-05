@@ -19,6 +19,7 @@
 
 import { Categories }     from '../collections/category.collection';
 import { CategorySchema } from '../schemas/category.schema';
+import { Category }        from '../../common/models/models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -119,7 +120,7 @@ Meteor.methods({
 
         let id = category._id;
 
-        delete category._id;
+        delete category['_id'];
 
         Categories.update({_id: id}, {$set: category});
     }

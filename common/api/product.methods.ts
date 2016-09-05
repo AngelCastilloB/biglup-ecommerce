@@ -17,10 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Products }      from '../collections/product.collection';
-import { Categories }    from '../collections/category.collection';
-import { Images }        from '../collections/image.collection';
-import { ProductSchema } from '../schemas/product.schema';
+import { Products }              from '../collections/product.collection';
+import { Categories }            from '../collections/category.collection';
+import { Images }                from '../collections/image.collection';
+import { ProductSchema }         from '../schemas/product.schema';
+import { Product, OrderedImage } from '../../common/models/models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -45,15 +46,15 @@ Meteor.methods({
 
         check(product, ProductSchema);
 
-        if (product.categoryId)
+        if (product.categories)
         {
-            for (let i = 0; i < product.categoryId.length; ++i)
+            for (let i = 0; i < product.categories.length; ++i)
             {
-                if (Categories.find({_id: product.categoryId[i]}).count() === 0)
+                if (Categories.find({_id: product.categories[i]}).count() === 0)
                 {
                     throw new Meteor.Error(
                         'products.createProduct.categoryDoesNotExist',
-                        'One of the categories for this product does not exist (' + (product.categoryId[i]) + ').');
+                        'One of the categories for this product does not exist (' + (product.categories[i]) + ').');
                 }
             }
         }
@@ -136,7 +137,7 @@ Meteor.methods({
 
         let id: string = product._id;
 
-        delete product._id;
+        delete product['_id'];
 
         Products.update({_id: id}, {$set: product});
     }

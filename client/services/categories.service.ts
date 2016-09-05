@@ -22,6 +22,7 @@ import { Categories }      from '../../common/collections/category.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
+import { Category }        from '../../common/models/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';

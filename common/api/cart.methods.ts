@@ -17,8 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Carts }    from '../collections/cart.collection';
-import { Products } from '../collections/product.collection';
+import { Carts }                   from '../collections/cart.collection';
+import { Products }                from '../collections/product.collection';
+import { Cart, CartItem, Product } from '../../common/models/models';
 
 // METHODS ************************************************************************************************************/
 
@@ -54,7 +55,7 @@ Meteor.methods({
                 'The product that you are trying to add to the cart does not exist.');
         }
 
-        let item:     CartItem = {productId: productId, quantity: quantity, title: product.title};
+        let item:     CartItem = new CartItem(productId, quantity, product.title);
         let selector: Object   = {_id: cart._id, 'items.productId': productId};
         let modifier: Object;
 

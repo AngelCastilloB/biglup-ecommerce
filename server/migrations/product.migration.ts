@@ -20,7 +20,8 @@
 import { Mongo }                    from 'meteor/mongo';
 import { AbstractMigration }        from './abstract-migration';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
-
+import { Category, Product }
+from '../../common/models/models';
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -29,9 +30,9 @@ import { AbstractContentGenerator } from '../../common/helpers/generator/abstrac
 export class ProductMigration extends AbstractMigration
 {
 
-    protected _amount: number    = 10; // 1 to 10 products per category.
-    private _products: Product[] = [];
-    private _categories: Category[];
+    protected _amount:     number     = 10; // 1 to 10 products per category.
+    private   _products:   Product[]  = [];
+    private   _categories: Category[] = [];
 
     /**
      * @summary Initializes a new instance of the class ProductMigration.
@@ -103,24 +104,22 @@ export class ProductMigration extends AbstractMigration
     {
         const generator = this._generators[0];
 
-        return {
-            title: [],
-            description: [],
-            color: [],
-            size: [],
-            sku: generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000),
-            barcode: generator.getWords(1).replace(' ', '=').concat('.').toLowerCase(),
-            categoryId: this._addRandomIds(this._categories[index]._id),
-            price: generator.getRandomNumber(10000),
-            discount: generator.getRandomNumber(),
-            hashtags: generator.getWordsArray(3),
-            isVisible: generator.getRandomBoolean(),
-            trackInventory: generator.getRandomBoolean(),
-            isLowQuantity: generator.getRandomBoolean(),
-            stock: generator.getRandomNumber(500),
-            isBackorder: generator.getRandomBoolean(),
-            requiresShipping: generator.getRandomBoolean()
-        };
+        let product: Product = new Product();
+
+        product.sku              = generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000);
+        product.barcode          = generator.getWords(1).replace(' ', '=').concat('.').toLowerCase();
+        product.categories       = this._addRandomIds(this._categories[index]._id);
+        product.price            = generator.getRandomNumber(10000);
+        product.discount         = generator.getRandomNumber();
+        product.hashtags         = generator.getWordsArray(3);
+        product.isVisible        = generator.getRandomBoolean();
+        product.trackInventory   = generator.getRandomBoolean();
+        product.isLowQuantity    = generator.getRandomBoolean();
+        product.stock            = generator.getRandomNumber(500);
+        product.isBackorder      = generator.getRandomBoolean();
+        product.requiresShipping = generator.getRandomBoolean();
+
+        return product;
     }
 
     /**

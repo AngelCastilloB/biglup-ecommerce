@@ -19,6 +19,7 @@
 
 import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
+import { Image }    from '../../common/models/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -27,7 +28,7 @@ import { UploadFS } from 'meteor/jalik:ufs';
  *
  * @type {Collection<Image>}
  */
-export const Images = new Mongo.Collection<ProductImage>('images');
+export const Images = new Mongo.Collection<Image>('images');
 
 /**
  * @summary The images store.

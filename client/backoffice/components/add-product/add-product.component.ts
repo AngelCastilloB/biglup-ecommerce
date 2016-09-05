@@ -30,6 +30,7 @@ import { ModalComponent }           from '../modal/modal.component';
 import { UploaderImage }            from '../images-uploader/internals/product-image';
 import { ProductsService }          from '../../../services/products.service.ts';
 import { CategoriesService }        from '../../../services/categories.service';
+import { Product, OrderedImage }    from '../../../../common/models/models';
 
 // Methods
 import '../../../../common/api/product.methods';
@@ -50,7 +51,7 @@ import template from './add-product.component.html';
 export class AddProductComponent extends MeteorComponent implements OnInit
 {
     private _i18nService:        I18nSingletonService = I18nSingletonService.getInstance();
-    private _product:            Product              = <Product>{};
+    private _product:            Product              = new Product();
     private _productTitle:       string               = '';
     private _productDescription: string               = '';
     @ViewChild('imagesUploader')
@@ -70,23 +71,8 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         private _categoriesService: CategoriesService)
     {
         super();
-        this._product.categoryId       = [];
-        this._product.title            = [];
-        this._product.images           = [];
-        this._product.description      = [];
-        this._product.hashtags         = [];
-        this._product.createdAt        = new Date();
-        this._product.updatedAt        = new Date();
-        this._productTitle             = this._i18nService.getMongoText(this._product.title);
-        this._productDescription       = this._i18nService.getMongoText(this._product.description);
-        this._product.price            = 0;
-        this._product.discount         = 0;
-        this._product.stock            = 0;
-        this._product.trackInventory   = false;
-        this._product.isVisible        = false;
-        this._product.requiresShipping = false;
-        this._product.color            = [];
-        this._product.size             = [];
+        this._productTitle       = '';
+        this._productDescription = '';
     }
 
     /**
@@ -146,17 +132,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _onCategoryToggle(id: string, isChecked: boolean): void
     {
-        let index: number = this._product.categoryId.indexOf(id);
+        let index: number = this._product.categories.indexOf(id);
 
         if (isChecked)
         {
             if (index === -1)
-                this._product.categoryId.push(id);
+                this._product.categories.push(id);
         }
         else
         {
             if (index > -1)
-                this._product.categoryId.splice(index, 1);
+                this._product.categories.splice(index, 1);
         }
     }
 
@@ -168,7 +154,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _productHasCategory(id: string)
     {
-        return this._product.categoryId.indexOf(id) > -1;
+        return this._product.categories.indexOf(id) > -1;
     }
 
     /**

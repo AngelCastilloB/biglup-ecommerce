@@ -75,10 +75,8 @@
                         <label for="track-inventory" class="checkbox-text">{{ 'Track Inventory' | translate }}</label>
                       </div>
                       <div *ngIf="_product.trackInventory" class="col-md-6">
-                        <div class="md-form">
+                          {{ 'Quantity' | translate }}
                           <input type="number" id="quantity" [(ngModel)]="_product.stock" name="quantity" class="form-control">
-                          <label for="quantity" class="">{{ 'Quantity' | translate }}</label>
-                        </div>
                       </div>
                     </div>
                     <div *ngIf="_product.trackInventory" class="row">
