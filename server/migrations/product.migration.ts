@@ -108,7 +108,7 @@ export class ProductMigration extends AbstractMigration
 
         product.sku              = generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000);
         product.barcode          = generator.getWords(1).replace(' ', '=').concat('.').toLowerCase();
-        product.categories       = this._addRandomIds(this._categories[index]._id);
+        product.categories       = this._addRandomIds(categoryId);
         product.price            = generator.getRandomNumber(10000);
         product.discount         = generator.getRandomNumber();
         product.hashtags         = generator.getWordsArray(3);
