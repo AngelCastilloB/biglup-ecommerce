@@ -21,6 +21,7 @@ import 'reflect-metadata';
 
 import { Component, Input  }  from '@angular/core';
 import { IdGeneratorService } from '../../../../services/id-generator.service';
+import { Image }              from '../../../../../common/models/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,7 +39,7 @@ import template from './product-images-carousel.html';
 export class ProductImagesCarouselComponent
 {
     @Input()
-    public images: Array<ProductImage>;
+    public images: Array<Image>;
     private _id:   string;
 
     /**

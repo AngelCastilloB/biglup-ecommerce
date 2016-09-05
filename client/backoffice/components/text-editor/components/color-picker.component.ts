@@ -55,7 +55,7 @@ export class ColorPickerComponent extends MeteorComponent
     /**
      * @summary Shows the color picker.
      *
-     * @param {MouseEvent} event The mouse event that triggered the color picker display.
+     * @param {left: number, top: number} location The mouse event that triggered the color picker display.
      */
     public show(location: { left: number, top: number }): void {
 

@@ -22,6 +22,7 @@ import { Products }        from '../../common/collections/product.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
+import { Product }         from '../../common/models/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -80,7 +81,7 @@ export class ProductsService extends MeteorComponent
     public getCategoryProducts(categoryId: string): Observable<Array<Product>>
     {
         return new Observable<Array<Product>>(func => this._productsStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product.categoryId.indexOf(categoryId) > -1)))
+            .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)))
             .subscribe(func));
     }
 

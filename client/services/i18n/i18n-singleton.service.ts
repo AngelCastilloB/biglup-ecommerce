@@ -20,6 +20,7 @@
 import 'reflect-metadata';
 
 import { EventEmitter } from '@angular/core';
+import { I18nString }   from '../../../common/models/models';
 
 // CONSTANTS **********************************************************************************************************/
 

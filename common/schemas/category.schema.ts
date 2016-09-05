@@ -70,7 +70,7 @@ export let SubCategorySchema: any = new SimpleSchema({
         },
         optional: true
     },
-    updated:
+    updatedAt:
     {
         type: Date,
         label: 'Last date this filter was updated.',
@@ -136,7 +136,7 @@ export let CategorySchema: any = new SimpleSchema({
         },
         optional: true
     },
-    updated:
+    updatedAt:
     {
         type: Date,
         label: 'Last date this category was updated.',

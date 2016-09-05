@@ -21,7 +21,7 @@ import 'reflect-metadata';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { MeteorComponent }          from 'angular2-meteor';
-import { Images }                   from '../../../../common/collections/image.collection';
+import { Product }                  from '../../../../common/models/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
