@@ -68,7 +68,7 @@ export class I18nSingletonService
     private _translations: {[key: string]: {[key: string]: string}} = {};
 
     /**
-     * @brief Gets the singleton instance of the I18nSingletonService class.
+     * @summary Gets the singleton instance of the I18nSingletonService class.
      *
      * @returns {I18nSingletonService} The singleton instance.
      */
@@ -93,7 +93,7 @@ export class I18nSingletonService
     }
 
     /**
-     * @brief Gets the localized text for the given key.
+     * @summary Gets the localized text for the given key.
      *
      * @param {string} key The key.
      *
@@ -119,20 +119,24 @@ export class I18nSingletonService
     /**
      * @summary Gets the correct translation out of a I18nString collection.
      *
-     * @param messageCollection The message collection with all the translations.
+     * @param i18nStrings The message collection with all the translations.
      *
      * @returns {string} The translation.
      */
-    public getMongoText(messageCollection: I18nString[]): string
+    public getMongoText(i18nStrings: I18nString[]): string
     {
-        if (!messageCollection)
+        if (!i18nStrings)
             return '';
 
-        for (let i = 0, l = messageCollection.length; i < l; ++i)
-        {
-            if (messageCollection[i].language === this._currentLocale)
-                return messageCollection[i].value;
-        }
+        let currentLocaleString: string = this._getLocaleString(i18nStrings, this._currentLocale);
+
+        if (currentLocaleString)
+            return currentLocaleString;
+
+        let defaultLocaleString: string = this._getLocaleString(i18nStrings, DEFAULT_LOCALE);
+
+        if (defaultLocaleString)
+            return defaultLocaleString;
 
         return '';
     }
@@ -148,7 +152,7 @@ export class I18nSingletonService
     }
 
     /**
-     * @brief Sets the ISO 639-1 locale.
+     * @summary Sets the ISO 639-1 locale.
      *
      * @param {string} locale The current locale.
      */
@@ -165,7 +169,7 @@ export class I18nSingletonService
     }
 
     /**
-     * @brief Gets the ISO 639-1 locale.
+     * @summary Gets the ISO 639-1 locale.
      *
      * @returns {string} The current locale.
      */
@@ -193,13 +197,36 @@ export class I18nSingletonService
      */
     public loadTranslations(json): {[key: string]: string}
     {
-        let map: {[key: string]: string} = {};
-
-        for (let i = 0, l = json.length; i < l; ++i)
+        return json.reduce(function (previous, pair)
         {
-            map[json[i].key] = json[i].value;
-        }
+            previous[pair.key] = pair.value;
 
-        return map;
+            return previous;
+        }, {});
+    }
+
+    /**
+     * @summary Retrieves the right translation from the I18nString collection, if the translation can not be found
+     * return undefined.
+     *
+     * @param i18nStrings The collection of translation strings.
+     * @param locale      The desired locale.
+     *
+     * @returns {string} The translation (undefined if no translation is found).
+     * @private
+     */
+    private _getLocaleString(i18nStrings: [I18nString], locale: string)
+    {
+        let value: string;
+
+        let found: I18nString = i18nStrings.find(function (i18nString: I18nString)
+        {
+            return i18nString.language === locale;
+        });
+
+        if (found)
+            value = found.value;
+
+        return value;
     }
 }

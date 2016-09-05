@@ -29,7 +29,6 @@ import { Category }                 from '../../common/models/models';
  */
 export class CategoryMigration extends AbstractMigration
 {
-
     /**
      * @summary All the categories to be inserted.
      */

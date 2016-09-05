@@ -30,7 +30,6 @@ import { Category, Product }            from '../../common/models/models';
  */
 export class ImageMigration extends AbstractMigration
 {
-
     protected _amount                       = 4;
     private   _productsIds: Array<string>   = [];
     private   _categoriesIds: Array<string> = [];
@@ -40,18 +39,16 @@ export class ImageMigration extends AbstractMigration
     /**
      * @summary Initializes a new instance of the class ImageMigration.
      *
-     * @param collection   The related image collection
-     * @param generators   The content generators.
+     * @param _collection  The related image collection
+     * @param _generators  The content generators.
      * @param _collections The collections that want images to be associated
      */
     constructor(
-        collection: Mongo.Collection<Object>, generators,
-        private _collections: {
-            products: Mongo.Collection<Product>,
-            categories: Mongo.Collection<Category>
-        })
+        private _collection: Mongo.Collection<Object>,
+        private _generators,
+        private _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
     {
-        super(collection, generators);
+        super(_collection, _generators);
     }
 
     /**
@@ -86,9 +83,7 @@ export class ImageMigration extends AbstractMigration
             ImagesStore.write(this._getImageStream(), fileId, error =>
             {
                 if (error)
-                {
                     console.log(error);
-                }
             });
         }
     }
@@ -99,12 +94,12 @@ export class ImageMigration extends AbstractMigration
      */
     private _generateIds(): void
     {
-        this._productsIds = <string[]>this._collections.products
+        this._productsIds = this._collections.products
             .find({}, {fields: {_id: 1}})
             .fetch()
             .map((obj: any) => obj._id);
 
-        this._categoriesIds = <string[]>this._collections.categories
+        this._categoriesIds = this._collections.categories
             .find({}, {fields: {_id: 1}})
             .fetch()
             .map((obj: any) => obj._id);

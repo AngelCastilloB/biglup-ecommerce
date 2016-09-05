@@ -51,8 +51,10 @@ export class ProductsService extends MeteorComponent
             {
                 this._products = Products.find().fetch();
 
-                for (let i: number = 0; i < this._products.length; ++i)
-                    this._products[i].images.sort(function(lhs, rhs) { return lhs.position - rhs.position; });
+                this._products.forEach(function (product: Product)
+                {
+                    product.images.sort(function(lhs, rhs) { return lhs.position - rhs.position; });
+                }, this);
 
                 this._productsStream.next(this._products);
             });

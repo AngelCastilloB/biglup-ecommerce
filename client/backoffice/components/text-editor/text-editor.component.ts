@@ -33,6 +33,11 @@ import { ColorPickerComponent } from './components/color-picker.component';
 // noinspection TypeScriptCheckImport
 import template    from './text-editor.component.html';
 
+// CONSTANTS **********************************************************************************************************/
+
+const MIN_FONT_SIZE = 8;
+const MAX_FONT_SIZE = 96;
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -74,7 +79,7 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
     constructor() {
         super();
 
-        for (let i: number = 8; i < 97; ++i)
+        for (let i: number = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; ++i)
             this._sizes.push(i);
 
         this._fonts.push('Arial');

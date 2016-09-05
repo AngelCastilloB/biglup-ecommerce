@@ -208,21 +208,18 @@ Meteor.methods({
  *
  * @param cart The cart where the product will be looked for.
  * @param productId The product to be found.
+ *
  * @returns {number} The index of the product in the cart index collection.
  */
 function findProduct(cart: Cart, productId: string): number
 {
     if (!cart.items)
-    {
         return -1;
-    }
 
     for (let i = 0; i < cart.items.length; ++i)
     {
         if (cart.items[i].productId === productId)
-        {
             return i;
-        }
     }
 
     return -1;
