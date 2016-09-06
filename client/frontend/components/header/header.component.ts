@@ -26,7 +26,7 @@ import { UserAuthService }              from '../../../services/user-auth.servic
 import { Subscription }                 from 'rxjs';
 import { CategoriesService }            from '../../../services/categories.service';
 
-import '../../../../common/api/cart.methods';
+import '../../../../common/methods/cart.methods';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

@@ -90,4 +90,75 @@ export class CategoriesService extends MeteorComponent
             });
         });
     }
+
+    /**
+     * @summary Creates a new category.
+     *
+     * @param category The category to be created in the database.
+     */
+    public createCategory(category: Category): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.createCategory', category, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Updates a category.
+     *
+     * @param category The category to be updated in the database.
+     */
+    public updateCategory(category: Category): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.updateCategory', category, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Deletes the given category from the database.
+     *
+     * @param categoryId The category Id.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deleteCategory(categoryId: string): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.deleteCategory', categoryId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
 }

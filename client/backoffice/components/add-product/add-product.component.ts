@@ -33,7 +33,7 @@ import { CategoriesService }        from '../../../services/categories.service';
 import { Product, OrderedImage }    from '../../../../common/models';
 
 // Methods
-import '../../../../common/api/product.methods';
+import '../../../../common/methods/product.methods';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
