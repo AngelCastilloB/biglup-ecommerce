@@ -28,7 +28,7 @@ import { MeteorComponent }      from 'angular2-meteor';
 import { ProductsService }      from '../../../../services/products.service';
 import { CategoriesService }    from '../../../../services/categories.service';
 import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
-import { Product, Category }    from '../../../../../common/models/models';
+import { Product, Category }    from '../../../../../common/models';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';

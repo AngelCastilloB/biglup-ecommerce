@@ -30,7 +30,7 @@ import { ModalComponent }           from '../modal/modal.component';
 import { UploaderImage }            from '../images-uploader/internals/product-image';
 import { ProductsService }          from '../../../services/products.service.ts';
 import { CategoriesService }        from '../../../services/categories.service';
-import { Product, OrderedImage }    from '../../../../common/models/models';
+import { Product, OrderedImage }    from '../../../../common/models';
 
 // Methods
 import '../../../../common/api/product.methods';

@@ -19,7 +19,7 @@
 
 import { Carts }                   from '../collections/cart.collection';
 import { Products }                from '../collections/product.collection';
-import { Cart, CartItem, Product } from '../../common/models/models';
+import { Cart, CartItem, Product } from '../models';
 
 // METHODS ************************************************************************************************************/
 
@@ -33,7 +33,7 @@ import { Cart, CartItem, Product } from '../../common/models/models';
  * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
 Meteor.methods({
-    'cart.addProduct': function (productId: string, quantity: number, set = false)
+    'cart.addProduct': (productId: string, quantity: number, set = false) =>
     {
         check(productId, String);
         check(quantity, Number);
@@ -109,7 +109,7 @@ Meteor.methods({
  * @summary Registers the add cart to user method to Meteor's DDP system.
  */
 Meteor.methods({
-    ['cart.create']: function ()
+    ['cart.create']: () =>
     {
         if (Carts.find({userId: this.userId}).count() > 0)
         {
@@ -130,7 +130,7 @@ Meteor.methods({
  * @param userId The user to remove the cart from.
  */
 Meteor.methods({
-    ['cart.delete']: function (userId: string)
+    ['cart.delete']: (userId: string) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -155,7 +155,7 @@ Meteor.methods({
  * @summary Deletes all products from the given user cart.
  */
 Meteor.methods({
-    ['cart.deleteAllProducts']: function (userId: string)
+    ['cart.deleteAllProducts']: (userId: string) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -180,7 +180,7 @@ Meteor.methods({
  * @summary Deletes the given product from the given user cart.
  */
 Meteor.methods({
-    ['cart.deleteProduct']: function (userId: string, productId: string)
+    ['cart.deleteProduct']: (userId: string, productId: string) =>
     {
         /*
          if (!this.user.IsAdmin) {

@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { ProductSchema } from '../schemas/product.schema';
-import { Product }       from '../../common/models/models';
+import { Product }       from '../../common/models';
 
 // IMPLEMENTATION *****************************************************************************************************/
 

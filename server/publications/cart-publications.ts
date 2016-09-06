@@ -25,7 +25,7 @@ import { Meteor } from 'meteor/meteor';
 /**
  * @summary Publishes all carts.
  */
-Meteor.publish('carts', function ()
+Meteor.publish('carts', () =>
 {
 
     // if (this.user.isAdmin())

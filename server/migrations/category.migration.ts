@@ -20,7 +20,7 @@
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 import { AbstractMigration }        from './abstract-migration';
 import { Mongo }                    from 'meteor/mongo';
-import { Category }                 from '../../common/models/models';
+import { Category }                 from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 

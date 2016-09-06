@@ -25,27 +25,18 @@ import { Meteor }   from 'meteor/meteor';
 /**
  * @summary Publishes all the products.
  */
-Meteor.publish('products', function ()
-{
-    return Products.find();
-});
+Meteor.publish('products', () => Products.find());
 
 /**
  * @summary Publishes a product given a product id.
  *
  * @param {string} id The product id.
  */
-Meteor.publish('product', function (id: string)
-{
-    return Products.find({_id: id});
-});
+Meteor.publish('product', id => Products.find({_id: id}));
 
 /**
  * @summary Publishes all the products related to a given category.
  *
  * @param {string} id The category id.
  */
-Meteor.publish('category-products', function (categoryId: string)
-{
-    return Products.find({categoryId: {$in: [categoryId]}});
-});
+Meteor.publish('category-products', categoryId => Products.find({ categoryId: {$in: [categoryId] }}));

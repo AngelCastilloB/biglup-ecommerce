@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { CategorySchema } from '../schemas/category.schema';
-import { Category }       from '../../common/models/models';
+import { Category }       from '../../common/models';
 
 // IMPLEMENTATION *****************************************************************************************************/
 

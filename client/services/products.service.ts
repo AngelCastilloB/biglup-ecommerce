@@ -22,7 +22,7 @@ import { Products }        from '../../common/collections/product.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
-import { Product }         from '../../common/models/models';
+import { Product }         from '../../common/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -51,10 +51,8 @@ export class ProductsService extends MeteorComponent
             {
                 this._products = Products.find().fetch();
 
-                this._products.forEach(function (product: Product)
-                {
-                    product.images.sort(function(lhs, rhs) { return lhs.position - rhs.position; });
-                }, this);
+                this._products.forEach((product: Product) =>
+                    product.images.sort((lhs, rhs) => lhs.position - rhs.position), this);
 
                 this._productsStream.next(this._products);
             });
