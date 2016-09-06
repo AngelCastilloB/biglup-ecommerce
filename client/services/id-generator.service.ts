@@ -31,17 +31,17 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class IdGeneratorService
 {
-    private static s_count: number = 0;
+    private _count: number = 0;
 
     /**
      * @summary Returns a new id (unrepeated).
      *
      * @returns {string} The new unique id.
      */
-    generate(): string
+    public generate(): string
     {
-        ++IdGeneratorService.s_count;
+        ++this._count;
 
-        return PREFIX + IdGeneratorService.s_count;
+        return PREFIX + this._count;
     }
 }

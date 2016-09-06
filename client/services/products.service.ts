@@ -17,12 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }      from '@angular/core';
-import { Products }        from '../../common/collections/product.collection';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable }      from 'rxjs/Observable';
-import { MeteorComponent } from 'angular2-meteor';
-import { Product }         from '../../common/models';
+import { Injectable }            from '@angular/core';
+import { Products }              from '../../common/collections/product.collection';
+import { BehaviorSubject }       from 'rxjs/BehaviorSubject';
+import { Observable }            from 'rxjs/Observable';
+import { MeteorComponent }       from 'angular2-meteor';
+import { Product, ProductImage } from '../../common/models';
+import { ImagesService }         from './images.service';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -41,7 +42,7 @@ export class ProductsService extends MeteorComponent
     /**
      * @summary Initializes a new instance of the ProductsService class.
      */
-    constructor()
+    constructor(private _imagesService: ImagesService)
     {
         super();
 
@@ -139,7 +140,13 @@ export class ProductsService extends MeteorComponent
      */
     public updateProduct(product: Product): Observable<string>
     {
-        return Observable.create(observer => {
+        let uploadImages: Observable<ProductImage> = product.images.reduce(
+            (stream: Observable, image: ProductImage) =>
+            {
+                stream.concat(this._imagesService.createProductImage(image));
+            }, Observable.create(observer => observer.complete()));
+
+        return uploadImages.concat(Observable.create(observer => {
             this.call('products.updateProduct', product, (error, result) =>
             {
                 if (error)
@@ -152,7 +159,7 @@ export class ProductsService extends MeteorComponent
                     observer.complete();
                 }
             });
-        });
+        }));
     }
 
     /**
