@@ -19,7 +19,7 @@
 
 import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
-import { Image }    from '../../common/models/models';
+import { Image }    from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 

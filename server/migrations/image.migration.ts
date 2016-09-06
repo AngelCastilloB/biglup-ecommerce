@@ -21,7 +21,7 @@ import { AbstractMigration }            from './abstract-migration';
 import { Mongo }                        from 'meteor/mongo';
 import { ImagesStore }                  from '../../common/collections/image.collection';
 import { ReadStream, createReadStream } from 'fs';
-import { Category, Product }            from '../../common/models/models';
+import { Category, Product }            from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 

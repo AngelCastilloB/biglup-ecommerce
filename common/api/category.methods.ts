@@ -19,7 +19,7 @@
 
 import { Categories }     from '../collections/category.collection';
 import { CategorySchema } from '../schemas/category.schema';
-import { Category }        from '../../common/models/models';
+import { Category }       from '../models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -31,7 +31,7 @@ import { Category }        from '../../common/models/models';
  * @return The ID if the newly inserted category.
  */
 Meteor.methods({
-    'categories.createCategory': function (category: Category)
+    'categories.createCategory': (category: Category) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -54,7 +54,7 @@ Meteor.methods({
  * @param categoryId The category id of the categoryId to be deleted.
  */
 Meteor.methods({
-    ['categories.deleteCategory']: function (categoryId: string)
+    ['categories.deleteCategory']: (categoryId: string) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -92,7 +92,7 @@ Meteor.methods({
  * @param category The category to be updated.
  */
 Meteor.methods({
-    ['categories.updateCategory']: function (category: Category)
+    ['categories.updateCategory']: (category: Category) =>
     {
         check(category, CategorySchema);
 

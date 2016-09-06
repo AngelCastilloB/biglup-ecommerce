@@ -27,7 +27,7 @@ import { MeteorComponent }          from 'angular2-meteor';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../../components/modal/modal.component';
-import { Category }                 from '../../../../common/models/models';
+import { Category }                 from '../../../../common/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

@@ -21,7 +21,7 @@ import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
-import { Product, OrderedImage } from '../../common/models/models';
+import { Product, OrderedImage } from '../models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -34,7 +34,7 @@ import { Product, OrderedImage } from '../../common/models/models';
  * @return The ID if the newly inserted product.
  */
 Meteor.methods({
-    'products.createProduct': function (product: Product)
+    'products.createProduct': (product: Product) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -70,7 +70,7 @@ Meteor.methods({
  * @param product The product id of the product to be deleted.
  */
 Meteor.methods({
-    ['products.deleteProduct']: function (productId: string)
+    ['products.deleteProduct']: (productId: string) =>
     {
         /*
          if (!this.user.IsAdmin) {
@@ -105,7 +105,7 @@ Meteor.methods({
  * @param product The product to be updated.
  */
 Meteor.methods({
-    ['products.updateProduct']: function (product: Product)
+    ['products.updateProduct']: (product: Product) =>
     {
         check(product, ProductSchema);
 
@@ -150,7 +150,7 @@ Meteor.methods({
  * @param id The id of the category to be removed.
  */
 Meteor.methods({
-    ['products.removeCategory']: function (id: string)
+    ['products.removeCategory']: (id: string) =>
     {
         check(id, String);
 
@@ -176,20 +176,9 @@ Meteor.methods({
  */
 function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
 {
-    let modifiedProductIds: Array<String> = modifiedProduct.images.map(function (orderedImage: OrderedImage)
-    {
-        return orderedImage.id;
-    });
-
-    let currentProductIds: Array<String> = currentProduct.images.map(function (orderedImage: OrderedImage)
-    {
-        return orderedImage.id;
-    });
-
-    let difference: Array<String> = currentProductIds.filter(function (id: string)
-    {
-        return modifiedProductIds.indexOf(id) < 0;
-    });
+    let modifiedProductIds: Array<String> = modifiedProduct.images.map(orderedImage => orderedImage.id);
+    let currentProductIds:  Array<String> = currentProduct.images.map(orderedImage => orderedImage.id);
+    let difference:         Array<String> = currentProductIds.filter(id => modifiedProductIds.indexOf(id) < 0);
 
     for (let i: number = 0; i < difference.length; ++i)
         Images.remove({_id: difference[i]});

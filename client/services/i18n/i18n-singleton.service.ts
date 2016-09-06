@@ -20,7 +20,7 @@
 import 'reflect-metadata';
 
 import { EventEmitter } from '@angular/core';
-import { I18nString }   from '../../../common/models/models';
+import { I18nString }   from '../../../common/models';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -197,7 +197,7 @@ export class I18nSingletonService
      */
     public loadTranslations(json): {[key: string]: string}
     {
-        return json.reduce(function (previous, pair)
+        return json.reduce((previous, pair) =>
         {
             previous[pair.key] = pair.value;
 
@@ -219,10 +219,7 @@ export class I18nSingletonService
     {
         let value: string;
 
-        let found: I18nString = i18nStrings.find(function (i18nString: I18nString)
-        {
-            return i18nString.language === locale;
-        });
+        let found: I18nString = i18nStrings.find((i18nString: I18nString) => i18nString.language === locale);
 
         if (found)
             value = found.value;

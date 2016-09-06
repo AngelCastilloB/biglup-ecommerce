@@ -19,7 +19,7 @@
 
 import { Mongo }      from 'meteor/mongo';
 import { CartSchema } from '../schemas/cart.schema';
-import { Cart }       from '../../common/models/models';
+import { Cart }       from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 

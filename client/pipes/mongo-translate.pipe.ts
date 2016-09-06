@@ -19,7 +19,7 @@
 
 import { Pipe, PipeTransform }  from  '@angular/core';
 import { I18nSingletonService } from '../services/i18n/i18n-singleton.service';
-import { I18nString }           from '../../common/models/models';
+import { I18nString }           from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -86,10 +86,7 @@ export class MongoTranslatePipe implements PipeTransform
     {
         let value: string;
 
-        let found: I18nString = i18nStrings.find(function (i18nString: I18nString)
-        {
-            return i18nString.language === locale;
-        });
+        let found: I18nString = i18nStrings.find(i18nString => i18nString.language === locale);
 
         if (found)
             value = found.value;
