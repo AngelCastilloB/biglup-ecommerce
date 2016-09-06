@@ -29,9 +29,9 @@ import { Category, Product }        from '../../common/models/models';
  */
 export class ProductMigration extends AbstractMigration
 {
-    protected _amount:     number     = 1; // 1 to 10 products per category.
-    private   _products:   Product[]  = [];
-    private   _categories: Category[] = [];
+    protected _amount: number       = 1;
+    private _products: Product[]    = [];
+    private _categories: Category[] = [];
 
     /**
      * @summary Initializes a new instance of the class ProductMigration.
@@ -46,6 +46,8 @@ export class ProductMigration extends AbstractMigration
         private _categoriesCollection: Mongo.Collection<Category>)
     {
         super(collection, generators);
+
+        this._categories = this._categoriesCollection.find({}).fetch();
     }
 
     /**
@@ -68,44 +70,36 @@ export class ProductMigration extends AbstractMigration
      */
     private _generateProducts(): void
     {
-        this._categories.forEach((category: Category) =>
+        for (let j = 0; j < this._amount; j++)
         {
-            let productCount: number = Math.max(Math.floor(Math.random() * this._amount), 1);
+            const product = this._createPartialProduct();
 
-            for (let j = 0; j < productCount; j++)
+            this._generators.forEach((generator: AbstractContentGenerator) =>
             {
-                const product = this._createPartialProduct(category._id);
+                product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
+                product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
+                product.color.push({language: generator.getLocale(), value: generator.getColor()});
+                product.size.push({language: generator.getLocale(), value: generator.getSize()});
+            });
 
-                this._generators.forEach((generator: AbstractContentGenerator) =>
-                {
-                    product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
-                    product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
-                    product.color.push({language: generator.getLocale(), value: generator.getColor()});
-                    product.size.push({language: generator.getLocale(), value: generator.getSize()});
-                });
-
-                this._products.push(product);
-            }
-        });
+            this._products.push(product);
+        }
     }
 
     /**
      * @summary creates an incomplete product object, this lacks title, color, size and other fields.
      *
-     * @param categoryId The category id this new product will be guaranteed to have.
-     *
      * @returns {Product} The new product partial.
      * @private
      */
-    private _createPartialProduct(categoryId: string): Product
+    private _createPartialProduct(): Product
     {
-        const generator = this._generators[0];
+        const generator        = this._generators[0];
+        const product: Product = new Product();
 
-        let product: Product = new Product();
-
+        product.categories       = this._getRandomCategoryIds();
         product.sku              = generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000);
         product.barcode          = generator.getWords(1).replace(' ', '=').concat('.').toLowerCase();
-        product.categories       = this._addRandomIds(categoryId);
         product.price            = generator.getRandomNumber(10000);
         product.discount         = generator.getRandomNumber();
         product.hashtags         = generator.getWordsArray(3);
@@ -120,22 +114,31 @@ export class ProductMigration extends AbstractMigration
     }
 
     /**
-     * @summary Gives a random set of ids, from 1 to 5
+     * @summary Gives a random set of ids, from 1 to 5, with a change of no id returned.
      *
-     * @param {string} id The id of a category to be guaranteed an spot on the product.
      * @returns {string[]} A random set of ids.
      * @private
      */
-    private _addRandomIds(id: string): string[]
+    private _getRandomCategoryIds(): string[]
     {
-        let results = [];
+        const results = [];
 
-        results.push(id);
+        // 10% chance of a product with no category.
+        if (Math.random() <= .1 || this._categories.length === 0)
+        {
+            return results;
+        }
 
-        let randomIndex: number = Math.floor(Math.random() * this._categories.length);
+        const array  = this._categories.slice(0);
+        const amount = array.length < 5 ? array.length : (Math.floor(Math.random() * 5) || 1);
 
-        results.push(this._categories[randomIndex]._id);
+        for (let i = 0; i < amount; i++)
+        {
+            const set = array.splice(Math.floor(Math.random() * array.length), 1)[0];
 
-        return results;
+            results.push(set);
+        }
+
+        return results.map(category => category._id);
     }
 }
