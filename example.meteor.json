@@ -6,7 +6,13 @@
   },
   "migrations": {
     "migrate": false,
-    "reset": false
+    "reset": false,
+    "locales": [
+      "en",
+      "zh",
+      "kr",
+      "es"
+    ]
   },
   "facebook": {
     "appId": "",

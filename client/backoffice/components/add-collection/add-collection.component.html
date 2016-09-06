@@ -13,14 +13,13 @@
                     <div class="card">
                         <div class="card-block">
 
-                            <div class="md-form">
-                                <input type="text" id="title" name="title" class="form-control" required
-                                       [value]="_categoryName"
-                                       (change)="_onNameChange($event.target.value)">
-                                <label for="title" class="">{{ 'Title' | translate }}</label>
-                            </div>
+                          {{ 'Title' | translate }}
+                          <input type="text" id="title" name="title" class="form-control" required
+                                 [value]="_categoryName"
+                                 (change)="_onNameChange($event.target.value)">
+
                           {{ 'Description' | translate }}
-                            <textarea [value]="_categoryDescription" (onChange)="_onDescriptionChange($event.target.value)"></textarea>
+                          <text-editor [model]="_categoryDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
                         </div>
                     </div>
                     <div class="card">

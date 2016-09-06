@@ -19,6 +19,7 @@
 
 import { Pipe, PipeTransform }  from  '@angular/core';
 import { I18nSingletonService } from '../services/i18n/i18n-singleton.service';
+import { I18nString }           from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -37,12 +38,12 @@ export class MongoTranslatePipe implements PipeTransform
     /**
      * @summary Selects the correct translation given a I18nString collection.
      *
-     * @param messageCollection The collection with all the available translations.
+     * @param i18nStrings The collection with all the available translations.
      *
      * @returns {string} The translation result. If no translation was found for the current locale, the translation
      * for the default language is returned instead.
      */
-    public transform(messageCollection: [I18nString]): any
+    public transform(i18nStrings: [I18nString]): any
     {
         let defaultLocale: string = I18nSingletonService.getInstance().getDefaultLocale();
         let currentLocale: string = I18nSingletonService.getInstance().getLocale();
@@ -50,25 +51,46 @@ export class MongoTranslatePipe implements PipeTransform
         if (currentLocale === this._locale)
             return this._value;
 
-        for (let i = 0, l = messageCollection.length; i < l; ++i)
-        {
-            if (messageCollection[i].language === currentLocale)
-            {
-                this._value = messageCollection[i].value;
+        let currentLocaleString: string = this._getLocaleString(i18nStrings, currentLocale);
 
-                return this._value;
-            }
+        if (currentLocaleString)
+        {
+            this._value = currentLocaleString;
+
+            return currentLocaleString;
         }
-        for (let i = 0, l = messageCollection.length; i < l; ++i)
-        {
-            if (messageCollection[i].language === defaultLocale)
-            {
-                this._value = messageCollection[i].value;
 
-                return this._value;
-            }
+        let defaultLocaleString: string = this._getLocaleString(i18nStrings, defaultLocale);
+
+        if (defaultLocaleString)
+        {
+            this._value = defaultLocaleString;
+
+            return defaultLocaleString;
         }
 
         return '';
+    }
+
+    /**
+     * @summary Retrieves the right translation from the I18nString collection, if the translation can not be found
+     * return undefined.
+     *
+     * @param i18nStrings The collection of translation strings.
+     * @param locale      The desired locale.
+     *
+     * @returns {string} The translation (undefined if no translation is found).
+     * @private
+     */
+    private _getLocaleString(i18nStrings: [I18nString], locale: string)
+    {
+        let value: string;
+
+        let found: I18nString = i18nStrings.find(i18nString => i18nString.language === locale);
+
+        if (found)
+            value = found.value;
+
+        return value;
     }
 }

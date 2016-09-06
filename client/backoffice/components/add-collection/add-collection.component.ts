@@ -21,13 +21,14 @@ import 'reflect-metadata';
 
 import { Component,
          OnInit,
-         NgZone,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../../components/modal/modal.component';
+import { Category }                 from '../../../../common/models';
+import { CategoriesService }        from '../../../services/categories.service.ts';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -47,22 +48,25 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 {
     @ViewChild(ModalComponent)
     private _modal:               ModalComponent;
-    private _category:            Category = <Category>{};
-    private _categoryName:        string   = '';
-    private _categoryDescription: string   = '';
-    private _defaultLocale:       string   = I18nSingletonService.getInstance().getDefaultLocale();
-    private _waitModalResult:     boolean  = false;
-    private _isEditMode:          boolean  = false;
+    private _category:            Category             = new Category();
+    private _categoryName:        string               = '';
+    private _categoryDescription: string               = '';
+    private _i18nService:         I18nSingletonService = I18nSingletonService.getInstance();
+    private _waitModalResult:     boolean              = false;
+    private _isEditMode:          boolean              = false;
 
      /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
-    constructor(private _zone: NgZone, private _router: Router, private _route: ActivatedRoute)
+    constructor(
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _categoriesService: CategoriesService)
     {
         super();
 
-        this._categoryName        = this._getMongoTranslation(this._category.name);
-        this._categoryDescription = this._getMongoTranslation(this._category.info);
+        this._categoryName        = this._i18nService.getMongoText(this._category.name);
+        this._categoryDescription = this._i18nService.getMongoText(this._category.info);
     }
 
     /**
@@ -75,65 +79,16 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             this._category._id = params['id'];
 
             if (!this._category._id)
-            {
-                // TODO: Remove tinyMCE.
-                tinymce.init(
-                 {
-                    selector: 'textarea',
-                    setup: (editor) =>
-                    {
-                        editor.on('keyup change', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-                                this._categoryDescription = tinymce.activeEditor.getContent();
-                                this._category.info       =
-                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
-                            });
-                        });
-                    }
-                });
-
                 return;
-            }
 
-            this.subscribe('category', this._category._id , () =>
-            {
-                this._category = Categories.findOne({_id: this._category._id});
-
-                this._categoryName        = this._getMongoTranslation(this._category.name);
-                this._categoryDescription = this._getMongoTranslation(this._category.info);
-
-                // TODO: Remove tinyMCE.
-                tinymce.init(
-                 {
-                    selector: 'textarea',
-                    setup: (editor) =>
-                    {
-                        editor.on('keyup change', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-
-                                this._categoryDescription = tinymce.activeEditor.getContent();
-                                this._category.info       =
-                                    [{'language': this._defaultLocale, 'value' : this._categoryDescription}];
-                            });
-                        });
-
-                        editor.on('init', (param, l) =>
-                        {
-                            this._zone.run(() =>
-                            {
-                                tinymce.activeEditor.setContent(this._categoryDescription);
-                                tinymce.activeEditor.execCommand('mceRepaint');
-                            });
-                        });
-                    }
+            this._categoriesService.getCategory(this._category._id).subscribe(
+                (category: Category) =>
+                {
+                    this._category            = category;
+                    this._categoryName        = this._i18nService.getMongoText(this._category.name);
+                    this._categoryDescription = this._i18nService.getMongoText(this._category.info);
+                    this._isEditMode          = true;
                 });
-
-                this._isEditMode = true;
-            }, true);
         });
     }
 
@@ -142,31 +97,21 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      *
      * @param newName The new name to be set.
      */
-    private _onNameChange(newName: any): void
+    private _onNameChange(newName: string): void
     {
         this._categoryName = newName;
-        this._category.name = [{'language': this._defaultLocale, 'value' : this._categoryName}];
+        this._category.name = [{'language': this._i18nService.getLocale(), 'value' : this._categoryName}];
     }
 
     /**
-     * @summary Gets the correct translation out of a I18nString collection.
+     * @summary Event triggered when the description has changed.
      *
-     * @param messageCollection The message collection with all the translations.
-     *
-     * @returns {string} The translation.
+     * @param newDescription The new description to be set.
      */
-    private _getMongoTranslation(messageCollection: I18nString[]): string
+    private _onDescriptionChange(newDescription: string): void
     {
-        if (!messageCollection)
-            return '';
-
-        for (let i = 0, l = messageCollection.length; i < l; ++i)
-        {
-            if (messageCollection[i].language === this._defaultLocale)
-                return messageCollection[i].value;
-        }
-
-        return '';
+        this._categoryDescription = newDescription;
+        this._category.info = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
     }
 
     /**
@@ -183,9 +128,17 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             return;
         }
 
-        this.call('categories.createCategory', this._category, (error, result) =>
-        {
-            if (error)
+        this._categoriesService.createCategory(this._category).subscribe(
+            (id) =>
+            {
+                this._category._id    = id;
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Category Saved!'),
+                    _T('Information'));
+            },
+            (error) =>
             {
                 this._waitModalResult = false;
 
@@ -195,16 +148,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
                 console.error(error);
             }
-            else
-            {
-                this._category._id    = result;
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Category Saved!'),
-                    _T('Information'));
-            }
-        });
+        );
     }
 
     /**
@@ -212,10 +156,17 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     private _deleteCategory(): void
     {
+        this._categoriesService.deleteCategory(this._category._id).subscribe(
+            (id) =>
+            {
+                this._category._id    = id;
+                this._waitModalResult = true;
 
-        this.call('categories.deleteCategory', this._category._id, (error, result) =>
-        {
-            if (error)
+                this._modal.show(
+                    _T('Category Deleted!'),
+                    _T('Information'));
+            },
+            (error) =>
             {
                 this._waitModalResult = false;
 
@@ -225,16 +176,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
                 console.error(error);
             }
-            else
-            {
-                this._category._id    = result;
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Category Deleted!'),
-                    _T('Information'));
-            }
-        });
+        );
     }
 
     /**
@@ -252,9 +194,16 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             return;
         }
 
-        this.call('categories.updateCategory', this._category, (error, result) =>
-        {
-            if (error)
+        this._categoriesService.updateCategory(this._category).subscribe(
+            () =>
+            {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Category Updated!'),
+                    _T('Information'));
+            },
+            (error) =>
             {
                 this._waitModalResult = false;
 
@@ -264,21 +213,11 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
                 console.error(error);
             }
-            else
-            {
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Category Updated!'),
-                    _T('Information'));
-            }
-        });
+        );
     }
 
     /**
      * @summary Cancels the operation
-     *
-     * @param event The modal closed event
      */
     private _onCancel(): void
     {
@@ -287,8 +226,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
 
     /**
      * @summary Handles the modal closed event.
-     *
-     * @param {any} Event The modal event.
      *
      * @param event The modal closed event
      */

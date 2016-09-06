@@ -17,21 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Mongo }                             from 'meteor/mongo';
-import { IMigratable }                       from './interfaces/i-migratable';
-import { SimplifiedChineseContentGenerator } from '../../common/helpers/generator/simplified-chinese-content-generator';
-import { KoreanContentGenerator }            from '../../common/helpers/generator/korean-content-generator';
-
-// GENERATORS**********************************************************************************************************/
-
-/**
- * @summary The available generators.
- */
-interface ContentGenerators
-{
-    zh: SimplifiedChineseContentGenerator;
-    kr: KoreanContentGenerator;
-}
+import { Mongo }                    from 'meteor/mongo';
+import { IMigratable }              from './interfaces/i-migratable';
+import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -40,14 +28,21 @@ interface ContentGenerators
  */
 export abstract class AbstractMigration implements IMigratable
 {
-    protected _amount = 10;
 
     /**
-     * @summary Initializes a new instance of the class
-     * @param _collection
-     * @param _generators
+     * @summary The default amount a migration should have.
+     *
+     * @type {number}
      */
-    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: ContentGenerators)
+    public static defaultAmount = 10;
+
+    /**
+     * @summary Initializes a new instance of the class.
+     *
+     * @param {Mongo.Collection<{}>} _collection The mongo collection to associate with this migration class.
+     * @param {AbstractContentGenerator[]} _generators The fake language content generator.
+     */
+    constructor(protected _collection: Mongo.Collection<Object>, protected _generators: AbstractContentGenerator[])
     {
     }
 

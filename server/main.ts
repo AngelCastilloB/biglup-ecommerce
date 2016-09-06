@@ -29,7 +29,7 @@ import './publications/images-publications.ts';
 import './publications/product-publications.ts';
 
 // Method Imports
-import '../common/api/cart.methods';
+import '../common/methods/cart.methods';
 
 // App email templates
 import './email-templates/password-reset';

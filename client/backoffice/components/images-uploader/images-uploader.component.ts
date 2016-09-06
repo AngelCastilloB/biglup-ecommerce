@@ -29,6 +29,7 @@ import { UploadFS }       from 'meteor/jalik:ufs';
 import { ImagesStore }    from '../../../../common/collections/image.collection.ts';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { UploaderImage }  from './internals/product-image';
+import { Product }        from '../../../../common/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -124,10 +125,7 @@ export class ImagesUploaderComponent
 
         product.images.length = 0;
 
-        let toBeUploaded: number = this._previewFiles.filter(function (uploaderImage: UploaderImage)
-        {
-            return !uploaderImage.isUploaded;
-        }).length;
+        let toBeUploaded: number = this._previewFiles.filter(uploaderImage => !uploaderImage.isUploaded).length;
 
         let onlyRearrenge: boolean = toBeUploaded === 0;
 
@@ -220,9 +218,8 @@ export class ImagesUploaderComponent
         if (!files.length)
             return;
 
-        let newFiles: Array<UploaderImage> = Array.prototype.slice.call(files).map(function (file) {
-            return new UploaderImage(file, false, '');
-        });
+        let newFiles: Array<UploaderImage> = Array.prototype.slice.call(files).map(file =>
+            new UploaderImage(file, false, ''));
 
         if (this._previewFiles.length === 0)
         {

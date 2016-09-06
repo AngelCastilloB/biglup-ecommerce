@@ -20,13 +20,23 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
    the "common" folder.
    
-### Object Oriented Programming Design
+### Object Oriented Programming
 ---
  * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
  * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
  * Methods should be named after an action, IE: getTime() instead of time().
  * Methods that return flags or booleans should answer to questions IE: isAdmin()
  
+### JavaScript
+---
+ * Prefer array helpers (forEach, map, filter, find, every/some, reduce) over manual iteration using for or while loops.
+ * When you must use function expressions (as when passing an anonymous function), prefer the arrow function notation. 
+ * Always use class. Avoid manipulating prototype directly.
+ * Don't use generators for now. (They don't transpile well to ES5).
+ * Prefer object destructuring over directly accessing and using multiple properties of an object.
+ * Prefer array destructuring over directly referencing elements on the array.
+ * Prefer object destructuring for multiple return values over array destructuring.
+
 ### Version control agreements
 ---
  * Only make commits to the private Biglup Git server.

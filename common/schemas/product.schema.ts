@@ -90,10 +90,10 @@ export let ProductSchema: any = new SimpleSchema({
         label: 'Product Id',
         optional: true
     },
-    categoryId:
+    categories:
     {
         type: [String],
-        label: 'Product category id',
+        label: 'Product categories id',
         optional: true
     },
     title:

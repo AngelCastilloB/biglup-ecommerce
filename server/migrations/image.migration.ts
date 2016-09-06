@@ -21,36 +21,69 @@ import { AbstractMigration }            from './abstract-migration';
 import { Mongo }                        from 'meteor/mongo';
 import { ImagesStore }                  from '../../common/collections/image.collection';
 import { ReadStream, createReadStream } from 'fs';
+import { Category, Product }            from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Handles the image migrations. Each collection will have at least 4 images.
+ * @summary Handles the image migrations. Each collection will have 4 images.
  */
 export class ImageMigration extends AbstractMigration
 {
 
-    protected _amount                     = 4;
-    private _productsIds: Array<string>   = [];
-    private _categoriesIds: Array<string> = [];
-    private _path                         = 'storage/files/placeholder.png';
-    private _type                         = 'image/png';
+    /**
+     * @summary Each associated document will have at most 4 images.
+     *
+     * @type {number}
+     * @private
+     */
+    private _amount = 4;
+
+    /**
+     * @summary The products that will be updated with new images.
+     *
+     * @type {Array}
+     * @private
+     */
+    private _products: Array<Product> = [];
+
+    /**
+     * @summary The categories that will have one image.
+     *
+     * @type {Array}
+     * @private
+     */
+    private _categories: Array<Category> = [];
+
+    /**
+     * @summary The path the default image has.
+     *
+     * @type {string}
+     * @private
+     */
+    private _path = 'storage/files/placeholder.png';
+
+    /**
+     * @summary The mime type the default image has, UploadFS needs this info.
+     *
+     * @type {string}
+     * @private
+     */
+    private _type = 'image/png';
 
     /**
      * @summary Initializes a new instance of the class ImageMigration.
      *
-     * @param collection   The related image collection
-     * @param generators   The content generators.
+     * @param _collection  The related image collection
+     * @param _generators  The content generators.
      * @param _collections The collections that want images to be associated
      */
     constructor(
-        collection: Mongo.Collection<Object>, generators,
-        private _collections: {
-            products: Mongo.Collection<Product>,
-            categories: Mongo.Collection<Category>
-        })
+        _collection: Mongo.Collection<Object>,
+        _generators,
+        private   _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
     {
-        super(collection, generators);
+        super(_collection, _generators);
     }
 
     /**
@@ -62,51 +95,70 @@ export class ImageMigration extends AbstractMigration
     {
         console.log('Adding Images.');
 
-        this._generateIds();
+        this._products   = this._collections.products.find({}).fetch();
+        this._categories = this._collections.categories.find({}).fetch();
 
-        this._productsIds.forEach((id: string) => this._addImage('productId', id));
-
-        this._categoriesIds.forEach((id: string) => this._addImage('categoryId', id));
+        this._products.forEach((product: Product) => this._addProductImages(product));
+        this._categories.forEach((category: Category) => this._addCategoryImage(category));
     }
 
     /**
-     * @summary adds an image related to the document given.
+     * @summary adds a group of images to the given product.
      *
-     * @param {string} field the database field, IE: productId
-     * @param {string} id
+     * @param {Product} product The product to add the images into.
      * @private
      */
-    private _addImage(field: string, id: string)
+    private _addProductImages(product: Product): void
     {
         for (let i = 1; i <= this._amount; ++i)
         {
-            const fileId = ImagesStore.create({name: `${id}-${i}`, [field]: id, type: this._type});
-
-            ImagesStore.write(this._getImageStream(), fileId, error =>
+            this._createImage(i.toString(), (error, image) =>
             {
                 if (error)
                 {
-                    console.log(error);
+                    throw error;
                 }
+
+                this._collections.products.update({_id: product._id}, {
+                    $push: {
+                        images: {position: i - 1, id: image._id, url: image.url}
+                    }
+                });
             });
         }
     }
 
     /**
-     * @summary Gets the models ids that need images from the database.
+     * @summary Writes a new image to the HD asynchronously.
+     *
+     * @param {string} name The name this image will have.
+     * @param {Function} callback The function to run after the image is written.
      * @private
      */
-    private _generateIds(): void
+    private _createImage(name: string, callback: (error, image) => void)
     {
-        this._productsIds = <string[]>this._collections.products
-            .find({}, {fields: {_id: 1}})
-            .fetch()
-            .map((obj: any) => obj._id);
+        const imageId = ImagesStore.create({name, type: this._type});
 
-        this._categoriesIds = <string[]>this._collections.categories
-            .find({}, {fields: {_id: 1}})
-            .fetch()
-            .map((obj: any) => obj._id);
+        ImagesStore.write(this._getImageStream(), imageId, callback);
+    }
+
+    /**
+     * @summary Creates a image for a given category.
+     *
+     * @param {Category} category The category to have the new image.
+     * @private
+     */
+    private _addCategoryImage(category: Category)
+    {
+        this._createImage('0', (error, image) =>
+        {
+            if (error)
+            {
+                throw error;
+            }
+
+            this._collections.categories.update({_id: category._id}, {$set: {image: image.url}});
+        });
     }
 
     /**

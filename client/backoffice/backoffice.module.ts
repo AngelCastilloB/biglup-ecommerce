@@ -30,7 +30,6 @@ import { AddProductComponent }     from './components/add-product/add-product.co
 import { CollectionsComponent }    from './components/collections/collections.component';
 import { CustomersComponent }      from './components/customers/customers.component';
 import { DashboardComponent }      from './components/dashboard/dashboard.component';
-import { EditProductComponent }    from './components/edit-product/edit-product.component';
 import { ModalComponent }          from './components/modal/modal.component';
 import { OrdersComponent }         from './components/orders/orders.component';
 import { ProductsComponent }       from './components/products/products.component';
@@ -44,6 +43,8 @@ import { ImagePreviewComponent }   from './components/images-uploader/components
 import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }       from './components/images-uploader/directives/file-drop.directive';
 import { FileSelectDirective }     from './components/images-uploader/directives/file-select.directive';
+import { TextEditorComponent }     from './components/text-editor/text-editor.component';
+import { ColorPickerComponent }    from './components/text-editor/components/color-picker.component'
 
 // EXPORTS ************************************************************************************************************/
 
@@ -57,6 +58,8 @@ import { FileSelectDirective }     from './components/images-uploader/directives
         BreadcrumbComponent,
         DashboardComponent,
         ModalComponent,
+        TextEditorComponent,
+        ColorPickerComponent,
 
         // collection
         AddCollectionComponent,
@@ -64,7 +67,6 @@ import { FileSelectDirective }     from './components/images-uploader/directives
 
         // product
         AddProductComponent,
-        EditProductComponent,
         ProductsComponent,
 
         // customer

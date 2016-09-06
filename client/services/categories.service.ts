@@ -22,6 +22,7 @@ import { Categories }      from '../../common/collections/category.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
 import { MeteorComponent } from 'angular2-meteor';
+import { Category }        from '../../common/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -73,9 +74,91 @@ export class CategoriesService extends MeteorComponent
      */
     public getCategory(categoryId: string): Observable<Category>
     {
-        return new Observable<Category>(func => this._categoriesStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product._id === categoryId)[0]))
-            .filter(category => !!category)
-            .subscribe(func));
+        return Observable.create(observer => {
+            this.subscribe('categories', categoryId , () =>
+            {
+                let category: Category = Categories.findOne({_id: categoryId});
+
+                if (!category)
+                {
+                    observer.error('Category not found');
+                    return;
+                }
+
+                observer.next(category);
+                observer.complete();
+            });
+        });
+    }
+
+    /**
+     * @summary Creates a new category.
+     *
+     * @param category The category to be created in the database.
+     */
+    public createCategory(category: Category): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.createCategory', category, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Updates a category.
+     *
+     * @param category The category to be updated in the database.
+     */
+    public updateCategory(category: Category): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.updateCategory', category, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Deletes the given category from the database.
+     *
+     * @param categoryId The category Id.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deleteCategory(categoryId: string): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('categories.deleteCategory', categoryId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
     }
 }

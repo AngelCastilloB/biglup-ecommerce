@@ -29,7 +29,7 @@ import template from './sidebar.component.html';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays the admin panel dashboard.
+ * @summary This component displays the admin panel sidebar.
  */
 @Component({
     selector: 'sidebar',
@@ -38,7 +38,7 @@ import template from './sidebar.component.html';
 export class SidebarComponent extends MeteorComponent
 {
     /**
-     * @summary Initializes a new instance of the DashboardComponent class.
+     * @summary Initializes a new instance of the SidebarComponent class.
      */
     constructor() {
         super();

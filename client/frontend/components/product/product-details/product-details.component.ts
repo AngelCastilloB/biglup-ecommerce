@@ -19,11 +19,16 @@
 
 import 'reflect-metadata';
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute }               from '@angular/router';
-import { MeteorComponent }              from 'angular2-meteor';
-import { ProductsService }              from '../../../../services/products.service';
-import { CategoriesService }            from '../../../../services/categories.service';
+import { Component,
+         OnInit,
+         OnChanges,
+         SimpleChanges }        from '@angular/core';
+import { ActivatedRoute }       from '@angular/router';
+import { MeteorComponent }      from 'angular2-meteor';
+import { ProductsService }      from '../../../../services/products.service';
+import { CategoriesService }    from '../../../../services/categories.service';
+import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
+import { Product, Category }    from '../../../../../common/models';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
@@ -37,12 +42,11 @@ import template from './product-details.component.html';
     selector: 'product-details',
     template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnDestroy
+export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnChanges
 {
-    private _product:  Product;
-    private _category: Category;
-    private _productSubscription;
-    private _categorySubscription;
+    private _i18nService: I18nSingletonService = I18nSingletonService.getInstance();
+    private _product:     Product;
+    private _category:    Category;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
@@ -69,24 +73,25 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
             let categoryId: string = params['categoryId'];
             let productId:  string = params['productId'];
 
-            this._productSubscription = this._productsService.getProduct(productId)
-                .subscribe((product: Product) => { this._product = product; });
+            this._productsService.getProduct(productId).subscribe((product: Product) =>
+            {
+                this._product = product;
+            });
 
-            this._categorySubscription = this._categoriesService.getCategory(categoryId)
+            this._categoriesService.getCategory(categoryId)
                 .subscribe((category: Category) => { this._category = category; });
         });
     }
 
     /**
-     * @summary Cleanup just before Angular destroys the directive/component. Unsubscribe observables and detach event
-     * handlers to avoid memory leaks.
+     * @summary This method is called right after the data-bound properties have been checked and before view and
+     * content children are checked if at least one of them has changed.
+     *
+     * The changes parameter contains an entry for each of the changed data-bound property.
+     * The key is the property name and the value is an instance of SimpleChange.
+     * @param changes
      */
-    public ngOnDestroy()
+    public ngOnChanges(changes: SimpleChanges)
     {
-        if (this._productSubscription)
-            this._productSubscription.unsubscribe();
-
-        if (this._categorySubscription)
-            this._categorySubscription.unsubscribe();
     }
 }
