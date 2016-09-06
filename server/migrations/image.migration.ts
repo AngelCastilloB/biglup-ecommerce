@@ -30,11 +30,46 @@ import { Category, Product }            from '../../common/models/models';
  */
 export class ImageMigration extends AbstractMigration
 {
-    protected _amount                    = 1;
-    private _products: Array<Product>    = [];
+
+    /**
+     * @summary Each associated document will have at most 4 images.
+     *
+     * @type {number}
+     * @private
+     */
+    private _amount = 4;
+
+    /**
+     * @summary The products that will be updated with new images.
+     *
+     * @type {Array}
+     * @private
+     */
+    private _products: Array<Product> = [];
+
+    /**
+     * @summary The categories that will have one image.
+     *
+     * @type {Array}
+     * @private
+     */
     private _categories: Array<Category> = [];
-    private _path                        = 'storage/files/placeholder.png';
-    private _type                        = 'image/png';
+
+    /**
+     * @summary The path the default image has.
+     *
+     * @type {string}
+     * @private
+     */
+    private _path = 'storage/files/placeholder.png';
+
+    /**
+     * @summary The mime type the default image has, UploadFS needs this info.
+     *
+     * @type {string}
+     * @private
+     */
+    private _type = 'image/png';
 
     /**
      * @summary Initializes a new instance of the class ImageMigration.

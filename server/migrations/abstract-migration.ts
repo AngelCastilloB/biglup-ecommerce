@@ -28,7 +28,13 @@ import { AbstractContentGenerator } from '../../common/helpers/generator/abstrac
  */
 export abstract class AbstractMigration implements IMigratable
 {
-    protected _amount = 1;
+
+    /**
+     * @summary The default amount a migration should have.
+     *
+     * @type {number}
+     */
+    public static defaultAmount = 10;
 
     /**
      * @summary Initializes a new instance of the class.

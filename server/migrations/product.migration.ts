@@ -29,8 +29,29 @@ import { Category, Product }        from '../../common/models/models';
  */
 export class ProductMigration extends AbstractMigration
 {
-    protected _amount: number       = 1;
-    private _products: Product[]    = [];
+
+    /**
+     * @summary This migration will have the default amount of documents.
+     *
+     * @type {number}
+     * @private
+     */
+    private _amount = AbstractMigration.defaultAmount;
+
+    /**
+     * @summary The collection of products that will be stored into the DB.
+     *
+     * @type {Array}
+     * @private
+     */
+    private _products: Product[] = [];
+
+    /**
+     * @summary All the existing categories that could be associated with new products.
+     *
+     * @type {Array}
+     * @private
+     */
     private _categories: Category[] = [];
 
     /**

@@ -29,10 +29,19 @@ import { Category }                 from '../../common/models/models';
  */
 export class CategoryMigration extends AbstractMigration
 {
+
     /**
      * @summary All the categories to be inserted.
      */
     private _categories: Array<Category> = Array<Category>();
+
+    /**
+     * @summary This migration will have the default amount of documents.
+     *
+     * @type {number}
+     * @private
+     */
+    private _amount = AbstractMigration.defaultAmount;
 
     /**
      * @summary Initializes a new instances of the class CategoryMigration.
