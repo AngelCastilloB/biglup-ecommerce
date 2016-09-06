@@ -22,7 +22,7 @@
               </div>
             </div>
 
-            <product-image-manager #imagesManager></product-image-manager>
+            <images-uploader #imagesUploader (onSuccess)="_onImagesUploadedSuccessfully($event)" (onError)="_onImagesUploadedFails($event)"></images-uploader>
 
             <div class="card">
               <ul class="list-group list-group-flush">

@@ -21,7 +21,7 @@ import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
-import { Product, ProductImage } from '../models';
+import { Product, OrderedImage } from '../models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -189,7 +189,7 @@ function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
  *
  * @param images The images to be removed.
  */
-function removeAllImages(images: Array<ProductImage>)
+function removeAllImages(images: Array<OrderedImage>)
 {
     for (let i: number = 0; i < images.length; ++i)
         Images.remove({_id: images[i].id});
