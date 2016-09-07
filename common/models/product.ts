@@ -115,14 +115,12 @@ export class ProductImage
     /**
      * @summary Initialises a new instance of the ProductImage class.
      *
-     * @param position    The position of the image within the collection.
      * @param id          The id of the image in the database.
      * @param url         The url of the image.
      * @param isUploaded  Tells whether this image already exists on the server.
      * @param file        The image file.
      */
     constructor(
-        public position:   number  = 0,
         public id:         string  = '',
         public url:        string  = '',
         public isUploaded: boolean = false,

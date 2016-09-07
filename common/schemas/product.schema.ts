@@ -27,11 +27,6 @@ import { I18nStringSchema } from './i18n-string.schema';
  */
 export let ProductImageSchema: any = new SimpleSchema(
 {
-    position:
-    {
-        label: 'The image position', // Since the image upload is simultaneous, this is the easier way to enforce order.
-        type: Number
-    },
     id:
     {
         label: 'The id of the image in the image collection',

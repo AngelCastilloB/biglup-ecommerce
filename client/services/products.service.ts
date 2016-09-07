@@ -24,6 +24,7 @@ import { Observable }       from 'rxjs/Observable';
 import { MeteorComponent }  from 'angular2-meteor';
 import { Product }          from '../../common/models';
 import { ImagesService }    from './images.service';
+import { ProductSchema }    from '../../common/schemas/product.schema';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -135,6 +136,8 @@ export class ProductsService extends MeteorComponent
      */
     public createProduct(product: Product): Observable<number>
     {
+        check(product, ProductSchema);
+
         const totalProgress:   number = product.images.length * 100;
         let   currentProgress: number = 0;
 
@@ -175,6 +178,8 @@ export class ProductsService extends MeteorComponent
      */
     public updateProduct(product: Product): Observable<number>
     {
+        check(product, ProductSchema);
+
         const totalProgress:   number = product.images.length * 100;
         let   currentProgress: number = 0;
 

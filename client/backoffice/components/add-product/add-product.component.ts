@@ -160,7 +160,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             (progress) =>
             {
                 this._uploadProgress = progress;
-                console.error(this._uploadProgress + '%');
             },
             (error) =>
             {
@@ -221,7 +220,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             (progress) =>
             {
                 this._uploadProgress = progress;
-                console.error(this._uploadProgress + '%');
             },
             (error) =>
             {

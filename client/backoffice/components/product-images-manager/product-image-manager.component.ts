@@ -115,7 +115,7 @@ export class ProductImageManagerComponent
     /**
      * @summary Event handler for the on file drop event.
      *
-     * @param file The file to be uploaded.
+     * @param files The files to be uploaded.
      */
     private _onFileDrop(files: FileList): void
     {
@@ -123,7 +123,7 @@ export class ProductImageManagerComponent
             return;
 
         let newFiles: Array<ProductImage> = Array.prototype.slice.call(files).map(file =>
-            new ProductImage(0, '', '', false, file));
+            new ProductImage('', '', false, file));
 
         if (this._previewFiles.length === 0)
         {
