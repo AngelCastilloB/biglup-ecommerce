@@ -38,7 +38,7 @@ export class IdGeneratorService
      *
      * @returns {string} The new unique id.
      */
-    generate(): string
+    public generate(): string
     {
         ++IdGeneratorService.s_count;
 

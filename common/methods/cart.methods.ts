@@ -21,6 +21,30 @@ import { Carts }                   from '../collections/cart.collection';
 import { Products }                from '../collections/product.collection';
 import { Cart, CartItem, Product } from '../models';
 
+// FUNCTIONS **********************************************************************************************************/
+
+/**
+ * @summary search for a product inside a cart.
+ *
+ * @param cart The cart where the product will be looked for.
+ * @param productId The product to be found.
+ *
+ * @returns {number} The index of the product in the cart index collection.
+ */
+const findProduct = (cart: Cart, productId: string): number =>
+{
+    if (!cart.items)
+        return -1;
+
+    for (let i = 0; i < cart.items.length; ++i)
+    {
+        if (cart.items[i].productId === productId)
+            return i;
+    }
+
+    return -1;
+};
+
 // METHODS ************************************************************************************************************/
 
 /**
@@ -200,27 +224,3 @@ Meteor.methods({
         Carts.update({userId: userId}, {$pull: {items: {productId: productId}}}, {multi: true});
     }
 });
-
-// FUNCTIONS **********************************************************************************************************/
-
-/**
- * @summary search for a product inside a cart.
- *
- * @param cart The cart where the product will be looked for.
- * @param productId The product to be found.
- *
- * @returns {number} The index of the product in the cart index collection.
- */
-function findProduct(cart: Cart, productId: string): number
-{
-    if (!cart.items)
-        return -1;
-
-    for (let i = 0; i < cart.items.length; ++i)
-    {
-        if (cart.items[i].productId === productId)
-            return i;
-    }
-
-    return -1;
-}
