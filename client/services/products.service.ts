@@ -150,8 +150,8 @@ export class ProductsService extends MeteorComponent
 
                 return currentProgress;
             })
-            .concat(Observable.create(observer => {
-
+            .concat(Observable.create(observer =>
+            {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
@@ -192,8 +192,8 @@ export class ProductsService extends MeteorComponent
 
                 return currentProgress;
             })
-            .concat(Observable.create(observer => {
-
+            .concat(Observable.create(observer =>
+            {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
