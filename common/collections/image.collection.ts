@@ -56,10 +56,10 @@ export const ImagesStore = new UploadFS.store.Local(
  *
  * @returns {boolean} true if the operation is allowed, otherwise, false.
  */
-function isAllowed()
+const isAllowed = () =>
 {
     return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
-}
+};
 
 // RULES **************************************************************************************************************/
 
