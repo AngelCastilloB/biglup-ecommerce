@@ -95,7 +95,7 @@ Meteor.methods({
             }
 
             selector = {_id: cart._id};
-            modifier = {$push: {'items': item}};
+            modifier = {$push: {items: item}};
         }
         else
         {
@@ -105,7 +105,7 @@ Meteor.methods({
             {
                 if (item.quantity < 1)
                 {
-                    Carts.update(selector, {$pull: {items: {productId: productId}}}, {multi: true});
+                    Carts.update(selector, {$pull: {items: {productId}}}, {multi: true});
 
                     return;
                 }
@@ -116,7 +116,7 @@ Meteor.methods({
             {
                 if (newQuantity < 1)
                 {
-                    Carts.update(selector, {$pull: {items: {productId: productId}}}, {multi: true});
+                    Carts.update(selector, {$pull: {items: {productId}}}, {multi: true});
 
                     return;
                 }
@@ -164,14 +164,14 @@ Meteor.methods({
          }
          */
 
-        if (Carts.find({userId: userId}).count() === 0)
+        if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
                 'cart.delete.doesNotExists',
                 'This user does not have a cart.');
         }
 
-        Carts.remove({userId: userId});
+        Carts.remove({userId});
     }
 });
 
@@ -189,14 +189,14 @@ Meteor.methods({
          }
          */
 
-        if (Carts.find({userId: userId}).count() === 0)
+        if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
                 'cart.delete.doesNotExists',
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId: userId}, {$set: {'items': []}}, {multi: true});
+        Carts.update({userId}, {$set: {items: []}}, {multi: true});
     }
 });
 
@@ -214,13 +214,13 @@ Meteor.methods({
          }
          */
 
-        if (Carts.find({userId: userId}).count() === 0)
+        if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
                 'cart.delete.doesNotExists',
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId: userId}, {$pull: {items: {productId: productId}}}, {multi: true});
+        Carts.update({userId}, {$pull: {items: {productId}}}, {multi: true});
     }
 });

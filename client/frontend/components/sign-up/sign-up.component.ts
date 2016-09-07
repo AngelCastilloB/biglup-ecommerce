@@ -68,10 +68,12 @@ export class SignUpComponent implements OnInit
      * @param {NgZone}          _ngZone          The angular zone service.
      * @param {Router}          _router          The router service.
      */
-    constructor(private _formBuilder: FormBuilder,
+    constructor(
+        private _formBuilder: FormBuilder,
         private _userAuthService: UserAuthService,
         private _ngZone: NgZone,
-        private _router: Router) {
+        private _router: Router)
+    {
     }
 
     /**
@@ -109,7 +111,9 @@ export class SignUpComponent implements OnInit
         event.preventDefault();
 
         if (!this._signUpForm.valid)
+        {
             return;
+        }
 
         const email    = this._signUpForm.value.email;
         const password = this._signUpForm.value.password;
@@ -117,7 +121,9 @@ export class SignUpComponent implements OnInit
         this._userAuthService.createUser({email, password}, error =>
         {
             if (error)
+            {
                 return this._processError(error);
+            }
 
             this._router.navigate(['/']);
         });

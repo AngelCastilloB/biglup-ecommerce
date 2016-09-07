@@ -102,4 +102,3 @@ import { ImagesService }                from './../services/images.service';
 export class BackofficeModule
 {
 }
-

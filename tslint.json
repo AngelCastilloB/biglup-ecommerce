@@ -1,8 +1,9 @@
 {
   "rules": {
-    "only-arrow-functions": [
+    "align": [
       true,
-      "allow-declarations"
+      "parameters",
+      "statements"
     ],
     "class-name": true,
     "comment-format": [
@@ -16,6 +17,11 @@
       true,
       "spaces"
     ],
+    "interface-name": [
+      true,
+      "always-prefix"
+    ],
+    "jsdoc-format": true,
     "label-position": true,
     "label-undefined": true,
     "max-line-length": [
@@ -29,6 +35,7 @@
       "static-before-instance",
       "variables-before-functions"
     ],
+    "new-parens": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
@@ -39,6 +46,8 @@
       "timeEnd",
       "trace"
     ],
+    "no-unused-new": true,
+    "no-consecutive-blank-lines": true,
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-key": true,
@@ -56,6 +65,15 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-shorthand": true,
+    "only-arrow-functions": [
+      true,
+      "allow-declarations"
+    ],
     "one-line": [
       true,
       "check-whitespace"
@@ -83,6 +101,7 @@
       }
     ],
     "variable-name": false,
+    "switch-default": true,
     "whitespace": [
       true,
       "check-branch",

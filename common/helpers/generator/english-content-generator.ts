@@ -167,4 +167,3 @@ export class EnglishContentGenerator extends AbstractContentGenerator
         return this._getRandomArrayIndexes(this._sizes, 1).toString();
     }
 }
-

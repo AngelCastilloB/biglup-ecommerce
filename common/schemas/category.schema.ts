@@ -15,9 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// We need the correct scope of this inside the schemas.
-// tslint:disable:only-arrow-functions
-
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
@@ -29,38 +26,32 @@ import { I18nStringSchema } from './i18n-string.schema';
  * @summary The sub category schema.
  */
 export let SubCategorySchema: any = new SimpleSchema({
-    name:
-    {
+    name: {
         type: [I18nStringSchema],
         label: 'Name'
     },
-    info:
-    {
+    info: {
         type: [I18nStringSchema],
         label: 'Info'
     },
-    slug:
-    {
+    slug: {
         label: 'The category slug',
         type: String,
         optional: true,
     },
-    image:
-    {
+    image: {
         type: String,
         label: 'Image',
         optional: true
     },
-    active:
-    {
+    active: {
         type: Boolean,
         label: 'Active',
         defaultValue: true
     },
-    createdAt:
-    {
+    createdAt: {
         type: Date,
-        autoValue: function ()
+        autoValue()
         {
             if (this.isInsert)
             {
@@ -73,11 +64,10 @@ export let SubCategorySchema: any = new SimpleSchema({
         },
         optional: true
     },
-    updatedAt:
-    {
+    updatedAt: {
         type: Date,
         label: 'Last date this filter was updated.',
-        autoValue: function ()
+        autoValue()
         {
             return new Date();
         },
@@ -89,44 +79,37 @@ export let SubCategorySchema: any = new SimpleSchema({
  * @summary The category schema.
  */
 export let CategorySchema: any = new SimpleSchema({
-    _id:
-    {
+    _id: {
         type: String,
         label: 'Category Id',
         optional: true
     },
-    name:
-    {
+    name: {
         type: [I18nStringSchema],
         label: 'Name'
     },
-    slug:
-    {
+    slug: {
         type: String,
         label: 'Slug',
         optional: true,
     },
-    info:
-    {
+    info: {
         type: [I18nStringSchema],
         label: 'Info'
     },
-    image:
-    {
+    image: {
         type: String,
         label: 'Image',
         optional: true
     },
-    active:
-    {
+    active: {
         type: Boolean,
         label: 'Active',
         defaultValue: true
     },
-    createdAt:
-    {
+    createdAt: {
         type: Date,
-        autoValue: function ()
+        autoValue()
         {
             if (this.isInsert)
             {
@@ -139,18 +122,16 @@ export let CategorySchema: any = new SimpleSchema({
         },
         optional: true
     },
-    updatedAt:
-    {
+    updatedAt: {
         type: Date,
         label: 'Last date this category was updated.',
-        autoValue: function ()
+        autoValue()
         {
             return new Date();
         },
         optional: true
     },
-    subCategories:
-    {
+    subCategories: {
         type: [SubCategorySchema],
         label: 'The list of categories inside this category.',
         optional: true

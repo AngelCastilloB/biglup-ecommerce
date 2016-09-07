@@ -82,12 +82,14 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             this._product._id = params['id'];
 
             if (!this._product._id)
+            {
                 return;
+            }
 
             this._productsService.getProduct(this._product._id).subscribe(
                 (product: Product) =>
                 {
-                    this._product = product;
+                    this._product            = product;
                     this._productTitle       = this._i18nService.getMongoText(this._product.title);
                     this._productDescription = this._i18nService.getMongoText(this._product.description);
                     this._isEditMode         = true;
@@ -103,7 +105,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onTitleChange(newTitle: any): void
     {
         this._productTitle  = newTitle;
-        this._product.title = [{'language': this._i18nService.getLocale(), 'value' : this._productTitle}];
+        this._product.title = [{language: this._i18nService.getLocale(), value: this._productTitle}];
     }
 
     /**
@@ -114,7 +116,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onDescriptionChange(newDescription: string): void
     {
         this._productDescription  = newDescription;
-        this._product.description = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
+        this._product.description = [{language: this._i18nService.getLocale(), value: newDescription}];
     }
 
     /**
@@ -130,12 +132,16 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         if (isChecked)
         {
             if (index === -1)
+            {
                 this._product.categories.push(id);
+            }
         }
         else
         {
             if (index > -1)
+            {
                 this._product.categories.splice(index, 1);
+            }
         }
     }
 
