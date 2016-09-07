@@ -1,5 +1,9 @@
 {
   "rules": {
+    "only-arrow-functions": [
+      true,
+      "allow-declarations"
+    ],
     "class-name": true,
     "comment-format": [
       true,
