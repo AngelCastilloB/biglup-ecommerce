@@ -48,17 +48,18 @@ export class ColorPickerComponent extends MeteorComponent
     /**
      * @summary Initializes a new instance of the ColorPickerComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
     }
 
     /**
      * @summary Shows the color picker.
      *
-     * @param {left: number, top: number} location The mouse event that triggered the color picker display.
+     * @param {{left: number, top: number}} location The mouse event that triggered the color picker display.
      */
-    public show(location: { left: number, top: number }): void {
-
+    public show(location: { left: number, top: number }): void
+    {
         this._isOpening = true;
 
         setTimeout(() => this._isOpening = false, 400);
@@ -106,10 +107,11 @@ export class ColorPickerComponent extends MeteorComponent
      *
      * @returns {{position: string, display: (string|string), left: string, top: string}}
      */
-    get locationCss(): any {
+    get locationCss(): any
+    {
         return {
-            'position': 'fixed',
-            'display': this._isShown ? 'block' : 'none',
+            position: 'fixed',
+            display: this._isShown ? 'block' : 'none',
             left: this._location.left + 'px',
             top: this._location.top + 'px',
         };
@@ -122,7 +124,9 @@ export class ColorPickerComponent extends MeteorComponent
     private _clickedOutside(): void
     {
         if (!this._isOpening)
+        {
             this.hide();
+        }
     }
 
 }

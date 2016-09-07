@@ -19,7 +19,7 @@
 
 import 'reflect-metadata';
 
-import { Validators, FormGroup, FormBuilder}  from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, NgZone }          from '@angular/core';
 import { ValidationService }                  from '../../../services/validation.service';
 import { Router }                             from '@angular/router';
@@ -94,12 +94,16 @@ export class PasswordResetComponent implements OnInit
         event.preventDefault();
 
         if (!this._pwResetForm.valid)
+        {
             return;
+        }
 
         this._userAuthService.forgotPassword({email: this._pwResetForm.value.email}, error =>
         {
             if (error)
+            {
                 return this._processError(error);
+            }
 
             // TODO show user success message after password reset
             this._router.navigate(['/login']);
@@ -122,7 +126,7 @@ export class PasswordResetComponent implements OnInit
             switch (error.error) // TODO: Handle all cases.
             {
                 case NOT_FOUND:
-                    this._error.message = _T('The Email provided did not match our records.')
+                    this._error.message = _T('The Email provided did not match our records.');
                     break;
                 default:
                     this._error.message = error.reason;

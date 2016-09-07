@@ -76,7 +76,8 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
     /**
      * @summary Initializes a new instance of the TextEditorComponent class.
      */
-    constructor() {
+    constructor()
+    {
         super();
 
         for (let i: number = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; ++i)
@@ -207,7 +208,6 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
         this._updateJustficationFlags();
     }
 
-
     /**
      * @summary Event handler for the justify full toggle.
      *
@@ -234,7 +234,7 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
      *
      * @private
      */
-    private _changeFontSize (size: number)
+    private _changeFontSize(size: number)
     {
         this._editableArea.nativeElement.focus();
         document.execCommand('fontSize', false, '2');
@@ -316,7 +316,9 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
     {
         // Try to use HiliteColor since some browsers apply BackColor to the whole block, if that fails, apply BackColor
         if (!document.execCommand('HiliteColor', false, color))
+        {
             document.execCommand('BackColor', false, color);
+        }
     }
 
     /**
@@ -347,7 +349,7 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
     {
         let rectangle: ClientRect = $event.srcElement.getBoundingClientRect();
 
-        this._fontColorPicker.show({ left: rectangle.left, top: rectangle.bottom });
+        this._fontColorPicker.show({left: rectangle.left, top: rectangle.bottom});
     }
 
     /**
@@ -360,7 +362,7 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
     {
         let rectangle: ClientRect = $event.srcElement.getBoundingClientRect();
 
-        this._backgroundColorPicker.show({ left: rectangle.left, top: rectangle.bottom });
+        this._backgroundColorPicker.show({left: rectangle.left, top: rectangle.bottom});
     }
 
     /**

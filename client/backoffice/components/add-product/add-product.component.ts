@@ -24,13 +24,11 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
-import { ImagesUploaderComponent }  from '../images-uploader/images-uploader.component';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent }           from '../modal/modal.component';
-import { UploaderImage }            from '../images-uploader/internals/product-image';
 import { ProductsService }          from '../../../services/products.service.ts';
 import { CategoriesService }        from '../../../services/categories.service';
-import { Product, OrderedImage }    from '../../../../common/models';
+import { Product }                  from '../../../../common/models';
 
 // Methods
 import '../../../../common/methods/product.methods';
@@ -54,12 +52,11 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _product:            Product              = new Product();
     private _productTitle:       string               = '';
     private _productDescription: string               = '';
-    @ViewChild('imagesUploader')
-    private _imagesUploader:     ImagesUploaderComponent;
     @ViewChild(ModalComponent)
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
     private _isEditMode:         boolean = false;
+    private _uploadProgress:     number  = 0;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -85,19 +82,17 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             this._product._id = params['id'];
 
             if (!this._product._id)
+            {
                 return;
+            }
 
             this._productsService.getProduct(this._product._id).subscribe(
                 (product: Product) =>
                 {
-                    this._product = product;
-
+                    this._product            = product;
                     this._productTitle       = this._i18nService.getMongoText(this._product.title);
                     this._productDescription = this._i18nService.getMongoText(this._product.description);
                     this._isEditMode         = true;
-
-                    this._imagesUploader.setImages(this._product.images.map(
-                        (image: OrderedImage) => new UploaderImage(<File>{}, true, image.id, image.url)));
                 });
         });
     }
@@ -110,7 +105,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onTitleChange(newTitle: any): void
     {
         this._productTitle  = newTitle;
-        this._product.title = [{'language': this._i18nService.getLocale(), 'value' : this._productTitle}];
+        this._product.title = [{language: this._i18nService.getLocale(), value: this._productTitle}];
     }
 
     /**
@@ -121,7 +116,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _onDescriptionChange(newDescription: string): void
     {
         this._productDescription  = newDescription;
-        this._product.description = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
+        this._product.description = [{language: this._i18nService.getLocale(), value: newDescription}];
     }
 
     /**
@@ -137,12 +132,16 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         if (isChecked)
         {
             if (index === -1)
+            {
                 this._product.categories.push(id);
+            }
         }
         else
         {
             if (index > -1)
+            {
                 this._product.categories.splice(index, 1);
+            }
         }
     }
 
@@ -162,7 +161,31 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _saveProduct(): void
     {
-        this._imagesUploader.upload(this._product);
+        this._uploadProgress = 0;
+        this._productsService.createProduct(this._product).subscribe(
+            (progress) =>
+            {
+                this._uploadProgress = progress;
+            },
+            (error) =>
+            {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error saving the product'),
+                    _T('Error'));
+
+                console.error(error);
+            },
+            () =>
+            {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Saved!'),
+                    _T('Information'));
+            }
+        );
     }
 
     /**
@@ -198,85 +221,39 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _updateProduct(): void
     {
-        this._imagesUploader.upload(this._product);
+        this._uploadProgress = 0;
+        this._productsService.updateProduct(this._product).subscribe(
+            (progress) =>
+            {
+                this._uploadProgress = progress;
+            },
+            (error) =>
+            {
+                this._waitModalResult = false;
+
+                this._modal.show(
+                    _T('There was an error updating the product'),
+                    _T('Error'));
+
+                console.error(error);
+            },
+            () =>
+            {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Updated!'),
+                    _T('Information'));
+            }
+        );
     }
 
     /**
      * @summary Cancels the operation
-     *
-     * @param event The modal closed event
      */
     private _onCancel(): void
     {
         this._router.navigate(['/admin/products']);
-    }
-
-    /**
-     * @summary Event Handler for when image uploading process successfully.
-     */
-    private _onImagesUploadedSuccessfully(result: any): void
-    {
-        if (!this._isEditMode)
-        {
-            this._productsService.createProduct(this._product).subscribe(
-                () =>
-                {
-                    this._waitModalResult = true;
-
-                    this._modal.show(
-                        _T('Product Saved!'),
-                        _T('Information'));
-                },
-                (error) =>
-                {
-                    this._waitModalResult = false;
-
-                    this._modal.show(
-                        _T('There was an error saving the product'),
-                        _T('Error'));
-
-                    console.error(error);
-                }
-            );
-        }
-        else
-        {
-            this._productsService.updateProduct(this._product).subscribe(
-                () =>
-                {
-                    this._waitModalResult = true;
-
-                    this._modal.show(
-                        _T('Product Updated!'),
-                        _T('Information'));
-                },
-                (error) =>
-                {
-                    this._waitModalResult = false;
-
-                    this._modal.show(
-                        _T('There was an error updating the product'),
-                        _T('Error'));
-
-                    console.error(error);
-                }
-            );
-        }
-    }
-
-    /**
-     * @summary Event Handler for when image uploading process fails.
-     */
-    private _onImagesUploadedFails(error: any): void
-    {
-        this._waitModalResult = false;
-
-        this._modal.show(
-            _T('There was an error saving the product'),
-            _T('Error'));
-
-        this._productsService.deteleProduct(this._product._id)
-            .subscribe((id) => this._product._id = id, (deleteError) => console.error(deleteError));
     }
 
     /**

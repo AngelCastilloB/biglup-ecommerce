@@ -26,6 +26,7 @@ import { Category }        from '../../common/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -62,7 +63,7 @@ export class CategoriesService extends MeteorComponent
      */
     public getCategories(): Observable<Array<Category>>
     {
-        return new Observable<Array<Category>>(func => this._categoriesStream.subscribe(func));
+        return this._categoriesStream.distinctUntilChanged();
     }
 
     /**

@@ -59,7 +59,7 @@ export class Product
         public slug:             string                = '',
         public categories:       Array<string>         = Array<string>(),
         public title:            Array<I18nString>     = Array<I18nString>(),
-        public images:           Array<OrderedImage>   = Array<OrderedImage>(),
+        public images:           Array<ProductImage>   = Array<ProductImage>(),
         public description:      Array<I18nString>     = Array<I18nString>(),
         public barcode:          string                = '',
         public sku:              string                = '',
@@ -108,21 +108,23 @@ export class ProductVariant
 }
 
 /**
- * @summary The ordered image model. This kind of images keeps track of their own position within a collection.
+ * @summary The product image model.
  */
-export class OrderedImage
+export class ProductImage
 {
     /**
-     * @summary Initialises a new instance of the OrderedImage class.
+     * @summary Initialises a new instance of the ProductImage class.
      *
-     * @param position The position of the image within the collection.
-     * @param id       The id of the image in the database.
-     * @param url      The url of the image.
+     * @param id          The id of the image in the database.
+     * @param url         The url of the image.
+     * @param isUploaded  Tells whether this image already exists on the server.
+     * @param file        The image file.
      */
     constructor(
-        public position: number = 0,
-        public id:       string = '',
-        public url:      string = '')
+        public id:         string  = '',
+        public url:        string  = '',
+        public isUploaded: boolean = false,
+        public file:       File    = null)
     {
     }
 }

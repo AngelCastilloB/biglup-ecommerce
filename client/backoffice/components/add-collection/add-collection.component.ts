@@ -55,7 +55,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     private _waitModalResult:     boolean              = false;
     private _isEditMode:          boolean              = false;
 
-     /**
+    /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */
     constructor(
@@ -79,7 +79,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
             this._category._id = params['id'];
 
             if (!this._category._id)
+            {
                 return;
+            }
 
             this._categoriesService.getCategory(this._category._id).subscribe(
                 (category: Category) =>
@@ -99,8 +101,8 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     private _onNameChange(newName: string): void
     {
-        this._categoryName = newName;
-        this._category.name = [{'language': this._i18nService.getLocale(), 'value' : this._categoryName}];
+        this._categoryName  = newName;
+        this._category.name = [{language: this._i18nService.getLocale(), value: this._categoryName}];
     }
 
     /**
@@ -111,7 +113,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     private _onDescriptionChange(newDescription: string): void
     {
         this._categoryDescription = newDescription;
-        this._category.info = [{'language': this._i18nService.getLocale(), 'value' : newDescription}];
+        this._category.info       = [{language: this._i18nService.getLocale(), value: newDescription}];
     }
 
     /**

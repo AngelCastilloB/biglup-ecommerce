@@ -21,7 +21,36 @@ import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
-import { Product, OrderedImage } from '../models';
+import { Product, ProductImage } from '../models';
+
+// INNER FUNCTIONS ****************************************************************************************************/
+
+/**
+ * @summary Removes the images that are not longer in use.
+ *
+ * @param modifiedProduct The product with the modifications.
+ * @param currentProduct  The product as it currently is in the database.
+ */
+const removeUnusedImages = (modifiedProduct: Product, currentProduct: Product) =>
+{
+    let modifiedProductIds: Array<String> = modifiedProduct.images.map(orderedImage => orderedImage.id);
+    let currentProductIds:  Array<String> = currentProduct.images.map(orderedImage => orderedImage.id);
+    let difference:         Array<String> = currentProductIds.filter(id => modifiedProductIds.indexOf(id) < 0);
+
+    for (let i: number = 0; i < difference.length; ++i)
+        Images.remove({_id: difference[i]});
+};
+
+/**
+ * @summary Removes all the images related to a product.
+ *
+ * @param images The images to be removed.
+ */
+const removeAllImages = (images: Array<ProductImage>) =>
+{
+    for (let i: number = 0; i < images.length; ++i)
+        Images.remove({_id: images[i].id});
+};
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -165,32 +194,3 @@ Meteor.methods({
         Products.update({}, {$pull: {categoryId: id}});
     }
 });
-
-// INNER FUNCTIONS ****************************************************************************************************/
-
-/**
- * @summary Removes the images that are not longer in use.
- *
- * @param modifiedProduct The product with the modifications.
- * @param currentProduct  The product as it currently is in the database.
- */
-function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
-{
-    let modifiedProductIds: Array<String> = modifiedProduct.images.map(orderedImage => orderedImage.id);
-    let currentProductIds:  Array<String> = currentProduct.images.map(orderedImage => orderedImage.id);
-    let difference:         Array<String> = currentProductIds.filter(id => modifiedProductIds.indexOf(id) < 0);
-
-    for (let i: number = 0; i < difference.length; ++i)
-        Images.remove({_id: difference[i]});
-}
-
-/**
- * @summary Removes all the images related to a product.
- *
- * @param images The images to be removed.
- */
-function removeAllImages(images: Array<OrderedImage>)
-{
-    for (let i: number = 0; i < images.length; ++i)
-        Images.remove({_id: images[i].id});
-}
