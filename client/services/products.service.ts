@@ -27,6 +27,26 @@ import { ImagesService }         from './images.service';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+// INTERNALS **********************************************************************************************************/
+
+/**
+ * @summary Performs a deep clone of the product model.
+ *
+ * @return The cloned instance.
+ */
+function cloneProduct(product: Product): Product
+{
+    let clone = JSON.parse(JSON.stringify(product));
+
+    // Fix the dates.
+    clone.createdAt   = new Date(clone.createdAt);
+    clone.updatedAt   = new Date(clone.createdAt);
+    clone.publishedAt = new Date(clone.createdAt);
+
+    return <Product>clone;
+}
 
 // EXPORTS ************************************************************************************************************/
 
@@ -51,10 +71,6 @@ export class ProductsService extends MeteorComponent
             this.autorun(() =>
             {
                 this._products = Products.find().fetch();
-
-                this._products.forEach((product: Product) =>
-                    product.images.sort((lhs, rhs) => lhs.position - rhs.position), this);
-
                 this._productsStream.next(this._products);
             });
         });
@@ -67,7 +83,7 @@ export class ProductsService extends MeteorComponent
      */
     public getProducts(): Observable<Array<Product>>
     {
-        return new Observable<Array<Product>>(func => this._productsStream.subscribe(func));
+        return this._productsStream.distinctUntilChanged();
     }
 
     /**
@@ -79,9 +95,9 @@ export class ProductsService extends MeteorComponent
      */
     public getCategoryProducts(categoryId: string): Observable<Array<Product>>
     {
-        return new Observable<Array<Product>>(func => this._productsStream
-            .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)))
-            .subscribe(func));
+        return this._productsStream
+           .distinctUntilChanged()
+           .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)));
     }
 
     /**
@@ -117,20 +133,28 @@ export class ProductsService extends MeteorComponent
      */
     public createProduct(product: Product): Observable<string>
     {
-        return Observable.create(observer => {
-            this.call('products.createProduct', product, (error, result) =>
-            {
-                if (error)
+        return Observable
+            .from(product.images)
+            .flatMap(image => this._imagesService.createProductImage(image))
+            .concat(Observable.create(observer => {
+
+                let clone: Product = cloneProduct(product);
+
+                clone.images.forEach(image => delete image['file'], this);
+
+                this.call('products.createProduct', clone, (error, result) =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
-            });
-        });
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
+            }));
     }
 
     /**
@@ -140,26 +164,28 @@ export class ProductsService extends MeteorComponent
      */
     public updateProduct(product: Product): Observable<string>
     {
-        let uploadImages: Observable<ProductImage> = product.images.reduce(
-            (stream: Observable, image: ProductImage) =>
-            {
-                stream.concat(this._imagesService.createProductImage(image));
-            }, Observable.create(observer => observer.complete()));
+        return Observable
+            .from(product.images)
+            .flatMap(image => this._imagesService.createProductImage(image))
+            .concat(Observable.create(observer => {
 
-        return uploadImages.concat(Observable.create(observer => {
-            this.call('products.updateProduct', product, (error, result) =>
-            {
-                if (error)
+                let clone: Product = cloneProduct(product);
+
+                clone.images.forEach(image => delete image['file'], this);
+
+                this.call('products.updateProduct', clone, (error, result) =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
-            });
-        }));
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
+            }));
     }
 
     /**

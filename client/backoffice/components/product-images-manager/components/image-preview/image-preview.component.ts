@@ -29,7 +29,7 @@ import { Component,
          AfterViewInit}          from '@angular/core';
 import { MeteorComponent }       from 'angular2-meteor';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
-import { UploaderImage }         from '../../internals/product-image';
+import { ProductImage }          from '../../../../../../common/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -48,9 +48,9 @@ import template from './image-preview.component.html';
 export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit
 {
     @Input('model')
-    private _model:        UploaderImage;
+    private _model:        ProductImage;
     @Output('onDeleted')
-    private _onDeleted:    EventEmitter<UploaderImage> = new EventEmitter<UploaderImage>();
+    private _onDeleted:    EventEmitter<ProductImage> = new EventEmitter<ProductImage>();
     @ViewChild(ImageDisplayComponent)
     private _imageDisplay: ImageDisplayComponent;
 
@@ -70,20 +70,27 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
         let thumbnail = this.element.nativeElement.querySelector('.image-responsive');
         let reader    = new FileReader();
 
-        if (this._model.isUploaded)
+        const { url, file, isUploaded } = this._model;
+
+        if (isUploaded)
         {
-            thumbnail.src = this._model.remoteUrl;
+            thumbnail.src = url;
 
             return;
+        }
+
+        if (!file)
+        {
+            throw new Meteor.Error(
+                'image-display.component.setImage',
+                'The image is marked is *not* uploaded, but the field file is empty.');
         }
 
         reader.onload = (event: ProgressEvent) =>
         {
             if (event.type === 'load')
             {
-                let src = event.target.result;
-
-                thumbnail.src = src;
+                thumbnail.src = event.target.result;
             }
             else if (event.type === 'error')
             {
@@ -91,7 +98,7 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
             }
         };
 
-        reader.readAsDataURL(this._model.file);
+        reader.readAsDataURL(file);
     }
 
     /**
@@ -105,9 +112,9 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
     /**
      * @summary Gets the on deleted event emitter.
      *
-     * @returns {EventEmitter<UploaderImage>} The on deleted event emitter.
+     * @returns {EventEmitter<ProductImage>} The on deleted event emitter.
      */
-    public getOnDeleteEmitter(): EventEmitter<UploaderImage>
+    public getOnDeleteEmitter(): EventEmitter<ProductImage>
     {
         return this._onDeleted;
     }

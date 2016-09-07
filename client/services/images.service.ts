@@ -28,6 +28,7 @@ import { UploadFS }            from 'meteor/jalik:ufs';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -65,7 +66,7 @@ export class ImagesService extends MeteorComponent
      */
     public getImages(): Observable<Array<Image>>
     {
-        return new Observable<Array<Image>>(func => this._imagesStream.subscribe(func));
+        return this._imagesStream.distinctUntilChanged();
     }
 
     /**
@@ -104,13 +105,7 @@ export class ImagesService extends MeteorComponent
     public createProductImage(image: ProductImage): Observable<ProductImage>
     {
         if (image.isUploaded)
-        {
-            return Observable.create(observer =>
-            {
-                observer.next(image);
-                observer.complete();
-            });
-        }
+            return Observable.of(image);
 
         if (!image.file)
         {

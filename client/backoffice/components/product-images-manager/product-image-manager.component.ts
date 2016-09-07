@@ -22,7 +22,8 @@ import 'reflect-metadata';
 import { Component,
          ViewChild,
          ElementRef,
-         Renderer }       from '@angular/core';
+         Renderer,
+         Input }          from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { ProductImage }   from '../../../../common/models';
 
@@ -44,15 +45,16 @@ const NUMBER_OF_COLUMNS = 5;
     template,
     styleUrls: ['./product-image-manager.component.css']
 })
-export class ProductImageManager
+export class ProductImageManagerComponent
 {
     @ViewChild('drop')
     private _dropzone:     ElementRef;
+    @Input('model')
     private _previewFiles: Array<ProductImage> = [];
     private _rows:         number              = 0;
 
     /**
-     * @summary Initializes a new instance of the ProductImageManager class.
+     * @summary Initializes a new instance of the ProductImageManagerComponent class.
      *
      * @param {Renderer}         _renderer       The angular element renderer.
      * @param { DragulaService } _dragulaService The dragula service.
@@ -80,26 +82,6 @@ export class ProductImageManager
                 this._moveFile(sourceIndex, sourceIndex > destinationIndex ? destinationIndex : destinationIndex - 1);
             }
         });
-    }
-
-    /**
-     * @summary Sets a lis of images to this component.
-     *
-     * @param images The images to be set.
-     */
-    public setImages(images: Array<ProductImage>)
-    {
-        this._previewFiles = images;
-    }
-
-    /**
-     * @summary Gets all the images from this component.
-     *
-     * @return the list of images.
-     */
-    public getImages(): Array<ProductImage>
-    {
-        return this._previewFiles;
     }
 
     /**

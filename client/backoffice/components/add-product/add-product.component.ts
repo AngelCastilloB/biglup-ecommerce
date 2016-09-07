@@ -24,7 +24,6 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
-import { ProductImageManager }      from '../product-images-manager/product-image-manager.component';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent }           from '../modal/modal.component';
 import { ProductsService }          from '../../../services/products.service.ts';
@@ -53,8 +52,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _product:            Product              = new Product();
     private _productTitle:       string               = '';
     private _productDescription: string               = '';
-    @ViewChild('imagesManager')
-    private _imagesManager:      ProductImageManager;
     @ViewChild(ModalComponent)
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
@@ -90,12 +87,9 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                 (product: Product) =>
                 {
                     this._product = product;
-
                     this._productTitle       = this._i18nService.getMongoText(this._product.title);
                     this._productDescription = this._i18nService.getMongoText(this._product.description);
                     this._isEditMode         = true;
-
-                    this._imagesManager.setImages(this._product.images);
                 });
         });
     }
@@ -160,8 +154,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _saveProduct(): void
     {
-        this._product.images = this._imagesManager.getImages();
-
         this._productsService.createProduct(this._product).subscribe(
             () =>
             {
@@ -180,10 +172,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                     _T('Error'));
 
                 console.error(error);
-
-                /*
-                 this._productsService.deteleProduct(this._product._id)
-                 .subscribe((id) => this._product._id = id, (deleteError) => console.error(deleteError)); */
             }
         );
     }
@@ -221,8 +209,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _updateProduct(): void
     {
-        this._product.images = this._imagesManager.getImages();
-
         this._productsService.updateProduct(this._product).subscribe(
             () =>
             {
@@ -241,9 +227,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                     _T('Error'));
 
                 console.error(error);
-                /*
-                this._productsService.deteleProduct(this._product._id)
-                    .subscribe((id) => this._product._id = id, (deleteError) => console.error(deleteError)); */
             }
         );
     }
