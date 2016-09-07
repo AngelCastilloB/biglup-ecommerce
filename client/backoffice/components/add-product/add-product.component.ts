@@ -246,8 +246,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
     /**
      * @summary Cancels the operation
-     *
-     * @param event The modal closed event
      */
     private _onCancel(): void
     {

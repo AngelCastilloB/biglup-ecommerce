@@ -17,13 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }            from '@angular/core';
-import { Products }              from '../../common/collections/product.collection';
-import { BehaviorSubject }       from 'rxjs/BehaviorSubject';
-import { Observable }            from 'rxjs/Observable';
-import { MeteorComponent }       from 'angular2-meteor';
-import { Product, ProductImage } from '../../common/models';
-import { ImagesService }         from './images.service';
+import { Injectable }       from '@angular/core';
+import { Products }         from '../../common/collections/product.collection';
+import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+import { Observable }       from 'rxjs/Observable';
+import { MeteorComponent }  from 'angular2-meteor';
+import { Product }          from '../../common/models';
+import { ImagesService }    from './images.service';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -36,7 +36,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
  *
  * @return The cloned instance.
  */
-function cloneProduct(product: Product): Product
+const cloneProduct = (product: Product) =>
 {
     let clone: any = JSON.parse(JSON.stringify(product));
 
@@ -46,7 +46,7 @@ function cloneProduct(product: Product): Product
     clone.publishedAt = new Date(clone.publishedAt.toString());
 
     return <Product>clone;
-}
+};
 
 // EXPORTS ************************************************************************************************************/
 
@@ -96,8 +96,8 @@ export class ProductsService extends MeteorComponent
     public getCategoryProducts(categoryId: string): Observable<Array<Product>>
     {
         return this._productsStream
-           .distinctUntilChanged()
-           .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)));
+            .distinctUntilChanged()
+            .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)));
     }
 
     /**
@@ -135,7 +135,7 @@ export class ProductsService extends MeteorComponent
      */
     public createProduct(product: Product): Observable<number>
     {
-        const totalProgress: number   = product.images.length * 100;
+        const totalProgress:   number = product.images.length * 100;
         let   currentProgress: number = 0;
 
         return Observable
