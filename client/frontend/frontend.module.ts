@@ -40,9 +40,6 @@ import { ProductsService }                from '../services/products.service';
 import { IdGeneratorService }             from '../services/id-generator.service.ts';
 import { ValidationService }              from '../services/validation.service';
 import { UserAuthService }                from '../services/user-auth.service';
-import { MdToolbarModule } from '@angular2-material/toolbar';
-import { MdButtonModule } from '@angular2-material/button';
-import { MdCardModule } from '@angular2-material/card';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -74,10 +71,7 @@ import { MdCardModule } from '@angular2-material/card';
     ],
     imports: [
         SharedModule,
-        FrontendRoutesModule,
-        MdToolbarModule,
-        MdButtonModule,
-        MdCardModule
+        FrontendRoutesModule
     ],
     providers: [
         CategoriesService,

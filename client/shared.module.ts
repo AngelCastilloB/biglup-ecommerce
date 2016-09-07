@@ -23,14 +23,16 @@ import { MongoTranslatePipe }               from './pipes/mongo-translate.pipe';
 import { TruncateStringPipe }               from './pipes/truncate-string.pipe';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2MaterialModule }                from './ng2-material.module';
 
 // EXPORTS ************************************************************************************************************/
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule, // TODO hunt down the component using template driven form
+        FormsModule,
         ReactiveFormsModule,
+        Ng2MaterialModule
     ],
     declarations: [
         TranslatePipe,
@@ -43,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommonModule,
         TranslatePipe,
         MongoTranslatePipe,
-        TruncateStringPipe
+        TruncateStringPipe,
+        Ng2MaterialModule
     ]
 })
 export class SharedModule
