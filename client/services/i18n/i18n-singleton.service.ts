@@ -41,7 +41,7 @@ let g_showWarning = true;
  *
  * This function should be used over getText. Since the _T() is used to locate translatable string in the code.
  */
-export function _T(key: string): string
+export const _T = (key: string): string =>
 {
     let result = '';
 
@@ -52,7 +52,7 @@ export function _T(key: string): string
     g_showWarning = true;
 
     return result;
-}
+};
 
 // EXPORTS ************************************************************************************************************/
 
@@ -83,7 +83,9 @@ export class I18nSingletonService
     constructor()
     {
         if (I18nSingletonService._instance)
+        {
             throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
+        }
 
         // Add supported languages
         this._translations['en'] = this.loadTranslations(require('./translations/en.json')); // english
@@ -104,7 +106,9 @@ export class I18nSingletonService
     public getText(key: string): string
     {
         if (g_showWarning)
+        {
             console.warn('Please do not call I18nSingletonService\'s getText() method directly. Use the _T() function instead');
+        }
 
         if (!(key in this._translations[this._currentLocale]))
         {
@@ -126,17 +130,23 @@ export class I18nSingletonService
     public getMongoText(i18nStrings: I18nString[]): string
     {
         if (!i18nStrings)
+        {
             return '';
+        }
 
         let currentLocaleString: string = this._getLocaleString(i18nStrings, this._currentLocale);
 
         if (currentLocaleString)
+        {
             return currentLocaleString;
+        }
 
         let defaultLocaleString: string = this._getLocaleString(i18nStrings, DEFAULT_LOCALE);
 
         if (defaultLocaleString)
+        {
             return defaultLocaleString;
+        }
 
         return '';
     }
@@ -159,10 +169,14 @@ export class I18nSingletonService
     public setLocale(locale: string): void
     {
         if (locale === this._currentLocale)
+        {
             return;
+        }
 
         if (!(locale in this._translations))
+        {
             console.error(`Locale ${locale} not supported.`);
+        }
 
         this._currentLocale = locale;
         this._localeChanged.emit(locale);
@@ -222,7 +236,9 @@ export class I18nSingletonService
         let found: I18nString = i18nStrings.find((i18nString: I18nString) => i18nString.language === locale);
 
         if (found)
+        {
             value = found.value;
+        }
 
         return value;
     }

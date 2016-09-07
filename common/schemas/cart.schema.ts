@@ -15,6 +15,9 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// We need the correct scope of this inside the schemas.
+// tslint:disable:only-arrow-functions
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';

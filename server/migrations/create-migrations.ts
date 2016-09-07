@@ -27,12 +27,33 @@ import { Images }                   from '../../common/collections/image.collect
 import { ContentGeneratorFactory }  from '../../common/helpers/generator/content-generator-factory';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 
+// FUNCTIONS **********************************************************************************************************/
+
+/**
+ * @summary creates all the content generators according to the meteor.json file settings.
+ *
+ * @returns {AbstractContentGenerator[]} all the created content generators.
+ */
+const createGenerators = (): AbstractContentGenerator[] =>
+{
+    ContentGeneratorFactory.init();
+
+    const data = [];
+
+    Meteor.settings['migrations']['locales'].forEach((locale: string) =>
+    {
+        data.push(ContentGeneratorFactory.create(locale));
+    });
+
+    return data;
+};
+
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary Adds the different migrations into the Migration library to be executed in main.
  */
-export function createMigrations()
+export const createMigrations = () =>
 {
     let generators: AbstractContentGenerator[] = createGenerators();
 
@@ -59,23 +80,4 @@ export function createMigrations()
             migrations.forEach((migration: IMigratable) => migration.down());
         }
     });
-}
-
-/**
- * @summary creates all the content generators according to the meteor.json file settings.
- *
- * @returns {AbstractContentGenerator[]} all the created content generators.
- */
-function createGenerators(): AbstractContentGenerator[]
-{
-    ContentGeneratorFactory.init();
-
-    const data = [];
-
-    Meteor.settings['migrations']['locales'].forEach((locale: string) =>
-    {
-        data.push(ContentGeneratorFactory.create(locale));
-    });
-
-    return data;
-}
+};

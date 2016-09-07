@@ -54,7 +54,7 @@ const TWITTER_SETTINGS  = {
  *
  * The Meteor.settings.public['something'] is accessible only to the client side.
  */
-export function checkMeteorSettings()
+export const checkMeteorSettings = () =>
 {
     if (!Meteor.settings['user'])
     {
@@ -95,4 +95,4 @@ export function checkMeteorSettings()
     {
         Meteor.settings.public.twitter = true;
     }
-}
+};

@@ -78,12 +78,16 @@ export class BreadcrumbComponent
     {
         // HACK: Remove base url. This is a temporary hack.
         if (url === '/admin' || url === '/admin/dashboard')
+        {
             return;
+        }
 
         this._urls.unshift(url);
 
         if (url.lastIndexOf('/') > 0)
+        {
             this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/')));
+        }
     }
 
     /**
@@ -93,10 +97,7 @@ export class BreadcrumbComponent
      */
     public getCurrentPosition(url: string): string
     {
-        let positions = url.split('/').filter(function (n)
-        {
-            return n !== '';
-        });
+        let positions = url.split('/').filter(n => n !== '');
 
         // HACK: remove the base route for the admin panel.
         if (positions[0] === 'admin')
