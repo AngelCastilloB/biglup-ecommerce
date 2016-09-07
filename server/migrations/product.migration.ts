@@ -67,8 +67,6 @@ export class ProductMigration extends AbstractMigration
         private _categoriesCollection: Mongo.Collection<Category>)
     {
         super(collection, generators);
-
-        this._categories = this._categoriesCollection.find({}).fetch();
     }
 
     /**
@@ -79,9 +77,19 @@ export class ProductMigration extends AbstractMigration
     public up(): void
     {
         console.log('Starting Default Products.');
+
+        this.fetchCategories();
         this._generateProducts();
 
         this._products.forEach(product => this._collection.insert(product));
+    }
+
+    /**
+     * @summary Gets the existing categories non reactively.
+     */
+    private fetchCategories()
+    {
+        this._categories = this._categoriesCollection.find({}, {reactive: false}).fetch();
     }
 
     /**
@@ -115,12 +123,12 @@ export class ProductMigration extends AbstractMigration
      */
     private _createPartialProduct(): Product
     {
-        const generator        = this._generators[0];
+        const generator        = this._getGenerator();
         const product: Product = new Product();
 
         product.categories       = this._getRandomCategoryIds();
-        product.sku              = generator.getWords(1).toLowerCase() + generator.getRandomNumber(10000);
-        product.barcode          = generator.getWords(1).replace(' ', '=').concat('.').toLowerCase();
+        product.sku              = generator.getWords(1).toLowerCase() + '-' + generator.getRandomNumber(10000);
+        product.barcode          = generator.getWords(2).replace(' ', '=').concat('.').toLowerCase();
         product.price            = generator.getRandomNumber(10000);
         product.discount         = generator.getRandomNumber();
         product.hashtags         = generator.getWordsArray(3);
@@ -150,16 +158,33 @@ export class ProductMigration extends AbstractMigration
             return results;
         }
 
-        const array  = this._categories.slice(0);
-        const amount = array.length < 5 ? array.length : (Math.floor(Math.random() * 5) || 1);
+        const array       = this._categories.slice(0);
+        const probability = 4 / array.length;
+        let amount        = array.length < 5 ? array.length : (Math.floor(Math.random() * 5) || 1);
 
-        for (let i = 0; i < amount; i++)
+        return array.filter(category =>
         {
-            const set = array.splice(Math.floor(Math.random() * array.length), 1)[0];
+            if (amount > 0 && Math.random() > probability)
+            {
+                amount--;
 
-            results.push(set);
-        }
+                return category;
+            }
+        }).map(category => category._id);
+    }
 
-        return results.map(category => category._id);
+    /**
+     * @summary Tries to get the 'en' generator, if it fails, returns the first one.
+     *
+     * @param {string} locale The default locale to return, defaults to english locale generator.
+     *
+     * @returns {AbstractContentGenerator}
+     * @private
+     */
+    private _getGenerator(locale = 'en'): AbstractContentGenerator
+    {
+        const generator = this._generators.find(gen => gen.getLocale() === locale);
+
+        return generator || this._generators[0];
     }
 }
