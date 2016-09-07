@@ -1,31 +1,22 @@
-<nav class="navbar navbar-dark bg-primary">
-  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx2">
-    <i class="fa fa-bars"></i>
-  </button>
+<md-toolbar class="header-margin">
+  <a [routerLink]="['/']">{{'E-commerce' | translate}}</a>
 
-  <div class="container">
-    <div class="collapse navbar-toggleable-xs" id="collapseEx2">
-      <a class="navbar-brand pull-left" [routerLink]="['/']">{{'Ecommerce' | translate}}</a>
-      <ul class="nav navbar-nav">
-        <li class="nav-item" *ngFor="let category of _categoriesService.getCategories() | async">
-          <a class="nav-link" [routerLink]="['/category', category._id]">{{category.name | mongoTranslate}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin']">{{'Administration' | translate}}</a>
-        </li>
-      </ul>
-      <div class="pull-right">
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a (click)="languageChanged('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
-            <a (click)="languageChanged('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/login']" *ngIf="!_isLogged">{{'Login' | translate}}</a>
-            <a class="nav-link" (click)="_logout()" *ngIf="_isLogged">{{'Logout' | translate}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+  <span *ngFor="let category of _categoriesService.getCategories() | async">
+    <a class="nav-link" [routerLink]="['/category', category._id]">{{category.name | mongoTranslate}}</a>
+  </span>
+
+  <span class="fill-space"></span>
+
+  <span>
+    <a class="nav-link" [routerLink]="['/admin']">{{'Administration' | translate}}</a>
+  </span>
+
+  <span>
+    <a (click)="_changeLanguage('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
+    <a (click)="_changeLanguage('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
+  </span>
+  <span class="auth-links">
+    <a class="nav-link" [routerLink]="['/login']" *ngIf="!_isLogged">{{'Login' | translate}}</a>
+    <a class="nav-link" (click)="_logout()" *ngIf="_isLogged">{{'Logout' | translate}}</a>
+  </span>
+</md-toolbar>

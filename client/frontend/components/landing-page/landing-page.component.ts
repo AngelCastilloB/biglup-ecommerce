@@ -33,7 +33,17 @@ import template from './landing-page.component.html';
  */
 @Component({
     selector: 'landing-page',
-    template
+    template,
+    styles: [`
+        .app-content 
+        {
+            padding: 20px;
+        }
+        .app-content md-card 
+        {
+            margin: 20px;
+        }`
+    ]
 })
 export class LandingPageComponent extends MeteorComponent
 {
