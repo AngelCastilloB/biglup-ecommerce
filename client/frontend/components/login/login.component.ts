@@ -71,8 +71,8 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {UserAuthService} _userAuthService The user authentication service.
      */
     constructor(private _formBuilder: FormBuilder,
-        private _router: Router,
-        private _userAuthService: UserAuthService)
+                private _router: Router,
+                private _userAuthService: UserAuthService)
     {
         super();
     }
@@ -83,7 +83,7 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     public ngOnInit()
     {
         this._loginForm = this._formBuilder.group({
-            email:    ['', Validators.compose([Validators.required, ValidationService.email])],
+            email: ['', Validators.compose([Validators.required, ValidationService.email])],
             password: ['', Validators.required]
         });
     }
@@ -94,7 +94,9 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
     public ngOnDestroy()
     {
         if (this._loginSubscription)
+        {
             this._loginSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -108,7 +110,9 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
         event.preventDefault();
 
         if (!this._loginForm.valid)
+        {
             return;
+        }
 
         const email    = this._loginForm.value.email;
         const password = this._loginForm.value.password;
@@ -116,7 +120,9 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
         this._userAuthService.login(email, password, err =>
         {
             if (err)
+            {
                 return this._processError(err);
+            }
 
             this._router.navigate(['/']);
         });

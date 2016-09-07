@@ -15,9 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// We need the correct scope of this inside the schemas.
-// tslint:disable:only-arrow-functions
-
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
@@ -68,14 +65,12 @@ export let CartItemSchema: any = new SimpleSchema(
  */
 export let CartSchema: any = new SimpleSchema(
 {
-    _id:
-    {
+    _id: {
         type: String
     },
-    userId:
-    {
+    userId: {
         type: String,
-        autoValue: function ()
+        autoValue()
         {
             if (this.isInsert)
             {
@@ -88,19 +83,17 @@ export let CartSchema: any = new SimpleSchema(
         },
         optional: true
     },
-    items:
-    {
+    items: {
         type: [CartItemSchema],
         optional: true
     },
-    updatedAt:
-    {
+    updatedAt: {
         type: Date,
-        autoValue: function ()
+        autoValue()
         {
             if (this.isUpdate || this.isUpsert)
             {
-                return new Date;
+                return new Date();
             }
         },
         optional: true

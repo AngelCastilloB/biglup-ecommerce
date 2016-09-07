@@ -47,4 +47,3 @@ Accounts.emailTemplates.resetPassword.text = (user: Meteor.User, url: string) =>
     // KNOWN ISSUE: url;token=[3D]value instead of url;token=value
     return statement;
 };
-

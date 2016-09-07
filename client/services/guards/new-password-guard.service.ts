@@ -41,4 +41,3 @@ export class NewPasswordGuardService implements CanActivate
         return route.params['token'] ? true : false;
     }
 }
-

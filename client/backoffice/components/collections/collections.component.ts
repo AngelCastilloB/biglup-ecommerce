@@ -28,7 +28,6 @@ import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.serv
 // noinspection TypeScriptCheckImport
 import template from './collections.component.html';
 
-
 // EXPORTS ************************************************************************************************************/
 
 /**

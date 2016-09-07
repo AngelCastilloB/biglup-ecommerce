@@ -63,4 +63,3 @@ const ROUTES: Routes = [
  * @type {ModuleWithProviders}
  */
 export const FrontendRoutesModule = RouterModule.forChild(ROUTES);
-
