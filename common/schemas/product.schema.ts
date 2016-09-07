@@ -23,9 +23,9 @@ import { I18nStringSchema } from './i18n-string.schema';
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @brief Image order schema.
+ * @brief product image schema.
  */
-export let OrderedImageSchema: any = new SimpleSchema(
+export let ProductImageSchema: any = new SimpleSchema(
 {
     position:
     {
@@ -42,6 +42,11 @@ export let OrderedImageSchema: any = new SimpleSchema(
     {
        label: 'The url of the image',
        type: String
+    },
+    isUploaded:
+    {
+        label: 'The image upload flag.',
+        type: Boolean
     }
 });
 
@@ -103,7 +108,7 @@ export let ProductSchema: any = new SimpleSchema({
     },
     images:
     {
-        type: [OrderedImageSchema],
+        type: [ProductImageSchema],
         optional: true
     },
     slug:

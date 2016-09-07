@@ -21,7 +21,7 @@ import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
-import { Product, OrderedImage } from '../models';
+import { Product, ProductImage } from '../models';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -174,7 +174,7 @@ Meteor.methods({
  * @param modifiedProduct The product with the modifications.
  * @param currentProduct  The product as it currently is in the database.
  */
-function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
+const removeUnusedImages = (modifiedProduct: Product, currentProduct: Product) =>
 {
     let modifiedProductIds: Array<String> = modifiedProduct.images.map(orderedImage => orderedImage.id);
     let currentProductIds:  Array<String> = currentProduct.images.map(orderedImage => orderedImage.id);
@@ -182,15 +182,15 @@ function removeUnusedImages(modifiedProduct: Product, currentProduct: Product)
 
     for (let i: number = 0; i < difference.length; ++i)
         Images.remove({_id: difference[i]});
-}
+};
 
 /**
  * @summary Removes all the images related to a product.
  *
  * @param images The images to be removed.
  */
-function removeAllImages(images: Array<OrderedImage>)
+const removeAllImages = (images: Array<ProductImage>) =>
 {
     for (let i: number = 0; i < images.length; ++i)
         Images.remove({_id: images[i].id});
-}
+};

@@ -27,7 +27,7 @@ import { Component,
          AfterViewInit}       from '@angular/core';
 import { MeteorComponent }    from 'angular2-meteor';
 import { IdGeneratorService } from '../../../../../services/id-generator.service.ts';
-import { UploaderImage }      from '../../internals/product-image';
+import { ProductImage }       from '../../../../../../common/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -46,7 +46,7 @@ import template from './image-display.component.html';
 export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit
 {
     @Input('model')
-    private _model:    UploaderImage;
+    private _model:    ProductImage;
     private _uniqueId: string;
     @ViewChild('display')
     private _display:  ElementRef;
@@ -89,27 +89,34 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
     /**
      * @summary Sets the image to be displayed
      */
-    public setImage(imageFile: UploaderImage)
+    public setImage(imageFile: ProductImage)
     {
         this._model = imageFile;
 
         let image  = this.element.nativeElement.querySelector('.image-display');
         let reader = new FileReader();
 
-        if (this._model.isUploaded)
+        const { url, file, isUploaded } = this._model;
+
+        if (isUploaded)
         {
-            image.src = this._model.remoteUrl;
+            image.src = url;
 
             return;
+        }
+
+        if (!file)
+        {
+            throw new Meteor.Error(
+                'image-display.component.setImage',
+                'The image is marked is *not* uploaded, but the field file is empty.');
         }
 
         reader.onload = (event: ProgressEvent) =>
         {
             if (event.type === 'load')
             {
-                let src = event.target.result;
-
-                image.src = src;
+                image.src = event.target.result;
             }
             else if (event.type === 'error')
             {
@@ -117,6 +124,6 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
             }
         };
 
-        reader.readAsDataURL(this._model.file);
+        reader.readAsDataURL(file);
     }
 }

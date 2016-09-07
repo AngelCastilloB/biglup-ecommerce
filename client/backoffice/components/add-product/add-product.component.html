@@ -22,7 +22,7 @@
               </div>
             </div>
 
-            <images-uploader #imagesUploader (onSuccess)="_onImagesUploadedSuccessfully($event)" (onError)="_onImagesUploadedFails($event)"></images-uploader>
+            <product-image-manager #imagesManager [(model)]="_product.images"></product-image-manager>
 
             <div class="card">
               <ul class="list-group list-group-flush">
@@ -32,7 +32,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         {{ 'Price' | translate }}
-                        <input type="number" id="price"  [(ngModel)]="_product.price" name="price" class="form-control">
+                        <input type="number" id="price" [(ngModel)]="_product.price" name="price" class="form-control">
                       </div>
                       <div class="col-md-6">
                         {{ 'Discount' | translate }}

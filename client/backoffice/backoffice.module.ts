@@ -19,32 +19,33 @@
 
 import 'reflect-metadata';
 
-import { NgModule }                from '@angular/core';
-import { SharedModule }            from '../shared.module';
-import { BackofficeRoutesModule }  from './backoffice.routes';
-import { BackofficeComponent }     from './backoffice.component';
-import { SidebarComponent }        from './components/sidebar/sidebar.component';
-import { BreadcrumbComponent }     from './components/breadcrumbs/breadcrumbs.component';
-import { AddCollectionComponent }  from './components/add-collection/add-collection.component';
-import { AddProductComponent }     from './components/add-product/add-product.component';
-import { CollectionsComponent }    from './components/collections/collections.component';
-import { CustomersComponent }      from './components/customers/customers.component';
-import { DashboardComponent }      from './components/dashboard/dashboard.component';
-import { ModalComponent }          from './components/modal/modal.component';
-import { OrdersComponent }         from './components/orders/orders.component';
-import { ProductsComponent }       from './components/products/products.component';
-import { ImagesUploaderComponent } from './components/images-uploader/images-uploader.component';
-import { ReportsComponent }        from './components/reports/reports.component';
-import { CategoriesService }       from '../services/categories.service';
-import { ProductsService }         from '../services/products.service';
-import { IdGeneratorService }      from '../services/id-generator.service.ts';
-import { ImageDisplayComponent }   from './components/images-uploader/components/image-display/image-display.component';
-import { ImagePreviewComponent }   from './components/images-uploader/components/image-preview/image-preview.component';
-import { DragulaService, Dragula } from 'ng2-dragula/ng2-dragula';
-import { FileDropDirective }       from './components/images-uploader/directives/file-drop.directive';
-import { FileSelectDirective }     from './components/images-uploader/directives/file-select.directive';
-import { TextEditorComponent }     from './components/text-editor/text-editor.component';
-import { ColorPickerComponent }    from './components/text-editor/components/color-picker.component'
+import { NgModule }                     from '@angular/core';
+import { SharedModule }                 from '../shared.module';
+import { BackofficeRoutesModule }       from './backoffice.routes';
+import { BackofficeComponent }          from './backoffice.component';
+import { SidebarComponent }             from './components/sidebar/sidebar.component';
+import { BreadcrumbComponent }          from './components/breadcrumbs/breadcrumbs.component';
+import { AddCollectionComponent }       from './components/add-collection/add-collection.component';
+import { AddProductComponent }          from './components/add-product/add-product.component';
+import { CollectionsComponent }         from './components/collections/collections.component';
+import { CustomersComponent }           from './components/customers/customers.component';
+import { DashboardComponent }           from './components/dashboard/dashboard.component';
+import { ModalComponent }               from './components/modal/modal.component';
+import { OrdersComponent }              from './components/orders/orders.component';
+import { ProductsComponent }            from './components/products/products.component';
+import { ProductImageManagerComponent } from './components/product-images-manager/product-image-manager.component';
+import { ReportsComponent }             from './components/reports/reports.component';
+import { CategoriesService }            from '../services/categories.service';
+import { ProductsService }              from '../services/products.service';
+import { IdGeneratorService }           from '../services/id-generator.service.ts';
+import { ImageDisplayComponent }        from './components/product-images-manager/components/image-display/image-display.component';
+import { ImagePreviewComponent }        from './components/product-images-manager/components/image-preview/image-preview.component';
+import { DragulaService, Dragula }      from 'ng2-dragula/ng2-dragula';
+import { FileDropDirective }            from './components/product-images-manager/directives/file-drop.directive';
+import { FileSelectDirective }          from './components/product-images-manager/directives/file-select.directive';
+import { TextEditorComponent }          from './components/text-editor/text-editor.component';
+import { ColorPickerComponent }         from './components/text-editor/components/color-picker.component'
+import { ImagesService }                from './../services/images.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -53,7 +54,7 @@ import { ColorPickerComponent }    from './components/text-editor/components/col
         BackofficeComponent,
 
         // TODO: refactor into child feature modules
-        // helpers?
+        // Common
         SidebarComponent,
         BreadcrumbComponent,
         DashboardComponent,
@@ -75,8 +76,8 @@ import { ColorPickerComponent }    from './components/text-editor/components/col
         // orders
         OrdersComponent,
 
-        // images uploader
-        ImagesUploaderComponent,
+        // images manager
+        ProductImageManagerComponent,
         ImageDisplayComponent,
         ImagePreviewComponent,
         FileDropDirective,
@@ -93,6 +94,7 @@ import { ColorPickerComponent }    from './components/text-editor/components/col
     providers: [
         CategoriesService,
         ProductsService,
+        ImagesService,
         IdGeneratorService,
         DragulaService
     ]
