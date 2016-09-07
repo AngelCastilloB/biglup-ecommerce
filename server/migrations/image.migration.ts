@@ -115,13 +115,10 @@ export class ImageMigration extends AbstractMigration
             this._createImage(i.toString(), (error, image) =>
             {
                 if (error)
-                {
                     throw error;
-                }
 
                 this._collections.products.update({_id: product._id}, {
-                    $push: {
-                        images: {position: i - 1, id: image._id, url: image.url}
+                    $push: { images: {id: image._id, url: image.url, isUploaded: true}
                     }
                 });
             });
