@@ -23,7 +23,9 @@ import { Component,
          ViewChild,
          ElementRef,
          Renderer,
-         Input }          from '@angular/core';
+         Input,
+         Output,
+         EventEmitter}    from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { ProductImage }   from '../../../../common/models';
 
@@ -49,6 +51,8 @@ export class ProductImageManagerComponent
 {
     @ViewChild('drop')
     private _dropzone:     ElementRef;
+    @Output('modelChange')
+    private _update                            = new EventEmitter();
     @Input('model')
     private _previewFiles: Array<ProductImage> = [];
     private _rows:         number              = 0;
@@ -81,6 +85,8 @@ export class ProductImageManagerComponent
 
                 this._moveFile(sourceIndex, sourceIndex > destinationIndex ? destinationIndex : destinationIndex - 1);
             }
+
+            this._update.emit(this._previewFiles);
         });
     }
 
@@ -129,6 +135,8 @@ export class ProductImageManagerComponent
         }
 
         this._rows = Math.ceil(this._previewFiles.length / NUMBER_OF_COLUMNS);
+
+        this._update.emit(this._previewFiles);
     }
 
     /**
@@ -142,6 +150,8 @@ export class ProductImageManagerComponent
 
         if (index !== -1)
             this._previewFiles.splice(index, 1);
+
+        this._update.emit(this._previewFiles);
     }
 
     /**

@@ -102,10 +102,10 @@ export class ImagesService extends MeteorComponent
      *
      * @remark Product images flagged as uploaded wont be uploaded.
      */
-    public createProductImage(image: ProductImage): Observable<ProductImage>
+    public createProductImage(image: ProductImage): Observable<number>
     {
         if (image.isUploaded)
-            return Observable.of(image);
+            return Observable.of(100);
 
         if (!image.file)
         {
@@ -114,6 +114,7 @@ export class ImagesService extends MeteorComponent
                 'You need to provide an image file to upload.');
         }
 
+        let addedWork: number = 0;
         return Observable.create(observer =>
         {
                 let sourceFile: File = image.file;
@@ -138,8 +139,12 @@ export class ImagesService extends MeteorComponent
                         image.id         = result._id;
                         image.url        = result.url.toString();
 
-                        observer.next(image);
                         observer.complete();
+                    },
+                    onProgress: (file, progress) =>
+                    {
+                        addedWork = (progress * 100) - addedWork;
+                        observer.next(addedWork);
                     }
                 });
 

@@ -56,6 +56,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
     private _modal:              ModalComponent;
     private _waitModalResult:    boolean = false;
     private _isEditMode:         boolean = false;
+    private _uploadProgress:     number  = 0;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -154,14 +155,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _saveProduct(): void
     {
+        this._uploadProgress = 0;
         this._productsService.createProduct(this._product).subscribe(
-            () =>
+            (progress) =>
             {
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Product Saved!'),
-                    _T('Information'));
+                this._uploadProgress = progress;
+                console.error(this._uploadProgress + '%');
             },
             (error) =>
             {
@@ -172,6 +171,14 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                     _T('Error'));
 
                 console.error(error);
+            },
+            () =>
+            {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Saved!'),
+                    _T('Information'));
             }
         );
     }
@@ -209,14 +216,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _updateProduct(): void
     {
+        this._uploadProgress = 0;
         this._productsService.updateProduct(this._product).subscribe(
-            () =>
+            (progress) =>
             {
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Product Updated!'),
-                    _T('Information'));
+                this._uploadProgress = progress;
+                console.error(this._uploadProgress + '%');
             },
             (error) =>
             {
@@ -227,6 +232,14 @@ export class AddProductComponent extends MeteorComponent implements OnInit
                     _T('Error'));
 
                 console.error(error);
+            },
+            () =>
+            {
+                this._waitModalResult = true;
+
+                this._modal.show(
+                    _T('Product Updated!'),
+                    _T('Information'));
             }
         );
     }

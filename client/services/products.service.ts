@@ -38,12 +38,12 @@ import 'rxjs/add/operator/distinctUntilChanged';
  */
 function cloneProduct(product: Product): Product
 {
-    let clone = JSON.parse(JSON.stringify(product));
+    let clone: any = JSON.parse(JSON.stringify(product));
 
     // Fix the dates.
-    clone.createdAt   = new Date(clone.createdAt);
-    clone.updatedAt   = new Date(clone.createdAt);
-    clone.publishedAt = new Date(clone.createdAt);
+    clone.createdAt   = new Date(clone.createdAt.toString());
+    clone.updatedAt   = new Date(clone.updatedAt.toString());
+    clone.publishedAt = new Date(clone.publishedAt.toString());
 
     return <Product>clone;
 }
@@ -130,12 +130,23 @@ export class ProductsService extends MeteorComponent
      * @summary Creates a new product.
      *
      * @param product The product to be created in the database.
+     *
+     * @return This returns an observable that tracks the progress of the product upload.
      */
-    public createProduct(product: Product): Observable<string>
+    public createProduct(product: Product): Observable<number>
     {
+        const totalProgress: number   = product.images.length * 100;
+        let   currentProgress: number = 0;
+
         return Observable
             .from(product.images)
             .flatMap(image => this._imagesService.createProductImage(image))
+            .map(progress =>
+            {
+                currentProgress += (progress / totalProgress) * 100;
+
+                return currentProgress;
+            })
             .concat(Observable.create(observer => {
 
                 let clone: Product = cloneProduct(product);
@@ -150,7 +161,7 @@ export class ProductsService extends MeteorComponent
                     }
                     else
                     {
-                        observer.next(result);
+                        observer.next(100);
                         observer.complete();
                     }
                 });
@@ -162,11 +173,20 @@ export class ProductsService extends MeteorComponent
      *
      * @param product The product to be updated in the database.
      */
-    public updateProduct(product: Product): Observable<string>
+    public updateProduct(product: Product): Observable<number>
     {
+        const totalProgress:   number = product.images.length * 100;
+        let   currentProgress: number = 0;
+
         return Observable
             .from(product.images)
             .flatMap(image => this._imagesService.createProductImage(image))
+            .map(progress =>
+            {
+                currentProgress += (progress / totalProgress) * 100;
+
+                return currentProgress;
+            })
             .concat(Observable.create(observer => {
 
                 let clone: Product = cloneProduct(product);
@@ -181,7 +201,7 @@ export class ProductsService extends MeteorComponent
                     }
                     else
                     {
-                        observer.next(result);
+                        observer.next(100);
                         observer.complete();
                     }
                 });
