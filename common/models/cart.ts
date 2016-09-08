@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { I18nString } from './i18n-string';
+import { CartItem } from './';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -26,6 +26,7 @@ import { I18nString } from './i18n-string';
  */
 export class Cart
 {
+
     /**
      * @summary Initialises a new instance of the Cart class.
      *
@@ -33,36 +34,9 @@ export class Cart
      * @param userId The id of the owner of the cart.
      * @param items  The products inside the cart.
      */
-    constructor(
-        public _id:    string = null,
-        public userId: string = '',
-        public items:  Array<CartItem> = Array<CartItem>())
-    {
-    }
-}
-
-/**
- * @summary The cart item model. A cart item represents a product inside the cart.
- */
-export class CartItem
-{
-    /**
-     * @summary Initialises a new instance of the CartItem class.
-     *
-     * @param productId The id of the product that this item represents.
-     * @param quantity  The quantity of this product in the cart.
-     * @param title     The title of the product (Denormalization field).
-     * @param color     The color variant of the product (Denormalization field).
-     * @param size      The size variant of the product (Denormalization field).
-     * @param updatedAt The last update date to this item. (This field should never be set by the client application).
-     */
-    constructor(
-        public productId: string            = '',
-        public quantity:  number            = 0,
-        public title:     Array<I18nString> = Array<I18nString>(),
-        public color:     Array<I18nString> = Array<I18nString>(),
-        public size:      Array<I18nString> = Array<I18nString>(),
-        public updatedAt: Date              = new Date())
+    constructor(public _id: string = null,
+                public userId: string = '',
+                public items: Array<CartItem> = Array<CartItem>())
     {
     }
 }
