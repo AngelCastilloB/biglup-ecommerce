@@ -62,13 +62,19 @@ export class ValidationService
         return (group: FormGroup) =>
         {
             if (!group.controls[firstControlKey])
+            {
                 throw new Error(`Control group does not posses '${firstControlKey}' as a key.`);
+            }
 
             if (!group.controls[secondControlKey])
+            {
                 throw new Error(`Control group does not posses '${secondControlKey}' as a key.`);
+            }
 
             if (group.controls[firstControlKey].value !== group.controls[secondControlKey].value)
-                return group.controls[secondControlKey].setErrors({'notEqual': true});
+            {
+                return group.controls[secondControlKey].setErrors({notEqual: true});
+            }
         };
     }
 }

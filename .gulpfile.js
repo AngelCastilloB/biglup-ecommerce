@@ -43,6 +43,12 @@ const PATHS = {
     drag: {
         css: {src: './public/theme/css/drag.min.css'}
     },
+    // https://github.com/angular/material2/blob/master/GETTING_STARTED.md#additional-setup-for-md-menu-and-md-tooltip
+    ng2Material: {
+        css: {
+            src: './node_modules/@angular2-material/core/overlay/overlay.css'
+        }
+    },
     mdb: {
         css: {src: './public/theme/css/mdb.min.css'},
         js: {src: './public/theme/js/mdb.min.js'}
@@ -102,7 +108,8 @@ gulp.task('uglify-css', function (callback)
     const files = [
         PATHS.bootstrap.css.src,
         PATHS.mdb.css.src,
-        PATHS.drag.css.src
+        PATHS.drag.css.src,
+        PATHS.ng2Material.css.src
     ];
 
     pump([

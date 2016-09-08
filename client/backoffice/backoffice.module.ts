@@ -44,7 +44,7 @@ import { DragulaService, Dragula }      from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }            from './components/product-images-manager/directives/file-drop.directive';
 import { FileSelectDirective }          from './components/product-images-manager/directives/file-select.directive';
 import { TextEditorComponent }          from './components/text-editor/text-editor.component';
-import { ColorPickerComponent }         from './components/text-editor/components/color-picker.component'
+import { ColorPickerComponent }         from './components/text-editor/components/color-picker.component';
 import { ImagesService }                from './../services/images.service';
 
 // EXPORTS ************************************************************************************************************/
@@ -102,4 +102,3 @@ import { ImagesService }                from './../services/images.service';
 export class BackofficeModule
 {
 }
-

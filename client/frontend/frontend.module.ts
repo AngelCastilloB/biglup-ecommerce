@@ -46,10 +46,9 @@ import { UserAuthService }                from '../services/user-auth.service';
 @NgModule({
     declarations: [
         FrontendComponent,
-        // TODO: refactor into child feature modules
-
-        // header
+        // header (child of frontend)
         HeaderComponent,
+        // TODO: refactor into child feature modules
 
         // auth
         LoginComponent,
