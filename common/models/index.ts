@@ -18,7 +18,11 @@
 // EXPORTS ************************************************************************************************************/
 
 export * from './cart';
+export * from './cart-item';
 export * from './category';
+export * from './sub-category';
 export * from './i18n-string';
 export * from './image';
 export * from './product';
+export * from './product-image';
+export * from './product-variant';

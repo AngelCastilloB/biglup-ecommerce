@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { I18nString } from './i18n-string';
+import { I18nString, SubCategory } from './';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,36 +49,6 @@ export class Category
         public createdAt:     Date               = new Date(),
         public updatedAt:     Date               = new Date(),
         public subCategories: Array<SubCategory> = Array<SubCategory>())
-    {
-    }
-}
-
-/**
- * @summary The subcategory model. Allows a nested categories.
- */
-export class SubCategory
-{
-    /**
-     * @summary Initialises a new instance of the SubCategory class.
-     *
-     * @param _id       The id of the category on the database.
-     * @param slug      The slug url for this category.
-     * @param name      The name of the category.
-     * @param info      The info of the category.
-     * @param image     The associated image category.
-     * @param active    The is active flag (true if the category is to be displayed at the store, otherwise, false).
-     * @param createdAt The category date of creation.
-     * @param updatedAt The last time this category was updated.
-     */
-    constructor(
-        public _id:       string            = null,
-        public slug:      string            = '',
-        public name:      Array<I18nString> = Array<I18nString>(),
-        public info:      Array<I18nString> = Array<I18nString>(),
-        public image:     string            = null,
-        public active:    boolean           = false,
-        public createdAt: Date              = new Date(),
-        public updatedAt: Date              = new Date())
     {
     }
 }
