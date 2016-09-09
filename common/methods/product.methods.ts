@@ -149,7 +149,7 @@ Meteor.methods({
         if (!product._id || product._id === '')
         {
             throw new Meteor.Error(
-                'products.updateProduct.idIsEmpty',
+                'updateProduct.idIsEmpty',
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
         }
 
@@ -158,7 +158,7 @@ Meteor.methods({
         if (!currentProductState)
         {
             throw new Meteor.Error(
-                'products.deleteProduct.productDoesNotExist',
+                'updateProduct.productDoesNotExist',
                 'This product does not exists in the database.');
         }
 

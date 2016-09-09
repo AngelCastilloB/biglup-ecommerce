@@ -16,6 +16,23 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
  * All folders should be lower case with "-" character as word separator.
  * All parts of the components should be name as follows name.component.ts|html|css|spec to represent those various files.
  * All components should have its own folder.
+    * The following structure must be followed inside the "client" folder:
+    ```
+    client
+    ├── common
+    │   ├── components
+    │   ├── pipes
+    │   └── services
+    └── featureModule
+        ├── common
+        │   ├── components
+        │   ├── pipes
+        │   └── services
+        └── component
+            ├── components
+            ├── pipes
+            └── services
+    ```
  * Client side code should be in the "client" folder, server side code should be in the "server" folder, all mongodb collections
    should be in the "collections" folder and all the common code between the client, the server and the collections should be in 
    the "common" folder.

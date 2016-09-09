@@ -24,9 +24,15 @@ import { Injectable }                 from '@angular/core';
 
 /**
  * @summary Regex that match a valid email.
+ *
+ * @remarks
+ * ^     # assert position at start of the string
+ * [^@]+ # match any character that's not @
+ * @     # match the literal char @
+ * [^@]+ # match any character that's not @
+ * $     # assert position at end of the string
  */
-// tslint:disable:max-line-length
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const EMAIL_REGEX = /^[^@]+@[^@]+$/;
 
 // EXPORTS ************************************************************************************************************/
 
