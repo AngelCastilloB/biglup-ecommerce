@@ -57,7 +57,7 @@ const findProduct = (cart: Cart, productId: string): number =>
  * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
 Meteor.methods({
-    'cart.addProduct': (productId: string, quantity: number, set = false) =>
+    AddProductToCart(productId: string, quantity: number, set = false)
     {
         check(productId, String);
         check(quantity, Number);
@@ -68,14 +68,14 @@ Meteor.methods({
         if (!cart)
         {
             throw new Meteor.Error(
-                'cart.addProduct.carNotFound',
+                'AddProductToCart.carNotFound',
                 'The cart for this user was not found.');
         }
 
         if (!product)
         {
             throw new Meteor.Error(
-                'cart.addProduct.productNotFound',
+                'AddProductToCart.productNotFound',
                 'The product that you are trying to add to the cart does not exist.');
         }
 
@@ -90,9 +90,7 @@ Meteor.methods({
         if (productIndex === -1)
         {
             if (newQuantity < 1)
-            {
                 return;
-            }
 
             selector = {_id: cart._id};
             modifier = {$push: {items: item}};
@@ -133,12 +131,12 @@ Meteor.methods({
  * @summary Registers the add cart to user method to Meteor's DDP system.
  */
 Meteor.methods({
-    ['cart.create']: () =>
+    createCart()
     {
         if (Carts.find({userId: this.userId}).count() > 0)
         {
             throw new Meteor.Error(
-                'cart.createCart.alreadyExists',
+                'createCart.alreadyExists',
                 'This user already have a cart.');
         }
 
@@ -154,7 +152,7 @@ Meteor.methods({
  * @param userId The user to remove the cart from.
  */
 Meteor.methods({
-    ['cart.delete']: (userId: string) =>
+    deleteCart(userId: string)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -167,7 +165,7 @@ Meteor.methods({
         if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
-                'cart.delete.doesNotExists',
+                'deleteCart.doesNotExists',
                 'This user does not have a cart.');
         }
 
@@ -179,7 +177,7 @@ Meteor.methods({
  * @summary Deletes all products from the given user cart.
  */
 Meteor.methods({
-    ['cart.deleteAllProducts']: (userId: string) =>
+    deleteAllProductsFromCart(userId: string)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -192,7 +190,7 @@ Meteor.methods({
         if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
-                'cart.delete.doesNotExists',
+                'deleteAllProductsFromCart.doesNotExists',
                 'This user does not have a cart.');
         }
 
@@ -204,7 +202,7 @@ Meteor.methods({
  * @summary Deletes the given product from the given user cart.
  */
 Meteor.methods({
-    ['cart.deleteProduct']: (userId: string, productId: string) =>
+    deleteProductFromCart(userId: string, productId: string)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -217,7 +215,7 @@ Meteor.methods({
         if (Carts.find({userId}).count() === 0)
         {
             throw new Meteor.Error(
-                'cart.delete.doesNotExists',
+                'deleteProductFromCart.doesNotExists',
                 'This user does not have a cart.');
         }
 

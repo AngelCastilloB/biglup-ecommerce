@@ -100,7 +100,7 @@ export class CategoriesService extends MeteorComponent
     public createCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('categories.createCategory', category, (error, result) =>
+            this.call('createCategory', category, (error, result) =>
             {
                 if (error)
                 {
@@ -123,7 +123,7 @@ export class CategoriesService extends MeteorComponent
     public updateCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('categories.updateCategory', category, (error, result) =>
+            this.call('updateCategory', category, (error, result) =>
             {
                 if (error)
                 {
@@ -148,7 +148,7 @@ export class CategoriesService extends MeteorComponent
     public deleteCategory(categoryId: string): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('categories.deleteCategory', categoryId, (error, result) =>
+            this.call('deleteCategory', categoryId, (error, result) =>
             {
                 if (error)
                 {

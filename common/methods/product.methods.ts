@@ -63,7 +63,7 @@ const removeAllImages = (images: Array<ProductImage>) =>
  * @return The ID if the newly inserted product.
  */
 Meteor.methods({
-    'products.createProduct': (product: Product) =>
+    createProduct(product: Product)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -82,7 +82,7 @@ Meteor.methods({
                 if (Categories.find({_id: product.categories[i]}).count() === 0)
                 {
                     throw new Meteor.Error(
-                        'products.createProduct.categoryDoesNotExist',
+                        'createProduct.categoryDoesNotExist',
                         'One of the categories for this product does not exist (' + (product.categories[i]) + ').');
                 }
             }
@@ -99,7 +99,7 @@ Meteor.methods({
  * @param product The product id of the product to be deleted.
  */
 Meteor.methods({
-    ['products.deleteProduct']: (productId: string) =>
+    deleteProduct(productId: string)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -116,7 +116,7 @@ Meteor.methods({
         if (!product)
         {
             throw new Meteor.Error(
-                'products.deleteProduct.productDoesNotExist',
+                'deleteProduct.productDoesNotExist',
                 'This product does not exists in the database.');
         }
 
@@ -134,7 +134,7 @@ Meteor.methods({
  * @param product The product to be updated.
  */
 Meteor.methods({
-    ['products.updateProduct']: (product: Product) =>
+    updateProduct(product: Product)
     {
         check(product, ProductSchema);
 
@@ -179,7 +179,7 @@ Meteor.methods({
  * @param id The id of the category to be removed.
  */
 Meteor.methods({
-    ['products.removeCategory']: (id: string) =>
+    removeCategory(id: string)
     {
         check(id, String);
 
