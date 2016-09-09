@@ -98,7 +98,8 @@ export class ProductsService extends MeteorComponent
     {
         return this._productsStream
             .distinctUntilChanged()
-            .flatMap(array => new BehaviorSubject(array.filter(product => product.categories.indexOf(categoryId) > -1)));
+            .mergeMap(array => new BehaviorSubject(array.filter(
+                product => product.categories.indexOf(categoryId) > -1)));
     }
 
     /**
@@ -143,20 +144,20 @@ export class ProductsService extends MeteorComponent
 
         return Observable
             .from(product.images)
-            .flatMap(image => this._imagesService.createProductImage(image))
+            .mergeMap(image => this._imagesService.createProductImage(image))
             .map(progress =>
             {
                 currentProgress += (progress / totalProgress) * 100;
 
                 return currentProgress;
             })
-            .concat(Observable.create(observer => {
-
+            .concat(Observable.create(observer =>
+            {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
 
-                this.call('products.createProduct', clone, (error, result) =>
+                this.call('createProduct', clone, (error, result) =>
                 {
                     if (error)
                     {
@@ -185,20 +186,20 @@ export class ProductsService extends MeteorComponent
 
         return Observable
             .from(product.images)
-            .flatMap(image => this._imagesService.createProductImage(image))
+            .mergeMap(image => this._imagesService.createProductImage(image))
             .map(progress =>
             {
                 currentProgress += (progress / totalProgress) * 100;
 
                 return currentProgress;
             })
-            .concat(Observable.create(observer => {
-
+            .concat(Observable.create(observer =>
+            {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
 
-                this.call('products.updateProduct', clone, (error, result) =>
+                this.call('updateProduct', clone, (error, result) =>
                 {
                     if (error)
                     {
@@ -223,7 +224,7 @@ export class ProductsService extends MeteorComponent
     public deteleProduct(productId: string): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('products.deleteProduct', productId, (error, result) =>
+            this.call('deleteProduct', productId, (error, result) =>
             {
                 if (error)
                 {
