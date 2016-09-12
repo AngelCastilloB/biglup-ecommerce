@@ -6,6 +6,7 @@
     border-top: 4px solid black;
     border-radius: 3px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.09);
+    cursor: text;
 }
 
 .buttons {
@@ -89,6 +90,7 @@
     margin-left: 0;
     margin-right: 0;
     padding-left: 40px;
+    cursor: text;
 }
 
 .editablearea ul li {

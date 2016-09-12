@@ -25,7 +25,7 @@
             aria-hidden="true"
             title="{{ 'Strikethrough' | translate }}">
     </button>
-
+<!-- TODO: Remove bootstrap dependency.
     <div class="btn-group dispensable">
       <button type="button" class="fa fa-font" data-toggle="dropdown" title="{{ 'Font Family' | translate }}"></button>
       <ul class="dropdown-menu scrollable-menu font-menu" role="menu">
@@ -45,7 +45,7 @@
         </li>
       </ul>
     </div>
-
+-->
     <button (click)="_onTextFontColor($event)" type="button" class="fa fa-pencil" data-toggle="dropdown" title="{{ 'Text Color' | translate }}"></button>
     <color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></color-picker>
 

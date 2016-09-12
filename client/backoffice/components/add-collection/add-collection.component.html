@@ -1,73 +1,61 @@
 <modal-message (onClose)="_onModalClosed($event)"></modal-message>
-<div class="container-fluid">
-    <form>
-        <div class="table-responsive">
-            <br>
-            <h3>
-                <i class="fa fa-tag"></i>
-                <small> {{ 'Add Collection' | translate }}</small>
-            </h3>
-            <hr>
-                <div class="col-md-8">
-                    <div class="add-product-content">
-                    <div class="card">
-                        <md-tab-group>
-                            <md-tab>
-                                <template md-tab-label>Chinese</template>
-                                <template md-tab-content>
-                                    <div class="card-block">
-                                      {{ 'Title' | translate }}
-                                        <input type="text" id="title" name="title" class="form-control" required
-                                               [value]="_categoryName"
-                                               (change)="_onNameChange($event.target.value)">
 
-                                      {{ 'Description' | translate }}
-                                        <text-editor [model]="_categoryDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
-                                    </div>
-                                </template>
-                            </md-tab>
-                            <md-tab>
-                                <template md-tab-label>English</template>
-                                <template md-tab-content>
-                                    <div class="card-block">
-                                      {{ 'Title2' | translate }}
-                                        <input type="text" id="title" name="title" class="form-control" required
-                                               [value]="_categoryName"
-                                               (change)="_onNameChange($event.target.value)">
+<h1>
+  <i class="fa fa-tag"></i>
+  <small> {{ 'Add Collection' | translate }}</small>
+</h1>
+<br>
+<hr>
+</br>
+<div class="add-collection-grid">
+  <md-grid-list cols="1" *ngIf="_category.name[0]">
+    <md-tab-group>
+      <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
+        <md-card>
+          <md-card-content>
+            <template md-tab-label>{{lang}}</template>
+            <template md-tab-content>
+              <br>
+              <i18n-input [(model)]="_i18nNameReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
+              <br>
+              <br>
+              {{ 'Description' | translate }}
+              <i18n-text-editor [(model)]="_i18nInfoReferenceMap[lang]"></i18n-text-editor>
+            </template>
+          </md-card-content>
+        </md-card>
 
-                                      {{ 'Description2' | translate }}
-                                        <text-editor [model]="_categoryDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
-                                    </div>
-                                </template>
-                            </md-tab>
-                        </md-tab-group>
-                    </div>
-                    <div class="card">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="card-block">
-                                    <b>{{ 'Visibility' | translate }}</b><br/><br/>
-                                    <div class="row">
-                                        <div class="col-md-12 checkbox-container">
-                                            <input class='hidden' type="checkbox" [checked]="_category.active" [(ngModel)]="_category.active"  name="is-visible" id="is-visible" class="checkbox"/>
-                                            <label for="is-visible" class="checkbox-text">{{ "Show this category in the store" | translate }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <br/></br>
-            <hr>
-              <div class="bottom-button">
-                  <button *ngIf="_isEditMode" type="button" (click)="_deleteCategory()" style="margin-left: 100px" class="btn btn-danger pull-left">{{'Delete' | translate }}</button>
-                  <button *ngIf="!_isEditMode"  type="button" (click)="_saveCategory()" class="btn btn-primary save-button pull-right">{{'Create' | translate }}</button>
-                  <button *ngIf="_isEditMode" type="button" (click)="_updateCategory()" class="btn btn-primary save-button pull-right">{{'Update' | translate }}</button>
-                  <button type="button" (click)="_onCancel()" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
-              </div>
-        </div>
-    </form>
+      </md-tab>
+    </md-tab-group>
+    <br>
+    <md-card>
+      {{ 'Visibility' | translate }}<br/><br/>
+      <md-checkbox [(ngModel)]="_category.active">
+        {{ "Show this category in the store" | translate }}
+      </md-checkbox>
+    </md-card>
+  </md-grid-list>
 </div>
-</br></br>
+<br>
+<button class="add-collection-left-buttons add-collection-buttons"
+        md-raised-button
+        *ngIf="_isEditMode"
+        (click)="_deleteCategory()"
+        color="warn">{{'Delete' | translate }}
+</button>
+<button class="add-collection-right-buttons add-collection-buttons"
+        md-raised-button
+        (click)="_onCancel()">{{'Cancel' | translate }}
+</button>
+<button class="add-collection-right-buttons add-collection-buttons"
+        md-raised-button
+        *ngIf="!_isEditMode"
+        (click)="_saveCategory()"
+        color="primary">{{'Create' | translate }}
+</button>
+<button class="add-collection-right-buttons add-collection-buttons"
+        md-raised-button
+        *ngIf="_isEditMode"
+        (click)="_updateCategory()"
+        color="primary">{{'Update' | translate }}
+</button>

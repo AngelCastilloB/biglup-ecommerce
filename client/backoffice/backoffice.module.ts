@@ -46,6 +46,8 @@ import { FileSelectDirective }          from './components/product-images-manage
 import { TextEditorComponent }          from './components/text-editor/text-editor.component';
 import { ColorPickerComponent }         from './components/text-editor/components/color-picker.component';
 import { ImagesService }                from './../services/images.service';
+import { I18nInputComponent }           from './components/i18n-input/i18n-input.component';
+import { I18nTextEditorComponent }      from './components/i18n-text-editor/i18n-text-editor.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -65,6 +67,8 @@ import { ImagesService }                from './../services/images.service';
         // collection
         AddCollectionComponent,
         CollectionsComponent,
+        I18nInputComponent,
+        I18nTextEditorComponent,
 
         // product
         AddProductComponent,

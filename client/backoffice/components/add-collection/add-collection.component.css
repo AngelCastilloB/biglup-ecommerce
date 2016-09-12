@@ -1,66 +1,18 @@
-.checkbox {
-    cursor: pointer;
-    float: left;
+.add-collection-grid {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 
-.checkbox:before {
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    content: "";
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    width: 1.8rem;
-    height: 1.8rem;
-    border: 2px solid #f2f2f2;
+.add-collection-right-buttons {
+    float:right;
 }
 
-.checkbox:checked:before {
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    height: .75rem;
-    border-color: #4285F4;
-    border-top-style: none;
-    border-right-style: none;
+.add-collection-left-buttons {
+    float:left;
 }
 
-.checkbox:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 1.8rem;
-    height: 1.8rem;
-    background: #fff;
-    cursor: pointer;
-}
-
-.checkbox-text {
-    float: left;
-    padding-left: 15px;
-    font-size: 15px;
-}
-
-.checkbox-container {
-    padding-top: 25px;
-}
-
-.add-product-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.save-button {
-    width: 150px;
-    height: 40px;
-    text-align: center;
-}
-
-.bottom-button {
-    padding-right: 100px;
+.add-collection-buttons {
+    margin-left: 20px!important;
+    margin-right: 20px!important;
 }

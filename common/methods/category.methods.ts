@@ -41,6 +41,10 @@ Meteor.methods({
          }
          */
 
+        // Remove empty entries in the translations.
+        category.name = category.name.filter((element) => element.value && element.value !== '');
+        category.info = category.info.filter((element) => element.value && element.value !== '');
+
         check(category, CategorySchema);
 
         return Categories.insert(category);
@@ -94,6 +98,10 @@ Meteor.methods({
 Meteor.methods({
     updateCategory(category: Category)
     {
+        // Remove empty entries in the translations.
+        category.name = category.name.filter((element) => element.value && element.value !== '');
+        category.info = category.info.filter((element) => element.value && element.value !== '');
+
         check(category, CategorySchema);
 
         /*
