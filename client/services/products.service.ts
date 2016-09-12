@@ -139,25 +139,19 @@ export class ProductsService extends MeteorComponent
     {
         check(product, ProductSchema);
 
-        const totalProgress:   number = product.images.length * 100;
-        let   currentProgress: number = 0;
+        const totalProgress: number = product.images.length * 100;
 
         return Observable
             .from(product.images)
             .mergeMap(image => this._imagesService.createProductImage(image))
-            .map(progress =>
-            {
-                currentProgress += (progress / totalProgress) * 100;
-
-                return currentProgress;
-            })
+            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
             .concat(Observable.create(observer =>
             {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
 
-                this.call('createProduct', clone, (error, result) =>
+                this.call('createProduct', clone, (error) =>
                 {
                     if (error)
                     {
@@ -181,25 +175,19 @@ export class ProductsService extends MeteorComponent
     {
         check(product, ProductSchema);
 
-        const totalProgress:   number = product.images.length * 100;
-        let   currentProgress: number = 0;
+        const totalProgress: number = product.images.length * 100;
 
         return Observable
             .from(product.images)
             .mergeMap(image => this._imagesService.createProductImage(image))
-            .map(progress =>
-            {
-                currentProgress += (progress / totalProgress) * 100;
-
-                return currentProgress;
-            })
+            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100), 0)
             .concat(Observable.create(observer =>
             {
                 let clone: Product = cloneProduct(product);
 
                 clone.images.forEach(image => delete image['file'], this);
 
-                this.call('updateProduct', clone, (error, result) =>
+                this.call('updateProduct', clone, (error) =>
                 {
                     if (error)
                     {

@@ -132,16 +132,12 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         if (isChecked)
         {
             if (index === -1)
-            {
                 this._product.categories.push(id);
-            }
         }
         else
         {
             if (index > -1)
-            {
                 this._product.categories.splice(index, 1);
-            }
         }
     }
 

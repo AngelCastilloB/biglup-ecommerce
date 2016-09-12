@@ -25,7 +25,6 @@ import { Component,
 import { Router, ActivatedRoute }   from '@angular/router';
 import { MeteorComponent }          from 'angular2-meteor';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { Categories }               from '../../../../common/collections/category.collection';
 import { ModalComponent }           from '../../components/modal/modal.component';
 import { Category }                 from '../../../../common/models';
 import { CategoriesService }        from '../../../services/categories.service.ts';
