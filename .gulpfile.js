@@ -46,9 +46,6 @@ const PATHS = {
     webAnimationPolyfill: {
         js: {src: './node_modules/web-animations-js/src/web-animations.min.js'}
     },
-    tether: {
-        js: {src: './node_modules/tether/dist/js/tether.min.js'}
-    },
     public: {css: './public/theme/css', js: './public/theme/js'},
     compatibility: './client/compatibility'
 };
@@ -106,7 +103,6 @@ gulp.task('uglify-css', function (callback)
 gulp.task('concat-js', function (callback)
 {
     const files = [
-        PATHS.tether.js.src,
         PATHS.webAnimationPolyfill.js.src
     ];
 
