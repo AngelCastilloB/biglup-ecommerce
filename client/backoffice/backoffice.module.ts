@@ -46,6 +46,7 @@ import { FileSelectDirective }          from './components/product-images-manage
 import { TextEditorComponent }          from './components/text-editor/text-editor.component';
 import { ColorPickerComponent }         from './components/text-editor/components/color-picker.component';
 import { ImagesService }                from './../services/images.service';
+import { CartsService }                 from '../services/carts.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -96,7 +97,8 @@ import { ImagesService }                from './../services/images.service';
         ProductsService,
         ImagesService,
         IdGeneratorService,
-        DragulaService
+        DragulaService,
+        CartsService
     ]
 })
 export class BackofficeModule

@@ -20,6 +20,7 @@
 import { Carts }                   from '../collections/cart.collection';
 import { Products }                from '../collections/product.collection';
 import { Cart, CartItem, Product } from '../models';
+import { Meteor }                  from 'meteor/meteor';
 
 // FUNCTIONS **********************************************************************************************************/
 
@@ -57,7 +58,7 @@ const findProduct = (cart: Cart, productId: string): number =>
  * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
 Meteor.methods({
-    AddProductToCart(productId: string, quantity: number, set = false)
+    addProductToCart(productId: string, quantity: number, set = false)
     {
         check(productId, String);
         check(quantity, Number);
