@@ -20,17 +20,26 @@
 import 'reflect-metadata';
 
 import { Component,
-         ViewChild,
-         ElementRef,
          Output,
          EventEmitter,
-         ChangeDetectorRef }  from '@angular/core';
+         ChangeDetectorRef,
+         trigger,
+         state,
+         style,
+         transition,
+         animate,
+         keyframes }          from '@angular/core';
 import { IdGeneratorService } from '../../../services/id-generator.service.ts';
 import { MeteorComponent }    from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './modal.component.html';
+
+// CONSTANTS **********************************************************************************************************/
+
+const MODAL_STATE_HIDDEN  = 'hidden';
+const MODAL_STATE_SHOWING = 'showing';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -39,17 +48,58 @@ import template from './modal.component.html';
  */
 @Component({
     selector: 'modal-message',
-    template
+    template,
+    styleUrls:['./modal.component.css'],
+    animations: [
+        trigger('modalBackground', [
+            state(MODAL_STATE_HIDDEN, style({
+                display: 'none',
+            })),
+            state(MODAL_STATE_SHOWING, style({
+                display: 'block',
+            })),
+            transition('hidden => showing', [
+                animate(50)
+            ]),
+            transition('showing => hidden', [
+                animate(50)
+            ])
+        ]),
+        trigger('modal', [
+            state(MODAL_STATE_HIDDEN, style({
+                display: 'none',
+                transform: 'scale(0)',
+            })),
+            state(MODAL_STATE_SHOWING, style({
+                display: 'block',
+                transform: 'scale(1)',
+            })),
+            transition('hidden => showing', [
+                style({
+                    transform: 'translateY(-100%)'
+                }),
+                animate(400, keyframes([
+                    style({transform: 'scale(0.7)', offset: 0}),
+                    style({transform: 'scale(1.05)', offset: 0.45}),
+                    style({transform: 'scale(0.95)', offset: 0.8}),
+                    style({transform: 'scale(1)', offset: 1.0})
+                ]))
+            ]),
+            transition('showing => hidden', [
+                style({transform: 'translateY(100%)'}),
+                animate(100)
+            ])
+        ])
+    ]
 })
 export class ModalComponent extends MeteorComponent
 {
     @Output('onClose')
     private _onClose:  EventEmitter<any> = new EventEmitter<any>();
-    @ViewChild('toggleButton')
-    private _toggle:   ElementRef;
     private _uniqueId: string = '';
     private _title:    string = '';
     private _message:  string = '';
+    private _state:    string = MODAL_STATE_HIDDEN;
 
     /**
      * @summary Initializes a new instance of the ImageDisplayComponent class.
@@ -74,7 +124,7 @@ export class ModalComponent extends MeteorComponent
 
         this._changeDetectorRef.detectChanges();
 
-        this._toggle.nativeElement.click();
+        this._state = MODAL_STATE_SHOWING;
     }
 
     /**
@@ -82,15 +132,12 @@ export class ModalComponent extends MeteorComponent
      *
      * @param event The event information
      */
-    private _onClick(event: any) // HACK: This is a hack to detect when the modal window is closed. Needs to be improved.
+    private _onClick(event: any)
     {
-        if (event.srcElement.className === 'closing-x' ||
-            event.srcElement.className === 'btn btn-primary' ||
-            event.srcElement.className === 'modal fade in') {
-            this._onClose.emit({});
+        this._onClose.emit({});
 
-            this._message = '';
-            this._title   = '';
-        }
+        this._message = '';
+        this._title   = '';
+        this._state   = MODAL_STATE_HIDDEN;
     }
 }

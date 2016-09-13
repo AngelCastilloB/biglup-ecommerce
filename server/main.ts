@@ -23,10 +23,10 @@ import { checkMeteorSettings }        from './check-meteor-settings';
 import { startServicesConfiguration } from './services-configuration';
 
 // Publication Imports
-import './publications/category-publications.ts';
-import './publications/cart-publications.ts';
-import './publications/images-publications.ts';
-import './publications/product-publications.ts';
+import './publications/category.publication.ts';
+import './publications/cart.publication.ts';
+import './publications/images.publication.ts';
+import './publications/product.publication.ts';
 
 // Method Imports
 import '../common/methods/cart.methods';

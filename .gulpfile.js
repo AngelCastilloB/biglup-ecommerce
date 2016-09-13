@@ -44,10 +44,10 @@ const PATHS = {
     },
     // TODO: Remove once Angular Team provides its own polyfill for web animation.
     webAnimationPolyfill: {
-        js: {src: './public/theme/js/web-animations.min.js'}
+        js: {src: './node_modules/web-animations-js/src/web-animations.min.js'}
     },
     tether: {
-        js: {src: './public/theme/js/tether.min.js'}
+        js: {src: './node_modules/tether/dist/js/tether.min.js'}
     },
     public: {css: './public/theme/css', js: './public/theme/js'},
     compatibility: './client/compatibility'

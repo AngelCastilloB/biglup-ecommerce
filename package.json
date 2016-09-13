@@ -50,6 +50,7 @@
     "spawn-sync": "^1.0.15",
     "transliteration": "^1.1.6",
     "try-thread-sleep": "^1.0.0",
+    "web-animations-js": "^2.2.2",
     "zone.js": "^0.6.6"
   },
   "devDependencies": {
