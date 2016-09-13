@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { I18nString } from './i18n-string';
+import { I18nString, ProductVariant, ProductImage } from './';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -79,52 +79,6 @@ export class Product
         public createdAt:        Date                  = new Date(),
         public updatedAt:        Date                  = new Date(),
         public publishedAt:      Date                  = new Date())
-    {
-    }
-}
-
-/**
- * @summary The product variant type.
- */
-export class ProductVariant
-{
-    /**
-     * @summary Initialises a new instance of the ProductVariant class.
-     *
-     * @param color         The color variant of the product.
-     * @param size          The size variant of the product.
-     * @param isLowQuantity Indicates if this variant is in low quantity (Denormalization field).
-     * @param stock         The stock of the product.
-     * @param isSoldOut     Indicates if this product is sold out.
-     */
-    constructor(
-        public color:         Array<I18nString> = Array<I18nString>(),
-        public size:          Array<I18nString> = Array<I18nString>(),
-        public isLowQuantity: boolean           = false,
-        public stock:         number            = 0,
-        public isSoldOut:     boolean           = false)
-    {
-    }
-}
-
-/**
- * @summary The product image model.
- */
-export class ProductImage
-{
-    /**
-     * @summary Initialises a new instance of the ProductImage class.
-     *
-     * @param id          The id of the image in the database.
-     * @param url         The url of the image.
-     * @param isUploaded  Tells whether this image already exists on the server.
-     * @param file        The image file.
-     */
-    constructor(
-        public id:         string  = '',
-        public url:        string  = '',
-        public isUploaded: boolean = false,
-        public file:       File    = null)
     {
     }
 }

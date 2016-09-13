@@ -31,7 +31,7 @@ import { Category }       from '../models';
  * @return The ID if the newly inserted category.
  */
 Meteor.methods({
-    'categories.createCategory': (category: Category) =>
+    createCategory(category: Category)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -54,7 +54,7 @@ Meteor.methods({
  * @param categoryId The category id of the categoryId to be deleted.
  */
 Meteor.methods({
-    ['categories.deleteCategory']: (categoryId: string) =>
+    deleteCategory(categoryId: string)
     {
         /*
          if (!this.user.IsAdmin) {
@@ -69,7 +69,7 @@ Meteor.methods({
         if (Categories.find({_id: categoryId}).count() === 0)
         {
             throw new Meteor.Error(
-                'categories.deleteCategory.categoryDoesNotExist',
+                'deleteCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
         }
 
@@ -92,7 +92,7 @@ Meteor.methods({
  * @param category The category to be updated.
  */
 Meteor.methods({
-    ['categories.updateCategory']: (category: Category) =>
+    updateCategory(category: Category)
     {
         check(category, CategorySchema);
 
@@ -107,14 +107,14 @@ Meteor.methods({
         if (!category._id || category._id === '')
         {
             throw new Meteor.Error(
-                'categories.updateCategory.idIsEmpty',
+                'updateCategory.idIsEmpty',
                 'The id of this category is empty. You need to provide the id of an existing category in the database.');
         }
 
         if (Categories.find({_id: category._id}).count() === 0)
         {
             throw new Meteor.Error(
-                'categories.updateCategory.categoryDoesNotExist',
+                'updateCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
         }
 
