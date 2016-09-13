@@ -9,24 +9,23 @@
 </br>
 <div class="add-collection-grid">
   <md-grid-list cols="1" *ngIf="_category.name[0]">
-    <md-tab-group>
-      <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
-        <md-card>
-          <md-card-content>
-            <template md-tab-label>{{lang}}</template>
-            <template md-tab-content>
-              <br>
-              <i18n-input [(model)]="_i18nNameReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
-              <br>
-              <br>
-              {{ 'Description' | translate }}
-              <i18n-text-editor [(model)]="_i18nInfoReferenceMap[lang]"></i18n-text-editor>
-            </template>
-          </md-card-content>
-        </md-card>
-
-      </md-tab>
-    </md-tab-group>
+    <md-card>
+      <md-tab-group>
+        <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
+            <md-card-content>
+              <template md-tab-label>{{lang}}</template>
+              <template md-tab-content>
+                <br>
+                <i18n-input [(model)]="_i18nNameReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
+                <br>
+                <br>
+                {{ 'Description' | translate }}
+                <i18n-text-editor [(model)]="_i18nInfoReferenceMap[lang]"></i18n-text-editor>
+              </template>
+            </md-card-content>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
     <br>
     <md-card>
       {{ 'Visibility' | translate }}<br/><br/>
