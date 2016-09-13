@@ -246,6 +246,8 @@ declare module MeteorSimpleSchema {
          * Examples are {$inc: 1} and {$push: new Date}.
          */
         autoValue?: (documentOrModifier: any) => any|void;
+
+        unique?: boolean;
     }
 
     interface BaseCleaningOptions {
