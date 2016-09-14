@@ -64,12 +64,12 @@ Meteor.methods({
         check(quantity, Number);
 
         const product: Product = Products.findOne(productId);
-        const cart:    Cart    = Carts.findOne({userId: this.userId});
+        const cart: Cart       = Carts.findOne({userId: this.userId});
 
         if (!cart)
         {
             throw new Meteor.Error(
-                'AddProductToCart.carNotFound',
+                'AddProductToCart.cartNotFound',
                 'The cart for this user was not found.');
         }
 
@@ -80,13 +80,22 @@ Meteor.methods({
                 'The product that you are trying to add to the cart does not exist.');
         }
 
-        let item:     CartItem = new CartItem(productId, quantity, product.title);
-        let selector: Object   = {_id: cart._id, 'items.productId': productId};
+        let item: CartItem   = new CartItem(productId, quantity, product.title, product.color, product.size);
+        let selector: Object = {_id: cart._id, 'items.productId': productId};
         let modifier: Object;
 
+        // ongoing issue at https://github.com/aldeed/meteor-simple-schema/issues/658
+        const itemClone = {
+            productId: item.productId,
+            quantity: item.quantity,
+            title: item.title,
+            color: item.color,
+            size: item.size
+        };
+
         let productIndex: number = findProduct(cart, product._id);
-        let maxQuantity:  number = product.stock;
-        let newQuantity:  number = Math.min(item.quantity, maxQuantity);
+        let maxQuantity: number  = product.stock;
+        let newQuantity: number  = Math.min(itemClone.quantity, maxQuantity);
 
         if (productIndex === -1)
         {
@@ -94,37 +103,37 @@ Meteor.methods({
                 return;
 
             selector = {_id: cart._id};
-            modifier = {$push: {items: item}};
+            modifier = {$push: {items: itemClone}};
         }
         else
         {
-            newQuantity = Math.min(cart.items[productIndex].quantity + item.quantity, maxQuantity);
+            newQuantity = Math.min(cart.items[productIndex].quantity + itemClone.quantity, maxQuantity);
 
             if (set)
             {
-                if (item.quantity < 1)
+                if (itemClone.quantity < 1)
                 {
-                    Carts.update(selector, {$pull: {items: {productId}}}, {multi: true});
-
-                    return;
+                    modifier = {$pull: {items: {productId}}};
                 }
-
-                modifier = {$set: {'items.$.quantity': item.quantity}};
+                else
+                {
+                    modifier = {$set: {'items.$.quantity': itemClone.quantity}};
+                }
             }
             else
             {
                 if (newQuantity < 1)
                 {
-                    Carts.update(selector, {$pull: {items: {productId}}}, {multi: true});
-
-                    return;
+                    modifier = {$pull: {items: {productId}}};
                 }
-
-                modifier = {$set: {'items.$.quantity': newQuantity}};
+                else
+                {
+                    modifier = {$set: {'items.$.quantity': newQuantity}};
+                }
             }
         }
 
-        Carts.update(selector, modifier);
+        return Carts.update(selector, modifier);
     }
 });
 
@@ -141,7 +150,7 @@ Meteor.methods({
                 'This user already have a cart.');
         }
 
-        Carts.insert({});
+        return Carts.insert({});
     }
 });
 
@@ -170,7 +179,7 @@ Meteor.methods({
                 'This user does not have a cart.');
         }
 
-        Carts.remove({userId});
+        return Carts.remove({userId});
     }
 });
 
@@ -195,7 +204,7 @@ Meteor.methods({
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId}, {$set: {items: []}}, {multi: true});
+        return Carts.update({userId}, {$set: {items: []}}, {multi: true});
     }
 });
 
@@ -220,6 +229,6 @@ Meteor.methods({
                 'This user does not have a cart.');
         }
 
-        Carts.update({userId}, {$pull: {items: {productId}}}, {multi: true});
+        return Carts.update({userId}, {$pull: {items: {productId}}}, {multi: true});
     }
 });

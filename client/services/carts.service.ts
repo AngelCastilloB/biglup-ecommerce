@@ -23,6 +23,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Cart }                                 from '../../common/models/cart';
 import { Carts }                                from '../../common/collections/cart.collection';
 import { UserAuthService }                      from './user-auth.service';
+import { MeteorComponent }                      from 'angular2-meteor';
 
 // RxJS imports
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -30,7 +31,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 // EXPORTS ************************************************************************************************************/
 
 @Injectable()
-export class CartsService
+export class CartsService extends MeteorComponent
 {
 
     /**
@@ -48,28 +49,20 @@ export class CartsService
      */
     private _userCartStream = new Subject<Cart>();
 
-    /**
-     * @summary Controls the number of tries a cart has for creation.
-     *
-     * @type {number}
-     * @private
-     */
-    private _cartCreationControl = 5;
-
-    /**
-     * @summary The meteor subscription to be manipulated.
-     */
-    private _cartMeteorSubscription: Meteor.SubscriptionHandle;
-
     constructor(private _userAuthService: UserAuthService)
     {
-        Meteor.subscribe('carts', () => this._cartsCollectionStream.next(Carts.find({}).fetch()));
+        super();
+
+        this.subscribe('carts', () =>
+        {
+            this.autorun(() => this._cartsCollectionStream.next(Carts.find({}).fetch()));
+        });
 
         this._userAuthService.getUserStream().subscribe(user =>
         {
             if (user)
             {
-                this._getCurrentUserCart(user._id);
+                this._subscribeToUserCart(user._id);
             }
         });
     }
@@ -95,10 +88,13 @@ export class CartsService
     {
         return new Observable<Cart>(observer =>
         {
-            Meteor.subscribe('cart', id, () =>
+            this.subscribe('cart', id, () =>
             {
-                observer.next(Carts.findOne({_id: id}));
-                observer.complete();
+                this.autorun(() =>
+                {
+                    observer.next(Carts.findOne({_id: id}));
+                    observer.complete();
+                });
             });
         });
     }
@@ -122,7 +118,7 @@ export class CartsService
      *
      * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
      */
-    public addProduct(productId: string, quantity: number, set = false)
+    public addProduct(productId: string, quantity: number, set = false): Observable<boolean>
     {
         return Observable.create(observer =>
         {
@@ -144,14 +140,20 @@ export class CartsService
      *
      * @returns {void}
      */
-    private _createCart(): void
+    private _createCart(): Observable<Cart>
     {
-        Meteor.call('createCart', (error) =>
+        return new Observable(observer =>
         {
-            if (error)
+            Meteor.call('createCart', (error, cart) =>
             {
-                throw error;
-            }
+                if (error)
+                {
+                    return observer.error(error);
+                }
+
+                observer.next(cart);
+                observer.complete();
+            });
         });
     }
 
@@ -161,32 +163,29 @@ export class CartsService
      * @param {string} userId The user id.
      * @private
      */
-    private _getCurrentUserCart(userId: string)
+    private _subscribeToUserCart(userId: string)
     {
-        if (this._cartMeteorSubscription)
+        this.subscribe('user-cart', userId, () =>
         {
-            this._cartMeteorSubscription.stop();
-        }
-
-        this._cartMeteorSubscription = Meteor.subscribe('user-cart', userId, () =>
-        {
-            if (this._cartCreationControl === 0)
+            this.autorun(() =>
             {
-                throw new Error('The number of attempts of cart creation exceeded.');
-            }
+                const cart = Carts.findOne({userId});
 
-            const cart = Carts.findOne({userId});
+                if (cart)
+                {
+                    return this._userCartStream.next(cart);
+                }
 
-            if (cart)
-            {
-                return this._userCartStream.next(cart);
-            }
-
-            // we try to create a cart, if for some reason it fails,
-            // we give it some chances (max 5) to try again.
-            this._cartCreationControl--;
-            this._createCart();
-            this._getCurrentUserCart(userId);
+                this._createCart()
+                    .retry(5)
+                    .subscribe(
+                        newCart => this._userCartStream.next(newCart),
+                        () =>
+                        {
+                            throw new Error('The number of attempts of cart creation exceeded.');
+                        }
+                    );
+            });
         });
     }
 }

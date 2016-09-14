@@ -78,4 +78,20 @@ export class CartComponent implements OnInit, OnDestroy
     {
         this._cartSubscription.unsubscribe();
     }
+
+    /**
+     * @summary gives the current cart's item count
+     *
+     * @returns {number}
+     * @private
+     */
+    private _cartItemCount()
+    {
+        if (this._cart && this._cart.items)
+        {
+            return this._cart.items.length;
+        }
+
+        return 0;
+    }
 }

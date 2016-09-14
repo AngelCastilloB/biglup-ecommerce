@@ -21,19 +21,29 @@ import { Mongo }      from 'meteor/mongo';
 import { CartSchema } from '../schemas/cart.schema';
 import { Cart }       from '../../common/models';
 
-// EXPORTS ************************************************************************************************************/
-
-export let Carts: any = new Mongo.Collection<Cart>('carts');
-
 // IMPLEMENTATION *****************************************************************************************************/
+
+let Carts: any = new Mongo.Collection<Cart>('carts');
 
 Carts.attachSchema(CartSchema);
 
 // RULES **************************************************************************************************************/
 
-Carts.deny(
-{
-    insert() { return true; },
-    update() { return true; },
-    remove() { return true; },
+Carts.deny({
+    insert()
+    {
+        return true;
+    },
+    update()
+    {
+        return true;
+    },
+    remove()
+    {
+        return true;
+    },
 });
+
+// EXPORTS ************************************************************************************************************/
+
+export { Carts }
