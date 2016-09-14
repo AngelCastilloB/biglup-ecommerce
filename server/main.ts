@@ -19,8 +19,9 @@
 
 import { Meteor }                     from 'meteor/meteor';
 import { createMigrations }           from './migrations/create-migrations';
-import { checkMeteorSettings }        from './check-meteor-settings';
-import { startServicesConfiguration } from './services-configuration';
+import { checkMeteorSettings }        from './configuration/check-meteor-settings';
+import { startServicesConfiguration } from './configuration/services-configuration';
+import { startAccountsConfiguration } from './configuration/accounts-configuration';
 
 // Publication Imports
 import './publications/category-publications.ts';
@@ -40,6 +41,7 @@ Meteor.startup(() =>
 {
     checkMeteorSettings();
     startServicesConfiguration();
+    startAccountsConfiguration();
 
     if (Meteor.settings['migrations'].migrate)
     {
