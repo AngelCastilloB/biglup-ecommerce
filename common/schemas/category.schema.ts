@@ -28,28 +28,29 @@ import { I18nStringSchema } from './i18n-string.schema';
 export let SubCategorySchema: any = new SimpleSchema({
     name: {
         type: [I18nStringSchema],
-        label: 'Name'
+        label: 'SubCategorySchema Name'
     },
     info: {
         type: [I18nStringSchema],
-        label: 'Info'
+        label: 'SubCategorySchema Info'
     },
     slug: {
-        label: 'The category slug',
+        label: 'SubCategorySchema slug',
         type: String,
         optional: true,
     },
     image: {
         type: String,
-        label: 'Image',
+        label: 'SubCategorySchema Image',
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'Active',
+        label: 'SubCategorySchema Active',
         defaultValue: true
     },
     createdAt: {
+        label: 'SubCategorySchema created at',
         type: Date,
         autoValue()
         {
@@ -66,7 +67,7 @@ export let SubCategorySchema: any = new SimpleSchema({
     },
     updatedAt: {
         type: Date,
-        label: 'Last date this filter was updated.',
+        label: 'SubCategorySchema updated at',
         autoValue()
         {
             return new Date();
@@ -81,33 +82,34 @@ export let SubCategorySchema: any = new SimpleSchema({
 export let CategorySchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'Category Id',
+        label: 'CategorySchema Id',
         optional: true
     },
     name: {
         type: [I18nStringSchema],
-        label: 'Name'
+        label: 'CategorySchema Name'
     },
     slug: {
         type: String,
-        label: 'Slug',
+        label: 'CategorySchema Slug',
         optional: true,
     },
     info: {
         type: [I18nStringSchema],
-        label: 'Info'
+        label: 'CategorySchema Info'
     },
     image: {
         type: String,
-        label: 'Image',
+        label: 'CategorySchema Image',
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'Active',
+        label: 'CategorySchema Active',
         defaultValue: true
     },
     createdAt: {
+        label: 'CategorySchema createdAt',
         type: Date,
         autoValue()
         {
@@ -124,7 +126,7 @@ export let CategorySchema: any = new SimpleSchema({
     },
     updatedAt: {
         type: Date,
-        label: 'Last date this category was updated.',
+        label: 'CategorySchema updatedAt',
         autoValue()
         {
             return new Date();
@@ -133,7 +135,7 @@ export let CategorySchema: any = new SimpleSchema({
     },
     subCategories: {
         type: [SubCategorySchema],
-        label: 'The list of categories inside this category.',
+        label: 'CategorySchema list of categories inside this category',
         optional: true
     }
 });

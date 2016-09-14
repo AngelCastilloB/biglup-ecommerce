@@ -27,27 +27,29 @@ import { I18nStringSchema } from './i18n-string.schema';
  */
 export let CartItemSchema: any = new SimpleSchema({
     productId: {
+        label: 'Cart Item product id',
         type: String
     },
     quantity: {
-        label: 'Quantity',
+        label: 'Cart Item Quantity',
         type: Number,
         min: 0
     },
     // Denormalized field: Indicates the title of this product.
     title: {
+        label: 'Cart Item Title',
         type: [I18nStringSchema]
     },
     // Denormalized field: Indicates the color variant of this product.
     color: {
-        label: 'Color',
+        label: 'Cart Item Color',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     // Denormalized field: Indicates the size of this product.
     size: {
-        label: 'Size',
+        label: 'Cart Item Size',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
@@ -59,11 +61,12 @@ export let CartItemSchema: any = new SimpleSchema({
  */
 export let CartSchema: any = new SimpleSchema({
     _id: {
+        label: 'CartSchema id',
         type: String
     },
     userId: {
         unique: true,
-        label: 'The related user\'s id',
+        label: 'CartSchema related user\'s id',
         type: String,
         autoValue()
         {
@@ -79,11 +82,12 @@ export let CartSchema: any = new SimpleSchema({
         optional: true
     },
     items: {
-        label: 'The items inside the cart.',
+        label: 'CartSchema items',
         type: [CartItemSchema],
         optional: true
     },
     updatedAt: {
+        label: 'CartSchema updateAt',
         type: Date,
         autoValue()
         {

@@ -30,16 +30,16 @@ import { I18nStringSchema } from './i18n-string.schema';
  */
 export let ProductImageSchema: any = new SimpleSchema({
     id: {
-        label: 'The id of the image in the image collection',
+        label: 'ProductImageSchema id',
         type: String
     },
     // Denormalized field: This will avoid the need to query the image collection.
     url: {
-        label: 'The url of the image',
+        label: 'ProductImageSchema url of the image',
         type: String
     },
     isUploaded: {
-        label: 'The image upload flag.',
+        label: 'ProductImageSchema image upload flag',
         type: Boolean
     }
 });
@@ -49,31 +49,31 @@ export let ProductImageSchema: any = new SimpleSchema({
  */
 export let ProductVariantSchema: any = new SimpleSchema({
     color: {
-        label: 'Color',
+        label: 'ProductImageSchema Color',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     size: {
-        label: 'Size',
+        label: 'ProductImageSchema Size',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     stock: {
-        label: 'Stock',
+        label: 'ProductImageSchema Stock',
         type: Number,
         optional: true
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
-        label: 'Indicates that the product quantity is too low',
+        label: 'ProductImageSchema is low quantity flag',
         type: Boolean,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
-        label: 'Indicates when the product quantity is zero',
+        label: 'ProductImageSchema is sold out flag',
         type: Boolean,
         optional: true
     },
@@ -85,108 +85,113 @@ export let ProductVariantSchema: any = new SimpleSchema({
 export let ProductSchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'Product Id',
+        label: 'ProductSchema Id',
         optional: true
     },
     categories: {
         type: [String],
-        label: 'Product categories id',
+        label: 'ProductSchema categories',
         optional: true
     },
     title: {
+        label: 'ProductSchema title',
         type: [I18nStringSchema],
         defaultValue: ''
     },
     images: {
+        label: 'ProductSchema images',
         type: [ProductImageSchema],
         optional: true
     },
     slug: {
-        label: 'The product slug',
+        label: 'ProductSchema slug',
         type: String,
         optional: true
     },
     sku: {
         type: String,
-        label: 'Stock Keeping Unit'
+        label: 'ProductSchema Stock Keeping Unit'
     },
     barcode: {
         type: String,
-        label: 'The barcode of the product',
+        label: 'ProductSchema barcode of the product',
         optional: true
     },
     description: {
+        label: 'ProductSchema description',
         type: [I18nStringSchema],
         optional: true
     },
     color: {
-        label: 'Color',
+        label: 'ProductSchema Color',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     size: {
-        label: 'Size',
+        label: 'ProductSchema Size',
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     price: {
-        label: 'Price',
+        label: 'ProductSchema Price',
         type: Number
     },
     discount: {
-        label: 'Discount',
+        label: 'ProductSchema Discount',
         type: Number
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
-        label: 'Indicates that the product quantity is too low',
+        label: 'ProductSchema is low quantity flag',
         type: Boolean,
         optional: true
     },
     trackInventory: {
-        label: 'Indicates if this product requires inventory tracking',
+        label: 'ProductSchema inventory tracking',
         type: Boolean,
     },
     stock: {
-        label: 'Stock',
+        label: 'ProductSchema Stock',
         type: Number,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
-        label: 'Indicates when the product quantity is zero',
+        label: 'ProductSchema os sold out flag',
         type: Boolean,
         optional: true
     },
+    // Indicates when the seller has allowed the sale of product which is not in stock
     isBackorder: {
-        label: 'Indicates when the seller has allowed the sale of product which is not in stock',
+        label: 'ProductSchema is backorder flag',
         type: Boolean,
         optional: true
     },
     requiresShipping: {
-        label: 'Require a shipping address',
+        label: 'ProductSchema Requires shipping address',
         type: Boolean,
         defaultValue: true,
         optional: true
     },
     hashtags: {
-        label: 'Associated hash tags',
+        label: 'ProductSchema hashtags',
         type: [String],
         optional: true,
     },
     isVisible: {
-        label: 'Visibility',
+        label: 'ProductSchema Visibility',
         type: Boolean,
         defaultValue: false,
     },
     variantProducts: {
-        label: 'Product variants.',
+        label: 'ProductSchema Product variants.',
         type: [ProductVariantSchema],
         optional: true
     },
     createdAt: {
+        label: 'ProductSchema createdAt',
         type: Date,
         autoValue()
         {
@@ -202,6 +207,7 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     updatedAt: {
+        label: 'ProductSchema updatedAt',
         type: Date,
         autoValue()
         {
@@ -210,6 +216,7 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     publishedAt: {
+        label: 'ProductSchema publishedAt',
         type: Date,
         optional: true
     },
