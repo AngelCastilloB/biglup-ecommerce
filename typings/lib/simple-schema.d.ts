@@ -95,6 +95,8 @@ interface SimpleSchema<T> {
     schema(key: string): MeteorSimpleSchema.PropertyDefinition;
 
     messages(errorMessages: MeteorSimpleSchema.ErrorMessages): void;
+
+    validate(schema: MeteorSimpleSchema.Definition);
 }
 
 declare module MeteorSimpleSchema {
