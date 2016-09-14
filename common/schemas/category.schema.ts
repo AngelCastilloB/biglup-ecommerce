@@ -28,11 +28,11 @@ import { I18nStringSchema } from './i18n-string.schema';
 export let SubCategorySchema: any = new SimpleSchema({
     name: {
         type: [I18nStringSchema],
-        label: 'SubCategorySchema Name'
+        label: 'SubCategorySchema name'
     },
     info: {
         type: [I18nStringSchema],
-        label: 'SubCategorySchema Info'
+        label: 'SubCategorySchema info'
     },
     slug: {
         label: 'SubCategorySchema slug',
@@ -41,16 +41,16 @@ export let SubCategorySchema: any = new SimpleSchema({
     },
     image: {
         type: String,
-        label: 'SubCategorySchema Image',
+        label: 'SubCategorySchema image',
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'SubCategorySchema Active',
+        label: 'SubCategorySchema active',
         defaultValue: true
     },
     createdAt: {
-        label: 'SubCategorySchema created at',
+        label: 'SubCategorySchema createdAt',
         type: Date,
         autoValue()
         {
@@ -67,7 +67,7 @@ export let SubCategorySchema: any = new SimpleSchema({
     },
     updatedAt: {
         type: Date,
-        label: 'SubCategorySchema updated at',
+        label: 'SubCategorySchema updatedAt',
         autoValue()
         {
             return new Date();
@@ -82,30 +82,30 @@ export let SubCategorySchema: any = new SimpleSchema({
 export let CategorySchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'CategorySchema Id',
+        label: 'CategorySchema _id',
         optional: true
     },
     name: {
         type: [I18nStringSchema],
-        label: 'CategorySchema Name'
+        label: 'CategorySchema name'
     },
     slug: {
         type: String,
-        label: 'CategorySchema Slug',
+        label: 'CategorySchema slug',
         optional: true,
     },
     info: {
         type: [I18nStringSchema],
-        label: 'CategorySchema Info'
+        label: 'CategorySchema info'
     },
     image: {
         type: String,
-        label: 'CategorySchema Image',
+        label: 'CategorySchema image',
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'CategorySchema Active',
+        label: 'CategorySchema active',
         defaultValue: true
     },
     createdAt: {
@@ -135,7 +135,7 @@ export let CategorySchema: any = new SimpleSchema({
     },
     subCategories: {
         type: [SubCategorySchema],
-        label: 'CategorySchema list of categories inside this category',
+        label: 'CategorySchema subCategories',
         optional: true
     }
 });
