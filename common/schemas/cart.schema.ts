@@ -15,6 +15,11 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// CONSTANTS **********************************************************************************************************/
+
+const CART_ITEM_SCHEMA_NAME = 'CartItemSchema';
+const CART_SCHEMA_NAME      = 'CartSchema';
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
@@ -27,29 +32,29 @@ import { I18nStringSchema } from './i18n-string.schema';
  */
 export let CartItemSchema: any = new SimpleSchema({
     productId: {
-        label: 'CartItemSchema productId',
+        label: `${CART_ITEM_SCHEMA_NAME} productId`,
         type: String
     },
     quantity: {
-        label: 'CartItemSchema quantity',
+        label: `${CART_ITEM_SCHEMA_NAME} quantity`,
         type: Number,
         min: 0
     },
     // Denormalized field: Indicates the title of this product.
     title: {
-        label: 'CartItemSchema title',
+        label: `${CART_ITEM_SCHEMA_NAME} title`,
         type: [I18nStringSchema]
     },
     // Denormalized field: Indicates the color variant of this product.
     color: {
-        label: 'CartItemSchema color',
+        label: `${CART_ITEM_SCHEMA_NAME} color`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     // Denormalized field: Indicates the size of this product.
     size: {
-        label: 'CartItemSchema size',
+        label: `${CART_ITEM_SCHEMA_NAME} size`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
@@ -61,12 +66,12 @@ export let CartItemSchema: any = new SimpleSchema({
  */
 export let CartSchema: any = new SimpleSchema({
     _id: {
-        label: 'CartSchema _id',
+        label: `${CART_SCHEMA_NAME} _id`,
         type: String
     },
     userId: {
         unique: true,
-        label: 'CartSchema userId',
+        label: `${CART_SCHEMA_NAME} userId`,
         type: String,
         autoValue()
         {
@@ -82,12 +87,12 @@ export let CartSchema: any = new SimpleSchema({
         optional: true
     },
     items: {
-        label: 'CartSchema items',
+        label: `${CART_SCHEMA_NAME} items`,
         type: [CartItemSchema],
         optional: true
     },
     updatedAt: {
-        label: 'CartSchema updateAt',
+        label: `${CART_SCHEMA_NAME} updateAt`,
         type: Date,
         autoValue()
         {

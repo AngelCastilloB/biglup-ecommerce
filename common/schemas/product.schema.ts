@@ -15,8 +15,11 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// We need the correct scope of this inside the schemas.
-// tslint:disable:only-arrow-functions
+// CONSTANTS **********************************************************************************************************/
+
+const PRODUCT_IMAGE_SCHEMA_NAME   = 'ProductImageSchema';
+const PRODUCT_VARIANT_SCHEMA_NAME = 'ProductVariantSchema';
+const PRODUCT_SCHEMA_NAME         = 'ProductSchema';
 
 // IMPORTS ************************************************************************************************************/
 
@@ -30,16 +33,16 @@ import { I18nStringSchema } from './i18n-string.schema';
  */
 export let ProductImageSchema: any = new SimpleSchema({
     id: {
-        label: 'ProductImageSchema id',
+        label: `${PRODUCT_IMAGE_SCHEMA_NAME} id`,
         type: String
     },
     // Denormalized field: This will avoid the need to query the image collection.
     url: {
-        label: 'ProductImageSchema url',
+        label: `${PRODUCT_IMAGE_SCHEMA_NAME} url`,
         type: String
     },
     isUploaded: {
-        label: 'ProductImageSchema isUploaded',
+        label: `${PRODUCT_IMAGE_SCHEMA_NAME} isUploaded`,
         type: Boolean
     }
 });
@@ -49,31 +52,31 @@ export let ProductImageSchema: any = new SimpleSchema({
  */
 export let ProductVariantSchema: any = new SimpleSchema({
     color: {
-        label: 'ProductImageSchema color',
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} color`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     size: {
-        label: 'ProductImageSchema size',
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} size`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     stock: {
-        label: 'ProductImageSchema stock',
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} stock`,
         type: Number,
         optional: true
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
-        label: 'ProductImageSchema isLowQuantity',
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} isLowQuantity`,
         type: Boolean,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
-        label: 'ProductImageSchema isSoldOut',
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} isSoldOut`,
         type: Boolean,
         optional: true
     },
@@ -85,113 +88,113 @@ export let ProductVariantSchema: any = new SimpleSchema({
 export let ProductSchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'ProductSchema _id',
+        label: `${PRODUCT_SCHEMA_NAME} _id`,
         optional: true
     },
     categories: {
         type: [String],
-        label: 'ProductSchema categories',
+        label: `${PRODUCT_SCHEMA_NAME} categories`,
         optional: true
     },
     title: {
-        label: 'ProductSchema title',
+        label: `${PRODUCT_SCHEMA_NAME} title`,
         type: [I18nStringSchema],
         defaultValue: ''
     },
     images: {
-        label: 'ProductSchema images',
+        label: `${PRODUCT_SCHEMA_NAME} images`,
         type: [ProductImageSchema],
         optional: true
     },
     slug: {
-        label: 'ProductSchema slug',
+        label: `${PRODUCT_SCHEMA_NAME} slug`,
         type: String,
         optional: true
     },
     sku: {
         type: String,
-        label: 'ProductSchema sku'
+        label: `${PRODUCT_SCHEMA_NAME} sk`,
     },
     barcode: {
         type: String,
-        label: 'ProductSchema barcode',
+        label: `${PRODUCT_SCHEMA_NAME} barcode`,
         optional: true
     },
     description: {
-        label: 'ProductSchema description',
+        label: `${PRODUCT_SCHEMA_NAME} description`,
         type: [I18nStringSchema],
         optional: true
     },
     color: {
-        label: 'ProductSchema color',
+        label: `${PRODUCT_SCHEMA_NAME} color`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     size: {
-        label: 'ProductSchema size',
+        label: `${PRODUCT_SCHEMA_NAME} size`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     price: {
-        label: 'ProductSchema price',
+        label: `${PRODUCT_SCHEMA_NAME} price`,
         type: Number
     },
     discount: {
-        label: 'ProductSchema discount',
+        label: `${PRODUCT_SCHEMA_NAME} discount`,
         type: Number
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
-        label: 'ProductSchema isLowQuantity',
+        label: `${PRODUCT_SCHEMA_NAME} isLowQuantity`,
         type: Boolean,
         optional: true
     },
     trackInventory: {
-        label: 'ProductSchema trackInventory',
+        label: `${PRODUCT_SCHEMA_NAME} trackInventory`,
         type: Boolean,
     },
     stock: {
-        label: 'ProductSchema stock',
+        label: `${PRODUCT_SCHEMA_NAME} stock`,
         type: Number,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
-        label: 'ProductSchema isSoldOut',
+        label: `${PRODUCT_SCHEMA_NAME} isSoldOut`,
         type: Boolean,
         optional: true
     },
     // Indicates when the seller has allowed the sale of product which is not in stock
     isBackorder: {
-        label: 'ProductSchema isBackorder',
+        label: `${PRODUCT_SCHEMA_NAME} isBackorder`,
         type: Boolean,
         optional: true
     },
     requiresShipping: {
-        label: 'ProductSchema requiresShipping',
+        label: `${PRODUCT_SCHEMA_NAME} requiresShipping`,
         type: Boolean,
         defaultValue: true,
         optional: true
     },
     hashtags: {
-        label: 'ProductSchema hashtags',
+        label: `${PRODUCT_SCHEMA_NAME} hashtags`,
         type: [String],
         optional: true,
     },
     isVisible: {
-        label: 'ProductSchema visibility',
+        label: `${PRODUCT_SCHEMA_NAME} visibility`,
         type: Boolean,
         defaultValue: false,
     },
     variantProducts: {
-        label: 'ProductSchema variantProducts',
+        label: `${PRODUCT_SCHEMA_NAME} variantProducts`,
         type: [ProductVariantSchema],
         optional: true
     },
     createdAt: {
-        label: 'ProductSchema createdAt',
+        label: `${PRODUCT_SCHEMA_NAME} createdAt`,
         type: Date,
         autoValue()
         {
@@ -207,7 +210,7 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     updatedAt: {
-        label: 'ProductSchema updatedAt',
+        label: `${PRODUCT_SCHEMA_NAME} updatedAt`,
         type: Date,
         autoValue()
         {
@@ -216,7 +219,7 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     publishedAt: {
-        label: 'ProductSchema publishedAt',
+        label: `${PRODUCT_SCHEMA_NAME} publishedAt`,
         type: Date,
         optional: true
     },

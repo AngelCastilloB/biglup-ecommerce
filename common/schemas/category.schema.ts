@@ -15,6 +15,11 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// CONSTANTS **********************************************************************************************************/
+
+const SUB_CAT_SCHEMA_NAME = 'SubCategorySchema';
+const CAT_SCHEMA_NAME     = 'UserSchema';
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
@@ -28,29 +33,29 @@ import { I18nStringSchema } from './i18n-string.schema';
 export let SubCategorySchema: any = new SimpleSchema({
     name: {
         type: [I18nStringSchema],
-        label: 'SubCategorySchema name'
+        label: `${SUB_CAT_SCHEMA_NAME} name`
     },
     info: {
         type: [I18nStringSchema],
-        label: 'SubCategorySchema info'
+        label: `${SUB_CAT_SCHEMA_NAME} info`
     },
     slug: {
-        label: 'SubCategorySchema slug',
+        label: `${SUB_CAT_SCHEMA_NAME} slug`,
         type: String,
         optional: true,
     },
     image: {
         type: String,
-        label: 'SubCategorySchema image',
+        label: `${SUB_CAT_SCHEMA_NAME} image`,
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'SubCategorySchema active',
+        label: `${SUB_CAT_SCHEMA_NAME} active`,
         defaultValue: true
     },
     createdAt: {
-        label: 'SubCategorySchema createdAt',
+        label: `${SUB_CAT_SCHEMA_NAME} createdAt`,
         type: Date,
         autoValue()
         {
@@ -67,7 +72,7 @@ export let SubCategorySchema: any = new SimpleSchema({
     },
     updatedAt: {
         type: Date,
-        label: 'SubCategorySchema updatedAt',
+        label: `${SUB_CAT_SCHEMA_NAME} updatedAt`,
         autoValue()
         {
             return new Date();
@@ -82,34 +87,34 @@ export let SubCategorySchema: any = new SimpleSchema({
 export let CategorySchema: any = new SimpleSchema({
     _id: {
         type: String,
-        label: 'CategorySchema _id',
+        label: `${CAT_SCHEMA_NAME} _id`,
         optional: true
     },
     name: {
         type: [I18nStringSchema],
-        label: 'CategorySchema name'
+        label: `${CAT_SCHEMA_NAME} name`
     },
     slug: {
         type: String,
-        label: 'CategorySchema slug',
+        label: `${CAT_SCHEMA_NAME} slug`,
         optional: true,
     },
     info: {
         type: [I18nStringSchema],
-        label: 'CategorySchema info'
+        label: `${CAT_SCHEMA_NAME} info`
     },
     image: {
         type: String,
-        label: 'CategorySchema image',
+        label: `${CAT_SCHEMA_NAME} image`,
         optional: true
     },
     active: {
         type: Boolean,
-        label: 'CategorySchema active',
+        label: `${CAT_SCHEMA_NAME} active`,
         defaultValue: true
     },
     createdAt: {
-        label: 'CategorySchema createdAt',
+        label: `${CAT_SCHEMA_NAME} createdAt`,
         type: Date,
         autoValue()
         {
@@ -126,7 +131,7 @@ export let CategorySchema: any = new SimpleSchema({
     },
     updatedAt: {
         type: Date,
-        label: 'CategorySchema updatedAt',
+        label: `${CAT_SCHEMA_NAME} updatedAt`,
         autoValue()
         {
             return new Date();
@@ -135,7 +140,7 @@ export let CategorySchema: any = new SimpleSchema({
     },
     subCategories: {
         type: [SubCategorySchema],
-        label: 'CategorySchema subCategories',
+        label: `${CAT_SCHEMA_NAME} subCategories`,
         optional: true
     }
 });

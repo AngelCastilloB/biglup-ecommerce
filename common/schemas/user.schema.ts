@@ -15,6 +15,10 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// CONSTANTS **********************************************************************************************************/
+
+const SCHEMA_NAME = 'UserSchema';
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
@@ -28,42 +32,42 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
  */
 export const UserSchema = new SimpleSchema({
     _id: {
-        label: 'UserSchema _id',
+        label: `${SCHEMA_NAME} _id`,
         type: String
     },
     emails: {
-        label: 'UserSchema emails',
+        label: `${SCHEMA_NAME} emails`,
         type: Array,
         optional: true
     },
     'emails.$': {
-        label: 'UserSchema emails.$',
+        label: `${SCHEMA_NAME} emails.$`,
         type: Object
     },
     'emails.$.address': {
-        label: 'UserSchema emails.$.address',
+        label: `${SCHEMA_NAME} emails.$.address`,
         type: String
     },
     'emails.$.verified': {
-        label: 'UserSchema emails.$.verified',
+        label: `${SCHEMA_NAME} emails.$.verified`,
         type: Boolean
     },
     createdAt: {
-        label: 'UserSchema createdAt',
+        label: `${SCHEMA_NAME} createdAt`,
         type: Date
     },
     services: {
-        label: 'UserSchema services',
+        label: `${SCHEMA_NAME} services`,
         type: Object,
         blackbox: true
     },
     profile: {
-        label: 'UserSchema profile',
+        label: `${SCHEMA_NAME} profile`,
         type: Object,
         blackbox: true
     },
     isAdmin: {
-        label: 'UserSchema isAdmin',
+        label: `${SCHEMA_NAME} isAdmin`,
         type: Boolean,
         optional: true,
         autoValue()
