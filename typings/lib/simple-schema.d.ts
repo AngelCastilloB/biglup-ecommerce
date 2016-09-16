@@ -26,6 +26,38 @@ interface SimpleSchemaStatic {
 
     debug: boolean;
 
+    /**
+     * True if it's an insert operation
+     */
+    isInsert: boolean;
+
+    /**
+     * True if it's an update operation
+     */
+    isUpdate: boolean;
+
+    /**
+     * True if it's an upsert operation (either upsert() or upsert: true)
+     */
+    isUpsert: boolean;
+
+    /**
+     * The ID of the currently logged in user. (Always null for server-initiated actions.)
+     */
+    userId: string;
+
+    /**
+     * True if the insert, update, or upsert was initiated from trusted (server) code
+     */
+    isFromTrustedCode: boolean;
+
+    /**
+     * The _id property of the document being inserted or updated. For an insert, this will be set only when it is
+     * provided in the insert doc, or when the operation is initiated on the client. For an update or upsert,
+     * this will be set only when the selector is or includes the _id, or when the operation is initiated on the client.
+     */
+    docId: string;
+
     RegEx: {
         Email: RegExp;
         Domain: RegExp;
