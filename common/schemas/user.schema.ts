@@ -28,36 +28,47 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
  */
 export const UserSchema = new SimpleSchema({
     _id: {
-        label: 'Accounts.validateNewUser _id',
+        label: 'UserSchema _id',
         type: String
     },
     emails: {
-        label: 'Accounts.validateNewUser emails',
-        type: Array
+        label: 'UserSchema emails',
+        type: Array,
+        optional: true
     },
     'emails.$': {
-        label: 'Accounts.validateNewUser emails.$',
+        label: 'UserSchema emails.$',
         type: Object
     },
     'emails.$.address': {
-        label: 'Accounts.validateNewUser emails.$.address',
+        label: 'UserSchema emails.$.address',
         type: String
     },
     'emails.$.verified': {
-        label: 'Accounts.validateNewUser emails.$.verified',
+        label: 'UserSchema emails.$.verified',
         type: Boolean
     },
     createdAt: {
-        label: 'Accounts.validateNewUser createdAt',
+        label: 'UserSchema createdAt',
         type: Date
     },
     services: {
-        label: 'Accounts.validateNewUser services',
+        label: 'UserSchema services',
+        type: Object,
+        blackbox: true
+    },
+    profile: {
+        label: 'UserSchema profile',
         type: Object,
         blackbox: true
     },
     isAdmin: {
-        label: 'Accounts.validateNewUser isAdmin',
-        type: Boolean
+        label: 'UserSchema isAdmin',
+        type: Boolean,
+        optional: true,
+        autoValue()
+        {
+            return false;
+        }
     }
 });

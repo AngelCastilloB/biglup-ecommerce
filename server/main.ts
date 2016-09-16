@@ -17,11 +17,13 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }                     from 'meteor/meteor';
-import { createMigrations }           from './migrations/create-migrations';
-import { checkMeteorSettings }        from './configuration/check-meteor-settings';
-import { startServicesConfiguration } from './configuration/services-configuration';
-import { startAccountsConfiguration } from './configuration/accounts-configuration';
+import {
+    checkMeteorSettings,
+    startServicesConfiguration,
+    startAccountsConfiguration
+}                           from './configuration';
+import { Meteor }           from 'meteor/meteor';
+import { createMigrations } from './migrations/create-migrations';
 
 // Publication Imports
 import './publications/category-publications.ts';

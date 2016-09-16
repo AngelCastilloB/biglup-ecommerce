@@ -17,8 +17,8 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Accounts }   from 'meteor/accounts-base';
 import { UserSchema } from '../../common/schemas/user.schema';
+import { Meteor }     from 'meteor/meteor';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -29,15 +29,7 @@ export const startAccountsConfiguration = () =>
 {
 
     /**
-     * @summary updates the user schema with new fields.
-     *
-     * @see https://guide.meteor.com/accounts.html#requiring-username-email
+     * @summary Attaches the user schema to meteor user collection.
      */
-    Accounts.validateNewUser((user) =>
-    {
-        UserSchema.validate(user);
-
-        // Return true to allow user creation to proceed
-        return true;
-    });
+    Meteor.users.attachSchema(UserSchema, {replace: true});
 };

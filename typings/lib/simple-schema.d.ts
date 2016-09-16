@@ -97,6 +97,9 @@ interface SimpleSchema<T> {
     messages(errorMessages: MeteorSimpleSchema.ErrorMessages): void;
 
     validate(schema: MeteorSimpleSchema.Definition);
+
+    // https://github.com/aldeed/meteor-simple-schema#cleaning-data
+    clean();
 }
 
 declare module MeteorSimpleSchema {
@@ -105,8 +108,8 @@ declare module MeteorSimpleSchema {
     }
 
     interface PropertyDefinition {
-        type: StringConstructor|NumberConstructor|BooleanConstructor|ObjectConstructor|DateConstructor
-            |[StringConstructor]|[NumberConstructor]|[BooleanConstructor]|[ObjectConstructor]|[DateConstructor];
+        type: StringConstructor|NumberConstructor|BooleanConstructor|ObjectConstructor|DateConstructor|ArrayConstructor
+            |[StringConstructor]|[NumberConstructor]|[BooleanConstructor]|[ObjectConstructor]|[DateConstructor]|[ArrayConstructor];
 
         /**
          * A string that will be used to refer to this field in validation error messages.
