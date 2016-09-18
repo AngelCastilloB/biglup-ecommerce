@@ -5,6 +5,11 @@
       <h2 class="modal-title">{{ _title }}</h2>
     </div>
     <div class="modal-body">
+      <success-animation></success-animation>
+      <error-animation></error-animation>
+      <warning-animation></warning-animation>
+      <waiting-animation></waiting-animation>
+      <information-animation></information-animation>
       <p>{{ _message }}</p>
     </div>
     <center><button class="modal-button" md-raised-button color="primary" (click)="_onClick($event)">

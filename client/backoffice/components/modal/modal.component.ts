@@ -28,9 +28,8 @@ import { Component,
          style,
          transition,
          animate,
-         keyframes }          from '@angular/core';
-import { IdGeneratorService } from '../../../services/id-generator.service.ts';
-import { MeteorComponent }    from 'angular2-meteor';
+         keyframes }                 from '@angular/core';
+import { MeteorComponent }           from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -49,7 +48,7 @@ const MODAL_STATE_SHOWING = 'showing';
 @Component({
     selector: 'modal-message',
     template,
-    styleUrls:['./modal.component.css'],
+    styleUrls: ['./modal.component.css'],
     animations: [
         trigger('modalBackground', [
             state(MODAL_STATE_HIDDEN, style({
@@ -96,19 +95,16 @@ export class ModalComponent extends MeteorComponent
 {
     @Output('onClose')
     private _onClose:  EventEmitter<any> = new EventEmitter<any>();
-    private _uniqueId: string = '';
     private _title:    string = '';
     private _message:  string = '';
     private _state:    string = MODAL_STATE_HIDDEN;
 
     /**
-     * @summary Initializes a new instance of the ImageDisplayComponent class.
+     * @summary Initializes a new instance of the ModalComponent class.
      */
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _idGenerator: IdGeneratorService)
+    constructor(private _changeDetectorRef: ChangeDetectorRef)
     {
         super();
-
-        this._uniqueId = _idGenerator.generate();
     }
 
     /**
