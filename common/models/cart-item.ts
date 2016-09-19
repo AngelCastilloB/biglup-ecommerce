@@ -26,6 +26,7 @@ import { I18nString } from './';
  */
 export class CartItem
 {
+
     /**
      * @summary Initialises a new instance of the CartItem class.
      *

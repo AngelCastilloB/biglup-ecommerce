@@ -27,12 +27,8 @@ import { createMigrations } from './migrations/create-migrations';
 
 // Publication Imports
 import './publications/category-publications.ts';
-import './publications/cart-publications.ts';
 import './publications/images-publications.ts';
 import './publications/product-publications.ts';
-
-// Method Imports
-import '../common/methods/cart.methods';
 
 // App email templates
 import './email-templates/password-reset';

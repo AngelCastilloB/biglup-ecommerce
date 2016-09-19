@@ -214,10 +214,10 @@ export class UserAuthService
     /**
      * @summary Updates all streams related to user events.
      *
-     * @param {Object} user the user object
+     * @param {Meteor.User} user the user object
      * @private
      */
-    private _updateUserStream(user?: {})
+    private _updateUserStream(user?: Meteor.User)
     {
         this._isLoggedStream.next(!!user);
         this._userStream.next(user);

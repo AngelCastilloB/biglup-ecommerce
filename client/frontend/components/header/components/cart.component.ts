@@ -24,9 +24,9 @@ import template from './cart.component.html';
 import 'reflect-metadata';
 
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { CartsService }                         from '../../../../services/carts.service';
 import { Cart }                                 from '../../../../../common/models';
 import { Subscription }                         from 'rxjs';
+import { UserAuthService }                      from '../../../../services/user-auth.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -46,15 +46,15 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary the cart service subscription.
      */
-    private _cartSubscription: Subscription;
+    private _userSubscription: Subscription;
 
     /**
      * @summary the cart component constructor.
      *
-     * @param {CartsService} _cartsService The cart service.
-     * @param {NgZone}       _ngZone       Ng2 external computation zone.
+     * @param {UserAuthService} _userAuthService The user auth service.
+     * @param {NgZone}          _ngZone          Ng2 external computation zone.
      */
-    constructor(private _cartsService: CartsService, private _ngZone: NgZone)
+    constructor(private _userAuthService: UserAuthService, private _ngZone: NgZone)
     {
     }
 
@@ -65,9 +65,9 @@ export class CartComponent implements OnInit, OnDestroy
     {
         this._ngZone.run(() =>
         {
-            this._cartSubscription = this._cartsService
-                .getUserCart()
-                .subscribe(cart => this._cart = cart);
+            this._userSubscription = this._userAuthService
+                .getUserStream()
+                .subscribe(user => this._cart = user.cart);
         });
     }
 
@@ -76,7 +76,7 @@ export class CartComponent implements OnInit, OnDestroy
      */
     public ngOnDestroy(): void
     {
-        this._cartSubscription.unsubscribe();
+        this._userSubscription.unsubscribe();
     }
 
     /**

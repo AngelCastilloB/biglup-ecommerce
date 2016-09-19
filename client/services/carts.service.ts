@@ -17,13 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }                           from '@angular/core';
-import { Meteor }                               from 'meteor/meteor';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { Cart }                                 from '../../common/models/cart';
-import { Carts }                                from '../../common/collections/cart.collection';
-import { UserAuthService }                      from './user-auth.service';
-import { MeteorComponent }                      from 'angular2-meteor';
+import { Injectable }                  from '@angular/core';
+import { Meteor }                      from 'meteor/meteor';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Cart }                        from '../../common/models';
 
 // RxJS imports
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -31,7 +28,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 // EXPORTS ************************************************************************************************************/
 
 @Injectable()
-export class CartsService extends MeteorComponent
+export class CartsService
 {
 
     /**
@@ -45,29 +42,6 @@ export class CartsService extends MeteorComponent
     private _cartsCollectionStream = new BehaviorSubject<Cart[]>(this._carts);
 
     /**
-     * @summary the current user's cart.
-     */
-    private _userCartStream = new Subject<Cart>();
-
-    constructor(private _userAuthService: UserAuthService)
-    {
-        super();
-
-        this.subscribe('carts', () =>
-        {
-            this.autorun(() => this._cartsCollectionStream.next(Carts.find({}).fetch()));
-        });
-
-        this._userAuthService.getUserStream().subscribe(user =>
-        {
-            if (user)
-            {
-                this._subscribeToUserCart(user._id);
-            }
-        });
-    }
-
-    /**
      * @summary returns all the carts in the system.
      *
      * @returns {Observable<Cart[]>}
@@ -75,38 +49,6 @@ export class CartsService extends MeteorComponent
     public getCarts(): Observable<Cart[]>
     {
         return this._cartsCollectionStream.distinctUntilChanged();
-    }
-
-    /**
-     * @summary returns all the carts in the system.
-     *
-     * @param {string} id The cart id.
-     *
-     * @returns {Observable<Cart>}
-     */
-    public getCart(id: string): Observable<Cart>
-    {
-        return new Observable<Cart>(observer =>
-        {
-            this.subscribe('cart', id, () =>
-            {
-                this.autorun(() =>
-                {
-                    observer.next(Carts.findOne({_id: id}));
-                    observer.complete();
-                });
-            });
-        });
-    }
-
-    /**
-     * @summary returns the current users cart stream.
-     *
-     * @returns {Observable<Cart>}
-     */
-    public getUserCart(): Observable<Cart>
-    {
-        return this._userCartStream.distinctUntilChanged();
     }
 
     /**
@@ -131,60 +73,6 @@ export class CartsService extends MeteorComponent
 
                 observer.next(results);
                 observer.complete();
-            });
-        });
-    }
-
-    /**
-     * @summary Attempts to create a new cart for the current user.
-     *
-     * @returns {void}
-     */
-    private _createCart(): Observable<Cart>
-    {
-        return new Observable(observer =>
-        {
-            Meteor.call('createCart', (error, cart) =>
-            {
-                if (error)
-                {
-                    return observer.error(error);
-                }
-
-                observer.next(cart);
-                observer.complete();
-            });
-        });
-    }
-
-    /**
-     * @summary Gets the current users cart from the meteor subscription interface.
-     *
-     * @param {string} userId The user id.
-     * @private
-     */
-    private _subscribeToUserCart(userId: string)
-    {
-        this.subscribe('user-cart', userId, () =>
-        {
-            this.autorun(() =>
-            {
-                const cart = Carts.findOne({userId});
-
-                if (cart)
-                {
-                    return this._userCartStream.next(cart);
-                }
-
-                this._createCart()
-                    .retry(5)
-                    .subscribe(
-                        newCart => this._userCartStream.next(newCart),
-                        () =>
-                        {
-                            throw new Error('The number of attempts of cart creation exceeded.');
-                        }
-                    );
             });
         });
     }

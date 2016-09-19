@@ -15,12 +15,16 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// IMPORT ************************************************************************************************************/
+
+import { Cart } from './';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary The user model.
  */
-export class User
+export class User implements Meteor.User
 {
 
     /**
@@ -32,11 +36,13 @@ export class User
      * @param {boolean} emails.verified Verified email flag.
      * @param {Object} services External OAuth services.
      * @param {boolean} isAdmin Admin role flag.
+     * @param {Cart} cart Admin role flag.
      */
     constructor(public _id: string = null,
-                public emails: Array<EmailObject> = Array<EmailObject>(),
+                public emails: EmailObject[] = Array<EmailObject>(),
                 public services: Object = {},
-                public isAdmin = false)
+                public isAdmin = false,
+                public cart: Cart = <Cart>{})
     {
     }
 }

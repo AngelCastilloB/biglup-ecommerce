@@ -22,6 +22,7 @@ const SCHEMA_NAME = 'UserSchema';
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { CartSchema }   from './cart.schema';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,7 +31,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
  *
  * @type {SimpleSchema<User>}
  */
-export const UserSchema = new SimpleSchema({
+export const UserSchema: any = new SimpleSchema({
     _id: {
         label: `${SCHEMA_NAME} _id`,
         type: String
@@ -74,5 +75,9 @@ export const UserSchema = new SimpleSchema({
         {
             return false;
         }
+    },
+    cart: {
+        label: `${SCHEMA_NAME} cart`,
+        type: CartSchema
     }
 });

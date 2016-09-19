@@ -17,7 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Carts }                   from '../collections/cart.collection';
 import { Products }                from '../collections/product.collection';
 import { Cart, CartItem, Product } from '../models';
 import { Meteor }                  from 'meteor/meteor';
@@ -27,8 +26,8 @@ import { Meteor }                  from 'meteor/meteor';
 /**
  * @summary search for a product inside a cart.
  *
- * @param cart The cart where the product will be looked for.
- * @param productId The product to be found.
+ * @param {Cart}   cart      The cart where the product will be looked for.
+ * @param {string} productId The product to be found.
  *
  * @returns {number} The index of the product in the cart index collection.
  */
@@ -51,27 +50,30 @@ const findProduct = (cart: Cart, productId: string): number =>
 /**
  * @summary Registers the add to cart method to Meteor's DDP system.
  *
- * @param productId The product to be added to the cart.
- * @param quantity  The amount of this products that wants to be added.
- * @param set       Indicates if the amount must be increased or changed. (defaults to false).
+ * @param {string}  productId The product to be added to the cart.
+ * @param {number}  quantity  The amount of this products that wants to be added.
+ * @param {boolean} set       Indicates if the amount must be increased or changed. (defaults to false).
+ * @param {string}  userId    The id of the user's cart to be manipulated. (defaults to current user authenticated).
  *
  * @remark If the resulting new quantity for the cart item is less than one, the element will be deleted from the cart.
  */
 Meteor.methods({
-    addProductToCart(productId: string, quantity: number, set = false)
+    addProductToCart(productId: string, quantity: number, set = false, userId?: string)
     {
+        if (userId && this.user.isAdmin)
+        {
+            check(userId, String);
+        }
+        else
+        {
+            userId = this.userId;
+        }
+
         check(productId, String);
         check(quantity, Number);
 
         const product: Product = Products.findOne(productId);
-        const cart: Cart       = Carts.findOne({userId: this.userId});
-
-        if (!cart)
-        {
-            throw new Meteor.Error(
-                'AddProductToCart.cartNotFound',
-                'The cart for this user was not found.');
-        }
+        const cart: Cart       = Meteor.users.findOne({_id: userId}).cart;
 
         if (!product)
         {
@@ -81,107 +83,57 @@ Meteor.methods({
         }
 
         let item: CartItem   = new CartItem(productId, quantity, product.title, product.color, product.size);
-        let selector: Object = {_id: cart._id, 'items.productId': productId};
+        let selector: Object = {_id: userId};
         let modifier: Object;
-
-        // ongoing issue at https://github.com/aldeed/meteor-simple-schema/issues/658
-        const itemClone = {
-            productId: item.productId,
-            quantity: item.quantity,
-            title: item.title,
-            color: item.color,
-            size: item.size
-        };
 
         let productIndex: number = findProduct(cart, product._id);
         let maxQuantity: number  = product.stock;
-        let newQuantity: number  = Math.min(itemClone.quantity, maxQuantity);
+        let newQuantity: number  = Math.min(item.quantity, maxQuantity);
 
         if (productIndex === -1)
         {
             if (newQuantity < 1)
                 return;
 
-            selector = {_id: cart._id};
-            modifier = {$push: {items: itemClone}};
+            modifier = {$push: {'cart.items': item}};
         }
         else
         {
-            newQuantity = Math.min(cart.items[productIndex].quantity + itemClone.quantity, maxQuantity);
+            newQuantity = Math.min(cart.items[productIndex].quantity + item.quantity, maxQuantity);
 
             if (set)
             {
-                if (itemClone.quantity < 1)
+                if (item.quantity < 1)
                 {
-                    modifier = {$pull: {items: {productId}}};
+                    modifier = {$pull: {'cart.items': {productId}}};
                 }
                 else
                 {
-                    modifier = {$set: {'items.$.quantity': itemClone.quantity}};
+                    selector['cart.items.productId'] = productId;
+
+                    modifier = {$set: {'cart.items.$.quantity': item.quantity}};
                 }
             }
             else
             {
                 if (newQuantity < 1)
                 {
-                    modifier = {$pull: {items: {productId}}};
+                    modifier = {$pull: {'cart.items': {productId}}};
                 }
                 else
                 {
-                    modifier = {$set: {'items.$.quantity': newQuantity}};
+                    selector['cart.items.productId'] = productId;
+
+                    modifier = {$set: {'cart.items.$.quantity': newQuantity}};
                 }
             }
         }
 
-        return Carts.update(selector, modifier);
-    }
-});
-
-/**
- * @summary Registers the add cart to user method to Meteor's DDP system.
- */
-Meteor.methods({
-    createCart()
-    {
-        if (Carts.find({userId: this.userId}).count() > 0)
-        {
-            throw new Meteor.Error(
-                'createCart.alreadyExists',
-                'This user already have a cart.');
-        }
-
-        return Carts.insert({});
+        return Meteor.users.update(selector, modifier);
     }
 });
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
-
-/**
- * @summary Deletes the cart for the given user.
- *
- * @param userId The user to remove the cart from.
- */
-Meteor.methods({
-    deleteCart(userId: string)
-    {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'cart.delete.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
-
-        if (Carts.find({userId}).count() === 0)
-        {
-            throw new Meteor.Error(
-                'deleteCart.doesNotExists',
-                'This user does not have a cart.');
-        }
-
-        return Carts.remove({userId});
-    }
-});
 
 /**
  * @summary Deletes all products from the given user cart.
@@ -189,22 +141,14 @@ Meteor.methods({
 Meteor.methods({
     deleteAllProductsFromCart(userId: string)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'cart.deleteAllProducts.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
-
-        if (Carts.find({userId}).count() === 0)
+        if (!this.user.isAdmin)
         {
             throw new Meteor.Error(
-                'deleteAllProductsFromCart.doesNotExists',
-                'This user does not have a cart.');
+                'cart.deleteAllProducts.unauthorized',
+                'You are not authorized to perform this action.');
         }
 
-        return Carts.update({userId}, {$set: {items: []}}, {multi: true});
+        return Meteor.users.update({userId}, {$set: {items: []}});
     }
 });
 
@@ -214,21 +158,13 @@ Meteor.methods({
 Meteor.methods({
     deleteProductFromCart(userId: string, productId: string)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'cart.deleteProduct.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
-
-        if (Carts.find({userId}).count() === 0)
+        if (!this.user.isAdmin)
         {
             throw new Meteor.Error(
-                'deleteProductFromCart.doesNotExists',
-                'This user does not have a cart.');
+                'cart.deleteProduct.unauthorized',
+                'You are not authorized to perform this action.');
         }
 
-        return Carts.update({userId}, {$pull: {items: {productId}}}, {multi: true});
+        return Meteor.users.update({_id: userId}, {$pull: {items: {productId}}});
     }
 });
