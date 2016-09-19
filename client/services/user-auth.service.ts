@@ -21,6 +21,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Meteor }                               from 'meteor/meteor';
 import { Accounts }                             from 'meteor/accounts-base';
 import { Injectable }                           from '@angular/core';
+import { MeteorComponent }                      from 'angular2-meteor';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -28,7 +29,7 @@ import { Injectable }                           from '@angular/core';
  * @summary Handles the users login and logout cases with related observables.
  */
 @Injectable()
-export class UserAuthService
+export class UserAuthService extends MeteorComponent
 {
 
     /**
@@ -41,20 +42,21 @@ export class UserAuthService
      * @summary creates a subject of the Meteors user object.
      * @see this._isLoggedStream
      */
-    private _userStream = new Subject<Meteor.User>();
+    private _userStream = new BehaviorSubject<Meteor.User>(null);
 
     constructor()
     {
-        const _id = this.getId();
+        super();
 
-        Meteor.subscribe('user', _id, () =>
+        this.subscribe('user', this.getId(), () =>
         {
-            const user = Meteor.users.findOne({_id});
-
-            if (user)
+            this.autorun(() =>
             {
-                this._updateUserStream(user);
-            }
+                const user = Meteor.users.findOne({_id: this.getId()});
+
+                if (user)
+                    this._updateUserStream(user);
+            });
         });
     }
 

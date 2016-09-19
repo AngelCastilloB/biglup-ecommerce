@@ -67,7 +67,7 @@ export class CartComponent implements OnInit, OnDestroy
         {
             this._userSubscription = this._userAuthService
                 .getUserStream()
-                .subscribe(user => this._cart = user.cart);
+                .subscribe(user => this._cart = user ? user.cart : null);
         });
     }
 
