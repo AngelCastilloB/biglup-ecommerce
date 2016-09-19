@@ -17,10 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }                  from '@angular/core';
-import { Meteor }                      from 'meteor/meteor';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Cart }                        from '../../common/models';
+import { Injectable }                            from '@angular/core';
+import { Meteor }                                from 'meteor/meteor';
+import { Observable, BehaviorSubject, Observer } from 'rxjs';
+import { Cart }                                  from '../../common/models';
 
 // RxJS imports
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -66,14 +66,64 @@ export class CartsService
         {
             Meteor.call('addProductToCart', productId, quantity, set, (error, results) =>
             {
-                if (error)
-                {
-                    return observer.error(error);
-                }
-
-                observer.next(results);
-                observer.complete();
+                this._handleMeteorMethod(observer, error, results);
             });
         });
+    }
+
+    /**
+     * @summary Removes an item from any user's cart.
+     *
+     * @param {string} userId The id of the user to be manipulated.
+     * @param {string} productId The id of the product to be removed.
+     *
+     * @returns {Observable<boolean>}
+     */
+    public removeItem(userId: string, productId: string): Observable<boolean>
+    {
+        return Observable.create(observer =>
+        {
+            Meteor.call('deleteProductFromCart', userId, productId, (error, results) =>
+            {
+                this._handleMeteorMethod(observer, error, results);
+            });
+        });
+    }
+
+    /**
+     * @summary Removes all items in the cart associated to an user.
+     *
+     * @param {string} userId The id of the user to be manipulated.
+     *
+     * @returns {Observable<boolean>}
+     */
+    public removeAllItems(userId: string): Observable<boolean>
+    {
+        return Observable.create(observer =>
+        {
+            Meteor.call('deleteAllProductsFromCart', userId, (error, results) =>
+            {
+                this._handleMeteorMethod(observer, error, results);
+            });
+        });
+    }
+
+    /**
+     * @summary handles the generic meteor method calls to the server.
+     *
+     * @param {Observer} observer The observer object.
+     * @param {Meteor.Error} error The error from the server.
+     * @param {*} results The results from the server.
+     * @private
+     */
+    private _handleMeteorMethod(observer: Observer, error: Meteor.Error, results: any)
+    {
+        if (error)
+        {
+            return observer.error(error);
+        }
+
+        observer.next(results);
+        observer.complete();
     }
 }
