@@ -46,6 +46,10 @@ export const CartSchema: any = new SimpleSchema({
         label: `${CART_SCHEMA_NAME} productId`,
         type: String
     },
+    'items.$.image': {
+        label: `${CART_SCHEMA_NAME} image`,
+        type: String
+    },
     'items.$.quantity': {
         label: `${CART_ITEM_SCHEMA_NAME} quantity`,
         type: Number,

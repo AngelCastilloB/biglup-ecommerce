@@ -82,7 +82,15 @@ Meteor.methods({
                 'The product that you are trying to add to the cart does not exist.');
         }
 
-        let item: CartItem   = new CartItem(productId, quantity, product.title, product.color, product.size);
+        let item: CartItem = new CartItem(
+            productId,
+            quantity,
+            product.title,
+            product.color,
+            product.size,
+            product.images[0].url
+        );
+
         let selector: Object = {_id: userId};
         let modifier: Object;
 
