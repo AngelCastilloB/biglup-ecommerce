@@ -24,9 +24,10 @@ import template from './cart.component.html';
 import 'reflect-metadata';
 
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Cart }                                 from '../../../../../common/models';
+import { Cart, CartItem, User }                 from '../../../../../common/models';
 import { Subscription }                         from 'rxjs';
 import { UserAuthService }                      from '../../../../services/user-auth.service';
+import { CartsService }                         from '../../../../services/carts.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -37,6 +38,8 @@ import { UserAuthService }                      from '../../../../services/user-
 })
 export class CartComponent implements OnInit, OnDestroy
 {
+
+    private _user: User;
 
     /**
      * @summary the current user's cart.
@@ -51,11 +54,30 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary the cart component constructor.
      *
+     * @param {CartsService}    _cartsService    The carts service.
      * @param {UserAuthService} _userAuthService The user auth service.
      * @param {NgZone}          _ngZone          Ng2 external computation zone.
      */
-    constructor(private _userAuthService: UserAuthService, private _ngZone: NgZone)
+    constructor(private _cartsService: CartsService,
+                private _userAuthService: UserAuthService,
+                private _ngZone: NgZone)
     {
+    }
+
+    /**
+     * @summary gives the items inside the cart.
+     *
+     * @returns {CartItem[]}
+     * @private
+     */
+    private get _items(): CartItem[]
+    {
+        if (this._cart && this._cart.items)
+        {
+            return this._cart.items;
+        }
+
+        return [];
     }
 
     /**
@@ -67,7 +89,11 @@ export class CartComponent implements OnInit, OnDestroy
         {
             this._userSubscription = this._userAuthService
                 .getUserStream()
-                .subscribe(user => this._cart = user ? user.cart : null);
+                .subscribe(user =>
+                {
+                    this._user = user;
+                    this._cart = user ? user.cart : null;
+                });
         });
     }
 
@@ -85,7 +111,7 @@ export class CartComponent implements OnInit, OnDestroy
      * @returns {number}
      * @private
      */
-    private _cartItemCount()
+    private _cartItemCount(): number
     {
         if (this._cart && this._cart.items)
         {
@@ -93,5 +119,30 @@ export class CartComponent implements OnInit, OnDestroy
         }
 
         return 0;
+    }
+
+    /**
+     * @summary wrapper around the cart's item count.
+     *
+     * @returns {boolean}
+     * @private
+     */
+    private _hasItems(): boolean
+    {
+        return !!this._cartItemCount();
+    }
+
+    /**
+     * @summary removes an item from the current cart.
+     *
+     * @param {CartItem} item The item to be removed.
+     * @private
+     */
+    private _onClickRemoveItem(item: CartItem): void
+    {
+        this._cartsService.removeItem(this._user._id, item.productId).subscribe(
+            status => console.log(status),
+            error => console.log('handle remove item from cart error!', error)
+        );
     }
 }

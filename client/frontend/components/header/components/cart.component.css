@@ -3,3 +3,16 @@
     margin-left: 1rem;
     margin-right: 1rem;
 }
+
+.cart-item-wrapper
+{
+    background-color: white;
+    position: absolute;
+    z-index: 20;
+}
+
+.cart-item-image
+{
+    max-height: 96px;
+    max-width: 96px;
+}
