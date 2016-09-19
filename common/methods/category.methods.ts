@@ -20,6 +20,7 @@
 import { Categories }     from '../collections/category.collection';
 import { CategorySchema } from '../schemas/category.schema';
 import { Category }       from '../models';
+import { getUser }        from '../helpers/get-user';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -33,13 +34,12 @@ import { Category }       from '../models';
 Meteor.methods({
     createCategory(category: Category)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.createCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!getUser(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'categories.createCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         check(category, CategorySchema);
 
@@ -56,13 +56,12 @@ Meteor.methods({
 Meteor.methods({
     deleteCategory(categoryId: string)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.deleteCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!getUser(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'categories.deleteCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         check(categoryId, String);
 
@@ -96,13 +95,12 @@ Meteor.methods({
     {
         check(category, CategorySchema);
 
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.updateCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!getUser(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'categories.updateCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         if (!category._id || category._id === '')
         {

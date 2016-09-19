@@ -151,7 +151,7 @@ Meteor.methods({
 Meteor.methods({
     deleteAllProductsFromCart(userId: string)
     {
-        if (getUser(this.userId).isAdmin)
+        if (!getUser(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'cart.deleteAllProducts.unauthorized',
@@ -168,7 +168,7 @@ Meteor.methods({
 Meteor.methods({
     deleteProductFromCart(userId: string, productId: string)
     {
-        if (getUser(this.userId).isAdmin)
+        if (!getUser(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'cart.deleteProduct.unauthorized',
