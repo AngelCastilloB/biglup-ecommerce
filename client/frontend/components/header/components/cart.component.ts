@@ -39,6 +39,9 @@ import { CartsService }                         from '../../../../services/carts
 export class CartComponent implements OnInit, OnDestroy
 {
 
+    /**
+     * @summary The current authenticated user.
+     */
     private _user: User;
 
     /**
@@ -106,12 +109,12 @@ export class CartComponent implements OnInit, OnDestroy
     }
 
     /**
-     * @summary gives the current cart's item count
+     * @summary Gives the current cart's item count
      *
-     * @returns {number}
+     * @returns {number} The existing item amount in the cart
      * @private
      */
-    private _cartItemCount(): number
+    private _getCartItemCount(): number
     {
         if (this._cart && this._cart.items)
         {
@@ -129,7 +132,7 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private _hasItems(): boolean
     {
-        return !!this._cartItemCount();
+        return !!this._getCartItemCount();
     }
 
     /**
