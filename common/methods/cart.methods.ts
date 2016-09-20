@@ -167,7 +167,7 @@ Meteor.methods({
 Meteor.methods({
     deleteProductFromCart(userId: string, productId: string)
     {
-        if (!Meteor.users.findOne(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin && userId !== this.userId)
         {
             throw new Meteor.Error(
                 'deleteProductFromCart.unauthorized',
