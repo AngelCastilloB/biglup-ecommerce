@@ -116,7 +116,7 @@ export class CartsService
      * @param {*} results The results from the server.
      * @private
      */
-    private _completeMeteorSubscription(observer: Observer, error: Meteor.Error, results: any)
+    private _completeMeteorSubscription(observer: Observer<any>, error: Meteor.Error, results: any)
     {
         if (error)
         {
