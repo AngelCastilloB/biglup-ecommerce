@@ -20,7 +20,7 @@
 import { Categories }     from '../collections/category.collection';
 import { CategorySchema } from '../schemas/category.schema';
 import { Category }       from '../models';
-import { getUser }        from '../helpers/get-user';
+import { Meteor }         from 'meteor/meteor';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -34,7 +34,7 @@ import { getUser }        from '../helpers/get-user';
 Meteor.methods({
     createCategory(category: Category)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'categories.createCategory.unauthorized',
@@ -56,7 +56,7 @@ Meteor.methods({
 Meteor.methods({
     deleteCategory(categoryId: string)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'categories.deleteCategory.unauthorized',
@@ -95,7 +95,7 @@ Meteor.methods({
     {
         check(category, CategorySchema);
 
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'categories.updateCategory.unauthorized',

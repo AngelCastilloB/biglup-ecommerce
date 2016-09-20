@@ -20,7 +20,6 @@
 import { Products }                from '../collections/product.collection';
 import { Cart, CartItem, Product } from '../models';
 import { Meteor }                  from 'meteor/meteor';
-import { getUser }                 from '../helpers/get-user';
 
 // FUNCTIONS **********************************************************************************************************/
 
@@ -61,7 +60,7 @@ const findProduct = (cart: Cart, productId: string): number =>
 Meteor.methods({
     addProductToCart(productId: string, quantity: number, set = false, userId?: string)
     {
-        const user = getUser(this.userId);
+        const user = Meteor.users.findOne(this.userId);
 
         if (userId && user.isAdmin)
         {
@@ -151,7 +150,7 @@ Meteor.methods({
 Meteor.methods({
     deleteAllProductsFromCart(userId: string)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'cart.deleteAllProducts.unauthorized',
@@ -168,7 +167,7 @@ Meteor.methods({
 Meteor.methods({
     deleteProductFromCart(userId: string, productId: string)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'cart.deleteProduct.unauthorized',

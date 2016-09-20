@@ -22,7 +22,7 @@ import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
 import { Product, ProductImage } from '../models';
-import { getUser }               from '../helpers/get-user';
+import { Meteor }                from 'meteor/meteor';
 
 // INNER FUNCTIONS ****************************************************************************************************/
 
@@ -66,7 +66,7 @@ const removeAllImages = (images: Array<ProductImage>) =>
 Meteor.methods({
     createProduct(product: Product)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'products.createProduct.unauthorized',
@@ -101,7 +101,7 @@ Meteor.methods({
 Meteor.methods({
     deleteProduct(productId: string)
     {
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'products.deleteProduct.unauthorized',
@@ -137,7 +137,7 @@ Meteor.methods({
     {
         check(product, ProductSchema);
 
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'products.updateProduct.unauthorized',
@@ -181,7 +181,7 @@ Meteor.methods({
     {
         check(id, String);
 
-        if (!getUser(this.userId).isAdmin)
+        if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'products.removeCategory.unauthorized',
