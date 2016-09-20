@@ -66,7 +66,7 @@ export class CartsService
         {
             Meteor.call('addProductToCart', productId, quantity, set, (error, results) =>
             {
-                this._handleMeteorMethod(observer, error, results);
+                this._completeMeteorSubscription(observer, error, results);
             });
         });
     }
@@ -85,7 +85,7 @@ export class CartsService
         {
             Meteor.call('deleteProductFromCart', userId, productId, (error, results) =>
             {
-                this._handleMeteorMethod(observer, error, results);
+                this._completeMeteorSubscription(observer, error, results);
             });
         });
     }
@@ -103,7 +103,7 @@ export class CartsService
         {
             Meteor.call('deleteAllProductsFromCart', userId, (error, results) =>
             {
-                this._handleMeteorMethod(observer, error, results);
+                this._completeMeteorSubscription(observer, error, results);
             });
         });
     }
@@ -116,7 +116,7 @@ export class CartsService
      * @param {*} results The results from the server.
      * @private
      */
-    private _handleMeteorMethod(observer: Observer, error: Meteor.Error, results: any)
+    private _completeMeteorSubscription(observer: Observer, error: Meteor.Error, results: any)
     {
         if (error)
         {
