@@ -23,18 +23,35 @@ import template from './cart.component.html';
 
 import 'reflect-metadata';
 
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Cart, CartItem, User }                 from '../../../../../common/models';
-import { Subscription }                         from 'rxjs';
-import { UserAuthService }                      from '../../../../services/user-auth.service';
-import { CartsService }                         from '../../../../services/carts.service';
+import {
+    Component, OnInit, OnDestroy,
+    NgZone, style, state,
+    animate, transition, trigger
+}                          from '@angular/core';
+import { Cart, CartItem }  from '../../../../../common/models';
+import { Subscription }    from 'rxjs';
+import { UserAuthService } from '../../../../services/user-auth.service';
+import { CartsService }    from '../../../../services/carts.service';
+import { Meteor }          from 'meteor/meteor';
 
 // EXPORTS ************************************************************************************************************/
 
 @Component({
     selector: 'cart',
     template,
-    styleUrls: ['cart.component.css']
+    styleUrls: ['cart.component.css'],
+    animations: [
+        trigger('showCart', [
+            state('true', style({
+                opacity: 1
+            })),
+            state('false', style({
+                opacity: 0
+            })),
+            transition('0 => 1', animate('100ms')),
+            transition('1 => 0', animate('500ms'))
+        ])
+    ]
 })
 export class CartComponent implements OnInit, OnDestroy
 {
@@ -42,7 +59,7 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary The current authenticated user.
      */
-    private _user: User;
+    private _user: Meteor.User;
 
     /**
      * @summary the current user's cart.
@@ -55,6 +72,11 @@ export class CartComponent implements OnInit, OnDestroy
     private _userSubscription: Subscription;
 
     /**
+     * @summary Controls whether the cart and its items are shown to the user.
+     */
+    private _isCartVisible: boolean;
+
+    /**
      * @summary the cart component constructor.
      *
      * @param {CartsService}    _cartsService    The carts service.
@@ -65,6 +87,13 @@ export class CartComponent implements OnInit, OnDestroy
                 private _userAuthService: UserAuthService,
                 private _ngZone: NgZone)
     {
+    }
+
+    private get _cartItemsCss()
+    {
+        return {
+            top: this._isCartVisible ? 'initial' : '-2000px'
+        };
     }
 
     /**
@@ -80,6 +109,8 @@ export class CartComponent implements OnInit, OnDestroy
             return this._cart.items;
         }
 
+        this._isCartVisible = false;
+
         return [];
     }
 
@@ -88,16 +119,13 @@ export class CartComponent implements OnInit, OnDestroy
      */
     public ngOnInit()
     {
-        this._ngZone.run(() =>
-        {
-            this._userSubscription = this._userAuthService
-                .getUserStream()
-                .subscribe(user =>
-                {
-                    this._user = user;
-                    this._cart = user ? user.cart : null;
-                });
-        });
+        this._userSubscription = this._userAuthService
+            .getUserStream()
+            .subscribe(user =>
+            {
+                this._user = user;
+                this._cart = user ? user.cart : null;
+            });
     }
 
     /**
@@ -120,6 +148,8 @@ export class CartComponent implements OnInit, OnDestroy
         {
             return this._cart.items.length;
         }
+
+        this._isCartVisible = false;
 
         return 0;
     }
@@ -144,7 +174,18 @@ export class CartComponent implements OnInit, OnDestroy
     private _onClickRemoveItem(item: CartItem): void
     {
         this._cartsService.removeItem(this._user._id, item.productId).subscribe(
-            status => console.log(status),
+            status =>
+            {
+                if (!status)
+                {
+                    console.error(status);
+                }
+
+                if (this._items <= 0)
+                {
+                    return this._isCartVisible = false;
+                }
+            },
             error => console.log('handle remove item from cart error!', error)
         );
     }

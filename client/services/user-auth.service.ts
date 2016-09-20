@@ -17,11 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { Meteor }                               from 'meteor/meteor';
-import { Accounts }                             from 'meteor/accounts-base';
-import { Injectable }                           from '@angular/core';
-import { MeteorComponent }                      from 'angular2-meteor';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Meteor }                      from 'meteor/meteor';
+import { Accounts }                    from 'meteor/accounts-base';
+import { Injectable }                  from '@angular/core';
+import { MeteorComponent }             from 'angular2-meteor';
 
 // EXPORTS ************************************************************************************************************/
 
