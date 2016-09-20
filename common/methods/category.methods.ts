@@ -37,7 +37,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'categories.createCategory.unauthorized',
+                'createCategory.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
@@ -59,7 +59,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'categories.deleteCategory.unauthorized',
+                'deleteCategory.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
@@ -98,7 +98,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'categories.updateCategory.unauthorized',
+                'updateCategory.unauthorized',
                 'You are not authorized to perform this action.');
         }
 

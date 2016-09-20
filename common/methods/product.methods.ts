@@ -69,7 +69,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'products.createProduct.unauthorized',
+                'createProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
@@ -104,7 +104,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'products.deleteProduct.unauthorized',
+                'deleteProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
@@ -140,7 +140,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'products.updateProduct.unauthorized',
+                'updateProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
@@ -184,7 +184,7 @@ Meteor.methods({
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
-                'products.removeCategory.unauthorized',
+                'removeCategory.unauthorized',
                 'You are not authorized to perform this action.');
         }
 
