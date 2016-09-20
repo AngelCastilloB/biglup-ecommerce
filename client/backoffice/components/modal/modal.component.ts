@@ -28,14 +28,14 @@ import { Component,
          style,
          transition,
          animate,
-         keyframes }          from '@angular/core';
-import { MeteorComponent }    from 'angular2-meteor';
-import {_T }                  from '../../../services/i18n/i18n-singleton.service';
+         keyframes }        from '@angular/core';
+import { MeteorComponent }  from 'angular2-meteor';
+import {_T }                from '../../../services/i18n/i18n-singleton.service';
+import { Observable }       from 'rxjs';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './modal.component.html';
-import { Observable } from 'rxjs';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -61,12 +61,12 @@ export enum ModalType
  */
 export enum ModalResult
 {
-    Ok       = 0,
-    Cancel   = 1,
-    Yes      = 2,
-    No       = 3,
-    Continue = 4,
-    None     = 5
+    None     = 0,
+    Ok       = 1,
+    Cancel   = 2,
+    Yes      = 3,
+    No       = 4,
+    Continue = 5
 }
 
 /**
@@ -256,7 +256,7 @@ export class ModalComponent extends MeteorComponent
             this._subscription.unsubscribe();
 
             this._busy    = false;
-            this._message = _T('The operation was canceled!');
+            this._message = _T('The operation was canceled.');
             this._type    = ModalType.Warning;
             this._buttons = ModalButtons.Ok;
 

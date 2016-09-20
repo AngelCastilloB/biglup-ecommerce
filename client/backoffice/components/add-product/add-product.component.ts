@@ -29,6 +29,7 @@ import { ModalComponent }           from '../modal/modal.component';
 import { ProductsService }          from '../../../services/products.service.ts';
 import { CategoriesService }        from '../../../services/categories.service';
 import { Product }                  from '../../../../common/models';
+import { I18nString }               from '../../../../common/models/i18n-string';
 
 // Methods
 import '../../../../common/methods/product.methods';
@@ -48,15 +49,15 @@ import template from './add-product.component.html';
 })
 export class AddProductComponent extends MeteorComponent implements OnInit
 {
-    private _i18nService:        I18nSingletonService = I18nSingletonService.getInstance();
-    private _product:            Product              = new Product();
-    private _productTitle:       string               = '';
-    private _productDescription: string               = '';
+    private _i18nService:          I18nSingletonService = I18nSingletonService.getInstance();
+    private _product:              Product              = new Product();
     @ViewChild(ModalComponent)
-    private _modal:              ModalComponent;
-    private _waitModalResult:    boolean = false;
-    private _isEditMode:         boolean = false;
-    private _uploadProgress:     number  = 0;
+    private _modal:                 ModalComponent;
+    private _waitModalResult:       boolean = false;
+    private _isEditMode:            boolean = false;
+    private _uploadProgress:        number  = 0;
+    private _i18nTitleReferenceMap: Object               = {};
+    private _i18nDescReferenceMap:  Object               = {};
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -68,8 +69,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         private _categoriesService: CategoriesService)
     {
         super();
-        this._productTitle       = '';
-        this._productDescription = '';
     }
 
     /**
@@ -83,40 +82,52 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
             if (!this._product._id)
             {
+                this._i18nService.getSupportedLanguages().forEach((lang) =>
+                {
+                    let info: I18nString = new I18nString(lang);
+                    let name: I18nString = new I18nString(lang);
+
+                    this._product.title.push(name);
+                    this._i18nTitleReferenceMap[lang] = name;
+
+                    this._product.description.push(info);
+                    this._i18nDescReferenceMap[lang] = info;
+                });
+
                 return;
             }
 
             this._productsService.getProduct(this._product._id).subscribe(
                 (product: Product) =>
                 {
-                    this._product            = product;
-                    this._productTitle       = this._i18nService.getMongoText(this._product.title);
-                    this._productDescription = this._i18nService.getMongoText(this._product.description);
-                    this._isEditMode         = true;
+                    this._product   = product;
+                    this._isEditMode = true;
+
+                    this._i18nService.getSupportedLanguages().forEach((lang) =>
+                    {
+                        let title: I18nString = this._product.title.find(
+                            (i18nString) => i18nString.language === lang);
+
+                        let description: I18nString = this._product.description.find(
+                            (i18nString) => i18nString.language === lang);
+
+                        if (!title)
+                        {
+                            title = new I18nString(lang);
+                            this._product.title.push(title);
+                        }
+
+                        if (!description)
+                        {
+                            description = new I18nString(lang);
+                            this._product.description.push(description);
+                        }
+
+                        this._i18nTitleReferenceMap[lang] = title;
+                        this._i18nDescReferenceMap[lang] = description;
+                    });
                 });
         });
-    }
-
-    /**
-     * @summary Event triggered when the title has changed.
-     *
-     * @param newTitle The new title to be set.
-     */
-    private _onTitleChange(newTitle: any): void
-    {
-        this._productTitle  = newTitle;
-        this._product.title = [{language: this._i18nService.getLocale(), value: this._productTitle}];
-    }
-
-    /**
-     * @summary Event triggered when the description has changed.
-     *
-     * @param newDescription The new description to be set.
-     */
-    private _onDescriptionChange(newDescription: string): void
-    {
-        this._productDescription  = newDescription;
-        this._product.description = [{language: this._i18nService.getLocale(), value: newDescription}];
     }
 
     /**
@@ -265,5 +276,16 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
             this._router.navigate(['/admin/products']);
         }
+    }
+
+    /**
+     * @summary Gets the translation for 'Title' for the given language.
+     *
+     * @returns {string} The translation.
+     * @private
+     */
+    private _getTitleTranslation(): string
+    {
+        return _T('Title');
     }
 }
