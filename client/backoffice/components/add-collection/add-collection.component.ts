@@ -21,18 +21,20 @@ import 'reflect-metadata';
 
 import { Component,
          OnInit,
-         ViewChild }                from '@angular/core';
-import { Router, ActivatedRoute }   from '@angular/router';
-import { MeteorComponent }          from 'angular2-meteor';
-import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
-import { ModalComponent }           from '../../components/modal/modal.component';
-import { Category }                 from '../../../../common/models';
-import { CategoriesService }        from '../../../services/categories.service.ts';
+         ViewChild }                 from '@angular/core';
+import { Router, ActivatedRoute }    from '@angular/router';
+import { MeteorComponent }           from 'angular2-meteor';
+import { I18nSingletonService, _T }  from '../../../services/i18n/i18n-singleton.service';
+import { ModalComponent,
+         ModalType,
+         ModalResult }               from '../../components/modal/modal.component';
+import { Category }                  from '../../../../common/models';
+import { CategoriesService }         from '../../../services/categories.service.ts';
+import { I18nString }                from '../../../../common/models/i18n-string';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './add-collection.component.html';
-import { I18nString } from '../../../../common/models/i18n-string';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -52,7 +54,7 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
     private _waitModalResult:       boolean              = false;
     private _isEditMode:            boolean              = false;
-    private _i18nNameReferenceMap: Object               = {};
+    private _i18nNameReferenceMap:  Object               = {};
     private _i18nInfoReferenceMap:  Object               = {};
 
     /**
@@ -130,32 +132,27 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
         if (!this._category.name || !this._category.info)
         {
             this._modal.show(
+                _T('Information'),
                 _T('Please fill all the required fields.'),
-                _T('Information'));
+                ModalType.Information);
 
             return;
         }
 
-        this._categoriesService.createCategory(this._category).subscribe(
-            (id) =>
-            {
-                this._category._id    = id;
-                this._waitModalResult = true;
+        this._waitModalResult = true;
 
-                this._modal.show(
-                    _T('Category Saved!'),
-                    _T('Information'));
+        this._modal.showObservable(
+            _T('Create Category'),
+            _T('Creating...'),
+            this._categoriesService.createCategory(this._category),
+            {
+                title:   _T('Create Category'),
+                message: _T('Category Created.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error saving the category'),
-                    _T('Error'));
-
-                console.error(error);
-            }
+                title:   _T('Error'),
+                message: _T('There was an error creating the category.')
+            },
         );
     }
 
@@ -164,26 +161,20 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
      */
     private _deleteCategory(): void
     {
-        this._categoriesService.deleteCategory(this._category._id).subscribe(
-            (id) =>
-            {
-                this._category._id    = id;
-                this._waitModalResult = true;
+        this._waitModalResult = true;
 
-                this._modal.show(
-                    _T('Category Deleted!'),
-                    _T('Information'));
+        this._modal.showObservable(
+            _T('Delete Category'),
+            _T('Deleting...'),
+            this._categoriesService.deleteCategory(this._category._id),
+            {
+                title:   _T('Delete Category'),
+                message: _T('Category Deleted.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error saving the category'),
-                    _T('Error'));
-
-                console.error(error);
-            }
+                title:   _T('Error'),
+                message: _T('There was an error deleting the category.')
+            },
         );
     }
 
@@ -196,31 +187,27 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
         if (!this._category.name || !this._category.info)
         {
             this._modal.show(
+                _T('Information'),
                 _T('Please fill all the required fields.'),
-                _T('Information'));
+                ModalType.Information);
 
             return;
         }
 
-        this._categoriesService.updateCategory(this._category).subscribe(
-            () =>
-            {
-                this._waitModalResult = true;
+        this._waitModalResult = true;
 
-                this._modal.show(
-                    _T('Category Updated!'),
-                    _T('Information'));
+        this._modal.showObservable(
+            _T('Update Category'),
+            _T('Updating...'),
+            this._categoriesService.updateCategory(this._category),
+            {
+                title:   _T('Update Category'),
+                message: _T('Category Updated.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error updating the category'),
-                    _T('Error'));
-
-                console.error(error);
-            }
+                title:   _T('Error'),
+                message: _T('There was an error updating the category.')
+            },
         );
     }
 
@@ -235,9 +222,9 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
     /**
      * @summary Handles the modal closed event.
      *
-     * @param event The modal closed event
+     * @param result The modal result.
      */
-    private _onModalClosed(event: any): void
+    private _onModalClosed(result: ModalResult): void
     {
         if (this._waitModalResult)
         {

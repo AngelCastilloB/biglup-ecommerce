@@ -42,19 +42,22 @@
         (click)="_deleteCategory()"
         color="warn">{{'Delete' | translate }}
 </button>
-<button class="add-collection-right-buttons add-collection-buttons"
-        md-raised-button
-        (click)="_onCancel()">{{'Cancel' | translate }}
-</button>
+
 <button class="add-collection-right-buttons add-collection-buttons"
         md-raised-button
         *ngIf="!_isEditMode"
         (click)="_saveCategory()"
         color="primary">{{'Create' | translate }}
 </button>
+
 <button class="add-collection-right-buttons add-collection-buttons"
         md-raised-button
         *ngIf="_isEditMode"
         (click)="_updateCategory()"
         color="primary">{{'Update' | translate }}
+</button>
+
+<button class="add-collection-right-buttons add-collection-buttons"
+        md-raised-button
+        (click)="_onCancel()">{{'Cancel' | translate }}
 </button>
