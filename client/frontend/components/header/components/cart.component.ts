@@ -25,14 +25,13 @@ import 'reflect-metadata';
 
 import {
     Component, OnInit, OnDestroy,
-    NgZone, style, state,
-    animate, transition, trigger
-}                          from '@angular/core';
-import { Cart, CartItem }  from '../../../../../common/models';
-import { Subscription }    from 'rxjs';
-import { UserAuthService } from '../../../../services/user-auth.service';
-import { CartsService }    from '../../../../services/carts.service';
-import { Meteor }          from 'meteor/meteor';
+    style, state, animate,
+    transition, trigger
+}                               from '@angular/core';
+import { Cart, CartItem, User } from '../../../../../common/models';
+import { Subscription }         from 'rxjs';
+import { UserAuthService }      from '../../../../services/user-auth.service';
+import { CartsService }         from '../../../../services/carts.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -64,7 +63,7 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary The current authenticated user.
      */
-    private _user: Meteor.User;
+    private _user: User;
 
     /**
      * @summary the current user's cart.

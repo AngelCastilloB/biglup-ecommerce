@@ -22,6 +22,7 @@ import { Meteor }                      from 'meteor/meteor';
 import { Accounts }                    from 'meteor/accounts-base';
 import { Injectable }                  from '@angular/core';
 import { MeteorComponent }             from 'angular2-meteor';
+import { User }                        from '../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -42,7 +43,7 @@ export class UserAuthService extends MeteorComponent
      * @summary creates a subject of the Meteors user object.
      * @see this._isLoggedStream
      */
-    private _userStream = new BehaviorSubject<Meteor.User>(null);
+    private _userStream = new BehaviorSubject<User>(null);
 
     /**
      * @summary Initializes a new instance of the UserAuthService class.
@@ -96,9 +97,9 @@ export class UserAuthService extends MeteorComponent
     /**
      * @summary Observable stream of the Meteor user object.
      *
-     * @returns {Observable<Meteor.User>}
+     * @returns {Observable<User>}
      */
-    public getUserStream(): Observable<Meteor.User>
+    public getUserStream(): Observable<User>
     {
         return this._userStream;
     }
@@ -219,10 +220,10 @@ export class UserAuthService extends MeteorComponent
     /**
      * @summary Updates all streams related to user events.
      *
-     * @param {Meteor.User} user the user object
+     * @param {User} user the user object
      * @private
      */
-    private _updateUserStream(user?: Meteor.User)
+    private _updateUserStream(user?: User)
     {
         this._isLoggedStream.next(!!user);
         this._userStream.next(user);
