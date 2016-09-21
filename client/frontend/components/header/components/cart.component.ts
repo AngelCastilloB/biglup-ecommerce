@@ -66,14 +66,19 @@ export class CartComponent implements OnInit, OnDestroy
     private _user: User;
 
     /**
-     * @summary the current user's cart.
+     * @summary The current user's cart.
      */
     private _cart: Cart;
 
     /**
-     * @summary the cart service subscription.
+     * @summary The user service subscription.
      */
     private _userSubscription: Subscription;
+
+    /**
+     * @summary The cart service subscription.
+     */
+    private _cartSubscription: Subscription;
 
     /**
      * @summary Controls whether the cart and its items are shown to the user.
@@ -129,11 +134,11 @@ export class CartComponent implements OnInit, OnDestroy
     {
         this._userSubscription = this._userAuthService
             .getUserStream()
-            .subscribe(user =>
-            {
-                this._user = user;
-                this._cart = user ? user.cart : null;
-            });
+            .subscribe(user => this._user = user);
+
+        this._cartSubscription = this._cartsService
+            .getUserCartStream()
+            .subscribe(cart => this._cart = cart);
     }
 
     /**
@@ -142,6 +147,7 @@ export class CartComponent implements OnInit, OnDestroy
     public ngOnDestroy(): void
     {
         this._userSubscription.unsubscribe();
+        this._cartSubscription.unsubscribe();
     }
 
     /**
@@ -181,7 +187,9 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private _onClickRemoveItem(item: CartItem): void
     {
-        this._cartsService.removeItem(this._user._id, item.productId).subscribe(
+        const userId = this._user ? this._user._id : null;
+
+        this._cartsService.removeItem(userId, item.productId).subscribe(
             status =>
             {
                 if (!status)
@@ -189,7 +197,7 @@ export class CartComponent implements OnInit, OnDestroy
                     console.error(status);
                 }
 
-                if (this._items <= 0)
+                if (this._items.length <= 0)
                 {
                     return this._isCartVisible = false;
                 }

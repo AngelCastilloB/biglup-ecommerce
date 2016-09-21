@@ -56,7 +56,7 @@ export class UserAuthService extends MeteorComponent
         {
             this.autorun(() =>
             {
-                const user = Meteor.users.findOne({_id: this.getId()});
+                const user = <User>Meteor.users.findOne({_id: this.getId()});
 
                 if (user)
                     this._updateUserStream(user);
@@ -208,7 +208,7 @@ export class UserAuthService extends MeteorComponent
     {
         if (!error)
         {
-            this._updateUserStream(Meteor.user());
+            this._updateUserStream(<User>Meteor.user());
         }
 
         if (callback)

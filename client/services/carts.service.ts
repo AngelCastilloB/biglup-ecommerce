@@ -20,7 +20,9 @@
 import { Injectable }                            from '@angular/core';
 import { Meteor }                                from 'meteor/meteor';
 import { Observable, BehaviorSubject, Observer } from 'rxjs';
-import { Cart }                                  from '../../common/models';
+import { Cart, CartItem, Product }               from '../../common/models';
+import { UserAuthService }                       from './user-auth.service';
+import { Products }                              from '../../common/collections/product.collection';
 
 // RxJS imports
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -40,18 +42,73 @@ export class CartsService
     private _carts: Cart[] = [];
 
     /**
-     * @summary the carts observable stream.
+     * @summary The carts observable stream.
+     *
+     * @type {BehaviorSubject<Cart[]>}
+     * @private
      */
     private _cartsCollectionStream = new BehaviorSubject<Cart[]>(this._carts);
 
     /**
-     * @summary returns all the carts in the system.
+     * @summary The user cart observable stream.
+     *
+     * @type {BehaviorSubject<Cart>}
+     * @private
+     */
+    private _userCartStream = new BehaviorSubject<Cart>(null);
+
+    /**
+     * @summary The key used in the Storage object accessed by localStorage.
+     *
+     * @type {string}
+     * @private
+     */
+    private _localStorageCartKey = 'cart';
+
+    /**
+     * @summary Initializes a new instance of the CartComponent class.
+     *
+     * @param {UserAuthService} _userAuthService The user authentication service.
+     */
+    constructor(private _userAuthService: UserAuthService)
+    {
+        this._userAuthService.getUserStream().subscribe(user =>
+        {
+            let cart: Cart;
+
+            if (!user)
+            {
+                cart = this._getLocalStorageCart();
+            }
+            else
+            {
+                cart = user.cart;
+
+                this._deleteLocalStorageCart();
+            }
+
+            this._userCartStream.next(cart);
+        });
+    }
+
+    /**
+     * @summary Observable stream of all carts in the system.
      *
      * @returns {Observable<Cart[]>}
      */
-    public getCarts(): Observable<Cart[]>
+    public getCartsStream(): Observable<Cart[]>
     {
         return this._cartsCollectionStream.distinctUntilChanged();
+    }
+
+    /**
+     * @summary Observable stream of the current user's cart.
+     *
+     * @returns {BehaviorSubject<Cart>}
+     */
+    public getUserCartStream()
+    {
+        return this._userCartStream;
     }
 
     /**
@@ -67,10 +124,18 @@ export class CartsService
     {
         return Observable.create(observer =>
         {
-            Meteor.call('addProductToCart', productId, quantity, set, (error, results) =>
+            if (this._isLocalStorageCartInit())
             {
-                this._completeMeteorSubscription(observer, error, results);
-            });
+                this._addProductToLocalStorageCart(productId, quantity);
+                this._completeSubscription(observer, null, true);
+            }
+            else
+            {
+                Meteor.call('addProductToCart', productId, quantity, set, (error, results) =>
+                {
+                    this._completeSubscription(observer, error, results);
+                });
+            }
         });
     }
 
@@ -86,10 +151,18 @@ export class CartsService
     {
         return Observable.create(observer =>
         {
-            Meteor.call('deleteProductFromCart', userId, productId, (error, results) =>
+            if (this._isLocalStorageCartInit())
             {
-                this._completeMeteorSubscription(observer, error, results);
-            });
+                this._removeProductInLocalStorageCart(productId);
+                this._completeSubscription(observer, null, true);
+            }
+            else
+            {
+                Meteor.call('deleteProductFromCart', userId, productId, (error, results) =>
+                {
+                    this._completeSubscription(observer, error, results);
+                });
+            }
         });
     }
 
@@ -104,10 +177,18 @@ export class CartsService
     {
         return Observable.create(observer =>
         {
-            Meteor.call('deleteAllProductsFromCart', userId, (error, results) =>
+            if (this._isLocalStorageCartInit())
             {
-                this._completeMeteorSubscription(observer, error, results);
-            });
+                this._removeAllProductsInLocalStorageCart();
+                this._completeSubscription(observer, null, true);
+            }
+            else
+            {
+                Meteor.call('deleteAllProductsFromCart', userId, (error, results) =>
+                {
+                    this._completeSubscription(observer, error, results);
+                });
+            }
         });
     }
 
@@ -119,7 +200,7 @@ export class CartsService
      * @param {*} results The results from the server.
      * @private
      */
-    private _completeMeteorSubscription(observer: Observer<any>, error: Meteor.Error, results: any)
+    private _completeSubscription(observer: Observer<any>, error: Meteor.Error, results: any)
     {
         if (error)
         {
@@ -128,5 +209,132 @@ export class CartsService
 
         observer.next(results);
         observer.complete();
+    }
+
+    /**
+     * @summary Finds the cart inside the local storage object of the user's web browser.
+     *
+     * @returns {Cart} The cart object.
+     * @private
+     */
+    private _getLocalStorageCart(): Cart
+    {
+        // TODO decrypt cart inside local storage
+        let cart: any = localStorage.getItem(this._localStorageCartKey);
+
+        if (!cart)
+        {
+            cart = new Cart();
+            this._setLocalStorageCart(cart);
+        }
+        else
+        {
+            cart = JSON.parse(cart);
+        }
+
+        return cart;
+    }
+
+    /**
+     * @summary Puts a cart into the user's local Storage Object.
+     *
+     * @param {Cart} cart The cart object to add.
+     * @private
+     */
+    private _setLocalStorageCart(cart: Cart)
+    {
+        // TODO encrypt cart inside localStorage
+        localStorage.setItem(this._localStorageCartKey, JSON.stringify(cart));
+    }
+
+    /**
+     * @summary Removes the cart from the user's web browser Storage object.
+     * @private
+     */
+    private _deleteLocalStorageCart(): void
+    {
+        localStorage.removeItem(this._localStorageCartKey);
+    }
+
+    /**
+     * @summary Wrapper around the cart object in Storage.
+     *
+     * @returns {boolean} True if the cart exist in the user's web browser.
+     * @private
+     */
+    private _isLocalStorageCartInit()
+    {
+        return !!localStorage.getItem(this._localStorageCartKey);
+    }
+
+    /**
+     * @summary Adds a new item into the local Storage cart.
+     *
+     * @param {string} productId The product to be added to the cart.
+     * @param {number} quantity The amount of this products that wants to be added.
+     * @private
+     */
+    private _addProductToLocalStorageCart(productId: string, quantity: number): void
+    {
+        const cart = this._getLocalStorageCart();
+
+        let item: CartItem = cart.items.find(obj => obj.productId === productId);
+
+        if (!item)
+        {
+            // TODO move product find into its own product service
+            const product: Product = Products.findOne({_id: productId});
+
+            item = new CartItem(
+                productId,
+                quantity,
+                product.title,
+                product.color,
+                product.size,
+                product.images[0].url
+            );
+
+            cart.items.push(item);
+        }
+        else
+        {
+            cart.items.map(obj =>
+            {
+                if (obj.productId === productId)
+                    obj.quantity += quantity;
+            });
+        }
+
+        this._userCartStream.next(cart);
+        this._setLocalStorageCart(cart);
+    }
+
+    /**
+     * @summary Removes a product from the Storage object cart.
+     *
+     * @param {string} productId The product to be removed from the cart.
+     * @private
+     */
+    private _removeProductInLocalStorageCart(productId: string)
+    {
+        const cart = this._getLocalStorageCart();
+        cart.items = cart.items.filter(item => item.productId !== productId);
+
+        this._userCartStream.next(cart);
+        this._setLocalStorageCart(cart);
+    }
+
+    /**
+     * @summary Removes all items inside the localStorage Cart.
+     *
+     * @private
+     */
+    private _removeAllProductsInLocalStorageCart()
+    {
+        const cart = this._getLocalStorageCart();
+        cart.items = [];
+
+        this._userCartStream.next(cart);
+        this._setLocalStorageCart(cart);
     }
 }
