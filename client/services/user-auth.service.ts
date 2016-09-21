@@ -44,6 +44,9 @@ export class UserAuthService extends MeteorComponent
      */
     private _userStream = new BehaviorSubject<Meteor.User>(null);
 
+    /**
+     * @summary Initializes a new instance of the UserAuthService class.
+     */
     constructor()
     {
         super();

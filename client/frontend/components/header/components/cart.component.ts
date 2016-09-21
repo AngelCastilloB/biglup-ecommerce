@@ -36,11 +36,16 @@ import { Meteor }          from 'meteor/meteor';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This component displays the cart and its items with related actions.
+ */
 @Component({
     selector: 'cart',
     template,
     styleUrls: ['cart.component.css'],
     animations: [
+        // gives an animation effect whenever showCart changes.
+        // showCart is bound to the _isVisible flag of this component.
         trigger('showCart', [
             state('true', style({
                 opacity: 1
@@ -77,18 +82,22 @@ export class CartComponent implements OnInit, OnDestroy
     private _isCartVisible: boolean;
 
     /**
-     * @summary the cart component constructor.
+     * @summary Initializes a new instance of the CartComponent class.
      *
      * @param {CartsService}    _cartsService    The carts service.
      * @param {UserAuthService} _userAuthService The user auth service.
-     * @param {NgZone}          _ngZone          Ng2 external computation zone.
      */
-    constructor(private _cartsService: CartsService,
-                private _userAuthService: UserAuthService,
-                private _ngZone: NgZone)
+    constructor(private _cartsService: CartsService, private _userAuthService: UserAuthService)
     {
     }
 
+    /**
+     * @summary Generates the css needed to hide the html element when is not shown
+     * on the view to prevent incorrect behaviour.
+     *
+     * @returns {{top: string}} The CSS object used by the HTML element.
+     * @private
+     */
     private get _cartItemsCss()
     {
         return {
@@ -99,7 +108,7 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary gives the items inside the cart.
      *
-     * @returns {CartItem[]}
+     * @returns {CartItem[]} The current set of CartItems.
      * @private
      */
     private get _items(): CartItem[]
@@ -115,7 +124,7 @@ export class CartComponent implements OnInit, OnDestroy
     }
 
     /**
-     * @summary used in the ng2 creation cycle.
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
     public ngOnInit()
     {
@@ -129,7 +138,7 @@ export class CartComponent implements OnInit, OnDestroy
     }
 
     /**
-     * @summary used in the ng2 destroy cycle.
+     * @summary Invoked just before Angular destroys the directive/component.
      */
     public ngOnDestroy(): void
     {

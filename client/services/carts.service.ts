@@ -27,6 +27,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 // EXPORTS ************************************************************************************************************/
 
+/**
+ * @summary This service is responsible of all Cart and CartItems related actions and services.
+ */
 @Injectable()
 export class CartsService
 {
