@@ -49,13 +49,12 @@ import template from './add-product.component.html';
 })
 export class AddProductComponent extends MeteorComponent implements OnInit
 {
-    private _i18nService:          I18nSingletonService = I18nSingletonService.getInstance();
-    private _product:              Product              = new Product();
+    private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
+    private _product:               Product              = new Product();
     @ViewChild(ModalComponent)
     private _modal:                 ModalComponent;
-    private _waitModalResult:       boolean = false;
-    private _isEditMode:            boolean = false;
-    private _uploadProgress:        number  = 0;
+    private _waitModalResult:       boolean              = false;
+    private _isEditMode:            boolean              = false;
     private _i18nTitleReferenceMap: Object               = {};
     private _i18nDescReferenceMap:  Object               = {};
 
@@ -84,14 +83,14 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             {
                 this._i18nService.getSupportedLanguages().forEach((lang) =>
                 {
-                    let info: I18nString = new I18nString(lang);
-                    let name: I18nString = new I18nString(lang);
+                    let title:       Object = { language: lang, value: '' };
+                    let description: Object = { language: lang, value: '' };
 
-                    this._product.title.push(name);
-                    this._i18nTitleReferenceMap[lang] = name;
+                    this._product.title.push(<I18nString>title);
+                    this._i18nTitleReferenceMap[lang] = title;
 
-                    this._product.description.push(info);
-                    this._i18nDescReferenceMap[lang] = info;
+                    this._product.description.push(<I18nString>description);
+                    this._i18nDescReferenceMap[lang] = description;
                 });
 
                 return;
@@ -100,7 +99,7 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             this._productsService.getProduct(this._product._id).subscribe(
                 (product: Product) =>
                 {
-                    this._product   = product;
+                    this._product    = product;
                     this._isEditMode = true;
 
                     this._i18nService.getSupportedLanguages().forEach((lang) =>
@@ -113,18 +112,18 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
                         if (!title)
                         {
-                            title = new I18nString(lang);
-                            this._product.title.push(title);
+                            title = { language: lang, value: '' };
+                            this._product.title.push(<I18nString>title);
                         }
 
                         if (!description)
                         {
-                            description = new I18nString(lang);
-                            this._product.description.push(description);
+                            description = { language: lang, value: '' };
+                            this._product.description.push(<I18nString>description);
                         }
 
                         this._i18nTitleReferenceMap[lang] = title;
-                        this._i18nDescReferenceMap[lang] = description;
+                        this._i18nDescReferenceMap[lang]  = description;
                     });
                 });
         });
@@ -168,30 +167,20 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _saveProduct(): void
     {
-        this._uploadProgress = 0;
-        this._productsService.createProduct(this._product).subscribe(
-            (progress) =>
+        this._waitModalResult = true;
+
+        this._modal.showObservable(
+            _T('Create Product'),
+            _T('Creating...'),
+            this._productsService.createProduct(this._product),
             {
-                this._uploadProgress = progress;
+                title:   _T('Create Product'),
+                message: _T('Product Created.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error saving the product'),
-                    _T('Error'));
-
-                console.error(error);
+                title:   _T('Error'),
+                message: _T('There was an error creating the product.')
             },
-            () =>
-            {
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Product Saved!'),
-                    _T('Information'));
-            }
         );
     }
 
@@ -200,26 +189,20 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _deleteProduct(): void
     {
-        this._productsService.deteleProduct(this._product._id).subscribe(
-            (id) =>
-            {
-                this._product._id     = id;
-                this._waitModalResult = true;
+        this._waitModalResult = true;
 
-                this._modal.show(
-                    _T('Product Deleted!'),
-                    _T('Information'));
+        this._modal.showObservable(
+            _T('Delete Product'),
+            _T('Deleting...'),
+            this._productsService.deteleProduct(this._product._id),
+            {
+                title:   _T('Delete Product'),
+                message: _T('Product Deleted.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error deleting the product'),
-                    _T('Error'));
-
-                console.error(error);
-            }
+                title:   _T('Error'),
+                message: _T('There was an error deleting the product.')
+            },
         );
     }
 
@@ -228,30 +211,20 @@ export class AddProductComponent extends MeteorComponent implements OnInit
      */
     private _updateProduct(): void
     {
-        this._uploadProgress = 0;
-        this._productsService.updateProduct(this._product).subscribe(
-            (progress) =>
+        this._waitModalResult = true;
+
+        this._modal.showObservable(
+            _T('Update Product'),
+            _T('Updating...'),
+            this._productsService.updateProduct(this._product),
             {
-                this._uploadProgress = progress;
+                title:   _T('Update Product'),
+                message: _T('Product Updated.')
             },
-            (error) =>
             {
-                this._waitModalResult = false;
-
-                this._modal.show(
-                    _T('There was an error updating the product'),
-                    _T('Error'));
-
-                console.error(error);
+                title:   _T('Error'),
+                message: _T('There was an error updating the product.')
             },
-            () =>
-            {
-                this._waitModalResult = true;
-
-                this._modal.show(
-                    _T('Product Updated!'),
-                    _T('Information'));
-            }
         );
     }
 

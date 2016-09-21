@@ -16,3 +16,7 @@
     margin-left: 20px!important;
     margin-right: 20px!important;
 }
+
+.clearfix {
+    overflow: auto;
+}

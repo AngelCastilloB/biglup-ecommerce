@@ -20,8 +20,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
-import { I18nStringSchema } from './i18n-string.schema';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { I18nString }   from '../models/i18n-string';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -50,13 +50,13 @@ export let ProductImageSchema: any = new SimpleSchema({
 export let ProductVariantSchema: any = new SimpleSchema({
     color: {
         label: 'Color',
-        type: [I18nStringSchema],
+        type: [I18nString],
         defaultValue: '',
         optional: true
     },
     size: {
         label: 'Size',
-        type: [I18nStringSchema],
+        type: [I18nString],
         defaultValue: '',
         optional: true
     },
@@ -94,8 +94,21 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     title: {
-        type: [I18nStringSchema],
-        defaultValue: ''
+        label: 'Product title',
+        type: Array,
+        defaultValue: []
+    },
+    'title.$': {
+        label: 'Product title translations',
+        type: Object
+    },
+    'title.$.language': {
+        label: 'Language field of the translation',
+        type: String
+    },
+    'title.$.value': {
+        label: 'Value field of the translation,',
+        type: String
     },
     images: {
         type: [ProductImageSchema],
@@ -116,18 +129,32 @@ export let ProductSchema: any = new SimpleSchema({
         optional: true
     },
     description: {
-        type: [I18nStringSchema],
+        label: 'Product description',
+        type: Array,
+        defaultValue: []
+    },
+    'description.$': {
+        label: 'Product description translations',
+        type: Object,
         optional: true
+    },
+    'description.$.language': {
+        label: 'Language field of the translation',
+        type: String
+    },
+    'description.$.value': {
+        label: 'Value field of the translation,',
+        type: String
     },
     color: {
         label: 'Color',
-        type: [I18nStringSchema],
+        type: [I18nString],
         defaultValue: '',
         optional: true
     },
     size: {
         label: 'Size',
-        type: [I18nStringSchema],
+        type: [I18nString],
         defaultValue: '',
         optional: true
     },

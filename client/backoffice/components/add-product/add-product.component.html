@@ -1,9 +1,9 @@
 <modal-message (onClose)="_onModalClosed($event)"></modal-message>
 
-<h3>
+<h1>
   <i class="fa fa-tag"></i>
   <small> {{ 'Add Product' | translate }}</small>
-</h3>
+</h1>
 <hr>
 <br>
 <div class="add-product-grid">
@@ -33,12 +33,11 @@
     <br>
     <md-card>
       <b>{{ 'Pricing' | translate }}</b><br/><br/>
-      <md-input placeholder="Price" align="end" [(ngModel)]="_product.price">
+      <md-input type="number" style="width: 49%" placeholder="Price" align="end" [(ngModel)]="_product.price">
         <span md-prefix></span>
         <span md-suffix>&nbsp;$</span>
       </md-input>
-      <br>
-      <md-input placeholder="Discount" align="end" [(ngModel)]="_product.discount">
+      <md-input type="number" style="width: 49%" placeholder="Discount" align="end" [(ngModel)]="_product.discount">
         <span md-prefix></span>
         <span md-suffix>&nbsp;%</span>
       </md-input>
@@ -56,51 +55,36 @@
     <br>
     <md-card>
       <b>{{ 'Inventory' | translate }}</b><br/><br/>
-      <div class="row">
-        <div class="col-md-6">
-          {{ 'SKU (Stock Keeping Unit)' | translate }}
-          <input type="text" [(ngModel)]="_product.sku" name="sku" id="sku" class="form-control">
-        </div>
-        <div class="col-md-6">
-          {{ 'Barcode (ISBN, UPC, GTIN, etc.)' | translate }}
-          <input type="text" id="barcode" [(ngModel)]="_product.barcode" name="barcode" id="barcode" class="form-control">
-        </div>
-      </div>
+      <md-input style="width: 49%" placeholder="SKU (Stock Keeping Unit)" [(ngModel)]="_product.sku" name="sku" id="sku"></md-input>
+      <md-input style="width: 49%" placeholder="Barcode (ISBN, UPC, GTIN, etc.)" id="barcode" [(ngModel)]="_product.barcode" name="barcode""></md-input>
+      <br>
+      <br>
 
-      {{ 'Inventory Policy' | translate }}
-      <br/>
-      <div class="row">
-        <div class="col-md-6 checkbox-container">
-          <input type="checkbox" [checked]="_product.trackInventory" [(ngModel)]="_product.trackInventory" name="track-inventory" id="track-inventory" class="checkbox"/>
-          <label for="track-inventory" class="checkbox-text">{{ 'Track Inventory' | translate }}</label>
-        </div>
-        <div *ngIf="_product.trackInventory" class="col-md-6">
-          {{ 'Quantity' | translate }}
-          <input type="number" id="quantity" [(ngModel)]="_product.stock" name="quantity" class="form-control">
-        </div>
-      </div>
-      <div *ngIf="_product.trackInventory" class="row">
-        <div class="col-md-12 checkbox-container">
-          <input type="checkbox" [checked]="_product.isBackorder" [(ngModel)]="_product.isBackorder" name="allow-backorder" id="allow-backorder" class="checkbox"/>
-          <label for="allow-backorder" class="checkbox-text">{{ "Allow customers to purchase this product when it's out of stock" | translate }}</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 checkbox-container">
-          <input type="checkbox" [checked]="_product.requiresShipping" [(ngModel)]="_product.requiresShipping"  name="requires-shipping" id="requires-shipping" class="checkbox"/>
-          <label for="requires-shipping" class="checkbox-text">{{ "This product requires shipping" | translate }}</label>
-        </div>
-      </div>
+      <b>{{ 'Inventory Policy' | translate }}</b>
+      <br>
+      <br>
+      <md-checkbox [(ngModel)]="_product.trackInventory">
+        {{ 'Track Inventory' | translate }}
+      </md-checkbox>
+
+      <md-input type="number" *ngIf="_product.trackInventory" style="width: 49%; float: right" placeholder="Quantity" [(ngModel)]="_product.stock" id="quantity" name="quantity"></md-input>
+
+      <div class="clearfix"></div>
+
+      <md-checkbox *ngIf="_product.trackInventory" [(ngModel)]="_product.isBackorder" name="allow-backorder" id="allow-backorder">
+        {{ "Allow customers to purchase this product when it's out of stock" | translate }}
+      </md-checkbox>
+
+      <md-checkbox [(ngModel)]="_product.requiresShipping">
+        {{ "This product requires shipping" | translate }}
+      </md-checkbox>
     </md-card>
     <br>
     <md-card>
       <b>{{ 'Visibility' | translate }}</b><br/><br/>
-      <div class="row">
-        <div class="col-md-12 checkbox-container">
-          <input type="checkbox" [checked]="_product.isVisible" [(ngModel)]="_product.isVisible"  name="is-visible" id="is-visible" class="checkbox"/>
-          <label for="is-visible" class="checkbox-text">{{ "Show this product in the store" | translate }}</label>
-        </div>
-      </div>
+      <md-checkbox [(ngModel)]="_product.isVisible">
+        {{ "Show this product in the store" | translate }}
+      </md-checkbox>
     </md-card>
   </md-grid-list>
 </div>
@@ -130,4 +114,4 @@
         md-raised-button
         (click)="_onCancel()">{{'Cancel' | translate }}
 </button>
-<br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>

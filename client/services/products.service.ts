@@ -25,6 +25,7 @@ import { MeteorComponent }  from 'angular2-meteor';
 import { Product }          from '../../common/models';
 import { ImagesService }    from './images.service';
 import { ProductSchema }    from '../../common/schemas/product.schema';
+import { I18nString }       from '../../common/models/i18n-string';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -137,6 +138,9 @@ export class ProductsService extends MeteorComponent
      */
     public createProduct(product: Product): Observable<number>
     {
+        product.title       = product.title.filter((translation: I18nString) => !!translation.value);
+        product.description = product.description.filter((translation: I18nString) => !!translation.value);
+
         check(product, ProductSchema);
 
         const totalProgress: number = product.images.length * 100;
@@ -173,8 +177,14 @@ export class ProductsService extends MeteorComponent
      */
     public updateProduct(product: Product): Observable<number>
     {
+        product.title       = product.title.filter((translation: I18nString) => !!translation.value);
+        product.description = product.description.filter((translation: I18nString) => !!translation.value);
+
+        console.error(product);
+
         check(product, ProductSchema);
 
+        console.error('pass validation');
         const totalProgress: number = product.images.length * 100;
 
         return Observable
