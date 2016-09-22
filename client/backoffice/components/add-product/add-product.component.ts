@@ -83,13 +83,13 @@ export class AddProductComponent extends MeteorComponent implements OnInit
             {
                 this._i18nService.getSupportedLanguages().forEach((lang) =>
                 {
-                    let title:       Object = { language: lang, value: '' };
-                    let description: Object = { language: lang, value: '' };
+                    let title:       I18nString = new I18nString(lang);
+                    let description: I18nString = new I18nString(lang);
 
-                    this._product.title.push(<I18nString>title);
+                    this._product.title.push(title);
                     this._i18nTitleReferenceMap[lang] = title;
 
-                    this._product.description.push(<I18nString>description);
+                    this._product.description.push(description);
                     this._i18nDescReferenceMap[lang] = description;
                 });
 
@@ -112,13 +112,13 @@ export class AddProductComponent extends MeteorComponent implements OnInit
 
                         if (!title)
                         {
-                            title = { language: lang, value: '' };
+                            title = new I18nString(lang);
                             this._product.title.push(<I18nString>title);
                         }
 
                         if (!description)
                         {
-                            description = { language: lang, value: '' };
+                            description = new I18nString(lang);
                             this._product.description.push(<I18nString>description);
                         }
 
