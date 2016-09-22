@@ -23,6 +23,7 @@ import { Observable, BehaviorSubject, Observer } from 'rxjs';
 import { Cart, CartItem, Product }               from '../../common/models';
 import { UserAuthService }                       from './user-auth.service';
 import { Products }                              from '../../common/collections/product.collection';
+import { NodeCrypto }                            from '../../common/helpers/crypto/node-crypto';
 
 // RxJS imports
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -64,6 +65,11 @@ export class CartsService
      * @private
      */
     private _localStorageCartKey = 'cart';
+
+    /**
+     * @summary The crypto class singleton service.
+     */
+    private _crypto: NodeCrypto = NodeCrypto.getInstance();
 
     /**
      * @summary Initializes a new instance of the CartComponent class.
@@ -219,7 +225,6 @@ export class CartsService
      */
     private _getLocalStorageCart(): Cart
     {
-        // TODO decrypt cart inside local storage
         let cart: any = localStorage.getItem(this._localStorageCartKey);
 
         if (!cart)
@@ -229,6 +234,7 @@ export class CartsService
         }
         else
         {
+            cart = this._crypto.decryptText(cart);
             cart = JSON.parse(cart);
         }
 
@@ -243,8 +249,9 @@ export class CartsService
      */
     private _setLocalStorageCart(cart: Cart)
     {
-        // TODO encrypt cart inside localStorage
-        localStorage.setItem(this._localStorageCartKey, JSON.stringify(cart));
+        const item = this._crypto.encryptText(JSON.stringify(cart));
+
+        localStorage.setItem(this._localStorageCartKey, item);
     }
 
     /**

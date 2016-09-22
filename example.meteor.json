@@ -25,5 +25,9 @@
   "google": {
     "clientId": "",
     "secret": ""
+  },
+  "crypto": {
+    "algorithm": "",
+    "password": ""
   }
 }
