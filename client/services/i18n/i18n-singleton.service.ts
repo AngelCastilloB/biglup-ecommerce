@@ -95,6 +95,16 @@ export class I18nSingletonService
     }
 
     /**
+     * @summary Gets an array with te currently supported languages.
+     *
+     * @returns {string[]} The supported languages (in ISO 639-1)
+     */
+    public getSupportedLanguages()
+    {
+        return Object.keys(this._translations);
+    }
+
+    /**
      * @summary Gets the localized text for the given key.
      *
      * @param {string} key The key.

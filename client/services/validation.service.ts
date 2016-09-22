@@ -56,7 +56,6 @@ export class ValidationService
 
     /**
      * @summary checks if the values from two different control groups are equal.
-     * @see http://stackoverflow.com/a/35642259
      *
      * @param {string} firstControlKey the first group name or key IE: name, password
      * @param {string} secondControlKey the second group name or key IE: another_name, password_confirmation
@@ -68,19 +67,13 @@ export class ValidationService
         return (group: FormGroup) =>
         {
             if (!group.controls[firstControlKey])
-            {
                 throw new Error(`Control group does not posses '${firstControlKey}' as a key.`);
-            }
 
             if (!group.controls[secondControlKey])
-            {
                 throw new Error(`Control group does not posses '${secondControlKey}' as a key.`);
-            }
 
             if (group.controls[firstControlKey].value !== group.controls[secondControlKey].value)
-            {
                 return group.controls[secondControlKey].setErrors({notEqual: true});
-            }
         };
     }
 }

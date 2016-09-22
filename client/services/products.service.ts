@@ -17,12 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import { Product,
+         ProductImage,
+         I18nString }       from '../../common/models';
 import { Injectable }       from '@angular/core';
 import { Products }         from '../../common/collections/product.collection';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { Observable }       from 'rxjs/Observable';
 import { MeteorComponent }  from 'angular2-meteor';
-import { Product }          from '../../common/models';
 import { ImagesService }    from './images.service';
 import { ProductSchema }    from '../../common/schemas/product.schema';
 
@@ -33,15 +35,17 @@ import 'rxjs/add/operator/distinctUntilChanged';
 // INTERNALS **********************************************************************************************************/
 
 /**
- * @summary Performs a deep clone of the product model.
+ * @summary Performs a copy of the product model.
+ *
+ * The image blobs are removed in the process to avoid sending then to the server.
  *
  * @return The cloned instance.
  */
-const cloneProduct = (product: Product) =>
+const copyProduct = (product: Product) =>
 {
     let clone: any = JSON.parse(JSON.stringify(product));
 
-    // Fix the dates.
+    // Fix the dates type safety.
     clone.createdAt   = new Date(clone.createdAt.toString());
     clone.updatedAt   = new Date(clone.updatedAt.toString());
     clone.publishedAt = new Date(clone.publishedAt.toString());
@@ -137,27 +141,26 @@ export class ProductsService extends MeteorComponent
      */
     public createProduct(product: Product): Observable<number>
     {
-        check(product, ProductSchema);
+        product.title       = product.title.filter((translation: I18nString) => !!translation.value);
+        product.description = product.description.filter((translation: I18nString) => !!translation.value);
 
-        const totalProgress:   number = product.images.length * 100;
-        let   currentProgress: number = 0;
+        // HACK: This allows the simple schema to work properly by removing the type safety on all complex types.
+        let copy: Product = copyProduct(product);
+
+        check(copy, ProductSchema);
+
+        const totalProgress: number = product.images.length * 100;
 
         return Observable
             .from(product.images)
             .mergeMap(image => this._imagesService.createProductImage(image))
-            .map(progress =>
-            {
-                currentProgress += (progress / totalProgress) * 100;
-
-                return currentProgress;
-            })
+            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
             .concat(Observable.create(observer =>
             {
-                let clone: Product = cloneProduct(product);
+                // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
+                copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                clone.images.forEach(image => delete image['file'], this);
-
-                this.call('createProduct', clone, (error, result) =>
+                this.call('createProduct', copy, (error) =>
                 {
                     if (error)
                     {
@@ -179,27 +182,26 @@ export class ProductsService extends MeteorComponent
      */
     public updateProduct(product: Product): Observable<number>
     {
-        check(product, ProductSchema);
+        product.title       = product.title.filter((translation: I18nString) => !!translation.value);
+        product.description = product.description.filter((translation: I18nString) => !!translation.value);
 
-        const totalProgress:   number = product.images.length * 100;
-        let   currentProgress: number = 0;
+        // HACK: This allows the simple schema to work properly by removing the type safety on all complex types.
+        let copy: Product = copyProduct(product);
+
+        check(copy, ProductSchema);
+
+        const totalProgress: number = product.images.length * 100;
 
         return Observable
             .from(product.images)
             .mergeMap(image => this._imagesService.createProductImage(image))
-            .map(progress =>
-            {
-                currentProgress += (progress / totalProgress) * 100;
-
-                return currentProgress;
-            })
+            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100), 0)
             .concat(Observable.create(observer =>
             {
-                let clone: Product = cloneProduct(product);
+                // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
+                copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                clone.images.forEach(image => delete image['file'], this);
-
-                this.call('updateProduct', clone, (error, result) =>
+                this.call('updateProduct', copy, (error) =>
                 {
                     if (error)
                     {

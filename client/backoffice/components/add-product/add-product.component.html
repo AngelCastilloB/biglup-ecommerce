@@ -1,122 +1,116 @@
 <modal-message (onClose)="_onModalClosed($event)"></modal-message>
-<div class="container-fluid">
-  <form>
-    <div class="table-responsive">
+
+<h1>
+  <i class="fa fa-tag"></i>
+  <small> {{ 'Add Product' | translate }}</small>
+</h1>
+<hr>
+<br>
+<div class="add-product-grid">
+  <md-grid-list cols="1" *ngIf="_product.title[0]">
+    <md-card>
+      <md-tab-group>
+        <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
+          <md-card-content>
+            <template md-tab-label>{{lang}}</template>
+            <template md-tab-content>
+              <br>
+              <i18n-input [(model)]="_i18nTitleReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
+              <br>
+              <br>
+              {{ 'Description' | translate }}
+              <i18n-text-editor [(model)]="_i18nDescReferenceMap[lang]"></i18n-text-editor>
+            </template>
+          </md-card-content>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
+    <br>
+    <md-card>
+      <product-image-manager #imagesManager [(model)]="_product.images"></product-image-manager>
+    </md-card>
+
+    <br>
+    <md-card>
+      <b>{{ 'Pricing' | translate }}</b><br/><br/>
+      <md-input type="number" style="width: 49%" placeholder="Price" align="end" [(ngModel)]="_product.price">
+        <span md-prefix></span>
+        <span md-suffix>&nbsp;$</span>
+      </md-input>
+      <md-input type="number" style="width: 49%" placeholder="Discount" align="end" [(ngModel)]="_product.discount">
+        <span md-prefix></span>
+        <span md-suffix>&nbsp;%</span>
+      </md-input>
+    </md-card>
+
+    <br>
+    <md-card>
+      <b>{{ 'Categories' | translate }}</b><br/><br/>
+      <md-checkbox *ngFor="let category of _categoriesService.getCategories() | async"
+                   [checked]="_productHasCategory(category._id)"
+                   (change)="_onCategoryToggle(category._id, $event.checked)">
+        {{category.name | mongoTranslate}}
+      </md-checkbox>
+    </md-card>
+    <br>
+    <md-card>
+      <b>{{ 'Inventory' | translate }}</b><br/><br/>
+      <md-input style="width: 49%" placeholder="SKU (Stock Keeping Unit)" [(ngModel)]="_product.sku" name="sku" id="sku"></md-input>
+      <md-input style="width: 49%" placeholder="Barcode (ISBN, UPC, GTIN, etc.)" id="barcode" [(ngModel)]="_product.barcode" name="barcode""></md-input>
       <br>
-      <h3>
-        <i class="fa fa-tag"></i>
-        <small> {{ 'Add Product' | translate }}</small>
-      </h3>
-      <hr>
-        <div class="add-product-content">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-block">
-                {{ 'Title' | translate }}
-                <input type="text" id="title" name="title" class="form-control" required
-                       [value]="_productTitle"
-                       (change)="_onTitleChange($event.target.value)">
+      <br>
 
-                {{ 'Description' | translate }}
-                <text-editor [model]="_productDescription" (modelChange)="_onDescriptionChange($event)"></text-editor>
-              </div>
-            </div>
+      <b>{{ 'Inventory Policy' | translate }}</b>
+      <br>
+      <br>
+      <md-checkbox [(ngModel)]="_product.trackInventory">
+        {{ 'Track Inventory' | translate }}
+      </md-checkbox>
 
-            <product-image-manager #imagesManager [(model)]="_product.images"></product-image-manager>
+      <md-input type="number" *ngIf="_product.trackInventory" style="width: 49%; float: right" placeholder="Quantity" [(ngModel)]="_product.stock" id="quantity" name="quantity"></md-input>
 
-            <div class="card">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="card-block">
-                    <b>{{ 'Pricing' | translate }}</b><br/><br/>
-                    <div class="row">
-                      <div class="col-md-6">
-                        {{ 'Price' | translate }}
-                        <input type="number" id="price" [(ngModel)]="_product.price" name="price" class="form-control">
-                      </div>
-                      <div class="col-md-6">
-                        {{ 'Discount' | translate }}
-                        <input type="number" id="discount" [(ngModel)]="_product.discount" name="discount" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="card-block">
-                    <b>{{ 'Categories' | translate }}</b><br/><br/>
-                    <div class="row" *ngFor="let category of _categoriesService.getCategories() | async">
-                      <div class="col-md-6 checkbox-container">
-                        <input [checked]="_productHasCategory(category._id)" type="checkbox" [attr.id]="category._id" name="track-inventory" class="checkbox"
-                           (change)="_onCategoryToggle($event.target.id, $event.target.checked)"/>
-                        <label [attr.for]="category._id" class="checkbox-text">{{category.name | mongoTranslate}}</label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="card-block">
-                    <b>{{ 'Inventory' | translate }}</b><br/><br/>
-                    <div class="row">
-                      <div class="col-md-6">
-                         {{ 'SKU (Stock Keeping Unit)' | translate }}
-                          <input type="text" [(ngModel)]="_product.sku" name="sku" id="sku" class="form-control">
-                      </div>
-                      <div class="col-md-6">
-                        {{ 'Barcode (ISBN, UPC, GTIN, etc.)' | translate }}
-                        <input type="text" id="barcode" [(ngModel)]="_product.barcode" name="barcode" id="barcode" class="form-control">
-                      </div>
-                    </div>
+      <div class="clearfix"></div>
 
-                    {{ 'Inventory Policy' | translate }}
-                    <br/>
-                    <div class="row">
-                      <div class="col-md-6 checkbox-container">
-                        <input type="checkbox" [checked]="_product.trackInventory" [(ngModel)]="_product.trackInventory" name="track-inventory" id="track-inventory" class="checkbox"/>
-                        <label for="track-inventory" class="checkbox-text">{{ 'Track Inventory' | translate }}</label>
-                      </div>
-                      <div *ngIf="_product.trackInventory" class="col-md-6">
-                          {{ 'Quantity' | translate }}
-                          <input type="number" id="quantity" [(ngModel)]="_product.stock" name="quantity" class="form-control">
-                      </div>
-                    </div>
-                    <div *ngIf="_product.trackInventory" class="row">
-                      <div class="col-md-12 checkbox-container">
-                        <input type="checkbox" [checked]="_product.isBackorder" [(ngModel)]="_product.isBackorder" name="allow-backorder" id="allow-backorder" class="checkbox"/>
-                        <label for="allow-backorder" class="checkbox-text">{{ "Allow customers to purchase this product when it's out of stock" | translate }}</label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 checkbox-container">
-                        <input type="checkbox" [checked]="_product.requiresShipping" [(ngModel)]="_product.requiresShipping"  name="requires-shipping" id="requires-shipping" class="checkbox"/>
-                        <label for="requires-shipping" class="checkbox-text">{{ "This product requires shipping" | translate }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="card-block">
-                    <b>{{ 'Visibility' | translate }}</b><br/><br/>
-                    <div class="row">
-                      <div class="col-md-12 checkbox-container">
-                        <input type="checkbox" [checked]="_product.isVisible" [(ngModel)]="_product.isVisible"  name="is-visible" id="is-visible" class="checkbox"/>
-                        <label for="is-visible" class="checkbox-text">{{ "Show this product in the store" | translate }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      <br/></br>
-      <hr>
-      <div class="bottom-button">
-        <button *ngIf="_isEditMode" type="button" (click)="_deleteProduct()" style="margin-left: 100px" class="btn btn-danger pull-left">{{'Delete' | translate }}</button>
-        <button *ngIf="!_isEditMode"  type="button" (click)="_saveProduct()" class="btn btn-primary save-button pull-right">{{'Create' | translate }}</button>
-        <button *ngIf="_isEditMode" type="button" (click)="_updateProduct()" class="btn btn-primary save-button pull-right">{{'Update' | translate }}</button>
-        <button type="button" (click)="_onCancel()" class="btn btn-primary-outline pull-right">{{'Cancel' | translate }}</button>
-      </div>
-    </div>
-  </form>
+      <md-checkbox *ngIf="_product.trackInventory" [(ngModel)]="_product.isBackorder" name="allow-backorder" id="allow-backorder">
+        {{ "Allow customers to purchase this product when it's out of stock" | translate }}
+      </md-checkbox>
+
+      <md-checkbox [(ngModel)]="_product.requiresShipping">
+        {{ "This product requires shipping" | translate }}
+      </md-checkbox>
+    </md-card>
+    <br>
+    <md-card>
+      <b>{{ 'Visibility' | translate }}</b><br/><br/>
+      <md-checkbox [(ngModel)]="_product.isVisible">
+        {{ "Show this product in the store" | translate }}
+      </md-checkbox>
+    </md-card>
+  </md-grid-list>
 </div>
-</br></br>
+<br>
+<button class="add-product-left-buttons add-product-buttons"
+        md-raised-button
+        *ngIf="_isEditMode"
+        (click)="_deleteProduct()"
+        color="warn">{{'Delete' | translate }}
+</button>
+
+<button class="add-product-right-buttons add-product-buttons"
+        md-raised-button
+        *ngIf="!_isEditMode"
+        (click)="_saveProduct()"
+        color="primary">{{'Create' | translate }}
+</button>
+
+<button class="add-product-right-buttons add-product-buttons"
+        md-raised-button
+        *ngIf="_isEditMode"
+        (click)="_updateProduct()"
+        color="primary">{{'Update' | translate }}
+</button>
+
+<button class="add-product-right-buttons add-product-buttons"
+        md-raised-button
+        (click)="_onCancel()">{{'Cancel' | translate }}
+</button>

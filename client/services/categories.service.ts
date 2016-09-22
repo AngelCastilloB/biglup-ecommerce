@@ -26,6 +26,7 @@ import { Category }        from '../../common/models';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 // EXPORTS ************************************************************************************************************/

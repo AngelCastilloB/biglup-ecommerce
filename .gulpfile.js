@@ -33,13 +33,6 @@ const PATHS = {
     meteor: {
         settings: './example.meteor.json'
     },
-    bootstrap: {
-        css: {
-            glob: './node_modules/bootstrap/dist/css/**/*',
-            src: './public/theme/css/bootstrap.css'
-        },
-        js: {src: './node_modules/bootstrap/dist/js/bootstrap.js'}
-    },
     drag: {
         css: {src: './public/theme/css/drag.min.css'}
     },
@@ -49,12 +42,9 @@ const PATHS = {
             src: './node_modules/@angular2-material/core/overlay/overlay.css'
         }
     },
-    mdb: {
-        css: {src: './public/theme/css/mdb.min.css'},
-        js: {src: './public/theme/js/mdb.min.js'}
-    },
-    tether: {
-        js: {src: './public/theme/js/tether.min.js'}
+    // TODO: Remove once Angular Team provides its own polyfill for web animation.
+    webAnimationPolyfill: {
+        js: {src: './node_modules/web-animations-js/src/web-animations.min.js'}
     },
     public: {css: './public/theme/css', js: './public/theme/js'},
     compatibility: './client/compatibility'
@@ -86,28 +76,11 @@ gulp.task('copy-meteor-settings', function ()
 });
 
 /**
- * @summary copies related bootstrap files
- */
-gulp.task('copy-bootstrap-css', function ()
-{
-    return gulp.src(PATHS.bootstrap.css.glob)
-        .pipe(gulp.dest(PATHS.public.css));
-});
-
-gulp.task('copy-bootstrap-js', function ()
-{
-    return gulp.src(PATHS.bootstrap.js.src)
-        .pipe(gulp.dest(PATHS.public.js));
-});
-
-/**
  * @summary concatenates and minifies the client css files
  */
 gulp.task('uglify-css', function (callback)
 {
     const files = [
-        PATHS.bootstrap.css.src,
-        PATHS.mdb.css.src,
         PATHS.drag.css.src,
         PATHS.ng2Material.css.src
     ];
@@ -130,9 +103,7 @@ gulp.task('uglify-css', function (callback)
 gulp.task('concat-js', function (callback)
 {
     const files = [
-        PATHS.tether.js.src,
-        PATHS.public.js + '/bootstrap.js',
-        PATHS.mdb.js.src
+        PATHS.webAnimationPolyfill.js.src
     ];
 
     pump([
@@ -149,7 +120,7 @@ gulp.task('concat-js', function (callback)
  */
 gulp.task('uglify', function ()
 {
-    sequence('copy-bootstrap-css', 'copy-bootstrap-js', 'uglify-css', 'concat-js');
+    sequence('uglify-css', 'concat-js');
 });
 
 /**
