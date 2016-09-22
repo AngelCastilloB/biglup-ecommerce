@@ -17,15 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
+import { Product,
+         ProductImage,
+         I18nString }       from '../../common/models';
 import { Injectable }       from '@angular/core';
 import { Products }         from '../../common/collections/product.collection';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { Observable }       from 'rxjs/Observable';
 import { MeteorComponent }  from 'angular2-meteor';
-import { Product }          from '../../common/models';
 import { ImagesService }    from './images.service';
 import { ProductSchema }    from '../../common/schemas/product.schema';
-import { I18nString }       from '../../common/models/i18n-string';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -34,15 +35,17 @@ import 'rxjs/add/operator/distinctUntilChanged';
 // INTERNALS **********************************************************************************************************/
 
 /**
- * @summary Performs a deep clone of the product model.
+ * @summary Performs a copy of the product model.
+ *
+ * The image blobs are removed in the process to avoid sending then to the server.
  *
  * @return The cloned instance.
  */
-const cloneProduct = (product: Product) =>
+const copyProduct = (product: Product) =>
 {
     let clone: any = JSON.parse(JSON.stringify(product));
 
-    // Fix the dates.
+    // Fix the dates type safety.
     clone.createdAt   = new Date(clone.createdAt.toString());
     clone.updatedAt   = new Date(clone.updatedAt.toString());
     clone.publishedAt = new Date(clone.publishedAt.toString());
@@ -141,7 +144,10 @@ export class ProductsService extends MeteorComponent
         product.title       = product.title.filter((translation: I18nString) => !!translation.value);
         product.description = product.description.filter((translation: I18nString) => !!translation.value);
 
-        check(product, ProductSchema);
+        // HACK: This allows the simple schema to work properly by removing the type safety on all complex types.
+        let copy: Product = copyProduct(product);
+
+        check(copy, ProductSchema);
 
         const totalProgress: number = product.images.length * 100;
 
@@ -151,11 +157,10 @@ export class ProductsService extends MeteorComponent
             .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
             .concat(Observable.create(observer =>
             {
-                let clone: Product = cloneProduct(product);
+                // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
+                copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                clone.images.forEach(image => delete image['file'], this);
-
-                this.call('createProduct', clone, (error) =>
+                this.call('createProduct', copy, (error) =>
                 {
                     if (error)
                     {
@@ -180,11 +185,11 @@ export class ProductsService extends MeteorComponent
         product.title       = product.title.filter((translation: I18nString) => !!translation.value);
         product.description = product.description.filter((translation: I18nString) => !!translation.value);
 
-        console.error(product);
+        // HACK: This allows the simple schema to work properly by removing the type safety on all complex types.
+        let copy: Product = copyProduct(product);
 
-        check(product, ProductSchema);
+        check(copy, ProductSchema);
 
-        console.error('pass validation');
         const totalProgress: number = product.images.length * 100;
 
         return Observable
@@ -193,11 +198,10 @@ export class ProductsService extends MeteorComponent
             .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100), 0)
             .concat(Observable.create(observer =>
             {
-                let clone: Product = cloneProduct(product);
+                // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
+                copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                clone.images.forEach(image => delete image['file'], this);
-
-                this.call('updateProduct', clone, (error) =>
+                this.call('updateProduct', copy, (error) =>
                 {
                     if (error)
                     {

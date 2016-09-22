@@ -15,34 +15,46 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// We need the correct scope of this inside the schemas.
-// tslint:disable:only-arrow-functions
-
 // IMPORTS ************************************************************************************************************/
 
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { I18nString }   from '../models/i18n-string';
+import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
+import { I18nStringSchema } from './i18n-string.schema';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @brief product image schema.
  */
-export let ProductImageSchema: any = new SimpleSchema({
-    id: {
-        label: 'The id of the image in the image collection',
-        type: String
-    },
-    // Denormalized field: This will avoid the need to query the image collection.
-    url: {
-        label: 'The url of the image',
-        type: String
-    },
-    isUploaded: {
-        label: 'The image upload flag.',
-        type: Boolean
-    }
-});
+export let ProductImageSchema: any = new SimpleSchema(
+    {
+        id:
+        {
+            label: 'The id of the image in the image collection',
+            type: String
+        },
+        // Denormalized field: This will avoid the need to query the image collection.
+        url:
+        {
+            label: 'The url of the image',
+            type: String
+        },
+        isUploaded:
+        {
+            label: 'The image upload flag.',
+            type: Boolean
+        },
+        file:
+        {
+            label: 'The image file object.',
+            type: Object,
+            autoValue()
+            {
+                if (this.isInsert || this.isSet)
+                    this.unset();
+            },
+            optional: true
+        }
+    });
 
 /**
  * @summary The product variant schema.
@@ -50,13 +62,13 @@ export let ProductImageSchema: any = new SimpleSchema({
 export let ProductVariantSchema: any = new SimpleSchema({
     color: {
         label: 'Color',
-        type: [I18nString],
+        type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     size: {
         label: 'Size',
-        type: [I18nString],
+        type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
@@ -83,106 +95,95 @@ export let ProductVariantSchema: any = new SimpleSchema({
  * @summary The product schema.
  */
 export let ProductSchema: any = new SimpleSchema({
-    _id: {
+    _id:
+    {
         type: String,
         label: 'Product Id',
         optional: true
     },
-    categories: {
+    categories:
+    {
         type: [String],
         label: 'Product categories id',
         optional: true
     },
-    title: {
-        label: 'Product title',
-        type: Array,
-        defaultValue: []
+    title:
+    {
+        type: [I18nStringSchema],
+        defaultValue: ''
     },
-    'title.$': {
-        label: 'Product title translations',
-        type: Object
-    },
-    'title.$.language': {
-        label: 'Language field of the translation',
-        type: String
-    },
-    'title.$.value': {
-        label: 'Value field of the translation,',
-        type: String
-    },
-    images: {
+    images:
+    {
         type: [ProductImageSchema],
         optional: true
     },
-    slug: {
+    slug:
+    {
         label: 'The product slug',
         type: String,
         optional: true
     },
-    sku: {
+    sku:
+    {
         type: String,
         label: 'Stock Keeping Unit'
     },
-    barcode: {
+    barcode:
+    {
         type: String,
         label: 'The barcode of the product',
         optional: true
     },
-    description: {
-        label: 'Product description',
-        type: Array,
-        defaultValue: []
-    },
-    'description.$': {
-        label: 'Product description translations',
-        type: Object,
+    description:
+    {
+        type: [I18nStringSchema],
         optional: true
     },
-    'description.$.language': {
-        label: 'Language field of the translation',
-        type: String
-    },
-    'description.$.value': {
-        label: 'Value field of the translation,',
-        type: String
-    },
-    color: {
+    color:
+    {
         label: 'Color',
-        type: [I18nString],
+        type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
-    size: {
+    size:
+    {
         label: 'Size',
-        type: [I18nString],
+        type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
-    price: {
+    price:
+    {
         label: 'Price',
         type: Number
     },
-    discount: {
+    discount:
+    {
         label: 'Discount',
         type: Number
     },
     // Denormalized field: Indicates if this product stock is too low.
-    isLowQuantity: {
+    isLowQuantity:
+    {
         label: 'Indicates that the product quantity is too low',
         type: Boolean,
         optional: true
     },
-    trackInventory: {
+    trackInventory:
+    {
         label: 'Indicates if this product requires inventory tracking',
         type: Boolean,
     },
-    stock: {
+    stock:
+    {
         label: 'Stock',
         type: Number,
         optional: true
     },
     // Denormalized field: Indicates if this product is sold out.
-    isSoldOut: {
+    isSoldOut:
+    {
         label: 'Indicates when the product quantity is zero',
         type: Boolean,
         optional: true
@@ -192,28 +193,33 @@ export let ProductSchema: any = new SimpleSchema({
         type: Boolean,
         optional: true
     },
-    requiresShipping: {
+    requiresShipping:
+    {
         label: 'Require a shipping address',
         type: Boolean,
         defaultValue: true,
         optional: true
     },
-    hashtags: {
+    hashtags:
+    {
         label: 'Associated hash tags',
         type: [String],
         optional: true,
     },
-    isVisible: {
+    isVisible:
+    {
         label: 'Visibility',
         type: Boolean,
         defaultValue: false,
     },
-    variantProducts: {
+    variantProducts:
+    {
         label: 'Product variants.',
         type: [ProductVariantSchema],
         optional: true
     },
-    createdAt: {
+    createdAt:
+    {
         type: Date,
         autoValue()
         {
@@ -228,7 +234,8 @@ export let ProductSchema: any = new SimpleSchema({
         },
         optional: true
     },
-    updatedAt: {
+    updatedAt:
+    {
         type: Date,
         autoValue()
         {
@@ -236,7 +243,8 @@ export let ProductSchema: any = new SimpleSchema({
         },
         optional: true
     },
-    publishedAt: {
+    publishedAt:
+    {
         type: Date,
         optional: true
     },
