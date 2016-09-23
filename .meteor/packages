@@ -35,3 +35,4 @@ accounts-password          # Meteor password based account system
 accounts-facebook          # Meteor facebook based account system
 accounts-google            # Meteor google based account system
 accounts-twitter           # Meteor twitter based account system
+biglup:biglup-ui
