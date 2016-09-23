@@ -15,79 +15,67 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// CONSTANTS **********************************************************************************************************/
+
+const CART_ITEM_SCHEMA_NAME = 'cartItemSchema';
+const CART_SCHEMA_NAME      = 'CartSchema';
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
 import { I18nStringSchema } from './i18n-string.schema';
+import { CartItem }         from '../models';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Represent an item on the cart.
+ * @summary The cart schema.
  */
-export let CartItemSchema: any = new SimpleSchema(
-{
-    productId:
-    {
+export const CartSchema: any = new SimpleSchema({
+    items: {
+        label: `${CART_SCHEMA_NAME} items`,
+        type: Array,
+        optional: true,
+        defaultValue: []
+    },
+    'items.$': {
+        label: `${CART_SCHEMA_NAME} items $`,
+        type: <any>CartItem
+    },
+    'items.$.productId': {
+        label: `${CART_SCHEMA_NAME} productId`,
         type: String
     },
-    quantity:
-    {
-        label: 'Quantity',
+    'items.$.image': {
+        label: `${CART_SCHEMA_NAME} image`,
+        type: String
+    },
+    'items.$.quantity': {
+        label: `${CART_ITEM_SCHEMA_NAME} quantity`,
         type: Number,
         min: 0
     },
     // Denormalized field: Indicates the title of this product.
-    title:
-    {
+    'items.$.title': {
+        label: `${CART_ITEM_SCHEMA_NAME} title`,
         type: [I18nStringSchema]
     },
     // Denormalized field: Indicates the color variant of this product.
-    color:
-    {
-        label: 'Color',
+    'items.$.color': {
+        label: `${CART_ITEM_SCHEMA_NAME} color`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
     // Denormalized field: Indicates the size of this product.
-    size:
-    {
-        label: 'Size',
+    'items.$.size': {
+        label: `${CART_ITEM_SCHEMA_NAME} size`,
         type: [I18nStringSchema],
         defaultValue: '',
         optional: true
     },
-});
-
-/**
- * @summary The cart schema.
- */
-export let CartSchema: any = new SimpleSchema(
-{
-    _id: {
-        type: String
-    },
-    userId: {
-        type: String,
-        autoValue()
-        {
-            if (this.isInsert)
-            {
-                return this.userId;
-            }
-            else
-            {
-                this.unset();
-            }
-        },
-        optional: true
-    },
-    items: {
-        type: [CartItemSchema],
-        optional: true
-    },
     updatedAt: {
+        label: `${CART_SCHEMA_NAME} updateAt`,
         type: Date,
         autoValue()
         {

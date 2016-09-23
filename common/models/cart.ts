@@ -30,13 +30,9 @@ export class Cart
     /**
      * @summary Initialises a new instance of the Cart class.
      *
-     * @param _id    The shopping cart id on the database.
-     * @param userId The id of the owner of the cart.
      * @param items  The products inside the cart.
      */
-    constructor(public _id: string = null,
-                public userId: string = '',
-                public items: Array<CartItem> = Array<CartItem>())
+    constructor(public items: Array<CartItem> = Array<CartItem>())
     {
     }
 }

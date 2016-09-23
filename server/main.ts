@@ -17,19 +17,18 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }                     from 'meteor/meteor';
-import { createMigrations }           from './migrations/create-migrations';
-import { checkMeteorSettings }        from './check-meteor-settings';
-import { startServicesConfiguration } from './services-configuration';
+import {
+    checkMeteorSettings,
+    startServicesConfiguration,
+    startAccountsConfiguration
+}                           from './configuration';
+import { Meteor }           from 'meteor/meteor';
+import { createMigrations } from './migrations/create-migrations';
 
 // Publication Imports
 import './publications/category.publication.ts';
-import './publications/cart.publication.ts';
 import './publications/images.publication.ts';
 import './publications/product.publication.ts';
-
-// Method Imports
-import '../common/methods/cart.methods';
 
 // App email templates
 import './email-templates/password-reset';
@@ -40,6 +39,7 @@ Meteor.startup(() =>
 {
     checkMeteorSettings();
     startServicesConfiguration();
+    startAccountsConfiguration();
 
     if (Meteor.settings['migrations'].migrate)
     {

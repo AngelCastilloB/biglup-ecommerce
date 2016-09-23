@@ -25,6 +25,7 @@ import { I18nSingletonService }         from '../../../services/i18n/i18n-single
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Subscription }                 from 'rxjs';
 import { CategoriesService }            from '../../../services/categories.service';
+import { CartComponent }                from './components/cart.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,7 +39,8 @@ import template from './header.component.html';
 @Component({
     selector: 'header',
     template,
-    styleUrls: ['header.component.css']
+    styleUrls: ['header.component.css'],
+    directives: [CartComponent]
 })
 export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
 {

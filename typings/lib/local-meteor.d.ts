@@ -24,6 +24,20 @@ declare module 'meteor/meteor' {
         // hack: We set the settings as any because Typescript complaints
         // about unknown types (coming from the meteor.json settings file).
         let settings: any;
+
+        // updates the user schema according to our custom model
+        interface User {
+            _id?: string;
+            username?: string;
+            emails?: Meteor.UserEmail[];
+            createdAt?: number;
+            profile?: any;
+            services?: any;
+            isAdmin?: boolean;
+            // if we try to import the cart model, the typings fail completely
+            // and complains randomly about unrelated issues
+            cart?: any;
+        }
     }
 }
 

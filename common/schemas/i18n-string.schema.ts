@@ -15,6 +15,10 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// CONSTANTS **********************************************************************************************************/
+
+const SCHEMA_NAME = 'I18nStringSchema';
+
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
@@ -24,16 +28,13 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /**
  * @summary The internationalization string schema.
  */
-export let I18nStringSchema: any = new SimpleSchema(
-{
-    language:
-    {
-        label: 'The ISO 639-1 code of the language',
+export let I18nStringSchema: any = new SimpleSchema({
+    language: {
+        label: `${SCHEMA_NAME} ISO 639-1 language`,
         type: String,
     },
-    value:
-    {
-        label: 'The translation string',
+    value: {
+        label: `${SCHEMA_NAME} translation string value`,
         type: String,
         defaultValue: ''
     }

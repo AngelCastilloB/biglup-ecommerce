@@ -22,6 +22,7 @@ import { Categories }            from '../collections/category.collection';
 import { Images }                from '../collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
 import { Product, ProductImage } from '../models';
+import { Meteor }                from 'meteor/meteor';
 
 // INNER FUNCTIONS ****************************************************************************************************/
 
@@ -65,13 +66,12 @@ const removeAllImages = (images: Array<ProductImage>) =>
 Meteor.methods({
     createProduct(product: Product)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'products.createProduct.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'createProduct.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         check(product, ProductSchema);
 
@@ -101,13 +101,12 @@ Meteor.methods({
 Meteor.methods({
     deleteProduct(productId: string)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'products.deleteProduct.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'deleteProduct.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         check(productId, String);
 
@@ -138,13 +137,12 @@ Meteor.methods({
     {
         check(product, ProductSchema);
 
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'products.updateProduct.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'updateProduct.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         if (!product._id || product._id === '')
         {
@@ -183,13 +181,13 @@ Meteor.methods({
     {
         check(id, String);
 
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'products.removeCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'removeCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
+
         Products.update({}, {$pull: {categoryId: id}});
     }
 });

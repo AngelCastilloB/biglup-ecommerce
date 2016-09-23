@@ -40,6 +40,7 @@ import { ProductsService }                from '../services/products.service';
 import { IdGeneratorService }             from '../services/id-generator.service.ts';
 import { ValidationService }              from '../services/validation.service';
 import { UserAuthService }                from '../services/user-auth.service';
+import { CartsService }                   from '../services/carts.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -78,7 +79,8 @@ import { UserAuthService }                from '../services/user-auth.service';
         ProductsService,
         ValidationService,
         UserAuthService,
-        IdGeneratorService
+        IdGeneratorService,
+        CartsService
     ]
 })
 export class FrontendModule
