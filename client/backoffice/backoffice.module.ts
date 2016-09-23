@@ -45,7 +45,7 @@ import { ProductsService }               from '../services/products.service';
 import { IdGeneratorService }            from '../services/id-generator.service.ts';
 import { ImageDisplayComponent }         from './components/product-images-manager/components/image-display/image-display.component';
 import { ImagePreviewComponent }         from './components/product-images-manager/components/image-preview/image-preview.component';
-import { DragulaService, Dragula }       from 'ng2-dragula/ng2-dragula';
+import { DragulaService, DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }             from './components/product-images-manager/directives/file-drop.directive';
 import { FileSelectDirective }           from './components/product-images-manager/directives/file-select.directive';
 import { TextEditorComponent }           from './components/text-editor/text-editor.component';
@@ -98,14 +98,14 @@ import { CartsService }                 from '../services/carts.service';
         ImagePreviewComponent,
         FileDropDirective,
         FileSelectDirective,
-        Dragula,
 
         // reports
         ReportsComponent
     ],
     imports: [
         SharedModule,
-        BackofficeRoutesModule
+        BackofficeRoutesModule,
+        DragulaModule
     ],
     providers: [
         CategoriesService,
