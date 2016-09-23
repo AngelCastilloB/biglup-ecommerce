@@ -20,7 +20,7 @@
 import { Injectable }                            from '@angular/core';
 import { Meteor }                                from 'meteor/meteor';
 import { Observable, BehaviorSubject, Observer } from 'rxjs';
-import { Cart, CartItem, Product }               from '../../common/models';
+import { Cart, CartItem, Product, User }         from '../../common/models';
 import { UserAuthService }                       from './user-auth.service';
 import { Products }                              from '../../common/collections/product.collection';
 
@@ -72,23 +72,7 @@ export class CartsService
      */
     constructor(private _userAuthService: UserAuthService)
     {
-        this._userAuthService.getUserStream().subscribe(user =>
-        {
-            let cart: Cart;
-
-            if (!user)
-            {
-                cart = this._getLocalStorageCart();
-            }
-            else
-            {
-                cart = user.cart;
-
-                this._deleteLocalStorageCart();
-            }
-
-            this._userCartStream.next(cart);
-        });
+        this._userAuthService.getUserStream().subscribe(user => this._completeUserSubscription(user));
     }
 
     /**
@@ -334,5 +318,55 @@ export class CartsService
 
         this._userCartStream.next(cart);
         this._setLocalStorageCart(cart);
+    }
+
+    /**
+     * @summary Updates the database with the Storage object's data.
+     *
+     * @private
+     */
+    private _mergeLocalStorageCartIntoDb(): void
+    {
+        const cart = this._getLocalStorageCart();
+
+        cart.items.forEach(item =>
+        {
+            Meteor.call('addProductToCart', item.productId, item.quantity, false, (error, results) =>
+            {
+                if (error)
+                    console.error(error);
+
+                if (!results)
+                    console.error('handle failed addProductToCart', results);
+            });
+        });
+    }
+
+    /**
+     * @summary Handles the user login/logout subscription stream.
+     *
+     * @param {User} user The current user in the system.
+     * @private
+     */
+    private _completeUserSubscription(user: User): void
+    {
+        let cart: Cart;
+
+        if (!user)
+        {
+            cart = this._getLocalStorageCart();
+        }
+        else
+        {
+            cart = user.cart;
+
+            if (this._isLocalStorageCartInit())
+            {
+                this._mergeLocalStorageCartIntoDb();
+                this._deleteLocalStorageCart();
+            }
+        }
+
+        this._userCartStream.next(cart);
     }
 }

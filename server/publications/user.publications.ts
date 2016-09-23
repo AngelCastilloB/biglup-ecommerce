@@ -31,6 +31,6 @@ Meteor.publish('users', () => Meteor.users.find({}));
 /**
  * @summary Publishes an user according to the id given.
  *
- * @param {string} id The user id
+ * @param {string} _id The user id.
  */
-Meteor.publish('user', id => Meteor.users.find({_id: id}));
+Meteor.publish('user', _id => Meteor.users.find({_id}));

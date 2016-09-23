@@ -33,7 +33,7 @@ import { Meteor }                  from 'meteor/meteor';
  */
 const findProduct = (cart: Cart, productId: string): number =>
 {
-    if (!cart.items)
+    if (!cart || !cart.items)
         return -1;
 
     for (let i = 0; i < cart.items.length; ++i)
@@ -61,6 +61,8 @@ Meteor.methods({
     addProductToCart(productId: string, quantity: number, set = false, userId?: string)
     {
         const user = Meteor.users.findOne(this.userId);
+
+        console.log(productId, quantity);
 
         if (userId && user.isAdmin)
         {
