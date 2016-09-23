@@ -52,9 +52,9 @@ export class UserAuthService extends MeteorComponent
     {
         super();
 
-        this.subscribe('user', this.getId(), () =>
+        this.autorun(() =>
         {
-            this.autorun(() =>
+            this.subscribe('user', this.getId(), () =>
             {
                 const user = <User>Meteor.users.findOne({_id: this.getId()});
 
