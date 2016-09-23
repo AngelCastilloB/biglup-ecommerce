@@ -48,11 +48,6 @@ const TWITTER_SETTINGS = {
     secret: ''
 };
 
-const CRYPTO_SETTINGS = {
-    algorithm: 'aes-256-ctr',
-    password: Math.random().toString(30)
-};
-
 /* EXPORTS ************************************************************************************************************/
 
 /**
@@ -101,10 +96,5 @@ export const checkMeteorSettings = () =>
     else
     {
         Meteor.settings.public.twitter = true;
-    }
-
-    if (!Meteor.settings['crypto'])
-    {
-        Meteor.settings['crypto'] = CRYPTO_SETTINGS;
     }
 };
