@@ -1,0 +1,21 @@
+{
+  "name": "biglup-ui",
+  "version": "1.0.0",
+  "description": "Resuable and themable UI components for the Biglup ecommerce project",
+  "author": "biglup",
+  "license": "Copyright 2016 Biglup. All Rights Reserved.",
+  "main": "biglup-ui.js",
+  "typings": "./biglup-ui.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.5",
+    "@angular/compiler": "2.0.0-rc.5",
+    "@angular/core": "2.0.0-rc.5",
+    "@angular/forms": "0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.0.3"
+  }
+}

@@ -14,10 +14,6 @@
  *
  * Use of this software is subject to the terms of an end user license agreement.
  */
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require('./components/button/biglup-button.component'));
-__export(require('./components/biglup-ui.module'));
-//# sourceMappingURL=biglup-ui.js.map
+
+export * from './components/button/biglup-button.component';
+export * from './components/biglup-ui.module';

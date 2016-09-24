@@ -1,0 +1,71 @@
+@import 'base';
+
+[biglup-button]{
+    position:      relative;
+    font-family:   'Roboto', sans-serif;
+    font-size:     20px;
+    display:       inline-block;
+    padding:       4px 12px;
+    border-radius: 4px;
+    overflow:      hidden;
+    border:        0;
+    outline:       0;
+    background:    0;
+    cursor:        pointer;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+         -o-user-select: none;
+            user-select: none;
+
+    -webkit-transition: box-shadow .2s;
+       -moz-transition: box-shadow .2s;
+        -ms-transition: box-shadow .2s;
+         -o-transition: box-shadow .2s;
+            transition: box-shadow .2s;
+
+    .touch{
+        background: rgba(100,100,100,.1);
+        pointer-events: none;
+        border-radius: 100%;
+    }
+    &.primary .touch{
+        background: transparentize($primary-color, 80);
+    }
+    &.accent .touch{
+        background: transparentize($accent-color, 80);
+    }
+    &.warn .touch{
+        background: transparentize($warn-color, 80);
+    }
+
+    &.overflow{
+        overflow: visible;
+    }
+
+    &[raised],.raised{
+        box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    }
+
+    &[icon]{
+        padding: 8px;
+        border-radius: 100%;
+        font-size: 35px;
+        line-height: 0;
+    }
+
+    &:focus, :active{
+        -moz-outline-style: none;
+    }
+
+    &[raised]:active,.raised:active{
+        box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    }
+
+    &[disabled],.disabled,[disabled]:active,.disabled:active{
+        background: #eee;
+        color: #aaa;
+        box-shadow: none !important;
+    }
+}
