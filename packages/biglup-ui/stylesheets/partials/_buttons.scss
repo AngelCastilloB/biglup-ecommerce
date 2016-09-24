@@ -1,17 +1,27 @@
 @import 'base';
 
+$button-padding:       4 12px !default;
+$button-min-width:     88px   !default;
+$button-margin:        0      !default;
+$button-line-height:   36px   !default;
+$button-border-radius: 4px    !default;
+
 [biglup-button]{
     position:      relative;
     font-family:   'Roboto', sans-serif;
     font-size:     20px;
     display:       inline-block;
-    padding:       4px 12px;
-    border-radius: 4px;
     overflow:      hidden;
     border:        0;
     outline:       0;
     background:    0;
     cursor:        pointer;
+
+    margin:        $button-margin;
+    min-width:     $button-min-width;
+    line-height:   $button-line-height;
+    padding:       $button-padding;
+    border-radius: $button-border-radius;
 
     -webkit-user-select: none;
        -moz-user-select: none;
@@ -31,13 +41,13 @@
         border-radius: 100%;
     }
     &.primary .touch{
-        background: transparentize($primary-color, 80);
+        background: transparentize($primary-color, 0.8);
     }
     &.accent .touch{
-        background: transparentize($accent-color, 80);
+        background: transparentize($accent-color, 0.8);
     }
     &.warn .touch{
-        background: transparentize($warn-color, 80);
+        background: transparentize($warn-color, 0.8);
     }
 
     &.overflow{

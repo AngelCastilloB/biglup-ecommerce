@@ -51,7 +51,8 @@
     "transliteration": "^1.1.6",
     "try-thread-sleep": "^1.0.0",
     "web-animations-js": "^2.2.2",
-    "zone.js": "^0.6.6"
+    "zone.js": "^0.6.6",
+    "biglup-ui": "file:packages/biglup-ui"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
