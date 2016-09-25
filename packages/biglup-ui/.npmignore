@@ -1,0 +1,1 @@
+# Override .gitignore so blacklisted files on the VC are included in the package when instaled.
