@@ -13,6 +13,7 @@
   },
   "filesGlob": [
     "components/**/*.ts",
+    "directives/**/*.ts",
     "biglup-ui.ts"
   ],
   "exclude": [

@@ -16,4 +16,5 @@
  */
 
 export * from './components/button/biglup-button.component';
-export * from './components/biglup-ui.module';
+export * from './directives/ripple/ripple.directive';
+export * from './biglup-ui.module';

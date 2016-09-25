@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
  */
 @Component({
     selector: 'biglup-button',
-    template: `<button type="button" biglup-button raised class="primary"><ng-content></ng-content></button>`
+    template: `<button type="button" biglup-button raised [ripple] class="primary"><ng-content></ng-content></button>`
 })
 export class BiglupButtonComponent
 {

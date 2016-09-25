@@ -2,9 +2,9 @@
   "name": "biglup-ecommerce",
   "private": true,
   "scripts": {
+    "update-local-plugins": "rm -rf node_modules/biglup-ui && meteor npm install",
     "start": "meteor run --settings meteor.json",
     "gulp:post-install": "gulp --gulpfile .gulpfile.js meteor-post-install",
-    "postinstall": "typings i && npm run gulp:post-install",
     "lint": "tslint -c tslint.json 'client/**/*.ts' 'server/**/*.ts' 'common/**/*.ts' '.tools/**/*.ts'"
   },
   "dependencies": {

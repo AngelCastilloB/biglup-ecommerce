@@ -20,7 +20,8 @@
 import 'reflect-metadata';
 
 import { NgModule }              from '@angular/core';
-import { BiglupButtonComponent } from './button/biglup-button.component';
+import { BiglupButtonComponent } from './components/button/biglup-button.component';
+import { RippleDirective }       from './directives/ripple/ripple.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -29,10 +30,12 @@ import { BiglupButtonComponent } from './button/biglup-button.component';
  */
 @NgModule({
     declarations: [
-        BiglupButtonComponent
+        BiglupButtonComponent,
+        RippleDirective
     ],
     exports: [
-        BiglupButtonComponent
+        BiglupButtonComponent,
+        RippleDirective
     ]
 })
 export class BiglupUiModule
