@@ -9,7 +9,6 @@ $button-border-radius: 4px    !default;
 [biglup-button]{
     position:      relative;
     font-family:   $base-font-family;
-    font-size:     20px;
     display:       inline-block;
     overflow:      hidden;
     border:        0;
@@ -35,6 +34,18 @@ $button-border-radius: 4px    !default;
          -o-transition: box-shadow .2s;
             transition: box-shadow .2s;
 
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
     .touch{
         background: rgba(100,100,100,.1);
         pointer-events: none;
@@ -55,7 +66,9 @@ $button-border-radius: 4px    !default;
     }
 
     &[raised],.raised{
-        box-shadow: 0 2px 5px rgba(0,0,0,.2);
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: $button-border-radius;
     }
 
     &[icon]{

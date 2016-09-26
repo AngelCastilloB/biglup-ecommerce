@@ -39,7 +39,7 @@ export class RippleDirective implements OnInit, OnDestroy {
     @Input('ripple')
     private color:                  string  = '#FF0000';
     private _mouseDownObservable:   any     = Observable.fromEvent(this._el.nativeElement, 'mousedown');
-    private _mouseUpObservable:     any     = Observable.fromEvent(this._el.nativeElement, 'mouseup');
+    private _mouseUpObservable:     any     = Observable.fromEvent(document.body, 'mouseup');
     private _mouseDownSubscription: any;
 
     /**
@@ -69,7 +69,6 @@ export class RippleDirective implements OnInit, OnDestroy {
 
                 let size: number = this._el.nativeElement.getBoundingClientRect().width * 0.6;
 
-                console.error(size);
                 ripple.style.top        = yPos + 'px';
                 ripple.style.left       = xPos + 'px';
                 ripple.style.background = this.color;

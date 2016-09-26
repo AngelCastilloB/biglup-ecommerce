@@ -1,1 +1,5 @@
 @import './../node_modules/biglup-ui/stylesheets/main';
+
+body {
+    @extend .typography;
+}
