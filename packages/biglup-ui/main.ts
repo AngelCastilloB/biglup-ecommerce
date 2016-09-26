@@ -15,6 +15,6 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-export * from './components/button/biglup-button.component';
-export * from './directives/ripple/ripple.directive';
-export * from './biglup-ui.module';
+export * from './client/components/button/biglup-button.component';
+export * from './client/directives/ripple/ripple.directive';
+export * from './client/biglup-ui.module';

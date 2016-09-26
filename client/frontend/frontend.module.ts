@@ -40,7 +40,7 @@ import { ProductsService }                from '../services/products.service';
 import { IdGeneratorService }             from '../services/id-generator.service.ts';
 import { ValidationService }              from '../services/validation.service';
 import { UserAuthService }                from '../services/user-auth.service';
-import { BiglupUiModule }                 from 'biglup-ui/biglup-ui';
+import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
 
 // EXPORTS ************************************************************************************************************/
 

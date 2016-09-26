@@ -2,7 +2,6 @@
 @import 'colors';
 
 @include google-font('Roboto');
-@include google-font('Noto');
 @include google-font('Roboto+Mono');
 
 $text-color:    $primary-text-color;
@@ -14,7 +13,7 @@ $link-color:         $accent-color;
 $link-visited-color: $accent-color;
 $link-hover-color:   saturate($accent-color, 20%);
 
-$base-font-family: 'Roboto', 'Noto', sans-serif;
+$base-font-family: 'Roboto', sans-serif;
 $base-font-size:   18px;
 $base-font-weight: 300;
 
