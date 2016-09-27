@@ -17,10 +17,6 @@ Package.onUse(function(api)
     ], 'client');
 
     api.addFiles([
-        'index.ts'
-    ], 'client');
-
-    api.addFiles([
         'client/stylesheets/_main.scss'
     ], 'client', {isImport: true});
 
