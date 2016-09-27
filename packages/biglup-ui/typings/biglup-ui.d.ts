@@ -22,7 +22,6 @@ declare module BiglupUi
     class BiglupUiModule {}
 }
 
-declare module 'biglup-ui'
-{
+declare module "meteor/biglup:biglup-ui" {
     export = BiglupUi;
 }

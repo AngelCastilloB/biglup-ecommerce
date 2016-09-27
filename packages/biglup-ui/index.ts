@@ -1,5 +1,5 @@
 /**
- * @file biglup-ui.ts
+ * @file index.d.ts
  *
  * @summary Module entry point.
  *

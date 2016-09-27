@@ -17,8 +17,15 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Directive, OnDestroy, Input, OnInit, ElementRef, Renderer } from '@angular/core';
-import { Observable }                     from 'rxjs/Observable';
+import 'reflect-metadata';
+
+import { Directive,
+         OnDestroy,
+         Input,
+         OnInit,
+         ElementRef,
+         Renderer }   from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/mergeMap';
 
