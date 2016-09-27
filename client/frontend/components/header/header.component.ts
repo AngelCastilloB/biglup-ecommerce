@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MeteorComponent }              from 'angular2-meteor';
 import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Subscription }                 from 'rxjs';
@@ -40,7 +37,7 @@ import template from './header.component.html';
     template,
     styleUrls: ['header.component.css']
 })
-export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
+export class HeaderComponent implements OnInit, OnDestroy
 {
     private _isLogged:             boolean;
     private _isLoggedSubscription: Subscription;
@@ -53,7 +50,6 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      */
     constructor(private _userAuthService: UserAuthService, private _categoriesService: CategoriesService)
     {
-        super();
     }
 
     /**

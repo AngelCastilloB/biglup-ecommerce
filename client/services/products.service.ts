@@ -24,7 +24,6 @@ import { Injectable }       from '@angular/core';
 import { Products }         from '../../common/collections/product.collection';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { Observable }       from 'rxjs/Observable';
-import { MeteorComponent }  from 'angular2-meteor';
 import { ImagesService }    from './images.service';
 import { ProductSchema }    from '../../common/schemas/product.schema';
 
@@ -59,7 +58,7 @@ const copyProduct = (product: Product) =>
  * @summary This services retrieves all the products along with its relational information from other collections.
  */
 @Injectable()
-export class ProductsService extends MeteorComponent
+export class ProductsService
 {
     private _products:       Array<Product>                  = Array<Product>();
     private _productsStream: BehaviorSubject<Array<Product>> = new BehaviorSubject<Array<Product>>(Array<Product>());
@@ -69,15 +68,13 @@ export class ProductsService extends MeteorComponent
      */
     constructor(private _imagesService: ImagesService)
     {
-        super();
-
-        this.subscribe('products', () =>
+        Meteor.subscribe('products', () =>
         {
-            this.autorun(() =>
-            {
+            //this.autorun(() =>
+            //{
                 this._products = Products.find().fetch();
                 this._productsStream.next(this._products);
-            });
+            //});
         });
     }
 
@@ -116,7 +113,7 @@ export class ProductsService extends MeteorComponent
     public getProduct(productId: string): Observable<Product>
     {
         return Observable.create(observer => {
-            this.subscribe('products', productId , () =>
+            Meteor.subscribe('products', productId , () =>
             {
                 let product: Product = Products.findOne({_id: productId});
 
@@ -160,7 +157,7 @@ export class ProductsService extends MeteorComponent
                 // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
                 copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                this.call('createProduct', copy, (error) =>
+                Meteor.call('createProduct', copy, (error) =>
                 {
                     if (error)
                     {
@@ -201,7 +198,7 @@ export class ProductsService extends MeteorComponent
                 // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
                 copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                this.call('updateProduct', copy, (error) =>
+                Meteor.call('updateProduct', copy, (error) =>
                 {
                     if (error)
                     {
@@ -226,7 +223,7 @@ export class ProductsService extends MeteorComponent
     public deteleProduct(productId: string): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('deleteProduct', productId, (error, result) =>
+            Meteor.call('deleteProduct', productId, (error, result) =>
             {
                 if (error)
                 {

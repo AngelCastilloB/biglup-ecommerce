@@ -10,7 +10,6 @@ Package.onUse(function(api)
     api.versionsFrom('1.4.1.1');
     api.use('ecmascript');
     api.use('angular2-compilers');
-    api.use('barbatus:angular2-runtime');
 
     api.addFiles([
         'typings/biglup-ui.d.ts'

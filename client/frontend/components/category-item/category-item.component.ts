@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, Input, OnInit } from '@angular/core';
-import { MeteorComponent }          from 'angular2-meteor';
 import { Product }                  from '../../../../common/models';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -36,7 +33,8 @@ import template from './category-item.component.html';
     selector: 'category-item',
     template
 })
-export class CategoryItemComponent extends MeteorComponent implements OnInit {
+export class CategoryItemComponent implements OnInit
+{
     @Input()
     public model: Product;
     @Input()
@@ -47,7 +45,6 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit {
      */
     constructor()
     {
-        super();
     }
 
     /**

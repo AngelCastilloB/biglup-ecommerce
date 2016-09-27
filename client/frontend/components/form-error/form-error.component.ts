@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, Input, OnInit } from '@angular/core';
 import { IdGeneratorService }       from '../../../services/id-generator.service';
 

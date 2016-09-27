@@ -21,7 +21,6 @@ import { Injectable }      from '@angular/core';
 import { Categories }      from '../../common/collections/category.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
-import { MeteorComponent } from 'angular2-meteor';
 import { Category }        from '../../common/models';
 
 // Reactive Extensions Imports
@@ -35,7 +34,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services retrieves all the categories along with its relational information from other collections.
  */
 @Injectable()
-export class CategoriesService extends MeteorComponent
+export class CategoriesService
 {
     private _categories:       Array<Category> = Array<Category>();
     private _categoriesStream: any             = new BehaviorSubject<Array<Category>>(Array<Category>());
@@ -45,15 +44,13 @@ export class CategoriesService extends MeteorComponent
      */
     constructor()
     {
-        super();
-
-        this.subscribe('categories', () =>
+        Meteor.subscribe('categories', () =>
         {
-            this.autorun(() =>
-            {
+        //    this.autorun(() =>
+        //    {
                 this._categories = Categories.find().fetch();
                 this._categoriesStream.next(this._categories);
-            });
+         //   });
         });
     }
 
@@ -77,7 +74,7 @@ export class CategoriesService extends MeteorComponent
     public getCategory(categoryId: string): Observable<Category>
     {
         return Observable.create(observer => {
-            this.subscribe('categories', categoryId , () =>
+            Meteor.subscribe('categories', categoryId , () =>
             {
                 let category: Category = Categories.findOne({_id: categoryId});
 
@@ -101,7 +98,7 @@ export class CategoriesService extends MeteorComponent
     public createCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('createCategory', category, (error, result) =>
+            Meteor.call('createCategory', category, (error, result) =>
             {
                 if (error)
                 {
@@ -124,7 +121,7 @@ export class CategoriesService extends MeteorComponent
     public updateCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('updateCategory', category, (error, result) =>
+            Meteor.call('updateCategory', category, (error, result) =>
             {
                 if (error)
                 {
@@ -149,7 +146,7 @@ export class CategoriesService extends MeteorComponent
     public deleteCategory(categoryId: string): Observable<string>
     {
         return Observable.create(observer => {
-            this.call('deleteCategory', categoryId, (error, result) =>
+            Meteor.call('deleteCategory', categoryId, (error, result) =>
             {
                 if (error)
                 {

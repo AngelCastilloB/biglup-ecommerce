@@ -17,13 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          OnInit,
          ViewChild }                 from '@angular/core';
 import { Router, ActivatedRoute }    from '@angular/router';
-import { MeteorComponent }           from 'angular2-meteor';
 import { I18nSingletonService, _T }  from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent,
          ModalType,
@@ -46,7 +43,7 @@ import template from './add-collection.component.html';
     selector: 'add-collection',
     template
 })
-export class AddCollectionComponent extends MeteorComponent implements OnInit
+export class AddCollectionComponent implements OnInit
 {
     @ViewChild(ModalComponent)
     private _modal:                 ModalComponent;
@@ -65,7 +62,6 @@ export class AddCollectionComponent extends MeteorComponent implements OnInit
         private _route: ActivatedRoute,
         private _categoriesService: CategoriesService)
     {
-        super();
     }
 
     /**

@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, EventEmitter, HostListener } from '@angular/core';
-import { MeteorComponent }                       from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,7 +33,7 @@ import template from './color-picker.component.html';
     template,
     outputs: ['onClear', 'onColorPicked']
 })
-export class ColorPickerComponent extends MeteorComponent
+export class ColorPickerComponent
 {
     public onClear:       EventEmitter<any>    = new EventEmitter<any>();
     public onColorPicked: EventEmitter<string> = new EventEmitter<string>();
@@ -50,7 +47,6 @@ export class ColorPickerComponent extends MeteorComponent
      */
     constructor()
     {
-        super();
     }
 
     /**

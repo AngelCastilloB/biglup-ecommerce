@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, OnInit } from '@angular/core';
-import { MeteorComponent }   from 'angular2-meteor';
 import { ActivatedRoute }    from '@angular/router';
 import { ProductsService }   from '../../../services/products.service';
 
@@ -37,7 +34,7 @@ import template from './category.component.html';
     selector: 'category',
     template
 })
-export class CategoryComponent extends MeteorComponent implements OnInit {
+export class CategoryComponent implements OnInit {
     private _categoryId: string;
 
     /**
@@ -45,7 +42,6 @@ export class CategoryComponent extends MeteorComponent implements OnInit {
      */
     constructor(private _route: ActivatedRoute, private _productsService: ProductsService)
     {
-        super();
     }
 
     /**

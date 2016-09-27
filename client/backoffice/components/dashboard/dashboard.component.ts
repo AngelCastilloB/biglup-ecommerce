@@ -17,11 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { AfterViewInit }       from '@angular/core';
-import { Component }           from '@angular/core';
-import { MeteorComponent }     from 'angular2-meteor';
+import { AfterViewInit }  from '@angular/core';
+import { Component }      from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,7 +33,7 @@ import template from './dashboard.component.html';
     selector: 'dashboard',
     template
 })
-export class DashboardComponent extends MeteorComponent implements AfterViewInit
+export class DashboardComponent implements AfterViewInit
 {
     private _content: string = 'sssss';
 
@@ -45,7 +42,6 @@ export class DashboardComponent extends MeteorComponent implements AfterViewInit
      */
     constructor()
     {
-        super();
     }
 
     /**

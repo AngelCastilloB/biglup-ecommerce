@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component }       from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
 import { Router }          from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 
@@ -37,13 +34,12 @@ import template from './products.component.html';
     selector: 'products',
     template,
 })
-export class ProductsComponent extends MeteorComponent
+export class ProductsComponent
 {
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
     constructor(private _router: Router, private _productsService: ProductsService)
     {
-        super();
     }
 }

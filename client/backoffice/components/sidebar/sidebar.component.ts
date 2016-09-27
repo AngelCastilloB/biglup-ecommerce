@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { Component }       from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
+import { Component } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,12 +32,12 @@ import template from './sidebar.component.html';
     selector: 'sidebar',
     template
 })
-export class SidebarComponent extends MeteorComponent
+export class SidebarComponent
 {
     /**
      * @summary Initializes a new instance of the SidebarComponent class.
      */
-    constructor() {
-        super();
+    constructor()
+    {
     }
 }

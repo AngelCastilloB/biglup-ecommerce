@@ -27,7 +27,6 @@ import { Component,
          EventEmitter,
          ViewChild,
          AfterViewInit}          from '@angular/core';
-import { MeteorComponent }       from 'angular2-meteor';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
 import { ProductImage }          from '../../../../../../common/models';
 
@@ -45,7 +44,7 @@ import template from './image-preview.component.html';
     template,
     styleUrls: ['./images-preview.component.css']
 })
-export class ImagePreviewComponent extends MeteorComponent implements OnInit, AfterViewInit
+export class ImagePreviewComponent implements OnInit, AfterViewInit
 {
     @Input('model')
     private _model:        ProductImage;
@@ -59,7 +58,6 @@ export class ImagePreviewComponent extends MeteorComponent implements OnInit, Af
      */
     constructor(private element: ElementRef)
     {
-        super();
     }
 
     /**

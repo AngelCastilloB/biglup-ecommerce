@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          Output,
          EventEmitter,
@@ -28,10 +26,9 @@ import { Component,
          style,
          transition,
          animate,
-         keyframes }        from '@angular/core';
-import { MeteorComponent }  from 'angular2-meteor';
-import {_T }                from '../../../services/i18n/i18n-singleton.service';
-import { Observable }       from 'rxjs';
+         keyframes }       from '@angular/core';
+import {_T }               from '../../../services/i18n/i18n-singleton.service';
+import { Observable }      from 'rxjs';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -133,7 +130,7 @@ export enum ModalButtons
         ])
     ]
 })
-export class ModalComponent extends MeteorComponent
+export class ModalComponent
 {
     @Output('onClose')
     private _onClose:      EventEmitter<ModalResult> = new EventEmitter<ModalResult>();
@@ -155,7 +152,6 @@ export class ModalComponent extends MeteorComponent
      */
     constructor(private _changeDetectorRef: ChangeDetectorRef)
     {
-        super();
     }
 
     /**

@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, Output, EventEmitter } from '@angular/core';
 import { UserAuthService }                 from '../../../services/user-auth.service';
 import { Router }                          from '@angular/router';

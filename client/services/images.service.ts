@@ -21,7 +21,6 @@ import { Injectable }          from '@angular/core';
 import { Images }              from '../../common/collections/image.collection';
 import { BehaviorSubject }     from 'rxjs/BehaviorSubject';
 import { Observable }          from 'rxjs/Observable';
-import { MeteorComponent }     from 'angular2-meteor';
 import { Image, ProductImage } from '../../common/models';
 import { ImagesStore }         from '../../common/collections/image.collection.ts';
 import { UploadFS }            from 'meteor/jalik:ufs';
@@ -36,7 +35,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services allows to upload, retrieve and delete all the images on the server..
  */
 @Injectable()
-export class ImagesService extends MeteorComponent
+export class ImagesService
 {
     private _images:       Array<Image>                  = Array<Image>();
     private _imagesStream: BehaviorSubject<Array<Image>> = new BehaviorSubject<Array<Image>>(Array<Image>());
@@ -46,16 +45,14 @@ export class ImagesService extends MeteorComponent
      */
     constructor()
     {
-        super();
-
-        this.subscribe('images', () =>
+        Meteor.subscribe('images', () =>
         {
-            this.autorun(() =>
-            {
+            //this.autorun(() =>
+            //{
                 this._images = Images.find().fetch();
 
                 this._imagesStream.next(this._images);
-            });
+            //});
         });
     }
 
@@ -79,7 +76,7 @@ export class ImagesService extends MeteorComponent
     public getImage(imageId: string): Observable<Image>
     {
         return Observable.create(observer => {
-            this.subscribe('images', imageId , () =>
+            Meteor.subscribe('images', imageId , () =>
             {
                 let image: Image = Images.findOne({_id: imageId});
 

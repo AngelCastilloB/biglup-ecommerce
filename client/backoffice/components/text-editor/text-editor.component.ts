@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          ViewChild,
          Input,
@@ -26,7 +24,6 @@ import { Component,
          OnChanges,
          SimpleChanges,
          EventEmitter }         from '@angular/core';
-import { MeteorComponent }      from 'angular2-meteor';
 import { ColorPickerComponent } from './components/color-picker.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -48,7 +45,7 @@ const MAX_FONT_SIZE = 96;
     template,
     styleUrls: ['./text-editor.component.css']
 })
-export class TextEditorComponent extends MeteorComponent implements OnChanges
+export class TextEditorComponent implements OnChanges
 {
     @ViewChild('editable')
     private _editableArea;
@@ -78,8 +75,6 @@ export class TextEditorComponent extends MeteorComponent implements OnChanges
      */
     constructor()
     {
-        super();
-
         for (let i: number = MIN_FONT_SIZE; i <= MAX_FONT_SIZE; ++i)
             this._sizes.push(i);
 
