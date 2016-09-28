@@ -17,12 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable, NgZone } from '@angular/core';
-import { Categories }         from '../../common/collections/category.collection';
-import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
-import { Observable }         from 'rxjs/Observable';
-import { Category }           from '../../common/models';
-import { Tracker }            from 'meteor/tracker';
+import { Injectable }      from '@angular/core';
+import { Categories }      from '../../common/collections/category.collection';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable }      from 'rxjs/Observable';
+import { Category }        from '../../common/models';
+import { MeteorReactive }  from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -35,27 +35,24 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services retrieves all the categories along with its relational information from other collections.
  */
 @Injectable()
-export class CategoriesService
+export class CategoriesService extends MeteorReactive
 {
     private _categories:       Array<Category> = Array<Category>();
     private _categoriesStream: any             = new BehaviorSubject<Array<Category>>(Array<Category>());
 
     /**
      * @summary Initializes a new instance of the CategoriesService class.
-     *
-     * @param {NgZone} _ngZone The angular zone.
      */
-    constructor(private _ngZone: NgZone)
+    constructor()
     {
-        Meteor.subscribe('categories', () =>
+        super();
+
+        this.subscribe('categories', () =>
         {
-            Tracker.autorun(() =>
+            this.autorun(() =>
             {
-                this._ngZone.run(() =>
-                {
-                    this._categories = Categories.find().fetch();
-                    this._categoriesStream.next(this._categories);
-                });
+                this._categories = Categories.find().fetch();
+                this._categoriesStream.next(this._categories);
             });
         });
     }
@@ -80,21 +77,18 @@ export class CategoriesService
     public getCategory(categoryId: string): Observable<Category>
     {
         return Observable.create(observer => {
-            Meteor.subscribe('categories', categoryId , () =>
+            this.subscribe('categories', categoryId , () =>
             {
-                this._ngZone.run(() =>
+                let category: Category = Categories.findOne({_id: categoryId});
+
+                if (!category)
                 {
-                    let category: Category = Categories.findOne({_id: categoryId});
+                    observer.error('Category not found');
+                    return;
+                }
 
-                    if (!category)
-                    {
-                        observer.error('Category not found');
-                        return;
-                    }
-
-                    observer.next(category);
-                    observer.complete();
-                });
+                observer.next(category);
+                observer.complete();
             });
         });
     }
@@ -107,20 +101,17 @@ export class CategoriesService
     public createCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            Meteor.call('createCategory', category, (error, result) =>
+            this.call('createCategory', category, (error, result) =>
             {
-                this._ngZone.run(() =>
+                if (error)
                 {
-                    if (error)
-                    {
-                        observer.error(error);
-                    }
-                    else
-                    {
-                        observer.next(result);
-                        observer.complete();
-                    }
-                });
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
             });
         });
     }
@@ -133,20 +124,17 @@ export class CategoriesService
     public updateCategory(category: Category): Observable<string>
     {
         return Observable.create(observer => {
-            Meteor.call('updateCategory', category, (error, result) =>
+            this.call('updateCategory', category, (error, result) =>
             {
-                this._ngZone.run(() =>
+                if (error)
                 {
-                    if (error)
-                    {
-                        observer.error(error);
-                    }
-                    else
-                    {
-                        observer.next(result);
-                        observer.complete();
-                    }
-                });
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
             });
         });
     }
@@ -161,20 +149,17 @@ export class CategoriesService
     public deleteCategory(categoryId: string): Observable<string>
     {
         return Observable.create(observer => {
-            Meteor.call('deleteCategory', categoryId, (error, result) =>
+            this.call('deleteCategory', categoryId, (error, result) =>
             {
-                this._ngZone.run(() =>
+                if (error)
                 {
-                    if (error)
-                    {
-                        observer.error(error);
-                    }
-                    else
-                    {
-                        observer.next(result);
-                        observer.complete();
-                    }
-                });
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
             });
         });
     }

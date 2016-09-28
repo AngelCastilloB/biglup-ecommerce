@@ -19,14 +19,14 @@
 
 import { Product,
          ProductImage,
-         I18nString }         from '../../common/models';
-import { Injectable, NgZone } from '@angular/core';
-import { Products }           from '../../common/collections/product.collection';
-import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
-import { Observable }         from 'rxjs/Observable';
-import { ImagesService }      from './images.service';
-import { ProductSchema }      from '../../common/schemas/product.schema';
-import { Tracker }            from 'meteor/tracker';
+         I18nString }      from '../../common/models';
+import { Injectable }      from '@angular/core';
+import { Products }        from '../../common/collections/product.collection';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable }      from 'rxjs/Observable';
+import { ImagesService }   from './images.service';
+import { ProductSchema }   from '../../common/schemas/product.schema';
+import { MeteorReactive }  from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -59,7 +59,7 @@ const copyProduct = (product: Product) =>
  * @summary This services retrieves all the products along with its relational information from other collections.
  */
 @Injectable()
-export class ProductsService
+export class ProductsService extends MeteorReactive
 {
     private _products:       Array<Product>                  = Array<Product>();
     private _productsStream: BehaviorSubject<Array<Product>> = new BehaviorSubject<Array<Product>>(Array<Product>());
@@ -68,19 +68,17 @@ export class ProductsService
      * @summary Initializes a new instance of the ProductsService class.
      *
      * @param {ImagesService} _imagesService The images service.
-     * @param {NgZone}       _ngZone         The angular zone.
      */
-    constructor(private _imagesService: ImagesService, private _ngZone: NgZone)
+    constructor(private _imagesService: ImagesService)
     {
-        Meteor.subscribe('products', () =>
+        super();
+
+        this.subscribe('products', () =>
         {
-            Tracker.autorun(() =>
+            this.autorun(() =>
             {
-                this._ngZone.run(() =>
-                {
-                    this._products = Products.find().fetch();
-                    this._productsStream.next(this._products);
-                });
+                this._products = Products.find().fetch();
+                this._productsStream.next(this._products);
             });
         });
     }
@@ -120,21 +118,18 @@ export class ProductsService
     public getProduct(productId: string): Observable<Product>
     {
         return Observable.create(observer => {
-            Meteor.subscribe('products', productId , () =>
+            this.subscribe('products', productId , () =>
             {
-                this._ngZone.run(() =>
+                let product: Product = Products.findOne({_id: productId});
+
+                if (!product)
                 {
-                    let product: Product = Products.findOne({_id: productId});
+                    observer.error('Product not found');
+                    return;
+                }
 
-                    if (!product)
-                    {
-                        observer.error('Product not found');
-                        return;
-                    }
-
-                    observer.next(product);
-                    observer.complete();
-                });
+                observer.next(product);
+                observer.complete();
             });
         });
     }
@@ -233,20 +228,17 @@ export class ProductsService
     public deteleProduct(productId: string): Observable<string>
     {
         return Observable.create(observer => {
-            Meteor.call('deleteProduct', productId, (error, result) =>
+            this.call('deleteProduct', productId, (error, result) =>
             {
-                this._ngZone.run(() =>
+                if (error)
                 {
-                    if (error)
-                    {
-                        observer.error(error);
-                    }
-                    else
-                    {
-                        observer.next(result);
-                        observer.complete();
-                    }
-                });
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
             });
         });
     }

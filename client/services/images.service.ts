@@ -17,14 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable, NgZone }  from '@angular/core';
+import { Injectable }          from '@angular/core';
 import { Images }              from '../../common/collections/image.collection';
 import { BehaviorSubject }     from 'rxjs/BehaviorSubject';
 import { Observable }          from 'rxjs/Observable';
 import { Image, ProductImage } from '../../common/models';
 import { ImagesStore }         from '../../common/collections/image.collection.ts';
 import { UploadFS }            from 'meteor/jalik:ufs';
-import { Tracker }             from 'meteor/tracker';
+import { MeteorReactive }      from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -36,28 +36,22 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services allows to upload, retrieve and delete all the images on the server..
  */
 @Injectable()
-export class ImagesService
+export class ImagesService extends MeteorReactive
 {
     private _images:       Array<Image>                  = Array<Image>();
     private _imagesStream: BehaviorSubject<Array<Image>> = new BehaviorSubject<Array<Image>>(Array<Image>());
 
     /**
      * @summary Initializes a new instance of the ImagesService class.
-     *
-     * @param {NgZone} _ngZone The angular zone.
      */
-    constructor(private _ngZone: NgZone)
+    constructor()
     {
-        Meteor.subscribe('images', () =>
+        super();
+
+        this.subscribe('images', () =>
         {
-            Tracker.autorun(() =>
-            {
-                this._ngZone.run(() =>
-                {
-                    this._images = Images.find().fetch();
-                    this._imagesStream.next(this._images);
-                });
-            });
+            this._images = Images.find().fetch();
+            this._imagesStream.next(this._images);
         });
     }
 
@@ -81,21 +75,18 @@ export class ImagesService
     public getImage(imageId: string): Observable<Image>
     {
         return Observable.create(observer => {
-            Meteor.subscribe('images', imageId , () =>
+            this.subscribe('images', imageId , () =>
             {
-                this._ngZone.run(() =>
+                let image: Image = Images.findOne({_id: imageId});
+
+                if (!Image)
                 {
-                    let image: Image = Images.findOne({_id: imageId});
+                    observer.error('Image not found');
+                    return;
+                }
 
-                    if (!Image)
-                    {
-                        observer.error('Image not found');
-                        return;
-                    }
-
-                    observer.next(image);
-                    observer.complete();
-                });
+                observer.next(image);
+                observer.complete();
             });
         });
     }

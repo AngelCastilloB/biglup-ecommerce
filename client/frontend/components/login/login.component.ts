@@ -17,15 +17,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { FormGroup, FormBuilder, Validators }   from '@angular/forms';
-import { Router }                               from '@angular/router';
-import { _T }                                   from '../../../services/i18n/i18n-singleton.service';
-import { Meteor }                               from 'meteor/meteor';
-import { ValidationService }                    from '../../../services/validation.service';
-import { UserAuthService }                      from '../../../services/user-auth.service';
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Subscription }                         from 'rxjs';
-import { Tracker }                              from 'meteor/tracker';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router }                             from '@angular/router';
+import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { Meteor }                             from 'meteor/meteor';
+import { ValidationService }                  from '../../../services/validation.service';
+import { UserAuthService }                    from '../../../services/user-auth.service';
+import { Component, OnInit, OnDestroy }       from '@angular/core';
+import { Subscription }                       from 'rxjs';
+import { MeteorReactive }                     from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -44,7 +44,7 @@ const NOT_FOUND = 403;
     selector: 'login-form',
     template
 })
-export class LoginComponent implements OnInit, OnDestroy
+export class LoginComponent extends MeteorReactive implements OnInit, OnDestroy
 {
     /**
      * @summary The data and other things associated with the login form.
@@ -71,9 +71,9 @@ export class LoginComponent implements OnInit, OnDestroy
      */
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
-                private _userAuthService: UserAuthService,
-                private _ngZone: NgZone)
+                private _userAuthService: UserAuthService)
     {
+        super();
     }
 
     /**
@@ -135,23 +135,20 @@ export class LoginComponent implements OnInit, OnDestroy
      */
     private _processError(error: Meteor.Error): void
     {
-        Tracker.autorun(() =>
+        this.autorun(() =>
         {
-            this._ngZone.run(() =>
+            this._error.cssClass = 'text-danger';
+
+            this._loginForm.setErrors({'external-related': true});
+
+            switch (error.error) // TODO: Handle all cases.
             {
-                this._error.cssClass = 'text-danger';
-
-                this._loginForm.setErrors({'external-related': true});
-
-                switch (error.error) // TODO: Handle all cases.
-                {
-                    case NOT_FOUND:
-                        this._error.message = _T('The credentials provided did not match our records.');
-                        break;
-                    default:
-                        this._error.message = error.reason;
-                }
-            });
+                case NOT_FOUND:
+                    this._error.message = _T('The credentials provided did not match our records.');
+                    break;
+                default:
+                    this._error.message = error.reason;
+            }
         });
     }
 }
