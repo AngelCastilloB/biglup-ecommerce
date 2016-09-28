@@ -25,11 +25,6 @@ import {
 import { Meteor }           from 'meteor/meteor';
 import { createMigrations } from './migrations/create-migrations';
 
-// Publication Imports
-import './publications/category.publication.ts';
-import './publications/images.publication.ts';
-import './publications/product.publication.ts';
-
 // App email templates
 import './email-templates/password-reset';
 

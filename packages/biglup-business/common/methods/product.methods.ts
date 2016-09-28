@@ -66,13 +66,14 @@ const removeAllImages = (images: Array<ProductImage>) =>
 Meteor.methods({
     createProduct(product: Product)
     {
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'createProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
-
+        */
         check(product, ProductSchema);
 
         if (product.categories)
@@ -101,12 +102,14 @@ Meteor.methods({
 Meteor.methods({
     deleteProduct(productId: string)
     {
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'deleteProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
+        */
 
         check(productId, String);
 

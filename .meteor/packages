@@ -34,5 +34,6 @@ accounts-facebook          # Meteor facebook based account system
 accounts-google            # Meteor google based account system
 accounts-twitter           # Meteor twitter based account system
 biglup:biglup-ui
+biglup:biglup-business
 barbatus:angular2-polyfills
 barbatus:angular2-runtime

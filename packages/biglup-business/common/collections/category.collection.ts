@@ -1,7 +1,7 @@
 /**
- * @file product.collection.ts
+ * @file category.collection.ts
  *
- * @summary The product collection.
+ * @summary The product category collection.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 17 2016
@@ -17,22 +17,22 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { ProductSchema } from '../schemas/product.schema';
-import { Product }       from '../../common/models';
+import { CategorySchema } from '../schemas/category.schema';
+import { Category }       from '../models';
 
 // IMPLEMENTATION *****************************************************************************************************/
 
-const Products: any = new Mongo.Collection<Product>('products');
+const Categories: any = new Mongo.Collection<Category>('categories');
 
-Products.attachSchema(ProductSchema);
+Categories.attachSchema(CategorySchema);
 
 // EXPORTS ************************************************************************************************************/
 
-export { Products }
+export { Categories }
 
 // RULES **************************************************************************************************************/
 
-Products.deny(
+Categories.deny(
 {
     insert() { return true; },
     update() { return true; },

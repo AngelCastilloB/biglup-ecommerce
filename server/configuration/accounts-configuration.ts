@@ -17,7 +17,7 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { UserSchema } from '../../common/schemas/user.schema';
+import { UserSchema } from 'meteor/biglup:biglup-business';
 import { Meteor }     from 'meteor/meteor';
 
 /* EXPORTS ************************************************************************************************************/

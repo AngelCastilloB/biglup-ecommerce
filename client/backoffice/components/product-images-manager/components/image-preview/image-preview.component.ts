@@ -28,7 +28,7 @@ import { Component,
          ViewChild,
          AfterViewInit}          from '@angular/core';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
-import { ProductImage }          from '../../../../../../common/models';
+import { ProductImage }          from 'meteor/biglup:biglup-business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

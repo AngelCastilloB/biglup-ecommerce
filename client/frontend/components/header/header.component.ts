@@ -19,9 +19,9 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
-import { UserAuthService }              from '../../../services/user-auth.service';
+import { UserAuthService }              from 'meteor/biglup:biglup-business';
 import { Subscription }                 from 'rxjs';
-import { CategoriesService }            from '../../../services/categories.service';
+import { CategoriesService }            from 'meteor/biglup:biglup-business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

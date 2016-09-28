@@ -40,8 +40,8 @@ import { OrdersComponent }               from './components/orders/orders.compon
 import { ProductsComponent }             from './components/products/products.component';
 import { ProductImageManagerComponent }  from './components/product-images-manager/product-image-manager.component';
 import { ReportsComponent }              from './components/reports/reports.component';
-import { CategoriesService }             from '../services/categories.service';
-import { ProductsService }               from '../services/products.service';
+import { CategoriesService }             from 'meteor/biglup:biglup-business';
+import { ProductsService }               from 'meteor/biglup:biglup-business';
 import { IdGeneratorService }            from '../services/id-generator.service.ts';
 import { ImageDisplayComponent }         from './components/product-images-manager/components/image-display/image-display.component';
 import { ImagePreviewComponent }         from './components/product-images-manager/components/image-preview/image-preview.component';
@@ -50,10 +50,10 @@ import { FileDropDirective }             from './components/product-images-manag
 import { FileSelectDirective }           from './components/product-images-manager/directives/file-select.directive';
 import { TextEditorComponent }           from './components/text-editor/text-editor.component';
 import { ColorPickerComponent }          from './components/text-editor/components/color-picker.component';
-import { ImagesService }                 from './../services/images.service';
+import { ImagesService }                 from 'meteor/biglup:biglup-business';
 import { I18nInputComponent }            from './components/i18n-input/i18n-input.component';
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
-import { CartsService }                 from '../services/carts.service';
+import { CartsService }                  from 'meteor/biglup:biglup-business';
 
 // EXPORTS ************************************************************************************************************/
 

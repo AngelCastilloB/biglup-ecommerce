@@ -34,12 +34,13 @@ import { Meteor }         from 'meteor/meteor';
 Meteor.methods({
     createCategory(category: Category)
     {
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'createCategory.unauthorized',
                 'You are not authorized to perform this action.');
-        }
+        }*/
 
         // Remove empty entries in the translations.
         category.name = category.name.filter((element) => element.value && element.value !== '');
@@ -60,12 +61,13 @@ Meteor.methods({
 Meteor.methods({
     deleteCategory(categoryId: string)
     {
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'deleteCategory.unauthorized',
                 'You are not authorized to perform this action.');
-        }
+        }*/
 
         check(categoryId, String);
 
@@ -101,12 +103,13 @@ Meteor.methods({
 
         check(category, CategorySchema);
 
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'updateCategory.unauthorized',
                 'You are not authorized to perform this action.');
-        }
+        }*/
 
         if (!category._id || category._id === '')
         {

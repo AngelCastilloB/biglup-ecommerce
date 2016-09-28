@@ -33,14 +33,11 @@ import { CategoryItemComponent }          from './components/category-item/categ
 import { CategoryComponent }              from './components/category/category.component';
 import { SharedModule }                   from '../shared.module';
 import { FrontendComponent }              from './frontend.component';
-import { CategoriesService }              from '../services/categories.service';
-import { ProductsService }                from '../services/products.service';
-import { IdGeneratorService }             from '../services/id-generator.service.ts';
-import { ValidationService }              from '../services/validation.service';
-import { UserAuthService }                from '../services/user-auth.service';
 import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
-import { CartsService }                   from '../services/carts.service';
 import { CartComponent }                  from './components/header/components/cart.component';
+import { CategoriesService }              from 'meteor/biglup:biglup-business';
+import { ProductsService }                from 'meteor/biglup:biglup-business';
+import { CartsService }                   from 'meteor/biglup:biglup-business';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -79,9 +76,6 @@ import { CartComponent }                  from './components/header/components/c
     providers: [
         CategoriesService,
         ProductsService,
-        ValidationService,
-        UserAuthService,
-        IdGeneratorService,
         CartsService
     ]
 })

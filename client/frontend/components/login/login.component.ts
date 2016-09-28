@@ -22,7 +22,7 @@ import { Router }                             from '@angular/router';
 import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
 import { Meteor }                             from 'meteor/meteor';
 import { ValidationService }                  from '../../../services/validation.service';
-import { UserAuthService }                    from '../../../services/user-auth.service';
+import { UserAuthService }                    from 'meteor/biglup:biglup-business';
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { Subscription }                       from 'rxjs';
 import { MeteorReactive }                     from 'angular2-meteor';

@@ -47,6 +47,9 @@ export class User
     }
 }
 
+/**
+ * @summary The email object type definition.
+ */
 interface EmailObject
 {
     address: string;

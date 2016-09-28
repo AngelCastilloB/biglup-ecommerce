@@ -22,7 +22,7 @@ import { CanActivate,
          ActivatedRouteSnapshot,
          RouterStateSnapshot }    from '@angular/router';
 import { Injectable }             from '@angular/core';
-import { UserAuthService }        from '../user-auth.service';
+import { UserAuthService }        from 'meteor/biglup:biglup-business';
 
 // EXPORTS ************************************************************************************************************/
 
