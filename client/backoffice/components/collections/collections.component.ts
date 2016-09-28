@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component }            from '@angular/core';
-import { MeteorComponent }      from 'angular2-meteor';
 import { CategoriesService }    from '../../../services/categories.service';
 import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.service';
 
@@ -37,7 +34,7 @@ import template from './collections.component.html';
     selector: 'categories',
     template
 })
-export class CollectionsComponent extends MeteorComponent
+export class CollectionsComponent
 {
     private _i18nService: I18nSingletonService = I18nSingletonService.getInstance();
 
@@ -48,6 +45,5 @@ export class CollectionsComponent extends MeteorComponent
      */
     constructor(private _categoriesService: CategoriesService)
     {
-        super();
     }
 }

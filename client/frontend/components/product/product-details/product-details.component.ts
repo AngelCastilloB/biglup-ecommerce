@@ -17,14 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          OnInit,
          OnChanges,
          SimpleChanges }        from '@angular/core';
 import { ActivatedRoute }       from '@angular/router';
-import { MeteorComponent }      from 'angular2-meteor';
 import { ProductsService }      from '../../../../services/products.service';
 import { CategoriesService }    from '../../../../services/categories.service';
 import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
@@ -42,7 +39,7 @@ import template from './product-details.component.html';
     selector: 'product-details',
     template
 })
-export class ProductDetailsComponent extends MeteorComponent implements OnInit, OnChanges
+export class ProductDetailsComponent implements OnInit, OnChanges
 {
     private _i18nService: I18nSingletonService = I18nSingletonService.getInstance();
     private _product:     Product;
@@ -60,7 +57,6 @@ export class ProductDetailsComponent extends MeteorComponent implements OnInit, 
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService)
     {
-        super();
     }
 
     /**

@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, Input, OnInit } from '@angular/core';
-import { MeteorComponent }          from 'angular2-meteor';
 import { Product }                  from '../../../../common/models';
 import { CartsService }             from '../../../services/carts.service';
 
@@ -37,9 +34,8 @@ import template from './category-item.component.html';
     selector: 'category-item',
     template
 })
-export class CategoryItemComponent extends MeteorComponent implements OnInit
+export class CategoryItemComponent implements OnInit
 {
-
     @Input()
     public model: Product;
 
@@ -51,7 +47,6 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit
      */
     constructor(private _cartsService: CartsService)
     {
-        super();
     }
 
     /**
@@ -61,11 +56,14 @@ export class CategoryItemComponent extends MeteorComponent implements OnInit
     {
     }
 
+    /**
+     * @brief Adds an item to the cart.
+     */
     private _addToCart()
     {
         this._cartsService.addProduct(this.model._id, 1).subscribe(
             () => console.log('handle product added to cart'),
-            err => console.error(err)
+            error => console.error(error)
         );
     }
 }

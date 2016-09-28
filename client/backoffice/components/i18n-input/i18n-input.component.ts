@@ -17,14 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          Input,
          EventEmitter,
-         Output }          from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
-import { I18nString }      from '../../../../common/models';
+         Output }         from '@angular/core';
+import { I18nString }     from '../../../../common/models';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -35,7 +32,7 @@ import { I18nString }      from '../../../../common/models';
     selector: 'i18n-input',
     template: `<md-input [style.width]="'100%'" [(ngModel)]="_model.value" placeholder="{{_placeholder}}"></md-input>`
 })
-export class I18nInputComponent extends MeteorComponent
+export class I18nInputComponent
 {
     @Output('modelChange')
     private _modelUpdate = new EventEmitter();
@@ -49,6 +46,5 @@ export class I18nInputComponent extends MeteorComponent
      */
     constructor()
     {
-        super();
     }
 }

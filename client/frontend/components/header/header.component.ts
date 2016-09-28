@@ -17,15 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MeteorComponent }              from 'angular2-meteor';
 import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
 import { UserAuthService }              from '../../../services/user-auth.service';
 import { Subscription }                 from 'rxjs';
 import { CategoriesService }            from '../../../services/categories.service';
-import { CartComponent }                from './components/cart.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -39,10 +35,9 @@ import template from './header.component.html';
 @Component({
     selector: 'header',
     template,
-    styleUrls: ['header.component.css'],
-    directives: [CartComponent]
+    styleUrls: ['header.component.css']
 })
-export class HeaderComponent extends MeteorComponent implements OnInit, OnDestroy
+export class HeaderComponent implements OnInit, OnDestroy
 {
     private _isLogged:             boolean;
     private _isLoggedSubscription: Subscription;
@@ -55,7 +50,6 @@ export class HeaderComponent extends MeteorComponent implements OnInit, OnDestro
      */
     constructor(private _userAuthService: UserAuthService, private _categoriesService: CategoriesService)
     {
-        super();
     }
 
     /**

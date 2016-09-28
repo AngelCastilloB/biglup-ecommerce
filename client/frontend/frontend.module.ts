@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { NgModule }                       from '@angular/core';
 import { FrontendRoutesModule }           from './frontend.routes';
 import { HeaderComponent }                from './components/header/header.component';
@@ -40,7 +38,9 @@ import { ProductsService }                from '../services/products.service';
 import { IdGeneratorService }             from '../services/id-generator.service.ts';
 import { ValidationService }              from '../services/validation.service';
 import { UserAuthService }                from '../services/user-auth.service';
+import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
 import { CartsService }                   from '../services/carts.service';
+import { CartComponent }                  from './components/header/components/cart.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,6 +49,7 @@ import { CartsService }                   from '../services/carts.service';
         FrontendComponent,
         // header (child of frontend)
         HeaderComponent,
+        CartComponent,
         // TODO: refactor into child feature modules
 
         // auth
@@ -72,7 +73,8 @@ import { CartsService }                   from '../services/carts.service';
     ],
     imports: [
         SharedModule,
-        FrontendRoutesModule
+        FrontendRoutesModule,
+        BiglupUiModule
     ],
     providers: [
         CategoriesService,

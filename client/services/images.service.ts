@@ -21,10 +21,10 @@ import { Injectable }          from '@angular/core';
 import { Images }              from '../../common/collections/image.collection';
 import { BehaviorSubject }     from 'rxjs/BehaviorSubject';
 import { Observable }          from 'rxjs/Observable';
-import { MeteorComponent }     from 'angular2-meteor';
 import { Image, ProductImage } from '../../common/models';
 import { ImagesStore }         from '../../common/collections/image.collection.ts';
 import { UploadFS }            from 'meteor/jalik:ufs';
+import { MeteorReactive }      from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -36,7 +36,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services allows to upload, retrieve and delete all the images on the server..
  */
 @Injectable()
-export class ImagesService extends MeteorComponent
+export class ImagesService extends MeteorReactive
 {
     private _images:       Array<Image>                  = Array<Image>();
     private _imagesStream: BehaviorSubject<Array<Image>> = new BehaviorSubject<Array<Image>>(Array<Image>());
@@ -50,12 +50,8 @@ export class ImagesService extends MeteorComponent
 
         this.subscribe('images', () =>
         {
-            this.autorun(() =>
-            {
-                this._images = Images.find().fetch();
-
-                this._imagesStream.next(this._images);
-            });
+            this._images = Images.find().fetch();
+            this._imagesStream.next(this._images);
         });
     }
 

@@ -17,10 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
-import { Component }       from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
+import { Component }      from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,13 +32,12 @@ import template from './orders.component.html';
     selector: 'orders',
     template
 })
-export class OrdersComponent extends MeteorComponent
+export class OrdersComponent
 {
     /**
      * @summary Initializes a new instance of the OrdersComponent class.
      */
     constructor()
     {
-        super();
     }
 }

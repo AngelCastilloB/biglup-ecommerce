@@ -19,14 +19,14 @@
 
 import { Product,
          ProductImage,
-         I18nString }       from '../../common/models';
-import { Injectable }       from '@angular/core';
-import { Products }         from '../../common/collections/product.collection';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
-import { Observable }       from 'rxjs/Observable';
-import { MeteorComponent }  from 'angular2-meteor';
-import { ImagesService }    from './images.service';
-import { ProductSchema }    from '../../common/schemas/product.schema';
+         I18nString }      from '../../common/models';
+import { Injectable }      from '@angular/core';
+import { Products }        from '../../common/collections/product.collection';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable }      from 'rxjs/Observable';
+import { ImagesService }   from './images.service';
+import { ProductSchema }   from '../../common/schemas/product.schema';
+import { MeteorReactive }  from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -59,13 +59,15 @@ const copyProduct = (product: Product) =>
  * @summary This services retrieves all the products along with its relational information from other collections.
  */
 @Injectable()
-export class ProductsService extends MeteorComponent
+export class ProductsService extends MeteorReactive
 {
     private _products:       Array<Product>                  = Array<Product>();
     private _productsStream: BehaviorSubject<Array<Product>> = new BehaviorSubject<Array<Product>>(Array<Product>());
 
     /**
      * @summary Initializes a new instance of the ProductsService class.
+     *
+     * @param {ImagesService} _imagesService The images service.
      */
     constructor(private _imagesService: ImagesService)
     {
@@ -160,7 +162,7 @@ export class ProductsService extends MeteorComponent
                 // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
                 copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                this.call('createProduct', copy, (error) =>
+                Meteor.call('createProduct', copy, (error) =>
                 {
                     if (error)
                     {
@@ -201,7 +203,7 @@ export class ProductsService extends MeteorComponent
                 // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).
                 copy.images = product.images.map((image) => new ProductImage(image.id, image.url, image.isUploaded));
 
-                this.call('updateProduct', copy, (error) =>
+                Meteor.call('updateProduct', copy, (error) =>
                 {
                     if (error)
                     {

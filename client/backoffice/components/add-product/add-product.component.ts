@@ -17,13 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component,
          OnInit,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
-import { MeteorComponent }          from 'angular2-meteor';
 import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
 import { ModalComponent }           from '../modal/modal.component';
 import { ProductsService }          from '../../../services/products.service.ts';
@@ -47,7 +44,7 @@ import template from './add-product.component.html';
     selector: 'add-products',
     template
 })
-export class AddProductComponent extends MeteorComponent implements OnInit
+export class AddProductComponent implements OnInit
 {
     private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
     private _product:               Product              = new Product();
@@ -67,7 +64,6 @@ export class AddProductComponent extends MeteorComponent implements OnInit
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService)
     {
-        super();
     }
 
     /**

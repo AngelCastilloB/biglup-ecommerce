@@ -14,10 +14,8 @@ tracker                    # Meteor's client-side reactive programming library
 standard-minifier-css      # CSS minifier run for production mode
 standard-minifier-js       # JS minifier run for production mode
 es5-shim                   # ECMAScript 5 compatibility for older browsers.
-ecmascript                 # Enable ECMAScript2015+ syntax in app code
 
 angular2-compilers@=0.6.0  # Modified Angular 2 compilers
-barbatus:angular2-runtime  #
 
 aldeed:simple-schema       # Enables use of Schemas in the app Collections
 aldeed:collection2         # Child of Simple schema
@@ -35,3 +33,6 @@ accounts-password          # Meteor password based account system
 accounts-facebook          # Meteor facebook based account system
 accounts-google            # Meteor google based account system
 accounts-twitter           # Meteor twitter based account system
+biglup:biglup-ui
+barbatus:angular2-polyfills
+barbatus:angular2-runtime

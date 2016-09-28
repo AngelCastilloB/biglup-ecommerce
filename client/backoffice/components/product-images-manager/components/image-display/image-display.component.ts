@@ -25,7 +25,6 @@ import { Component,
          Renderer,
          ViewChild,
          AfterViewInit}       from '@angular/core';
-import { MeteorComponent }    from 'angular2-meteor';
 import { IdGeneratorService } from '../../../../../services/id-generator.service.ts';
 import { ProductImage }       from '../../../../../../common/models';
 
@@ -43,7 +42,7 @@ import template from './image-display.component.html';
     template,
     styleUrls: ['./images-display.component.css']
 })
-export class ImageDisplayComponent extends MeteorComponent implements AfterViewInit
+export class ImageDisplayComponent implements AfterViewInit
 {
     @Input('model')
     private _model:    ProductImage;
@@ -56,8 +55,6 @@ export class ImageDisplayComponent extends MeteorComponent implements AfterViewI
      */
     constructor(private _renderer: Renderer, private _idGenerator: IdGeneratorService, private element: ElementRef)
     {
-        super();
-
         this._uniqueId = _idGenerator.generate();
     }
 

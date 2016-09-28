@@ -8,23 +8,19 @@
 <br>
 <div class="add-product-grid">
   <md-grid-list cols="1" *ngIf="_product.title[0]">
-    <md-card>
-      <md-tab-group>
-        <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
-          <md-card-content>
-            <template md-tab-label>{{lang}}</template>
-            <template md-tab-content>
-              <br>
-              <i18n-input [(model)]="_i18nTitleReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
-              <br>
-              <br>
-              {{ 'Description' | translate }}
-              <i18n-text-editor [(model)]="_i18nDescReferenceMap[lang]"></i18n-text-editor>
-            </template>
-          </md-card-content>
-        </md-tab>
-      </md-tab-group>
-    </md-card>
+    <md-tab-group>
+      <md-tab *ngFor="let lang of _i18nService.getSupportedLanguages()">
+        <template md-tab-label>{{lang}}</template>
+        <template md-tab-content>
+          <br>
+          <i18n-input [(model)]="_i18nTitleReferenceMap[lang]" [placeholder]="_getTitleTranslation()"></i18n-input>
+          <br>
+          <br>
+          {{ 'Description' | translate }}
+          <i18n-text-editor [(model)]="_i18nDescReferenceMap[lang]"></i18n-text-editor>
+        </template>
+      </md-tab>
+    </md-tab-group>
     <br>
     <md-card>
       <product-image-manager #imagesManager [(model)]="_product.images"></product-image-manager>

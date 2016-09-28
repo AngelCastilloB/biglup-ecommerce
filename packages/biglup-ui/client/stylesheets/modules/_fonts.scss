@@ -1,0 +1,25 @@
+@import 'mixins';
+@import 'colors';
+
+@include google-font('Roboto');
+@include google-font('Roboto+Mono');
+
+$text-color:    $primary-text-color;
+$quiet-color:   $secondary-text-color;
+$loud-color:    $primary-text-color;
+$heading-color: $primary-text-color;
+
+$link-color:         $accent-color;
+$link-visited-color: $accent-color;
+$link-hover-color:   saturate($accent-color, 20%);
+
+$base-font-family: 'Roboto', sans-serif;
+$base-font-size:   18px;
+$base-font-weight: 300;
+
+$fixed-font-family: 'Roboto Mono', monospace;
+$fixed-font-size:   15px;
+$fixed-line-height: 1.2;
+
+$heading-font-family: 'Roboto', sans-serif;
+$heading-font-weight: 700;

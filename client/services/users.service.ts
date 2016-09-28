@@ -15,20 +15,42 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-import { Injectable }          from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+// IMPORTS ************************************************************************************************************/
 
+import { Injectable }                  from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { MeteorReactive }              from 'angular2-meteor';
+
+// RxJS imports
+import 'rxjs/add/operator/distinctUntilChanged';
+
+// EXPORTS ************************************************************************************************************/
+
+/**
+ * @summary The UserService provides information about the users on the system.
+ */
 @Injectable()
-export class UsersService {
-
+export class UsersService extends MeteorReactive
+{
     /**
      * @summary creates a subject all the users in the system.
      */
-    private _userCollectionStream = new Subject<Meteor.User>();
+    private _userCollectionStream = new BehaviorSubject<Array<Meteor.User>>(Array<Meteor.User>());
 
+    /**
+     * @summary Initializes a new instnace of the UsersService class.
+     */
     constructor()
     {
-        Meteor.subscribe('users', () => this._userCollectionStream.next(Meteor.users.find({}).fetch()));
+        super();
+
+        this.subscribe('users', () =>
+        {
+            this.autorun(() =>
+            {
+                this._userCollectionStream.next(Meteor.users.find({}).fetch());
+            });
+        });
     }
 
     /**
@@ -36,8 +58,8 @@ export class UsersService {
      *
      * @returns {Observable<Meteor.User>}
      */
-    public getUserCollectionStream(): Observable<Meteor.User>
+    public getUserCollectionStream(): Observable<Array<Meteor.User>>
     {
-        return this._userCollectionStream;
+        return this._userCollectionStream.distinctUntilChanged();
     }
 }

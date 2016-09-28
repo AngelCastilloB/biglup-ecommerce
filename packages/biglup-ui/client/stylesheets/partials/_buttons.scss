@@ -1,0 +1,94 @@
+@import 'base';
+
+$button-padding:       4 12px !default;
+$button-min-width:     88px   !default;
+$button-margin:        0      !default;
+$button-line-height:   36px   !default;
+$button-border-radius: 4px    !default;
+
+[biglup-button]{
+    position:      relative;
+    font-family:   $base-font-family;
+    display:       inline-block;
+    overflow:      hidden;
+    border:        0;
+    outline:       0;
+    background:    0;
+    cursor:        pointer;
+
+    margin:        $button-margin;
+    min-width:     $button-min-width;
+    line-height:   $button-line-height;
+    padding:       $button-padding;
+    border-radius: $button-border-radius;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+         -o-user-select: none;
+            user-select: none;
+
+    -webkit-transition: box-shadow .2s;
+       -moz-transition: box-shadow .2s;
+        -ms-transition: box-shadow .2s;
+         -o-transition: box-shadow .2s;
+            transition: box-shadow .2s;
+
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
+    .touch{
+        background: rgba(100,100,100,.1);
+        pointer-events: none;
+        border-radius: 100%;
+    }
+    &.primary .touch {
+        background: transparentize($primary-color, 0.8);
+    }
+    &.accent .touch {
+        background: transparentize($accent-color, 0.8);
+    }
+    &.warn .touch {
+        background: transparentize($warn-color, 0.8);
+    }
+
+    &.overflow{
+        overflow: visible;
+    }
+
+    &[raised],.raised{
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: $button-border-radius;
+    }
+
+    &[icon]{
+        padding: 8px;
+        border-radius: 100%;
+        font-size: 35px;
+        line-height: 0;
+    }
+
+    &:focus, :active{
+        -moz-outline-style: none;
+    }
+
+    &[raised]:active,.raised:active{
+        box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    }
+
+    &[disabled],.disabled,[disabled]:active,.disabled:active{
+        background: #eee;
+        color: #aaa;
+        box-shadow: none !important;
+    }
+}

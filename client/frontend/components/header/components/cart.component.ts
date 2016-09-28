@@ -17,21 +17,22 @@
 
 // IMPORTS ************************************************************************************************************/
 
-// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
-// noinspection TypeScriptCheckImport
-import template from './cart.component.html';
-
-import 'reflect-metadata';
-
-import {
-    Component, OnInit, OnDestroy,
-    style, state, animate,
-    transition, trigger
-}                               from '@angular/core';
+import { Component,
+         OnInit,
+         OnDestroy,
+         style,
+         state,
+         animate,
+         transition,
+         trigger }              from '@angular/core';
 import { Cart, CartItem, User } from '../../../../../common/models';
 import { Subscription }         from 'rxjs';
 import { UserAuthService }      from '../../../../services/user-auth.service';
 import { CartsService }         from '../../../../services/carts.service';
+
+// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
+// noinspection TypeScriptCheckImport
+import template from './cart.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -59,7 +60,6 @@ import { CartsService }         from '../../../../services/carts.service';
 })
 export class CartComponent implements OnInit, OnDestroy
 {
-
     /**
      * @summary The current authenticated user.
      */
@@ -104,9 +104,7 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private get _cartItemsCss()
     {
-        return {
-            top: this._isCartVisible ? 'initial' : '-2000px'
-        };
+        return { top: this._isCartVisible ? 'initial' : '-2000px' };
     }
 
     /**
@@ -117,14 +115,14 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private get _items(): CartItem[]
     {
-        if (this._cart && this._cart.items)
+        if (!this._cart || !this._cart.items)
         {
-            return this._cart.items;
+            this._isCartVisible = false;
+
+            return [];
         }
 
-        this._isCartVisible = false;
-
-        return [];
+        return this._cart.items;
     }
 
     /**
@@ -158,14 +156,14 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private _getCartItemCount(): number
     {
-        if (this._cart && this._cart.items)
+        if (!this._cart || !this._cart.items)
         {
-            return this._cart.items.length;
+            this._isCartVisible = false;
+
+            return 0;
         }
 
-        this._isCartVisible = false;
-
-        return 0;
+        return this._cart.items.length;
     }
 
     /**
@@ -193,14 +191,10 @@ export class CartComponent implements OnInit, OnDestroy
             status =>
             {
                 if (!status)
-                {
                     console.error(status);
-                }
 
                 if (this._items.length <= 0)
-                {
                     return this._isCartVisible = false;
-                }
             },
             error => console.log('handle remove item from cart error!', error)
         );

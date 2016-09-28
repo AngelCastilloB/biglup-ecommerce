@@ -21,8 +21,8 @@ import { Injectable }      from '@angular/core';
 import { Categories }      from '../../common/collections/category.collection';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable }      from 'rxjs/Observable';
-import { MeteorComponent } from 'angular2-meteor';
 import { Category }        from '../../common/models';
+import { MeteorReactive }  from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -35,7 +35,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
  * @summary This services retrieves all the categories along with its relational information from other collections.
  */
 @Injectable()
-export class CategoriesService extends MeteorComponent
+export class CategoriesService extends MeteorReactive
 {
     private _categories:       Array<Category> = Array<Category>();
     private _categoriesStream: any             = new BehaviorSubject<Array<Category>>(Array<Category>());

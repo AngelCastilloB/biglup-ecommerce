@@ -12,7 +12,6 @@
       <information-animation *ngIf="_type === ModalType.Information"></information-animation>
       <p>{{ _message }}</p>
     </div>
-    <center>
       <button *ngIf="_buttons === ModalButtons.Cancel|| _buttons === ModalButtons.CancelOk || _buttons === ModalButtons.CancelContinue"
               class="modal-button"
               md-raised-button
@@ -51,6 +50,5 @@
               (click)="_onButtonClick(ModalResult.Continue)">
         {{'Continue' | translate }}
       </button>
-    </center>
   </div>
 </div>

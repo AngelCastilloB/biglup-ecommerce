@@ -17,17 +17,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router }                             from '@angular/router';
 import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
 import { Meteor }                             from 'meteor/meteor';
-import { MeteorComponent }                    from 'angular2-meteor';
 import { ValidationService }                  from '../../../services/validation.service';
 import { UserAuthService }                    from '../../../services/user-auth.service';
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { Subscription }                       from 'rxjs';
+import { MeteorReactive }                     from 'angular2-meteor';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -46,7 +44,7 @@ const NOT_FOUND = 403;
     selector: 'login-form',
     template
 })
-export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
+export class LoginComponent extends MeteorReactive implements OnInit, OnDestroy
 {
     /**
      * @summary The data and other things associated with the login form.
@@ -69,6 +67,7 @@ export class LoginComponent extends MeteorComponent implements OnInit, OnDestroy
      * @param {FormBuilder}     _formBuilder     The form builder service.
      * @param {Router}          _router          Angular's router service.
      * @param {UserAuthService} _userAuthService The user authentication service.
+     * @param {NgZone}          _ngZone          The angular zone.
      */
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
