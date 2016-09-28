@@ -19,13 +19,14 @@
 
 import { Product,
          ProductImage,
-         I18nString }       from '../../common/models';
-import { Injectable }       from '@angular/core';
-import { Products }         from '../../common/collections/product.collection';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
-import { Observable }       from 'rxjs/Observable';
-import { ImagesService }    from './images.service';
-import { ProductSchema }    from '../../common/schemas/product.schema';
+         I18nString }         from '../../common/models';
+import { Injectable, NgZone } from '@angular/core';
+import { Products }           from '../../common/collections/product.collection';
+import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
+import { Observable }         from 'rxjs/Observable';
+import { ImagesService }      from './images.service';
+import { ProductSchema }      from '../../common/schemas/product.schema';
+import { Tracker }            from 'meteor/tracker';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -65,16 +66,22 @@ export class ProductsService
 
     /**
      * @summary Initializes a new instance of the ProductsService class.
+     *
+     * @param {ImagesService} _imagesService The images service.
+     * @param {NgZone}       _ngZone         The angular zone.
      */
-    constructor(private _imagesService: ImagesService)
+    constructor(private _imagesService: ImagesService, private _ngZone: NgZone)
     {
         Meteor.subscribe('products', () =>
         {
-            //this.autorun(() =>
-            //{
-                this._products = Products.find().fetch();
-                this._productsStream.next(this._products);
-            //});
+            Tracker.autorun(() =>
+            {
+                this._ngZone.run(() =>
+                {
+                    this._products = Products.find().fetch();
+                    this._productsStream.next(this._products);
+                });
+            });
         });
     }
 
@@ -115,16 +122,19 @@ export class ProductsService
         return Observable.create(observer => {
             Meteor.subscribe('products', productId , () =>
             {
-                let product: Product = Products.findOne({_id: productId});
-
-                if (!product)
+                this._ngZone.run(() =>
                 {
-                    observer.error('Product not found');
-                    return;
-                }
+                    let product: Product = Products.findOne({_id: productId});
 
-                observer.next(product);
-                observer.complete();
+                    if (!product)
+                    {
+                        observer.error('Product not found');
+                        return;
+                    }
+
+                    observer.next(product);
+                    observer.complete();
+                });
             });
         });
     }
@@ -225,15 +235,18 @@ export class ProductsService
         return Observable.create(observer => {
             Meteor.call('deleteProduct', productId, (error, result) =>
             {
-                if (error)
+                this._ngZone.run(() =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
             });
         });
     }

@@ -179,7 +179,6 @@ export class AddCollectionComponent implements OnInit
      */
     private _updateCategory(): void
     {
-
         if (!this._category.name || !this._category.info)
         {
             this._modal.show(

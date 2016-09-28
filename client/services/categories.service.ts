@@ -17,11 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }      from '@angular/core';
-import { Categories }      from '../../common/collections/category.collection';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable }      from 'rxjs/Observable';
-import { Category }        from '../../common/models';
+import { Injectable, NgZone } from '@angular/core';
+import { Categories }         from '../../common/collections/category.collection';
+import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
+import { Observable }         from 'rxjs/Observable';
+import { Category }           from '../../common/models';
+import { Tracker }            from 'meteor/tracker';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -41,16 +42,21 @@ export class CategoriesService
 
     /**
      * @summary Initializes a new instance of the CategoriesService class.
+     *
+     * @param {NgZone} _ngZone The angular zone.
      */
-    constructor()
+    constructor(private _ngZone: NgZone)
     {
         Meteor.subscribe('categories', () =>
         {
-        //    this.autorun(() =>
-        //    {
-                this._categories = Categories.find().fetch();
-                this._categoriesStream.next(this._categories);
-         //   });
+            Tracker.autorun(() =>
+            {
+                this._ngZone.run(() =>
+                {
+                    this._categories = Categories.find().fetch();
+                    this._categoriesStream.next(this._categories);
+                });
+            });
         });
     }
 
@@ -76,16 +82,19 @@ export class CategoriesService
         return Observable.create(observer => {
             Meteor.subscribe('categories', categoryId , () =>
             {
-                let category: Category = Categories.findOne({_id: categoryId});
-
-                if (!category)
+                this._ngZone.run(() =>
                 {
-                    observer.error('Category not found');
-                    return;
-                }
+                    let category: Category = Categories.findOne({_id: categoryId});
 
-                observer.next(category);
-                observer.complete();
+                    if (!category)
+                    {
+                        observer.error('Category not found');
+                        return;
+                    }
+
+                    observer.next(category);
+                    observer.complete();
+                });
             });
         });
     }
@@ -100,15 +109,18 @@ export class CategoriesService
         return Observable.create(observer => {
             Meteor.call('createCategory', category, (error, result) =>
             {
-                if (error)
+                this._ngZone.run(() =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
             });
         });
     }
@@ -123,15 +135,18 @@ export class CategoriesService
         return Observable.create(observer => {
             Meteor.call('updateCategory', category, (error, result) =>
             {
-                if (error)
+                this._ngZone.run(() =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
             });
         });
     }
@@ -148,15 +163,18 @@ export class CategoriesService
         return Observable.create(observer => {
             Meteor.call('deleteCategory', categoryId, (error, result) =>
             {
-                if (error)
+                this._ngZone.run(() =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(result);
+                        observer.complete();
+                    }
+                });
             });
         });
     }

@@ -28,7 +28,6 @@ import { UserAuthService }             from './services/user-auth.service';
 import { NewPasswordGuardService }     from './services/guards/new-password-guard.service';
 import { FrontendModule }              from './frontend/frontend.module';
 import { BackofficeModule }            from './backoffice/backoffice.module';
-import { METEOR_PROVIDERS }            from 'angular2-meteor';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,7 +37,10 @@ import { METEOR_PROVIDERS }            from 'angular2-meteor';
         IsUserLoggedOutGuardService,
         NewPasswordGuardService,
         UserAuthService,
-        { provide: APP_BASE_HREF, useValue: '/' }
+        {
+            provide: APP_BASE_HREF,
+            useValue: '/'
+        }
     ],
     declarations: [
         AppComponent

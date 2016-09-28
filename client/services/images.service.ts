@@ -17,13 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }          from '@angular/core';
+import { Injectable, NgZone }  from '@angular/core';
 import { Images }              from '../../common/collections/image.collection';
 import { BehaviorSubject }     from 'rxjs/BehaviorSubject';
 import { Observable }          from 'rxjs/Observable';
 import { Image, ProductImage } from '../../common/models';
 import { ImagesStore }         from '../../common/collections/image.collection.ts';
 import { UploadFS }            from 'meteor/jalik:ufs';
+import { Tracker }             from 'meteor/tracker';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -42,17 +43,21 @@ export class ImagesService
 
     /**
      * @summary Initializes a new instance of the ImagesService class.
+     *
+     * @param {NgZone} _ngZone The angular zone.
      */
-    constructor()
+    constructor(private _ngZone: NgZone)
     {
         Meteor.subscribe('images', () =>
         {
-            //this.autorun(() =>
-            //{
-                this._images = Images.find().fetch();
-
-                this._imagesStream.next(this._images);
-            //});
+            Tracker.autorun(() =>
+            {
+                this._ngZone.run(() =>
+                {
+                    this._images = Images.find().fetch();
+                    this._imagesStream.next(this._images);
+                });
+            });
         });
     }
 
@@ -78,16 +83,19 @@ export class ImagesService
         return Observable.create(observer => {
             Meteor.subscribe('images', imageId , () =>
             {
-                let image: Image = Images.findOne({_id: imageId});
-
-                if (!Image)
+                this._ngZone.run(() =>
                 {
-                    observer.error('Image not found');
-                    return;
-                }
+                    let image: Image = Images.findOne({_id: imageId});
 
-                observer.next(image);
-                observer.complete();
+                    if (!Image)
+                    {
+                        observer.error('Image not found');
+                        return;
+                    }
+
+                    observer.next(image);
+                    observer.complete();
+                });
             });
         });
     }
