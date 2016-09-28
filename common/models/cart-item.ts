@@ -26,6 +26,7 @@ import { I18nString } from './';
  */
 export class CartItem
 {
+
     /**
      * @summary Initialises a new instance of the CartItem class.
      *
@@ -34,6 +35,7 @@ export class CartItem
      * @param title     The title of the product (Denormalization field).
      * @param color     The color variant of the product (Denormalization field).
      * @param size      The size variant of the product (Denormalization field).
+     * @param image     The main image of the product (Denormalization field).
      * @param updatedAt The last update date to this item. (This field should never be set by the client application).
      */
     constructor(public productId: string            = '',
@@ -41,6 +43,7 @@ export class CartItem
                 public title:     Array<I18nString> = Array<I18nString>(),
                 public color:     Array<I18nString> = Array<I18nString>(),
                 public size:      Array<I18nString> = Array<I18nString>(),
+                public image:     string            = '',
                 public updatedAt: Date              = new Date())
     {
     }

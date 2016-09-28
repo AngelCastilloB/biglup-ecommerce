@@ -53,6 +53,7 @@ import { ColorPickerComponent }          from './components/text-editor/componen
 import { ImagesService }                 from './../services/images.service';
 import { I18nInputComponent }            from './components/i18n-input/i18n-input.component';
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
+import { CartsService }                 from '../services/carts.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -111,7 +112,8 @@ import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18
         ProductsService,
         ImagesService,
         IdGeneratorService,
-        DragulaService
+        DragulaService,
+        CartsService
     ]
 })
 export class BackofficeModule

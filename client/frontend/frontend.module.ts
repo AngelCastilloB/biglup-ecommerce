@@ -39,6 +39,8 @@ import { IdGeneratorService }             from '../services/id-generator.service
 import { ValidationService }              from '../services/validation.service';
 import { UserAuthService }                from '../services/user-auth.service';
 import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
+import { CartsService }                   from '../services/carts.service';
+import { CartComponent }                  from './components/header/components/cart.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -47,6 +49,7 @@ import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
         FrontendComponent,
         // header (child of frontend)
         HeaderComponent,
+        CartComponent,
         // TODO: refactor into child feature modules
 
         // auth
@@ -78,7 +81,8 @@ import { BiglupUiModule }                 from 'meteor/biglup:biglup-ui';
         ProductsService,
         ValidationService,
         UserAuthService,
-        IdGeneratorService
+        IdGeneratorService,
+        CartsService
     ]
 })
 export class FrontendModule

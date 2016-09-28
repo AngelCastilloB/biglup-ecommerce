@@ -37,11 +37,13 @@ const FACEBOOK_SETTINGS = {
     appId: '',
     secret: ''
 };
-const GOOGLE_SETTINGS   = {
+
+const GOOGLE_SETTINGS = {
     clientId: '',
     secret: ''
 };
-const TWITTER_SETTINGS  = {
+
+const TWITTER_SETTINGS = {
     consumerKey: '',
     secret: ''
 };

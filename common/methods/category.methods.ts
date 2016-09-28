@@ -20,6 +20,7 @@
 import { Categories }     from '../collections/category.collection';
 import { CategorySchema } from '../schemas/category.schema';
 import { Category }       from '../models';
+import { Meteor }         from 'meteor/meteor';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -33,13 +34,12 @@ import { Category }       from '../models';
 Meteor.methods({
     createCategory(category: Category)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.createCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'createCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         // Remove empty entries in the translations.
         category.name = category.name.filter((element) => element.value && element.value !== '');
@@ -60,13 +60,12 @@ Meteor.methods({
 Meteor.methods({
     deleteCategory(categoryId: string)
     {
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.deleteCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'deleteCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         check(categoryId, String);
 
@@ -102,13 +101,12 @@ Meteor.methods({
 
         check(category, CategorySchema);
 
-        /*
-         if (!this.user.IsAdmin) {
-         throw new Meteor.Error(
-         'categories.updateCategory.unauthorized',
-         'You are not authorized to perform this action.');
-         }
-         */
+        if (!Meteor.users.findOne(this.userId).isAdmin)
+        {
+            throw new Meteor.Error(
+                'updateCategory.unauthorized',
+                'You are not authorized to perform this action.');
+        }
 
         if (!category._id || category._id === '')
         {

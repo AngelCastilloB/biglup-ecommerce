@@ -19,6 +19,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { Product }                  from '../../../../common/models';
+import { CartsService }             from '../../../services/carts.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,13 +38,14 @@ export class CategoryItemComponent implements OnInit
 {
     @Input()
     public model: Product;
+
     @Input()
-    public  category: string;
+    public category: string;
 
     /**
      * @summary Initializes a new instance of the CategoryItemComponent class.
      */
-    constructor()
+    constructor(private _cartsService: CartsService)
     {
     }
 
@@ -52,5 +54,16 @@ export class CategoryItemComponent implements OnInit
      */
     public ngOnInit()
     {
+    }
+
+    /**
+     * @brief Adds an item to the cart.
+     */
+    private _addToCart()
+    {
+        this._cartsService.addProduct(this.model._id, 1).subscribe(
+            () => console.log('handle product added to cart'),
+            error => console.error(error)
+        );
     }
 }

@@ -1,10 +1,10 @@
 /**
- * @file models.ts
+ * @file index.ts.
  *
- * @summary The Models exports.
+ * @summary The meteor configurations index barrel.
  *
- * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   September 05 2016
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @date   September 16 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,13 +17,6 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export * from './cart';
-export * from './cart-item';
-export * from './category';
-export * from './i18n-string';
-export * from './image';
-export * from './product';
-export * from './product-image';
-export * from './product-variant';
-export * from './sub-category';
-export * from './user';
+export * from './accounts-configuration';
+export * from './check-meteor-settings';
+export * from './services-configuration';
