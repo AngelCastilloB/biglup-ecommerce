@@ -40,3 +40,4 @@ biglup:ui
 biglup:business
 biglup:i18n
 biglup:migrations
+biglup:configuration

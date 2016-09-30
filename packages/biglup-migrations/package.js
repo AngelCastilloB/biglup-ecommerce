@@ -1,7 +1,7 @@
 Package.describe({
     name: 'biglup:migrations',
     version: '0.0.1',
-    summary: 'Internationalization entities for the Biglup E-Commerce project',
+    summary: 'Database migrations package for the Biglup E-Commerce project',
     documentation: 'README.md'
 });
 

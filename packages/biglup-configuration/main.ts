@@ -19,11 +19,11 @@
 
 import { checkMeteorSettings,
          startServicesConfiguration,
-         startAccountsConfiguration  } from './configuration';
+         startAccountsConfiguration  } from './server/configuration';
 import { Meteor }                      from 'meteor/meteor';
 
 // App email templates
-import './email-templates/password-reset';
+import './server/email-templates/password-reset';
 
 /* METEOR SERVER START UP *********************************************************************************************/
 
