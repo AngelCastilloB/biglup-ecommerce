@@ -22,8 +22,8 @@ barbatus:typescript@0.4.1
 barbatus:typescript-compiler@0.7.1_1
 barbatus:typescript-runtime@0.1.2
 base64@1.0.9
-biglup:biglup-business@0.0.1
-biglup:biglup-ui@0.0.1
+biglup:business@0.0.1
+biglup:ui@0.0.1
 binary-heap@1.0.9
 blaze@2.1.8
 blaze-tools@1.0.9

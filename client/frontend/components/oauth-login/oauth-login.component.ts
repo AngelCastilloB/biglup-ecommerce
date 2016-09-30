@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, Output, EventEmitter } from '@angular/core';
-import { UserAuthService }                 from 'meteor/biglup:biglup-business';
+import { UserAuthService }                 from 'meteor/biglup:business';
 import { Router }                          from '@angular/router';
 import { Meteor }                          from 'meteor/meteor';
 

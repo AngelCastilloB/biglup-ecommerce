@@ -24,7 +24,7 @@ import { AppComponent }                from './app.component';
 import { AppRoutesModule }             from './app.routes';
 import { IsUserLoggedGuardService }    from './services/guards/is-user-logged-guard.service';
 import { IsUserLoggedOutGuardService } from './services/guards/is-user-logged-out-guard.service';
-import { UserAuthService }             from 'meteor/biglup:biglup-business';
+import { UserAuthService }             from 'meteor/biglup:business';
 import { NewPasswordGuardService }     from './services/guards/new-password-guard.service';
 import { FrontendModule }              from './frontend/frontend.module';
 import { BackofficeModule }            from './backoffice/backoffice.module';

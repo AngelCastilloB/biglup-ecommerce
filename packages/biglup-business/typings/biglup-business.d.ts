@@ -1,7 +1,7 @@
 /**
  * @file biglup-business.d.ts
  *
- * @summary The servies typings.
+ * @summary The business project typings.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   September 28 2016
@@ -15,53 +15,56 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
-// IMPORTS ************************************************************************************************************/
+/* TYPING REFERENCES **************************************************************************************************/
 
-import { Observable }                           from 'rxjs';
-import { Cart, Category, Image, Product, User } from '../common/models';
+/*/// <reference path="../node_modules/rxjs/Observable.d.ts" /> */
 
-// MODULES ************************************************************************************************************/
+/* MODULES ************************************************************************************************************/
 
-declare module Services
+declare module Business
 {
-    class BiglupBusinessModule {};
+// SERVICES ***********************************************************************************************************/
+
     class CartsService
     {
-        public getCartsStream(): Observable<Cart[]>;
-        public getUserCartStream(file: any, id: string, callback?: Function): string;
-        public addProduct(productId: string, quantity: number, set = false): Observable<boolean>;
-        public removeItem(userId: string, productId: string): Observable<boolean>;
-        public removeAllItems(userId: string): Observable<boolean>;
-    };
+        public getCartsStream(): any;
+        public getUserCartStream(): any;
+        public addProduct(productId: string, quantity: number, set = false): any;
+        public removeItem(userId: string, productId: string): any;
+        public removeAllItems(userId: string): any;
+    }
 
     class CategoriesService
     {
-        public getCategories(): Observable<Array<Category>>;
-        public getCategory(categoryId: string): Observable<Category>;
-        public createCategory(category: Category): Observable<string>;
-        public updateCategory(category: Category): Observable<string>;
-        public deleteCategory(categoryId: string): Observable<string>;
-    };
+        public getCategories(): any;
+        public getCategory(categoryId: string): any;
+        public createCategory(category: Category): any;
+        public updateCategory(category: Category): any;
+        public deleteCategory(categoryId: string): any;
+    }
+
     class ImagesService
     {
-        public getImages(): Observable<Array<Image>>;
-        public getImage(imageId: string): Observable<Image>;
-    };
+        public getImages(): any;
+        public getImage(imageId: string): any;
+    }
+
     class ProductsService
     {
-        public getProducts(): Observable<Array<Product>>;
-        public getCategoryProducts(categoryId: string): Observable<Array<Product>>;
-        public getProduct(productId: string): Observable<Product>;
-        public createProduct(product: Product): Observable<number>;
-        public updateProduct(product: Product): Observable<number>;
-        public deteleProduct(productId: string): Observable<string>;
+        public getProducts(): any;
+        public getCategoryProducts(categoryId: string): any;
+        public getProduct(productId: string): any;
+        public createProduct(product: Product): any;
+        public updateProduct(product: Product): any;
+        public deteleProduct(productId: string): any;
     }
+
     class UserAuthService
     {
         public isLogged(): boolean;
         public getId(): string;
-        public isLoggedStream(): Observable<boolean>;
-        public getUserStream(): Observable<User>;
+        public isLoggedStream(): any;
+        public getUserStream(): any;
         public  login(email: string, password: string, callback: (error?) => void);
         public logout();
         public createUser(options: {email: string, password: string}, callback?: (error) => void);
@@ -74,11 +77,164 @@ declare module Services
 
     class UsersService
     {
-        public getUserCollectionStream(): Observable<Array<Meteor.User>>;
-    };
+        public getUserCollectionStream(): any;
+    }
+
+// COLLECTIONS ********************************************************************************************************/
+
+    const Categories: any;
+    const Images: any;
+    const ImagesStore: any;
+    const Products: any;
+
+// MODELS *************************************************************************************************************/
+
+    export class I18nString
+    {
+        constructor(
+            public language: string = '',
+            public value:    string = '')
+    }
+
+    class CartItem
+    {
+        constructor(
+            public productId: string            = '',
+            public quantity:  number            = 0,
+            public title:     Array<I18nString> = Array<I18nString>(),
+            public color:     Array<I18nString> = Array<I18nString>(),
+            public size:      Array<I18nString> = Array<I18nString>(),
+            public image:     string            = '',
+            public updatedAt: Date              = new Date());
+    }
+
+    class Cart
+    {
+        constructor(public items: Array<CartItem> = Array<CartItem>());
+    }
+
+    export declare class Category
+    {
+        constructor(
+            public _id:           string             = null,
+            public slug:          string             = '',
+            public name:          Array<I18nString>  = Array<I18nString>(),
+            public info:          Array<I18nString>  = Array<I18nString>(),
+            public image:         string             = '',
+            public active:        boolean            = false,
+            public createdAt:     Date               = new Date(),
+            public updatedAt:     Date               = new Date(),
+            public subCategories: Array<SubCategory> = Array<SubCategory>());
+    }
+
+    export class Image
+    {
+        constructor(
+            public _id:        string  = null,
+            public complete:   boolean = false,
+            public extension:  string  = '',
+            public name:       string  = '',
+            public progress:   number  = 0,
+            public size:       number  = 0,
+            public token:      string  = '',
+            public type:       string  = '',
+            public uploadedAt: Date    = new Date(),
+            public uploading:  boolean = false,
+            public url:        string  = '')
+    }
+
+    export class ProductImage
+    {
+        constructor(
+            public id:         string  = '',
+            public url:        string  = '',
+            public isUploaded: boolean = false,
+            public file:       File    = null);
+    }
+
+    class ProductVariant
+    {
+        constructor(
+            public color:         Array<I18nString> = Array<I18nString>(),
+            public size:          Array<I18nString> = Array<I18nString>(),
+            public isLowQuantity: boolean           = false,
+            public stock:         number            = 0,
+            public isSoldOut:     boolean           = false)
+    }
+
+    class Product
+    {
+        constructor(
+            public _id:              string                = null,
+            public slug:             string                = '',
+            public categories:       Array<string>         = Array<string>(),
+            public title:            Array<I18nString>     = Array<I18nString>(),
+            public images:           Array<ProductImage>   = Array<ProductImage>(),
+            public description:      Array<I18nString>     = Array<I18nString>(),
+            public barcode:          string                = '',
+            public sku:              string                = '',
+            public color:            Array<I18nString>     = Array<I18nString>(),
+            public size:             Array<I18nString>     = Array<I18nString>(),
+            public variantProducts:  Array<ProductVariant> = Array<ProductVariant>(),
+            public price:            number                = 0,
+            public discount:         number                = 0,
+            public trackInventory:   boolean               = false,
+            public stock:            number                = 0,
+            public isLowQuantity:    boolean               = false,
+            public isSoldOut:        boolean               = false,
+            public isBackorder:      boolean               = false,
+            public requiresShipping: boolean               = false,
+            public hashtags:         Array<string>         = Array<string>(),
+            public isVisible:        boolean               = false,
+            public createdAt:        Date                  = new Date(),
+            public updatedAt:        Date                  = new Date(),
+            public publishedAt:      Date                  = new Date());
+    }
+
+    class SubCategory
+    {
+        constructor(
+            public _id:       string            = null,
+            public slug:      string            = '',
+            public name:      Array<I18nString> = Array<I18nString>(),
+            public info:      Array<I18nString> = Array<I18nString>(),
+            public image:     string            = null,
+            public active:    boolean           = false,
+            public createdAt: Date              = new Date(),
+            public updatedAt: Date              = new Date());
+    }
+
+    class User
+    {
+        constructor(
+            public _id:      string        = null,
+            public emails:   EmailObject[] = Array<EmailObject>(),
+            public services: Object        = {},
+            public isAdmin:  Boolean       = false,
+            public cart:     Cart          = <Cart>{});
+    }
+
+    interface EmailObject
+    {
+        address: string;
+        verified: boolean;
+    }
+
+// SCHEMAS ************************************************************************************************************/
+
+    const CartSchema: any;
+    const SubCategorySchema: any;
+    const CategorySchema: any;
+    const I18nStringSchema: any;
+    const ProductImageSchema: any;
+    const ProductVariantSchema: any;
+    const ProductSchema: any;
+    const UserSchema: any;
 }
 
-declare module 'meteor/biglup:biglup-business'
+// MODULE EXPORT ******************************************************************************************************/
+
+declare module 'meteor/biglup:business'
 {
-    export = Services;
+    export = Business;
 }

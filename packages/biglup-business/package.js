@@ -1,5 +1,5 @@
 Package.describe({
-    name: 'biglup:biglup-business',
+    name: 'biglup:business',
     version: '0.0.1',
     summary: 'Business rules entities for the Biglup E-Commerce project',
     documentation: 'README.md'
@@ -24,10 +24,6 @@ Package.onUse(function(api)
         'typings/biglup-business.d.ts'
     ], 'client');
 
-    api.addFiles([
-        'typings/biglup-business.collections.d.ts'
-    ], 'server');
-
     // Services
     api.addFiles([
         'client/services/carts.service.ts',
@@ -35,8 +31,7 @@ Package.onUse(function(api)
         'client/services/images.service.ts',
         'client/services/products.service.ts',
         'client/services/user-auth.service.ts',
-        'client/services/users.service.ts',
-        'client/biglup-business.module.ts'
+        'client/services/users.service.ts'
     ], 'client');
 
     // Collections
@@ -85,6 +80,6 @@ Package.onUse(function(api)
         'server/publications/user.publication.ts'
     ], 'server');
 
-    api.mainModule ('index.ts', "client");
+    api.mainModule ('client.ts', "client");
     api.mainModule ('server.ts', "server");
 });

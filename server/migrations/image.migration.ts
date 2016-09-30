@@ -19,9 +19,9 @@
 
 import { AbstractMigration }            from './abstract-migration';
 import { Mongo }                        from 'meteor/mongo';
-import { ImagesStore }                  from 'meteor/biglup:biglup-business';
+import { ImagesStore }                  from 'meteor/biglup:business';
 import { ReadStream, createReadStream } from 'fs';
-import { Category, Product }            from 'meteor/biglup:biglup-business';
+import { Category, Product }            from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 

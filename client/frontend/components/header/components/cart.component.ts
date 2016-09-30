@@ -25,10 +25,10 @@ import { Component,
          animate,
          transition,
          trigger }              from '@angular/core';
-import { Cart, CartItem, User } from 'meteor/biglup:biglup-business';
+import { Cart, CartItem, User } from 'meteor/biglup:business';
 import { Subscription }         from 'rxjs';
-import { UserAuthService }      from 'meteor/biglup:biglup-business';
-import { CartsService }         from 'meteor/biglup:biglup-business';
+import { UserAuthService }      from 'meteor/biglup:business';
+import { CartsService }         from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

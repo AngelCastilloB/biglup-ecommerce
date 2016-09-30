@@ -78,7 +78,7 @@ export class CartsService
     /**
      * @summary Observable stream of all carts in the system.
      *
-     * @returns {Observable<Cart[]>}
+     * @returns {Observable<Cart[]>} An observable object for the cart collection..
      */
     public getCartsStream(): Observable<Cart[]>
     {
@@ -88,9 +88,9 @@ export class CartsService
     /**
      * @summary Observable stream of the current user's cart.
      *
-     * @returns {BehaviorSubject<Cart>}
+     * @returns {Observable<Cart>} An observable object for the current user cart.
      */
-    public getUserCartStream()
+    public getUserCartStream(): Observable<Cart>
     {
         return this._userCartStream;
     }

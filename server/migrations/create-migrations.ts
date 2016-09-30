@@ -18,12 +18,12 @@
 // IMPORTS ************************************************************************************************************/
 
 import { CategoryMigration }        from './category.migration';
-import { Categories }               from 'meteor/biglup:biglup-business';
+import { Categories }               from 'meteor/biglup:business';
 import { ProductMigration }         from './product.migration';
-import { Products }                 from 'meteor/biglup:biglup-business';
+import { Products }                 from 'meteor/biglup:business';
 import { IMigratable }              from './interfaces/i-migratable';
 import { ImageMigration }           from './image.migration';
-import { Images }                   from 'meteor/biglup:biglup-business';
+import { Images }                   from 'meteor/biglup:business';
 import { ContentGeneratorFactory }  from '../../common/helpers/generator/content-generator-factory';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
 

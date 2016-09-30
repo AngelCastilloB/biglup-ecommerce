@@ -20,7 +20,7 @@
 import 'reflect-metadata';
 
 import { EventEmitter } from '@angular/core';
-import { I18nString }   from 'meteor/biglup:biglup-business';
+import { I18nString }   from 'meteor/biglup:business';
 
 // CONSTANTS **********************************************************************************************************/
 

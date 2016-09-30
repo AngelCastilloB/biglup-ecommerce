@@ -20,7 +20,7 @@
 import { Mongo }                    from 'meteor/mongo';
 import { AbstractMigration }        from './abstract-migration';
 import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
-import { Category, Product }        from 'meteor/biglup:biglup-business';
+import { Category, Product }        from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 

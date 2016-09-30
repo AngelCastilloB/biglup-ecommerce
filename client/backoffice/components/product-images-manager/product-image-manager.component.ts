@@ -27,7 +27,7 @@ import { Component,
          Output,
          EventEmitter}    from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { ProductImage }   from 'meteor/biglup:biglup-business';
+import { ProductImage }   from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

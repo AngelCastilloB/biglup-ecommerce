@@ -22,10 +22,10 @@ import { Component,
          OnChanges,
          SimpleChanges }        from '@angular/core';
 import { ActivatedRoute }       from '@angular/router';
-import { ProductsService }      from 'meteor/biglup:biglup-business';
-import { CategoriesService }    from 'meteor/biglup:biglup-business';
+import { ProductsService }      from 'meteor/biglup:business';
+import { CategoriesService }    from 'meteor/biglup:business';
 import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
-import { Product, Category }    from 'meteor/biglup:biglup-business';
+import { Product, Category }    from 'meteor/biglup:business';
 
 // noinspection TypeScriptCheckImport
 import template from './product-details.component.html';
