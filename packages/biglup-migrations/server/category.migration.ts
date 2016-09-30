@@ -17,9 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
+import { AbstractContentGenerator } from './generators/abstract-content-generator';
 import { AbstractMigration }        from './abstract-migration';
-import { Mongo }                    from 'meteor/mongo';
 import { Category }                 from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/

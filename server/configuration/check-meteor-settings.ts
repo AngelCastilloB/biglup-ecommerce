@@ -27,12 +27,6 @@ const USER_SETTINGS = {
     password: '123'
 };
 
-const MIGRATIONS_SETTINGS = {
-    migrate: false,
-    reset: false,
-    locales: ['en', 'zh', 'kr', 'es']
-};
-
 const FACEBOOK_SETTINGS = {
     appId: '',
     secret: ''
@@ -61,11 +55,6 @@ export const checkMeteorSettings = () =>
     if (!Meteor.settings['user'])
     {
         Meteor.settings['user'] = USER_SETTINGS;
-    }
-
-    if (!Meteor.settings['migrations'])
-    {
-        Meteor.settings['migrations'] = MIGRATIONS_SETTINGS;
     }
 
     if (!Meteor.settings['facebook'])

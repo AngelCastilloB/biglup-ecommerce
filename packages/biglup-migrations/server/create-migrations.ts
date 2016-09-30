@@ -24,8 +24,8 @@ import { Products }                 from 'meteor/biglup:business';
 import { IMigratable }              from './interfaces/i-migratable';
 import { ImageMigration }           from './image.migration';
 import { Images }                   from 'meteor/biglup:business';
-import { ContentGeneratorFactory }  from '../../common/helpers/generator/content-generator-factory';
-import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
+import { ContentGeneratorFactory }  from './generators/content-generator-factory';
+import { AbstractContentGenerator } from './generators/abstract-content-generator';
 
 // FUNCTIONS **********************************************************************************************************/
 

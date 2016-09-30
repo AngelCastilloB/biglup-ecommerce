@@ -19,7 +19,7 @@
 
 import { Mongo }                    from 'meteor/mongo';
 import { IMigratable }              from './interfaces/i-migratable';
-import { AbstractContentGenerator } from '../../common/helpers/generator/abstract-content-generator';
+import { AbstractContentGenerator } from './generators/abstract-content-generator';
 
 // EXPORTS ************************************************************************************************************/
 
