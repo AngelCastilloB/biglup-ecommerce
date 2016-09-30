@@ -27,7 +27,7 @@ import { Component,
          transition,
          animate,
          keyframes }       from '@angular/core';
-import {_T }               from '../../../services/i18n/i18n-singleton.service';
+import {_T }               from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

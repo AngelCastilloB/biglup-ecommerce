@@ -113,7 +113,7 @@ declare module Business
         constructor(public items: Array<CartItem> = Array<CartItem>());
     }
 
-    export declare class Category
+    export class Category
     {
         constructor(
             public _id:           string             = null,

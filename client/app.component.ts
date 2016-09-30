@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component }           from '@angular/core';
+import { I18nSingletonService} from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,4 +35,12 @@ import template from './app.component.html';
 })
 export class AppComponent
 {
+    /**
+     * @summary Initializes a new instance of the AppComponent class.
+     */
+    constructor()
+    {
+        I18nSingletonService.getInstance().addTranslation(require('./translations/en.json'), 'en');
+        I18nSingletonService.getInstance().addTranslation(require('./translations/zh.json'), 'zh');
+    }
 }

@@ -18,8 +18,8 @@
 // IMPORTS ************************************************************************************************************/
 
 import { NgModule }                         from '@angular/core';
-import { TranslatePipe }                    from './pipes/translate.pipe';
-import { MongoTranslatePipe }               from './pipes/mongo-translate.pipe';
+import { TranslatePipe }                    from 'meteor/biglup:i18n';
+import { MongoTranslatePipe }               from 'meteor/biglup:i18n';
 import { TruncateStringPipe }               from './pipes/truncate-string.pipe';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

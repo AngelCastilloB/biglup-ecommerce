@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { I18nSingletonService }         from '../../../services/i18n/i18n-singleton.service';
+import { I18nSingletonService }         from 'meteor/biglup:i18n';
 import { UserAuthService }              from 'meteor/biglup:business';
 import { Subscription }                 from 'rxjs';
 import { CategoriesService }            from 'meteor/biglup:business';

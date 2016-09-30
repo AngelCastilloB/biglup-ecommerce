@@ -19,7 +19,7 @@
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router }                             from '@angular/router';
-import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { _T }                                 from 'meteor/biglup:i18n';
 import { Meteor }                             from 'meteor/meteor';
 import { ValidationService }                  from '../../../services/validation.service';
 import { UserAuthService }                    from 'meteor/biglup:business';

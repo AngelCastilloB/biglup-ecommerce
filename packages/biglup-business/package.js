@@ -19,6 +19,7 @@ Package.onUse(function(api)
     api.use('aldeed:collection2');
     api.use('check');
     api.use('mongo');
+    api.use('biglup:i18n');
 
     api.addFiles([
         'typings/biglup-business.d.ts'
@@ -53,7 +54,6 @@ Package.onUse(function(api)
         'common/models/cart.ts',
         'common/models/cart-item.ts',
         'common/models/category.ts',
-        'common/models/i18n-string.ts',
         'common/models/image.ts',
         'common/models/index.ts',
         'common/models/product.ts',

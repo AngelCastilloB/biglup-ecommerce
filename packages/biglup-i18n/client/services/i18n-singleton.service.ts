@@ -17,10 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { EventEmitter } from '@angular/core';
-import { I18nString }   from 'meteor/biglup:business';
+import { I18nString }   from '../../common/models/i18n-string';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -87,11 +85,18 @@ export class I18nSingletonService
             throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
         }
 
-        // Add supported languages
-        this._translations['en'] = this.loadTranslations(require('./translations/en.json')); // english
-        this._translations['zh'] = this.loadTranslations(require('./translations/zh.json')); // chinese
-
         I18nSingletonService._instance = this;
+    }
+
+    /**
+     * @summary Adds a translation file to the service.
+     *
+     * @param json The json file with the translations.
+     * @param {string} locale The locale of the translation.
+     */
+    public addTranslation(json, locale: string)
+    {
+        this._translations[locale] = this.loadTranslations(json);
     }
 
     /**

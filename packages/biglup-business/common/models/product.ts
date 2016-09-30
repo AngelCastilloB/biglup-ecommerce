@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { I18nString, ProductVariant, ProductImage } from './';
+import { I18nString }                   from 'meteor/biglup:i18n';
+import { ProductVariant, ProductImage } from './';
 
 // EXPORTS ************************************************************************************************************/
 

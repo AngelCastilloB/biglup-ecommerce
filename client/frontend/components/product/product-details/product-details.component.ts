@@ -24,7 +24,7 @@ import { Component,
 import { ActivatedRoute }       from '@angular/router';
 import { ProductsService }      from 'meteor/biglup:business';
 import { CategoriesService }    from 'meteor/biglup:business';
-import { I18nSingletonService } from '../../../../services/i18n/i18n-singleton.service';
+import { I18nSingletonService } from 'meteor/biglup:i18n';
 import { Product, Category }    from 'meteor/biglup:business';
 
 // noinspection TypeScriptCheckImport

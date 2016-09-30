@@ -21,7 +21,7 @@ import { Component,
          OnInit,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
-import { I18nSingletonService, _T } from '../../../services/i18n/i18n-singleton.service';
+import { I18nSingletonService, _T } from 'meteor/biglup:i18n';
 import { ModalComponent }           from '../modal/modal.component';
 import { ProductsService }          from 'meteor/biglup:business';
 import { CategoriesService }        from 'meteor/biglup:business';
