@@ -42,7 +42,7 @@ import { ProductImageManagerComponent }  from './components/product-images-manag
 import { ReportsComponent }              from './components/reports/reports.component';
 import { CategoriesService }             from 'meteor/biglup:business';
 import { ProductsService }               from 'meteor/biglup:business';
-import { IdGeneratorService }            from '../services/id-generator.service.ts';
+import { IdGeneratorService }            from 'meteor/biglup:core';
 import { ImageDisplayComponent }         from './components/product-images-manager/components/image-display/image-display.component';
 import { ImagePreviewComponent }         from './components/product-images-manager/components/image-preview/image-preview.component';
 import { DragulaService, DragulaModule } from 'ng2-dragula/ng2-dragula';

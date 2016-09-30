@@ -19,7 +19,7 @@
 
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, NgZone }          from '@angular/core';
-import { ValidationService }                  from '../../../services/validation.service';
+import { ValidationService }                  from 'meteor/biglup:core';
 import { Router }                             from '@angular/router';
 import { _T }                                 from 'meteor/biglup:i18n';
 import { UserAuthService }                    from 'meteor/biglup:business';

@@ -23,11 +23,11 @@ import { LandingPageComponent }        from './components/landing-page/landing-p
 import { FrontendComponent }           from './frontend.component';
 import { ProductDetailsComponent }     from './components/product/product-details/product-details.component';
 import { LoginComponent }              from './components/login/login.component';
-import { IsUserLoggedOutGuardService } from '../services/guards/is-user-logged-out-guard.service';
+import { IsUserLoggedOutGuardService } from 'meteor/biglup:core';
 import { SignUpComponent }             from './components/sign-up/sign-up.component';
 import { PasswordResetComponent }      from './components/password-reset/password-reset.component';
 import { NewPasswordComponent }        from './components/new-password/new-password.component';
-import { NewPasswordGuardService }     from '../services/guards/new-password-guard.service';
+import { NewPasswordGuardService }     from 'meteor/biglup:core';
 
 /* EXPORTS ************************************************************************************************************/
 

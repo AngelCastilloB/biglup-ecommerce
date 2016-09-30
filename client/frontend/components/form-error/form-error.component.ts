@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core';
-import { IdGeneratorService }       from '../../../services/id-generator.service';
+import { IdGeneratorService }       from 'meteor/biglup:core';
 
 // EXPORTS ************************************************************************************************************/
 

@@ -21,7 +21,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router }                             from '@angular/router';
 import { _T }                                 from 'meteor/biglup:i18n';
 import { Meteor }                             from 'meteor/meteor';
-import { ValidationService }                  from '../../../services/validation.service';
+import { ValidationService }                  from 'meteor/biglup:core';
 import { UserAuthService }                    from 'meteor/biglup:business';
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { Subscription }                       from 'rxjs';
