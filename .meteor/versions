@@ -28,6 +28,7 @@ biglup:core@0.0.1
 biglup:i18n@0.0.1
 biglup:migrations@0.0.1
 biglup:ui@0.0.1
+biglup:vendor-typings@0.0.1
 binary-heap@1.0.9
 blaze@2.1.8
 blaze-tools@1.0.9

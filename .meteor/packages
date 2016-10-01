@@ -42,3 +42,4 @@ biglup:ui
 biglup:business
 biglup:migrations
 biglup:configuration
+biglup:vendor-typings
