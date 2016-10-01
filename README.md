@@ -129,16 +129,6 @@ for more info.
 The database migrations are controlled inside the _meteor.json_ file; the migrate allows the migration table to be created
 along with the mock data, to reset migrations the reset flag must be set to true.
 
-The migrations need a placeholder image that is recommended to be 1080p (1920x1980) [like so](https://placeholdit.imgix.net/~text?txtsize=144&txt=1920%C3%971080&w=1920&h=1080)
-and be put inside the **private > storage > files** as placeholder.png.
-
-```
-private
-└── storage
-    └── files
-        └── placeholder.png
-```
-
 ## Private folder
 
 The private folder contains files not intended for use by the client directly,  it can however be accessed by the server side using the

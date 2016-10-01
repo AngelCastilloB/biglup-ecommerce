@@ -17,10 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration }            from './abstract-migration';
-import { ImagesStore }                  from 'meteor/biglup:business';
-import { ReadStream, createReadStream } from 'fs';
-import { Category, Product }            from 'meteor/biglup:business';
+import { AbstractMigration }               from './abstract-migration';
+import { ImagesStore, Category, Product  } from 'meteor/biglup:business';
+import { Observable }                      from 'rxjs/Observable';
+import * as Jimp                           from 'jimp';
+import * as stream                         from 'stream';
+
+// Reactive Extensions Imports
+import 'rxjs/add/operator/map';
+
+// CONSTANTS **********************************************************************************************************/
+
+const IMAGE_WIDTH    = 700;
+const IMAGE_HEIGHT   = 950;
+const MAX_32_BIT_INT = 2147483647;
+const FONT_OFFSET    = 32;
 
 // EXPORTS ************************************************************************************************************/
 
@@ -29,7 +40,6 @@ import { Category, Product }            from 'meteor/biglup:business';
  */
 export class ImageMigration extends AbstractMigration
 {
-
     /**
      * @summary Each associated document will have at most 4 images.
      *
@@ -80,7 +90,7 @@ export class ImageMigration extends AbstractMigration
     constructor(
         _collection: Mongo.Collection<Object>,
         _generators,
-        private   _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
+        private _collections: { products: Mongo.Collection<Product>, categories: Mongo.Collection<Category>})
     {
         super(_collection, _generators);
     }
@@ -116,9 +126,9 @@ export class ImageMigration extends AbstractMigration
                 if (error)
                     throw error;
 
-                this._collections.products.update({_id: product._id}, {
-                    $push: { images: {id: image._id, url: image.url, isUploaded: true}
-                    }
+                this._collections.products.update(
+                    {_id: product._id},
+                    {$push: { images: {id: image._id, url: image.url, isUploaded: true}}
                 });
             });
         }
@@ -135,7 +145,16 @@ export class ImageMigration extends AbstractMigration
     {
         const imageId = ImagesStore.create({name, type: this._type});
 
-        ImagesStore.write(this._getImageStream(), imageId, callback);
+        this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name).subscribe(
+            (buffer) =>
+            {
+                ImagesStore.write(buffer, imageId, callback);
+            },
+            (bufferError) =>
+            {
+                throw bufferError;
+            }
+        );
     }
 
     /**
@@ -149,39 +168,81 @@ export class ImageMigration extends AbstractMigration
         this._createImage('0', (error, image) =>
         {
             if (error)
-            {
                 throw error;
-            }
 
             this._collections.categories.update({_id: category._id}, {$set: {image: image.url}});
         });
     }
 
     /**
-     * @summary Creates a stream from the placeholder image file.
+     * @brief Creates an image of the specified width, height and color.
      *
-     * @private
+     * @param width  The width of the image.
+     * @param height The height of the image.
+     * @param color  The color of the image.
+     * @param name   The name of the image.
+     *
+     * @returns {Observable<any>} An observable with that will return the newly created image as a readable buffer.
      */
-    private _getImageStream(): ReadStream
+    private _getImageStream(width: number, height: number, color: number, name: string): Observable<any>
     {
-        let path;
-
-        try
+        return Observable.create(observer =>
         {
-            path = Assets.absoluteFilePath(this._path);
-        }
-        catch (error)
-        {
-            if (error.message.match(/Unknown asset/))
+            let image = new Jimp(width, height, color, Meteor.bindEnvironment((error, result) =>
             {
-                throw new Error('Image migration requires a placeholder set in ' +
-                    'PROJECT_ROOT/private/storage/files/placeholder.png, ' +
-                    'please read the README for more info.');
-            }
+                if (error)
+                {
+                    observer.error(error);
+                    return;
+                }
 
-            throw error;
-        }
+                let typography = Jimp.FONT_SANS_64_BLACK;
 
-        return createReadStream(path);
+                if (color < MAX_32_BIT_INT / 2)
+                    typography = Jimp.FONT_SANS_64_WHITE;
+
+                Jimp.loadFont(typography, Meteor.bindEnvironment((fontError, font) =>
+                {
+                    if (fontError)
+                    {
+                        observer.error(fontError);
+                        return;
+                    }
+
+                    result.print(font, FONT_OFFSET, FONT_OFFSET, name);
+
+                    result.getBuffer(Jimp.MIME_PNG, Meteor.bindEnvironment((bufferError, buffer) =>
+                    {
+                        if (bufferError)
+                        {
+                            observer.error(bufferError);
+                            return;
+                        }
+
+                        let bufferStream = new stream.PassThrough();
+
+                        bufferStream.end(buffer);
+
+                        observer.next(bufferStream);
+                        observer.complete();
+                    }));
+                }));
+            }));
+        });
+    }
+
+    /**
+     * @summary Generates a color number representation of a color in 32 bits format.
+     *
+     * @returns {number} The color number representation in 32 bits.
+     */
+    private _generateRandomColor(): number
+    {
+        let r = Math.round(Math.random() * 0xFF) & 0xFF;
+        let g = Math.round(Math.random() * 0xFF) & 0xFF;
+        let b = Math.round(Math.random() * 0xFF) & 0xFF;
+        let a = 0xFF;
+
+        return (((r << 24) + (g << 16) + (b << 8)) + a) >>> 0;
     }
 }
