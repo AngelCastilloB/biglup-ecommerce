@@ -163,13 +163,6 @@ To add an existing Webstorm coding style go to **file > settings > editor > codi
 to add an XML file containing pre existing rules to automatically reformat code (defaults to `crl + shift + L`) according 
 to the predefined coding styles conventions.
 
-## Architecture
-
-<p align="center">
-  <img src="https://github.com/waldyr/Sublime-Installer/blob/master/sublime_text.png?raw=true" alt="Sublime's custom image"/>
-</p>
-![Architecture](https://gitlab.com/arcangelz/biglup-ecommerce/uploads/8b3bae11bd2cb687ba51f22035db4085/biglup-framework.png)
-
 ## Features
 
 ### Store Front End Features
