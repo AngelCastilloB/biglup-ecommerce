@@ -67,7 +67,6 @@ export class LoginComponent extends MeteorReactive implements OnInit, OnDestroy
      * @param {FormBuilder}     _formBuilder     The form builder service.
      * @param {Router}          _router          Angular's router service.
      * @param {UserAuthService} _userAuthService The user authentication service.
-     * @param {NgZone}          _ngZone          The angular zone.
      */
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,

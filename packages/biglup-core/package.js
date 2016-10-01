@@ -10,6 +10,7 @@ Package.onUse(function(api)
     api.versionsFrom('1.4.1.1');
 
     api.use('angular2-compilers');
+    api.use('biglup:business');
 
     api.addFiles([
         'typings/biglup-core.d.ts'
