@@ -12,7 +12,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
 ## Architecture
 
 <p align="center">
-  <img src="https://gitlab.com/arcangelz/biglup-ecommerce/uploads/b02fc1fbb7dbc6302566092fbf42f54d/biglup-framework-small.png" alt="Sublime's custom image"/>
+  <img src="https://gitlab.com/arcangelz/biglup-ecommerce/uploads/b02fc1fbb7dbc6302566092fbf42f54d/biglup-framework-small.png" alt="Architecture"/>
 </p>
 
 ## Conventions
