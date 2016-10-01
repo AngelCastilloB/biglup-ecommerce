@@ -1,18 +1,24 @@
 # Biglup E-commerce Platform
----
+
 Biglup e-commerce is a modern reactive, real-time event driven platform. The platform is built with JavaScript (ES6), Angular2, Meteor and Node.js.
 
 ## Recommendations
----
+ 
  * Commit early and often.
  * Write concise and descriptive messages in every commit.
  * Respect project code convention.
  * Keep good development practices.
 
+## Architecture
+
+<p align="center">
+  <img src="https://gitlab.com/arcangelz/biglup-ecommerce/uploads/b02fc1fbb7dbc6302566092fbf42f54d/biglup-framework-small.png" alt="Sublime's custom image"/>
+</p>
+
 ## Conventions
----
+
 ### File system structure
----
+
  * All folders should be lower case with "-" character as word separator.
  * All parts of the components should be name as follows name.component.ts|html|css|spec to represent those various files.
  * All components should have its own folder.
@@ -38,14 +44,14 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
    the "common" folder.
    
 ### Object Oriented Programming
----
+
  * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
  * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
  * Methods should be named after an action, IE: getTime() instead of time().
  * Methods that return flags or booleans should answer to questions IE: isAdmin()
  
 ### JavaScript
----
+
  * Prefer array helpers (forEach, map, filter, find, every/some, reduce) over manual iteration using for or while loops.
  * When you must use function expressions (as when passing an anonymous function), prefer the arrow function notation. 
  * Always use class. Avoid manipulating prototype directly.
@@ -55,7 +61,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
  * Prefer object destructuring for multiple return values over array destructuring.
 
 ### Version control agreements
----
+
  * Only make commits to the private Biglup Git server.
  * Don't share source code over cloud services (Dropbox, etc).
  * Use Git branch naming and branch merging conventions:
@@ -66,7 +72,7 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
      Prefer git-extras and/or git-flow scripts for branching management.
 
 ## Installation
----
+
 > Biglup e-commerce requires [Meteor](https://www.meteor.com/install), [Node](http://nodejs.org/), [npm](https://www.npmjs.com/) and [imagemagick](http://www.imagemagick.org/script/index.php)
 
 Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
@@ -149,7 +155,7 @@ App
 ```
 
 ## IDE Configuration
----
+
 ### Tslint
 To add tslint support for development, the tslint executable must be installed: `npm i -g tslint` and in _Webstorm_ check 
 the settings in: **file > settings > Languages and Frameworks > Typescript > Tslint** and check enable, 
@@ -166,7 +172,7 @@ to add an XML file containing pre existing rules to automatically reformat code 
 to the predefined coding styles conventions.
 
 ## Features
----
+
 ### Store Front End Features
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
 *  Product Search
@@ -187,13 +193,13 @@ to the predefined coding styles conventions.
 *  Secure and quality code - Takes care all single page web app standards
 
 ## Contributors
----
+
 
 * Angel Castillo <angel.castillo@biglup.com>
 * Alejandro Granadillo <slayerfat@gmail.com>
 
 ## License
----
+
 Copyright 2016 Biglup. All Rights Reserved.
 
 Confidential Information of Biglup. Not for disclosure or distribution
