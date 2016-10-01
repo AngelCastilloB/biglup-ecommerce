@@ -78,6 +78,8 @@ git clone git@gitlab.com:arcangelz/biglup-ecommerce.git
 
 cd biglup-ecommerce
 
+typings install
+
 meteor npm install
 
 meteor

@@ -21,7 +21,7 @@ import { Component,
          Input,
          EventEmitter,
          Output }         from '@angular/core';
-import { I18nString }     from 'meteor/biglup:business';
+import { I18nString }     from 'meteor/biglup:i18n';
 
 // EXPORTS ************************************************************************************************************/
 

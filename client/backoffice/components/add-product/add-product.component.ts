@@ -26,7 +26,7 @@ import { ModalComponent }           from '../modal/modal.component';
 import { ProductsService }          from 'meteor/biglup:business';
 import { CategoriesService }        from 'meteor/biglup:business';
 import { Product }                  from 'meteor/biglup:business';
-import { I18nString }               from 'meteor/biglup:business';
+import { I18nString }               from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

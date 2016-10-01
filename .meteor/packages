@@ -36,9 +36,9 @@ accounts-twitter           # Meteor twitter based account system
 barbatus:angular2-polyfills
 barbatus:angular2-runtime
 
+biglup:i18n
 biglup:core
 biglup:ui
 biglup:business
-biglup:i18n
 biglup:migrations
 biglup:configuration

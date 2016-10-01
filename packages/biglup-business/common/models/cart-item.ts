@@ -26,7 +26,6 @@ import { I18nString } from 'meteor/biglup:i18n';
  */
 export class CartItem
 {
-
     /**
      * @summary Initialises a new instance of the CartItem class.
      *

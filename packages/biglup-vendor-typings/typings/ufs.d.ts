@@ -18,7 +18,6 @@
 declare module 'meteor/jalik:ufs' {
     module UploadFS {
         let Uploader;
-        // https://github.com/jalik/jalik-ufs#plugins
         let store: {
                 Local: {new (...args): Store},
                 GridFS: {new (...args): Store},
@@ -32,9 +31,4 @@ declare module 'meteor/jalik:ufs' {
         create(file: Object): string;
         write(file: any, id: string, callback?: Function): string;
     }
-}
-
-interface ProgressEvent {
-    type: string;
-    target: any;
 }

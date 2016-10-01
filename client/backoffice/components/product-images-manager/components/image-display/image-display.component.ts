@@ -109,7 +109,7 @@ export class ImageDisplayComponent implements AfterViewInit
                 'The image is marked is *not* uploaded, but the field file is empty.');
         }
 
-        reader.onload = (event: ProgressEvent) =>
+        reader.onload = (event: any) =>
         {
             if (event.type === 'load')
             {

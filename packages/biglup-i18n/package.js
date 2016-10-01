@@ -9,6 +9,7 @@ Package.onUse(function(api)
 {
     api.versionsFrom('1.4.1.1');
 
+    api.use('ecmascript');
     api.use('angular2-compilers');
 
     api.addFiles([
@@ -17,13 +18,18 @@ Package.onUse(function(api)
 
     // Services
     api.addFiles([
-        'client/services/i18n-singleton.service.ts',
+        'client/services/i18n-singleton.service.ts'
     ], 'client');
 
     // Models
     api.addFiles([
-        'common/models/i18n-string.ts',
-    ], ['client', 'server']);
+        'common/models/i18n-string.ts'
+    ], 'client');
+
+    // Models
+    api.addFiles([
+        'common/models/i18n-string.ts'
+    ], 'server');
 
     // Pipes
     api.addFiles([

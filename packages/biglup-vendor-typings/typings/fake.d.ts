@@ -27,8 +27,8 @@ declare var Fake: {
      *
      * @param {array} fields
      */
-    user(fields: []): UserObjectResult;
-    fromArray(array: []): {};
+    user(fields: any): UserObjectResult;
+    fromArray(array: any): {};
 };
 
 interface UserObjectResult {
