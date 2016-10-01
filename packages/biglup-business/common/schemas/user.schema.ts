@@ -60,6 +60,7 @@ export const UserSchema: any = new SimpleSchema({
     services: {
         label: `${SCHEMA_NAME} services`,
         type: Object,
+        optional: true,
         blackbox: true
     },
     profile: {
@@ -79,5 +80,11 @@ export const UserSchema: any = new SimpleSchema({
     cart: {
         label: `${SCHEMA_NAME} cart`,
         type: CartSchema
+    },
+    // Avoids the 'Exception in setInterval callback' error from Meteor.
+    heartbeat:
+    {
+        type: Date,
+        optional: true
     }
 });

@@ -26,7 +26,6 @@ import { Cart } from './';
  */
 export class User
 {
-
     /**
      * @summary Initializes a new instance of the User class.
      *
