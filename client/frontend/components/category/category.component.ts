@@ -19,7 +19,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
-import { ProductsService }   from '../../../services/products.service';
+import { ProductsService }   from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,7 +34,8 @@ import template from './category.component.html';
     selector: 'category',
     template
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit
+{
     private _categoryId: string;
 
     /**

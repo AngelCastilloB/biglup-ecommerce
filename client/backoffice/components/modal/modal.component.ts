@@ -27,8 +27,7 @@ import { Component,
          transition,
          animate,
          keyframes }       from '@angular/core';
-import {_T }               from '../../../services/i18n/i18n-singleton.service';
-import { Observable }      from 'rxjs';
+import {_T }               from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -194,7 +193,7 @@ export class ModalComponent
     public showObservable(
         title: string,
         message: string,
-        observable: Observable<any>,
+        observable: any,
         successOptions: { title: string, message: string },
         errorOptions: { title: string, message: string })
     {

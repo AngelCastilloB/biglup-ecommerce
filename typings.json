@@ -4,9 +4,10 @@
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "faker": "registry:dt/faker#0.0.0+20160406111603",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
-    "meteor": "github:meteor-typings/meteor/1.3#955b89a4e2af892d1736bc570b490a97e860d5b7",
+    "meteor": "registry:env/meteor#1.3.0+20160830163906",
     "node": "registry:env/node#6.0.0+20160902022231",
-    "require": "registry:dt/require#2.1.20+20160316155526"
+    "require": "registry:dt/require#2.1.20+20160316155526",
+    "angular2-compilers": "github:meteor-typings/angular2-compilers#c2ca3d3036b08f04a22b98ed16ff17377499e1e7"
   },
   "devDependencies": {
     "gulp": "github:types/npm-gulp/4.0.0-alpha.2#e01fe07d5fb6dbe07a0e37492e90e4969badbda2"

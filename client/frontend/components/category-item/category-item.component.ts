@@ -18,8 +18,8 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Product }                  from '../../../../common/models';
-import { CartsService }             from '../../../services/carts.service';
+import { Product }                  from 'meteor/biglup:business';
+import { CartsService }             from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

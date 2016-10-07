@@ -18,8 +18,8 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component }            from '@angular/core';
-import { CategoriesService }    from '../../../services/categories.service';
-import { I18nSingletonService } from '../../../services/i18n/i18n-singleton.service';
+import { CategoriesService }    from 'meteor/biglup:business';
+import { I18nSingletonService } from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

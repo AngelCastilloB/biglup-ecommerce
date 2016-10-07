@@ -21,13 +21,13 @@ import { Component,
          OnInit,
          ViewChild }                 from '@angular/core';
 import { Router, ActivatedRoute }    from '@angular/router';
-import { I18nSingletonService, _T }  from '../../../services/i18n/i18n-singleton.service';
+import { I18nSingletonService, _T }  from 'meteor/biglup:i18n';
 import { ModalComponent,
          ModalType,
          ModalResult }               from '../../components/modal/modal.component';
-import { Category }                  from '../../../../common/models';
-import { CategoriesService }         from '../../../services/categories.service.ts';
-import { I18nString }                from '../../../../common/models/i18n-string';
+import { Category }                  from 'meteor/biglup:business';
+import { CategoriesService }         from 'meteor/biglup:business';
+import { I18nString }                from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

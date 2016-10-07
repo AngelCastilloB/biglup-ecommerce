@@ -9,6 +9,12 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
  * Respect project code convention.
  * Keep good development practices.
 
+## Architecture
+
+<p align="center">
+  <img src="https://gitlab.com/arcangelz/biglup-ecommerce/uploads/b02fc1fbb7dbc6302566092fbf42f54d/biglup-framework-small.png" alt="Architecture"/>
+</p>
+
 ## Conventions
 
 ### File system structure
@@ -38,14 +44,14 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
    the "common" folder.
    
 ### Object Oriented Programming
----
+
  * Abstract class should have the 'Abstract' prefix, IE: AbstractVehicle instead of Vehicle.
  * Interfaces should have the letter 'I' as prefix, IE: IDevice, IXmlSerializable, ICommand.
  * Methods should be named after an action, IE: getTime() instead of time().
  * Methods that return flags or booleans should answer to questions IE: isAdmin()
  
 ### JavaScript
----
+
  * Prefer array helpers (forEach, map, filter, find, every/some, reduce) over manual iteration using for or while loops.
  * When you must use function expressions (as when passing an anonymous function), prefer the arrow function notation. 
  * Always use class. Avoid manipulating prototype directly.
@@ -77,6 +83,8 @@ curl https://install.meteor.com | /bin/sh # installs Meteor
 git clone git@gitlab.com:arcangelz/biglup-ecommerce.git
 
 cd biglup-ecommerce
+
+typings install
 
 meteor npm install
 
@@ -120,16 +128,6 @@ for more info.
 
 The database migrations are controlled inside the _meteor.json_ file; the migrate allows the migration table to be created
 along with the mock data, to reset migrations the reset flag must be set to true.
-
-The migrations need a placeholder image that is recommended to be 1080p (1920x1980) [like so](https://placeholdit.imgix.net/~text?txtsize=144&txt=1920%C3%971080&w=1920&h=1080)
-and be put inside the **private > storage > files** as placeholder.png.
-
-```
-private
-└── storage
-    └── files
-        └── placeholder.png
-```
 
 ## Private folder
 

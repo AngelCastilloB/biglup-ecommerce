@@ -1,7 +1,7 @@
 Package.describe({
-    name: 'biglup:biglup-ui',
+    name: 'biglup:ui',
     version: '0.0.1',
-    summary: 'Biglup UI',
+    summary: 'Angular 2 Components for the Biglup E-Commerce project',
     documentation: 'README.md'
 });
 

@@ -19,9 +19,9 @@
 
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Component, OnInit, NgZone }                           from '@angular/core';
-import { ValidationService }                                   from '../../../services/validation.service';
+import { ValidationService }                                   from 'meteor/biglup:core';
 import { Router, ActivatedRoute }                              from '@angular/router';
-import { UserAuthService }                                     from '../../../services/user-auth.service';
+import { UserAuthService }                                     from 'meteor/biglup:business';
 
 // noinspection TypeScriptCheckImport
 import template from './new-password.component.html';

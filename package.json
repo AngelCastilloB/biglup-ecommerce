@@ -2,12 +2,11 @@
   "name": "biglup-ecommerce",
   "private": true,
   "scripts": {
-    "update-local-plugins": "rm -rf node_modules/biglup-ui && meteor npm install",
     "start": "meteor run --settings meteor.json",
     "gulp:post-install": "gulp --gulpfile .gulpfile.js meteor-post-install",
+    "postinstall": "typings i && npm run gulp:post-install",
     "lint": "tslint -c tslint.json 'client/**/*.ts' 'server/**/*.ts' 'common/**/*.ts' '.tools/**/*.ts'"
   },
-
   "dependencies": {
     "@angular/common": "2.0.1",
     "@angular/compiler": "2.0.1",
@@ -42,7 +41,9 @@
     "es6-shim": "0.35.1",
     "faker": "^3.1.0",
     "gm": "^1.22.0",
+    "jimp": "^0.2.27",
     "meteor-node-stubs": "0.2.3",
+    "meteor-rxjs": "0.2.3",
     "ng2-dragula": "^1.1.10",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.12",

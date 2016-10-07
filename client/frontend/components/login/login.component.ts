@@ -19,10 +19,10 @@
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router }                             from '@angular/router';
-import { _T }                                 from '../../../services/i18n/i18n-singleton.service';
+import { _T }                                 from 'meteor/biglup:i18n';
 import { Meteor }                             from 'meteor/meteor';
-import { ValidationService }                  from '../../../services/validation.service';
-import { UserAuthService }                    from '../../../services/user-auth.service';
+import { ValidationService }                  from 'meteor/biglup:core';
+import { UserAuthService }                    from 'meteor/biglup:business';
 import { Component, OnInit, OnDestroy }       from '@angular/core';
 import { Subscription }                       from 'rxjs';
 import { MeteorReactive }                     from 'angular2-meteor';
@@ -67,7 +67,6 @@ export class LoginComponent extends MeteorReactive implements OnInit, OnDestroy
      * @param {FormBuilder}     _formBuilder     The form builder service.
      * @param {Router}          _router          Angular's router service.
      * @param {UserAuthService} _userAuthService The user authentication service.
-     * @param {NgZone}          _ngZone          The angular zone.
      */
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,

@@ -19,7 +19,7 @@
 
 import { Component }       from '@angular/core';
 import { Router }          from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
+import { ProductsService } from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport

@@ -28,7 +28,7 @@ import { Component,
          ViewChild,
          AfterViewInit}          from '@angular/core';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
-import { ProductImage }          from '../../../../../../common/models';
+import { ProductImage }          from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -84,7 +84,7 @@ export class ImagePreviewComponent implements OnInit, AfterViewInit
                 'The image is marked is *not* uploaded, but the field file is empty.');
         }
 
-        reader.onload = (event: ProgressEvent) =>
+        reader.onload = (event: any) =>
         {
             if (event.type === 'load')
             {
