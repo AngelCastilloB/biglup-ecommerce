@@ -1,14 +1,14 @@
 <div class="header-cart"
-     (mouseenter)="_isCartVisible = true"
-     (mouseleave)="_isCartVisible = false">
+     (mouseenter)="_setIsCartVisible(true)"
+     (mouseleave)="_setIsCartVisible(false)">
   <i class="fa fa-shopping-cart"></i>
   <span>{{ _getCartItemCount() }}</span>
 </div>
 
 <div class="cart-item-wrapper"
-     [@showCart]="_isCartVisible"
-     (mouseenter)="_isCartVisible = true"
-     (mouseleave)="_isCartVisible = false"
+     [@showCart]="_isCartVisible && _hasItems()"
+     (mouseenter)="_setIsCartVisible(true)"
+     (mouseleave)="_setIsCartVisible(false)"
      [ngStyle]="_cartItemsCss">
   <template *ngIf="_hasItems()" ngFor let-item [ngForOf]="_items">
     <p>
