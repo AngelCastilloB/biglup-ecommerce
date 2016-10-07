@@ -25,5 +25,10 @@
   "google": {
     "clientId": "",
     "secret": ""
+  },
+  "public": {
+    "i18nSingletonService": {
+      "logWarnings": true
+    }
   }
 }

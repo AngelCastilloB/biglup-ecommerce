@@ -15,6 +15,9 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// Schemas
+export * from './common/schemas/user.schema';
+
 // Collections
 export * from './common/collections/category.collection';
 export * from './common/collections/image.collection';

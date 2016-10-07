@@ -17,14 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component,
-         OnInit,
-         OnDestroy,
-         style,
-         state,
-         animate,
-         transition,
-         trigger }              from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    style,
+    state,
+    animate,
+    transition,
+    trigger
+}              from '@angular/core';
 import { Cart, CartItem, User } from 'meteor/biglup:business';
 import { Subscription }         from 'rxjs';
 import { UserAuthService }      from 'meteor/biglup:business';
@@ -83,7 +85,7 @@ export class CartComponent implements OnInit, OnDestroy
     /**
      * @summary Controls whether the cart and its items are shown to the user.
      */
-    private _isCartVisible: boolean;
+    private _isCartVisible = false;
 
     /**
      * @summary Initializes a new instance of the CartComponent class.
@@ -104,7 +106,7 @@ export class CartComponent implements OnInit, OnDestroy
      */
     private get _cartItemsCss()
     {
-        return { top: this._isCartVisible ? 'initial' : '-2000px' };
+        return {top: this._isCartVisible ? 'initial' : '-2000px'};
     }
 
     /**
@@ -198,5 +200,16 @@ export class CartComponent implements OnInit, OnDestroy
             },
             error => console.log('handle remove item from cart error!', error)
         );
+    }
+
+    /**
+     * @summary Changes the visibility status of the cart view.
+     *
+     * @param {boolean} isVisible Visibility status from the view event.
+     * @private
+     */
+    private _setIsCartVisible(isVisible: boolean)
+    {
+        this._isCartVisible = isVisible;
     }
 }
