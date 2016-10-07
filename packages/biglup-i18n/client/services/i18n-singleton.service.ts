@@ -19,6 +19,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { I18nString }   from '../../common/models/i18n-string';
+import { Meteor }       from 'meteor/meteor';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -63,6 +64,11 @@ export class I18nSingletonService
     public         _localeChanged: EventEmitter<string> = new EventEmitter<string>();
     private        _currentLocale: string               = DEFAULT_LOCALE;
 
+    /**
+     * @summary Controls console logs on client side.
+     */
+    private _logWarnings: boolean;
+
     private _translations: {[key: string]: {[key: string]: string}} = {};
 
     /**
@@ -77,13 +83,17 @@ export class I18nSingletonService
 
     /**
      * @summary Lazy initialise a new instance of the I18nSingletonService singleton class.
+     *
+     * @param {boolean} logWarnings Controls console logs on client side.
      */
-    constructor()
+    constructor(logWarnings?: boolean)
     {
         if (I18nSingletonService._instance)
         {
             throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
         }
+
+        this._logWarnings = logWarnings || Meteor.settings.public['i18nSingletonService']['logWarnings'];
 
         I18nSingletonService._instance = this;
     }
@@ -127,7 +137,10 @@ export class I18nSingletonService
 
         if (!(key in this._translations[this._currentLocale]))
         {
-            console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
+            if (this._logWarnings)
+            {
+                console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
+            }
 
             return key;
         }
