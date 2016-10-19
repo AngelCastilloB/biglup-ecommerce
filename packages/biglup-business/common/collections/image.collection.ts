@@ -21,6 +21,27 @@ import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
 import { Image }    from '../models';
 
+// VALIDATORS *********************************************************************************************************/
+
+/**
+ * @summary Rule validation for image insertion.
+ *
+ * @returns {boolean} true if the operation is allowed, otherwise, false.
+ */
+const isAllowed = () =>
+{
+    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
+};
+
+// PERMISIONS *********************************************************************************************************/
+
+// Set default permissions for all stores
+UploadFS.config.defaultStorePermissions = new UploadFS.StorePermissions({
+    insert: isAllowed,
+    update: isAllowed,
+    remove: isAllowed
+});
+
 // EXPORTS ************************************************************************************************************/
 
 /**

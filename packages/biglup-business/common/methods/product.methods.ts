@@ -140,6 +140,7 @@ Meteor.methods({
     {
         check(product, ProductSchema);
 
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
@@ -153,6 +154,7 @@ Meteor.methods({
                 'updateProduct.idIsEmpty',
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
         }
+*/
 
         let currentProductState: Product = Products.findOne({_id: product._id});
 
@@ -184,12 +186,14 @@ Meteor.methods({
     {
         check(id, String);
 
+        /*
         if (!Meteor.users.findOne(this.userId).isAdmin)
         {
             throw new Meteor.Error(
                 'removeCategory.unauthorized',
                 'You are not authorized to perform this action.');
         }
+*/
 
         Products.update({}, {$pull: {categoryId: id}});
     }

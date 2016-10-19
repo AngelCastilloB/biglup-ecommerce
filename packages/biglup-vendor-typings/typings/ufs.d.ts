@@ -18,6 +18,8 @@
 declare module 'meteor/jalik:ufs' {
     module UploadFS {
         let Uploader;
+        let config;
+        let StorePermissions;
         let store: {
                 Local: {new (...args): Store},
                 GridFS: {new (...args): Store},
