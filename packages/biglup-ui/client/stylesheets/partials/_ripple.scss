@@ -6,17 +6,17 @@
 .ripple-effect {
     position: absolute;
     border-radius: 50%;
-    background: white;
-    opacity: 0.2;
+    background: transparent;
+    opacity: 0.4;
 }
 
 .ripple-effect-on {
     @extend .ripple-effect;
-    animation: ripple-animation-on 1000ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation: ripple-animation-on 3000ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 .ripple-effect-off {
-    animation: ripple-animation-off 1000ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation: ripple-animation-off 3000ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 @keyframes ripple-animation-on {
@@ -25,8 +25,8 @@
         transform: scale(1);
     }
     to {
-        -webkit-transform: scale(2.4);
-        transform: scale(2.4);
+        -webkit-transform: scale(3.8);
+        transform: scale(3.8);
     }
 }
 
@@ -34,11 +34,11 @@
     from {
         -webkit-transform: scale(1);
         transform: scale(1);
-        opacity: 0.2;
+        opacity: 0.4;
     }
     to {
-        -webkit-transform: scale(2.4);
-        transform: scale(2.4);
+        -webkit-transform: scale(3.8);
+        transform: scale(3.8);
         opacity: 0.0;
     }
 }

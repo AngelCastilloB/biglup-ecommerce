@@ -1,10 +1,10 @@
 @import 'base';
 
-$button-padding:       4 12px !default;
-$button-min-width:     88px   !default;
-$button-margin:        0      !default;
-$button-line-height:   36px   !default;
-$button-border-radius: 4px    !default;
+$button-padding:       4px 12px !default;
+$button-min-width:     88px     !default;
+$button-margin:        0        !default;
+$button-line-height:   36px     !default;
+$button-border-radius: 4px      !default;
 
 [biglup-button]{
     position:      relative;
@@ -51,44 +51,85 @@ $button-border-radius: 4px    !default;
         pointer-events: none;
         border-radius: 100%;
     }
-    &.primary .touch {
-        background: transparentize($primary-color, 0.8);
+
+    &.primary {
+        color:      $text-and-icons-color;
+        background: $primary-color;
     }
-    &.accent .touch {
-        background: transparentize($accent-color, 0.8);
+    &.accent {
+        color:      $text-and-icons-color;
+        background: $accent-color;
     }
-    &.warn .touch {
-        background: transparentize($warn-color, 0.8);
+    &.warn {
+        color:      $text-and-icons-color;
+        background: $warn-color;
+    }
+    &.monochrome {
+        color:      black;
+        background: white;
+    }
+
+    &.monochrome-inverted {
+        color:      white;
+        background: black;
+    }
+
+    &.primary-flat {
+        background: white;
+        color: $primary-color;
+    }
+    &.accent-flat {
+        background: white;
+        color: $accent-color;
+    }
+    &.warn-flat {
+        background: white;
+        color: $warn-color;
+    }
+    &.monochrome-flat {
+        color:      black;
+        background: white;
+    }
+
+    &.monochrome-inverted-flat {
+        color:      white;
+        background: black;
     }
 
     &.overflow{
         overflow: visible;
     }
 
-    &[raised],.raised{
-        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    &.raised{
+        transition: box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
         border-radius: $button-border-radius;
-    }
-
-    &[icon]{
-        padding: 8px;
-        border-radius: 100%;
-        font-size: 35px;
-        line-height: 0;
     }
 
     &:focus, :active{
         -moz-outline-style: none;
     }
 
-    &[raised]:active,.raised:active{
-        box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    i {
+        padding-right: 5px;
+        vertical-align: middle;
     }
 
-    &[disabled],.disabled,[disabled]:active,.disabled:active{
-        background: #eee;
-        color: #aaa;
+    &.raised:active{
+        box-shadow: 0 8px 10px 0 rgba(0,0,0,.5);
+    }
+
+    &.disabled {
+        background: #dddddd;
+        color: #aaaaaa;
         box-shadow: none !important;
+        cursor: no-drop;
+    }
+
+    &.disabled-flat {
+        background: white;
+        color: #aaaaaa;
+        box-shadow: none !important;
+        cursor: no-drop;
     }
 }

@@ -1,0 +1,20 @@
+<button
+  [disabled]="_isDisabled"
+  biglup-button
+  ripple
+  [class.raised]='_raised && !_isDisabled'
+  [class.primary]='_color === "primary" && _raised && !_isDisabled'
+  [class.primary-flat]='_color === "primary" && !_raised && !_isDisabled'
+  [class.accent]='_color === "accent" && _raised && !_isDisabled'
+  [class.accent-flat]='_color === "accent" && !_raised && !_isDisabled'
+  [class.warn]='_color === "warn" && _raised && !_isDisabled'
+  [class.warn-flat]='_color === "warn" && !_raised && !_isDisabled'
+  [class.monochrome]='_color === "monochrome" && _raised && !_isDisabled'
+  [class.monochrome-flat]='_color === "monochrome" && !_raised && !_isDisabled'
+  [class.monochrome-inverted]='_color === "monochrome-inverted" && _raised && !_isDisabled'
+  [class.monochrome-inverted-flat]='_color === "monochrome-inverted" && !_raised && !_isDisabled'
+  [class.disabled]='_isDisabled && _raised'
+  [class.disabled-flat]='_isDisabled && !_raised'>
+  <i (click)="_onIconClick($event)" *ngIf="_icon" [ngClass]="['fa', _icon, 'fa-lg']" aria-hidden="true"></i>
+  <ng-content></ng-content>
+</button>

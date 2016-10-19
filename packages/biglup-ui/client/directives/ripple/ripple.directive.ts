@@ -43,10 +43,10 @@ import 'rxjs/add/operator/mergeMap';
     }
 })
 export class RippleDirective implements OnInit, OnDestroy {
-    @Input('ripple')
-    private color:                  string  = '#FF0000';
-    private _mouseDownObservable:   any     = Observable.fromEvent(this._el.nativeElement, 'mousedown');
-    private _mouseUpObservable:     any     = Observable.fromEvent(document.body, 'mouseup');
+    @Input('rippleColor')
+    private _rippleColor:           string = '#FFFFFF';
+    private _mouseDownObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
+    private _mouseUpObservable:     any    = Observable.fromEvent(document.body, 'mouseup');
     private _mouseDownSubscription: any;
 
     /**
@@ -78,7 +78,7 @@ export class RippleDirective implements OnInit, OnDestroy {
 
                 ripple.style.top        = yPos + 'px';
                 ripple.style.left       = xPos + 'px';
-                ripple.style.background = this.color;
+                ripple.style.background = getComputedStyle(this._el.nativeElement).getPropertyValue('color');
                 ripple.style.width      = size + 'px';
                 ripple.style.height     = size + 'px';
                 ripple.style.marginTop  = -(size / 2) + 'px';
@@ -105,7 +105,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.remove('ripple-effect-on');
                 elements.ripple.classList.add('ripple-effect-off');
             })
-            .mergeMap((elements: any) => Observable.interval(500).take(1).map((index: any) => elements))
+            .mergeMap((elements: any) => Observable.interval(3000).take(1).map((index: any) => elements))
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }

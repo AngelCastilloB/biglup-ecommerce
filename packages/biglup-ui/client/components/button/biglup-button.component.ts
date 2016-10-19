@@ -1,5 +1,5 @@
 /**
- * @file button.component.ts
+ * @file biglup-button.component.ts
  *
  * @summary A simple animated button.
  *
@@ -17,9 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
+import { Component, Input } from '@angular/core';
 
-import { Component } from '@angular/core';
+// REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
+// noinspection TypeScriptCheckImport
+import template from './biglup-button.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -28,14 +30,33 @@ import { Component } from '@angular/core';
  */
 @Component({
     selector: 'biglup-button',
-    template: `<button type="button" biglup-button raised [ripple] class="primary"><ng-content></ng-content></button>`
+    template
 })
 export class BiglupButtonComponent
 {
+    @Input('color')
+    private _color: string = 'primary';
+    @Input('raised')
+    private _raised: boolean = false;
+    @Input('disabled')
+    private _isDisabled: boolean = false;
+    @Input('icon')
+    private _icon: string = '';
+
     /**
      * @brief Initializes a new instance of the BiglupButtonComponent class.
      */
     constructor()
     {
+    }
+
+    /**
+     * @summary Hack to avoid triggering the click event when the button is disabled but the user click on the icon.
+     * @param event The click event.
+     */
+    private _onIconClick(event: any)
+    {
+        if (this._isDisabled)
+            event.stopPropagation();
     }
 }
