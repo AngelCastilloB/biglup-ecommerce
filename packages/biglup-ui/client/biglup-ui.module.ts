@@ -20,6 +20,7 @@
 import 'reflect-metadata';
 
 import { NgModule }              from '@angular/core';
+import { BrowserModule }         from '@angular/platform-browser';
 import { BiglupButtonComponent } from './components/button/biglup-button.component';
 import { RippleDirective }       from './directives/ripple/ripple.directive';
 
@@ -29,6 +30,7 @@ import { RippleDirective }       from './directives/ripple/ripple.directive';
  * @summary This module export all the biglup user interface components.
  */
 @NgModule({
+    imports: [BrowserModule],
     declarations: [
         BiglupButtonComponent,
         RippleDirective
