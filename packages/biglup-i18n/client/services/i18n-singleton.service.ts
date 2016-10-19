@@ -135,6 +135,9 @@ export class I18nSingletonService
             console.warn('Please do not call I18nSingletonService\'s getText() method directly. Use the _T() function instead');
         }
 
+        if (!this._translations[this._currentLocale])
+            return 'INVALID_LOCALE';
+
         if (!(key in this._translations[this._currentLocale]))
         {
             if (this._logWarnings)
