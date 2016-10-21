@@ -18,6 +18,7 @@
 declare module BiglupUi
 {
     class BiglupButtonComponent {}
+    class BiglupInputComponent {}
     class RippleDirective {}
     class BiglupUiModule {}
 }

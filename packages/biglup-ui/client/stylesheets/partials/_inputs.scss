@@ -1,0 +1,138 @@
+@import 'base';
+
+.biglup-text-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.biglup-text-input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid $secondary-text-color;
+    font-size: 16px;
+    padding: 8px 0;
+    &[disabled] {
+        border-bottom: 1px dashed $secondary-text-color;
+        background-color: transparent;
+    }
+    ~ label {
+        font-size: 16px;
+        width: 100%;
+        position: absolute;
+        pointer-events: none;
+        left: 0;
+        top: 10px;
+        bottom: 0;
+        color: $secondary-text-color;
+    }
+    &.floating-label ~ label {
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    &:focus {
+        outline: none;
+        ~ label:after {
+            visibility: visible;
+            width: 100%;
+            left: 0;
+        }
+    }
+    ~ label:after {
+        content: '';
+        height: 2px;
+        width: 10px;
+        bottom: 0;
+        left: 45%;
+        visibility: hidden;
+        position: absolute;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    &.dirty ~ label {
+        visibility: hidden;
+    }
+    &.floating-label {
+        &:focus ~ label, &.dirty ~ label {
+            visibility: visible;
+            top: -10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.biglup-text-error {
+    float: left;
+    margin-top: 3px;
+    color: $warn-color;
+    font-size: 12px;
+}
+
+.biglup-text-input-valid-float {
+    :focus ~ label, .dirty ~ label {
+        color: $primary-color;
+        :after {
+            background-color: $primary-color;
+            color: $primary-color;
+        }
+    }
+    label:after {
+        background-color: $primary-color;
+        color: $primary-color;
+    }
+    span {
+        visibility: hidden;
+    }
+}
+
+.biglup-text-input-invalid-float {
+    :focus ~ label, .dirty ~ label {
+        color: $warn-color;
+        :after {
+            background-color: $warn-color;
+            color: $warn-color;
+        }
+    }
+    label:after {
+        background-color: $warn-color;
+        color: $warn-color;
+        visibility: visible;
+        width: 100%;
+        left: 0;
+    }
+    span {
+        visibility: visible;
+    }
+}
+
+.biglup-text-input-valid {
+    :focus ~ label, .dirty ~ label {
+        color: $secondary-text-color;
+    }
+    label:after {
+        background-color: $primary-color;
+        color: $primary-color;
+    }
+    span {
+        visibility: hidden;
+    }
+}
+
+.biglup-text-input-invalid {
+    :focus ~ label, .dirty ~ label {
+        color: $secondary-text-color;
+    }
+    label:after {
+        background-color: $warn-color;
+        color: $warn-color;
+        visibility: visible;
+        width: 100%;
+        left: 0;
+    }
+    span {
+        visibility: visible;
+    }
+}

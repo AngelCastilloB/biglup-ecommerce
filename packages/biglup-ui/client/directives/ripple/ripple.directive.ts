@@ -105,7 +105,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.remove('ripple-effect-on');
                 elements.ripple.classList.add('ripple-effect-off');
             })
-            .mergeMap((elements: any) => Observable.interval(3000).take(1).map((index: any) => elements))
+            .mergeMap((elements: any) => Observable.interval(1500).take(1).map((index: any) => elements))
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }

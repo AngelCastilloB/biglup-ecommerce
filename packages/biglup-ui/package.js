@@ -20,6 +20,7 @@ Package.onUse(function(api)
     ], 'client', {isImport: true});
 
     api.addFiles([
+        'client/components/input/biglup-input.component.ts',
         'client/components/button/biglup-button.component.ts',
         'client/directives/ripple/ripple.directive.ts',
         'client/biglup-ui.module.ts'
