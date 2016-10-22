@@ -23,6 +23,7 @@ Package.onUse(function(api)
         'client/components/input/biglup-input.component.ts',
         'client/components/button/biglup-button.component.ts',
         'client/directives/ripple/ripple.directive.ts',
+        'client/components/input/filters/input-filters.ts',
         'client/biglup-ui.module.ts'
     ], 'client');
 

@@ -33,11 +33,20 @@
   <h3>INPUTS</h3>
   <hr>
   <div style="width: 40%">
-    <biglup-input name="sample" hint="Type something..."></biglup-input><br>
-    <biglup-input name="sample2" hint="Numbers Only"></biglup-input><br>
-    <biglup-input disabled name="sample3" hint="Im Disabled"></biglup-input><br>
-    <biglup-input name="sample4" hint="Text Input" floatingHint="true"></biglup-input><br>
-    <biglup-input name="sample5" hint="Numbers Only" floatingHint="true"></biglup-input><br>
-    <biglup-input name="sample6" hint="Password" isPassword="true" floatingHint="true"></biglup-input><br>
+    <h5>PASSWORD</h5>
+    <biglup-input name="sample1" hint="Password" isPassword="true" floatingHint="true"></biglup-input>
+    <h5>LABELS</h5>
+    <biglup-input name="sample2" hint="Type something..."></biglup-input>
+    <biglup-input name="sample3" hint="Numbers Only" [filter]="InputFilters.digits"></biglup-input>
+    <h5>FLOATING LABELS</h5>
+    <biglup-input name="sample4" hint="Text Input" floatingHint="true"></biglup-input>
+    <biglup-input name="sample5" hint="Numbers Only" floatingHint="true" [filter]="InputFilters.numerical"></biglup-input>
+    <h5>DISABLED</h5>
+    <biglup-input disabled name="sample6" hint="Im Disabled"></biglup-input>
+    <h5>VALIDATIONS</h5>
+    <biglup-input #validate errorMessage="Numbers Only!" name="validate" hint="Numbers"></biglup-input>
+    <biglup-input #validate2 errorMessage="Letters Only!" name="validate2" hint="A-Z Floating" floatingHint="true"></biglup-input>
+    <h5>ICONS</h5>
+    <biglup-input #email name="email" hint="Email" icon="fa-envelope" floatingHint="true" errorMessage="Please a valid email!"></biglup-input>
   </div>
 </div>

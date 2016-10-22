@@ -4,17 +4,21 @@
   [class.biglup-text-input-invalid]='_invalid && !_floatingHint'
   [class.biglup-text-input-valid-float]='!_invalid && _floatingHint'
   [class.biglup-text-input-invalid-float]='_invalid && _floatingHint'>
+
   <input
     #input
     (keydown)="_onKeyDown($event)"
-    (change)="_onChange($event)"
+    (keyup)="_onKeyUp($event)"
+    (blur)="_onBlur($event)"
     [class.floating-label]='_floatingHint'
+    [ngStyle]="{'margin-left': _icon ? '20px' : '0'}"
     class="biglup-text-input"
     attr.name="{{_name}}"
     [(ngModel)]="_value"
     [attr.type]="_isPassword ? 'password' : 'text'"
     [disabled]="_isDisabled"
   />
-  <label #hint attr.for="{{_name}}">{{ _hint }}</label>
-  <span class="biglup-text-error">{{ _errorMessage }}</span>
+  <i *ngIf="_icon" [ngClass]="['fa', _icon, 'biglup-text-input-icon']" aria-hidden="true"></i>
+  <label [ngStyle]="{'left': _icon ? '20px' : '0'}" #hint attr.for="{{_name}}">{{ _hint }}</label>
+  <span [ngStyle]="{'padding-left': _icon ? '20px' : '0'}" class="biglup-text-error">{{ _errorMessage }}</span>
 </div>

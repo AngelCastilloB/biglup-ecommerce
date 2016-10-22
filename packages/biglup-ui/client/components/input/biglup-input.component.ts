@@ -31,6 +31,13 @@ import { Observable }       from 'rxjs/Observable';
 // noinspection TypeScriptCheckImport
 import template from './biglup-input.component.html';
 
+import 'rxjs/add/operator/map';
+
+// CONSTANTS **********************************************************************************************************/
+
+const BACKSPACE_KEYCODE: number = 8;
+const DELETE_KEYCODE:    number = 46;
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -62,9 +69,16 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _isPassword: boolean = false;
     @Input('disabled')
     private _isDisabled: boolean = false;
+    @Input('filter')
+    private _filter: (keyCode: number) => boolean = null;
+    @Input('icon')
+    private _icon: string = '';
+    private _inputChange: any = null;
+    private _inputBlur: any = null;
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
+     *
      * @param _el              The element this attribute will enhance.
      * @param _changeDetector  A reference to the angular change detector engine.
      * @param _renderer        The renderer.
@@ -78,7 +92,47 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
      */
     public ngOnInit(): any
     {
+        this._inputChange = Observable.fromEvent(this._input.nativeElement, 'keyup');
+        this._inputBlur   = Observable.fromEvent(this._input.nativeElement, 'blur');
+
         this._updateStateFromDom();
+    }
+
+    /**
+     * @summary Returns an observable that watch over the value changes on the element.
+     *
+     * This observable only emits the value once the user has finish typing.
+     *
+     * @returns {Observable<string>} The observable for the value.
+     */
+    public observeValue(): Observable<string>
+    {
+        return this._inputBlur.map((event) =>
+        {
+            return event.target.value;
+        });
+    }
+
+    /**
+     * @summary Returns an observable that watch over the value changes on the element.
+     *
+     * Thos observable emits a value everytime the inser inputs a character.
+     *
+     * @returns {Observable<string>} The observable for the value.
+     */
+    public observeValueChanges(): Observable<string>
+    {
+        return this._inputChange.map((event) => event.target.value);
+    }
+
+    /**
+     * @summary Mark the input as an invalid.
+     *
+     * @param isInvalid The invalid flag, true if the input is in an invalid state, otherwise, false.
+     */
+    public setInvalid(isInvalid: boolean)
+    {
+        this._invalid = isInvalid;
     }
 
     /**
@@ -86,10 +140,10 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
      */
     public ngAfterViewInit(): any
     {
-        // HACK: Chrome wont feed the autofilled value if the input element is of type password for security reasons.
-        // This breaks out input element style when the password is autofilled since we cant mark our element dirty,
-        // This hack allow us to identify if chrome has autofilled a password input element and style it correctly
-        // even tho we still havent receive the value.
+        // HACK: Chrome wont feed the autofilled value if the input element is of type password until the user clicks on
+        // the page for security reasons. This breaks out input element style when the password is autofilled since we
+        // cant mark our element as dirty. This hack allow us to identify if chrome has autofilled a password input
+        // element and style it correctly even tho we still havent receive the value.
         Observable.of(null).delay(1000).subscribe(() =>
         {
             let autofilled: boolean = false;
@@ -122,11 +176,23 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
 
     /**
      * @summary Key down event handler for the input field.
+     *
      * @param event The key down event
      */
     private _onKeyDown(event: any)
     {
-        if (event.keyCode === 8 || event.keyCode === 46 && this._value === '')
+        if (this._filter)
+        {
+            const isValid = this._filter((event.which) ? event.which : event.keyCode);
+
+            if (!isValid)
+            {
+                event.preventDefault();
+                return;
+            }
+        }
+
+        if (event.keyCode === BACKSPACE_KEYCODE || event.keyCode === DELETE_KEYCODE && this._value === '')
             return;
 
         this._renderer.setElementStyle(
@@ -134,10 +200,25 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     }
 
     /**
-     * @summary Change event handler for the input field.
+     * @summary Key ip event handler for the input field.
+     *
+     * @param event The key down event
+     */
+    private _onKeyUp(event: any)
+    {
+        if (this._value === '')
+        {
+            this._renderer.setElementClass(this._input.nativeElement, 'dirty', false);
+            this._renderer.setElementStyle(this._hintElement.nativeElement, 'visibility', 'visible');
+        }
+    }
+
+    /**
+     * @summary Blur event handler for the input field.
+     *
      * @param event The key up event
      */
-    private _onChange(event: any)
+    private _onBlur(event: any)
     {
         this._updateStateFromDom();
     }

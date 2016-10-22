@@ -2,19 +2,18 @@
 
 .biglup-text-container {
     position: relative;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .biglup-text-input {
     display: block;
     width: 100%;
-    margin: 0;
     border: none;
     border-bottom: 1px solid $secondary-text-color;
     font-size: 16px;
     padding: 8px 0;
     &[disabled] {
-        border-bottom: 1px dashed $secondary-text-color;
+        border-bottom: 1px dashed $disabled-text-color;
         background-color: transparent;
     }
     ~ label {
@@ -22,15 +21,14 @@
         width: 100%;
         position: absolute;
         pointer-events: none;
-        left: 0;
         top: 10px;
         bottom: 0;
         color: $secondary-text-color;
     }
     &.floating-label ~ label {
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
+        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
     }
     &:focus {
         outline: none;
@@ -48,9 +46,9 @@
         left: 45%;
         visibility: hidden;
         position: absolute;
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
+        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
     }
     &.dirty ~ label {
         visibility: hidden;
@@ -65,6 +63,7 @@
 }
 
 .biglup-text-error {
+    display:block;
     float: left;
     margin-top: 3px;
     color: $warn-color;
@@ -135,4 +134,12 @@
     span {
         visibility: visible;
     }
+}
+
+.biglup-text-input-icon {
+    float: left;
+    margin-right: 6px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
 }
