@@ -16,5 +16,8 @@
  */
 
 export * from './client/components/button/biglup-button.component';
+export * from './client/components/input/biglup-input.component';
+export * from './client/components/input/filters/input-filters';
 export * from './client/directives/ripple/ripple.directive';
 export * from './client/biglup-ui.module';
+

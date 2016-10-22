@@ -1,0 +1,145 @@
+@import 'base';
+
+.biglup-text-container {
+    position: relative;
+    margin: 30px 0;
+}
+
+.biglup-text-input {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid $secondary-text-color;
+    font-size: 16px;
+    padding: 8px 0;
+    &[disabled] {
+        border-bottom: 1px dashed $disabled-text-color;
+        background-color: transparent;
+    }
+    ~ label {
+        font-size: 16px;
+        width: 100%;
+        position: absolute;
+        pointer-events: none;
+        top: 10px;
+        bottom: 0;
+        color: $secondary-text-color;
+    }
+    &.floating-label ~ label {
+        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    }
+    &:focus {
+        outline: none;
+        ~ label:after {
+            visibility: visible;
+            width: 100%;
+            left: 0;
+        }
+    }
+    ~ label:after {
+        content: '';
+        height: 2px;
+        width: 10px;
+        bottom: 0;
+        left: 45%;
+        visibility: hidden;
+        position: absolute;
+        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    }
+    &.dirty ~ label {
+        visibility: hidden;
+    }
+    &.floating-label {
+        &:focus ~ label, &.dirty ~ label {
+            visibility: visible;
+            top: -10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.biglup-text-error {
+    display:block;
+    float: left;
+    margin-top: 3px;
+    color: $warn-color;
+    font-size: 12px;
+}
+
+.biglup-text-input-valid-float {
+    :focus ~ label, .dirty ~ label {
+        color: $primary-color;
+        :after {
+            background-color: $primary-color;
+            color: $primary-color;
+        }
+    }
+    label:after {
+        background-color: $primary-color;
+        color: $primary-color;
+    }
+    span {
+        visibility: hidden;
+    }
+}
+
+.biglup-text-input-invalid-float {
+    :focus ~ label, .dirty ~ label {
+        color: $warn-color;
+        :after {
+            background-color: $warn-color;
+            color: $warn-color;
+        }
+    }
+    label:after {
+        background-color: $warn-color;
+        color: $warn-color;
+        visibility: visible;
+        width: 100%;
+        left: 0;
+    }
+    span {
+        visibility: visible;
+    }
+}
+
+.biglup-text-input-valid {
+    :focus ~ label, .dirty ~ label {
+        color: $secondary-text-color;
+    }
+    label:after {
+        background-color: $primary-color;
+        color: $primary-color;
+    }
+    span {
+        visibility: hidden;
+    }
+}
+
+.biglup-text-input-invalid {
+    :focus ~ label, .dirty ~ label {
+        color: $secondary-text-color;
+    }
+    label:after {
+        background-color: $warn-color;
+        color: $warn-color;
+        visibility: visible;
+        width: 100%;
+        left: 0;
+    }
+    span {
+        visibility: visible;
+    }
+}
+
+.biglup-text-input-icon {
+    float: left;
+    margin-right: 6px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}

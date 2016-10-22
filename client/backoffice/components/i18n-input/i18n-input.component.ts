@@ -42,7 +42,7 @@ export class I18nInputComponent
     private _placeholder: string = '';
 
     /**
-     * @summary Initializes a new instance of the CategoryI18nComponent class.
+     * @summary Initializes a new instance of the I18nInputComponent class.
      */
     constructor()
     {

@@ -18,8 +18,16 @@
 declare module BiglupUi
 {
     class BiglupButtonComponent {}
+    class BiglupInputComponent {
+        public observeValue(): any;
+        public observeValueChanges(): any;
+        public setInvalid(isInvalid: boolean);
+    }
     class RippleDirective {}
     class BiglupUiModule {}
+    class InputFilters {
+        public static numerical(keyCode: number): boolean;
+    }
 }
 
 declare module 'meteor/biglup:ui' {

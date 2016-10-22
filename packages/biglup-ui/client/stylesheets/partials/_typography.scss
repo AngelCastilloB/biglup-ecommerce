@@ -164,7 +164,7 @@
     ul { @extend .unordered-list; }
     ol { @extend .ordered-list; }
 
-    pre, code { @extend .fixed; }
+    pre, code, input, label, span { @extend .fixed; }
 
     button { @extend .font-button}
 }
