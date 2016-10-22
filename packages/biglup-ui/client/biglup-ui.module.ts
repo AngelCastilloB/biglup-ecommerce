@@ -17,12 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { NgModule }              from '@angular/core';
-import { BrowserModule }         from '@angular/platform-browser';
-import { FormsModule }           from '@angular/forms';
-import { BiglupButtonComponent } from './components/button/biglup-button.component';
-import { BiglupInputComponent }  from './components/input/biglup-input.component';
-import { RippleDirective }       from './directives/ripple/ripple.directive';
+import { NgModule }               from '@angular/core';
+import { BrowserModule }          from '@angular/platform-browser';
+import { FormsModule }            from '@angular/forms';
+import { BiglupButtonComponent }  from './components/button/biglup-button.component';
+import { BiglupInputComponent }   from './components/input/biglup-input.component';
+import { BiglupCheckboxComponent} from './components/checkbox/biglup-checkbox.component';
+import { RippleDirective }        from './directives/ripple/ripple.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -36,11 +37,13 @@ import { RippleDirective }       from './directives/ripple/ripple.directive';
     declarations: [
         BiglupButtonComponent,
         BiglupInputComponent,
+        BiglupCheckboxComponent,
         RippleDirective
     ],
     exports: [
         BiglupButtonComponent,
         BiglupInputComponent,
+        BiglupCheckboxComponent,
         RippleDirective
     ]
 })
