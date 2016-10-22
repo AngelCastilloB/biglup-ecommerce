@@ -1,0 +1,26 @@
+@import 'base';
+
+input[type="radio"] {
+    margin: 3px 0 0;
+}
+
+.biglup-radio-button label {
+    padding-left: 25px;
+}
+
+.biglup-radio-button input[type="biglup-radio-button"], .biglup-radio-button-inline input[type="biglup-radio-button"] {
+    -webkit-appearance: none;
+    margin-left: -25px;
+}
+
+.biglup-radio-button input[type="biglup-radio-button"]:after, .biglup-radio-button-inline input[type="biglup-radio-button"]:after {
+    border-color: rgba(0, 0, 0, 0.54);
+}
+
+.biglup-radio-button input[type="biglup-radio-button"]:disabled:after, .biglup-radio-button-inline input[type="biglup-radio-button"]:disabled:after {
+    border-color: rgba(0, 0, 0, 0.26);
+}
+
+.biglup-radio-button input[type="biglup-radio-button"]:focus, .biglup-radio-button-inline input[type="biglup-radio-button"]:focus {
+    outline: none;
+}

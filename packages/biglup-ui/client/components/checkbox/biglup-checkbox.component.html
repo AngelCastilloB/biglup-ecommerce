@@ -1,0 +1,8 @@
+<div class="biglup-checkbox">
+  <label>
+    <div [class.biglup-checkbox-text]="!_isDisabled" [class.biglup-checkbox-text-disabled]="_isDisabled">
+      <ng-content></ng-content>
+    </div>
+    <input type="checkbox" [checked]="_checked" [disabled]="_isDisabled"/>
+  </label>
+</div>

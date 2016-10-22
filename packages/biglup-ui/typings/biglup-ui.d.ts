@@ -23,6 +23,7 @@ declare module BiglupUi
         public observeValueChanges(): any;
         public setInvalid(isInvalid: boolean);
     }
+    class BiglupCheckboxComponent {}
     class RippleDirective {}
     class BiglupUiModule {}
     class InputFilters {

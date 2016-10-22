@@ -41,7 +41,7 @@ const DELETE_KEYCODE:    number = 46;
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays an animated button.
+ * @summary This component displays an animated text input.
  */
 @Component({
     selector: 'biglup-input',
