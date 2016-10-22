@@ -53,15 +53,15 @@ $button-border-radius: 4px      !default;
     }
 
     &.primary {
-        color:      $text-and-icons-color;
+        color:      $button-text-and-icon-color;
         background: $primary-color;
     }
     &.accent {
-        color:      $text-and-icons-color;
+        color:      $button-text-and-icon-color;
         background: $accent-color;
     }
     &.warn {
-        color:      $text-and-icons-color;
+        color:      $button-text-and-icon-color;
         background: $warn-color;
     }
     &.monochrome {
@@ -120,15 +120,15 @@ $button-border-radius: 4px      !default;
     }
 
     &.disabled {
-        background: #dddddd;
-        color: #aaaaaa;
+        background: $disabled-background-color;
+        color: $disabled-text-color;
         box-shadow: none !important;
         cursor: no-drop;
     }
 
     &.disabled-flat {
         background: white;
-        color: #aaaaaa;
+        color: $disabled-text-color;
         box-shadow: none !important;
         cursor: no-drop;
     }

@@ -1,10 +1,47 @@
-$dark-primary-color:   #303F9F;
-$primary-color:        #3F5AB5;
-$light-primary-color:  #C5CAE9;
-$text-and-icons-color: #FFFFFF;
-$accent-color:         #FF5722;
-$warn-color:           #F44336;
-$primary-text-color:   #212121;
-$secondary-text-color: #757575;
-$border-color:         #BDBDBD;
-$background-color:     #FFFFFF;
+@import '_material-design-colors';
+
+/*
+ * Material Design Light background theme
+ */
+$light-theme-background-color:           #ffffff;
+$light-theme-base-color:                 #000000;
+$light-theme-text-color:                 $grey-900;
+$light-theme-secondary-color:            #737373;
+$light-theme-button-text-and-icon-color: #ffffff;
+$light-theme-disabled-color:             #9b9b9b;
+$light-theme-disabled-background:        #dddddd;
+$light-theme-divider-color:              #dbdbdb;
+
+/*
+ * Material Design Dark background theme
+ */
+$dark-theme-background-color:           $grey-900;
+$dark-theme-base-color:                 #ffffff;
+$dark-theme-text-color:                 #ffffff;
+$dark-theme-secondary-color:            #bcbcbc;
+$dark-theme-button-text-and-icon-color: #ffffff;
+$dark-theme-disabled-color:             #9b9b9b;
+$dark-theme-disabled-background:        #dddddd;
+$dark-theme-divider-color:              #3c3c3c;
+
+/*
+ * Primary and accent colors. See _material-design-colors.scss for more colors.
+ */
+$primary-color:       $indigo-500;
+$light-primary-color: $indigo-100;
+$dark-primary-color:  $indigo-700;
+$accent-color:        $pink-a200;
+$light-accent-color:  $pink-a100;
+$dark-accent-color:   $pink-a400;
+$warn-color:          $red-500;
+
+$primary-text-color:         $light-theme-text-color;
+$primary-background-color:   $light-theme-background-color;
+$secondary-text-color:       $light-theme-secondary-color;
+$button-text-and-icon-color: $light-theme-button-text-and-icon-color;
+$disabled-text-color:        $light-theme-disabled-color;
+$disabled-background-color:  $light-theme-disabled-background;
+$divider-color:              $light-theme-divider-color;
+$error-color:                $red-500;
+
+
