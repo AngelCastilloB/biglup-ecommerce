@@ -5,7 +5,8 @@
          [class.biglup-radio-button-body-enabled]="!_isDisabled"
          [class.biglup-radio-button-body-enabled-checked]="!_isDisabled && _selected"
          [class.biglup-radio-button-body-disabled]="_isDisabled"
-         [class.biglup-radio-button-body-disabled-checked]="_isDisabled && _selected">
+         [class.biglup-radio-button-body-disabled-checked]="_isDisabled && _selected"
+         ripple [fixedRipple]="true" [rippleDisabled]="_isDisabled">
       <div [class.biglup-radio-button-select-mark-hide]="!_selected" [class.biglup-radio-button-select-mark-show]="_selected" [class.biglup-radio-button-select-mark-disabled]="_isDisabled"></div>
     </div>
     <div (click)="_onClick($event)" [class.biglup-radio-button-text]="!_isDisabled" [class.biglup-radio-button-text-disabled]="_isDisabled">
