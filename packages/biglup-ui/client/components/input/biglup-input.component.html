@@ -10,15 +10,25 @@
     (keydown)="_onKeyDown($event)"
     (keyup)="_onKeyUp($event)"
     (blur)="_onBlur($event)"
+    (focus)="_onFocus($event)"
     [class.floating-label]='_floatingHint'
-    [ngStyle]="{'margin-left': _icon ? '20px' : '0'}"
+    [class.biglup-text-input-margin-left]="_icon"
     class="biglup-text-input"
     attr.name="{{_name}}"
     [(ngModel)]="_value"
     [attr.type]="_isPassword ? 'password' : 'text'"
     [disabled]="_isDisabled"
   />
+  <div class="biglup-text-input-bar"
+       [class.biglup-text-input-bar-active]="_hasFocus || _invalid"
+       [class.biglup-text-input-bar-active-invalid]='_invalid'>
+  </div>
   <i *ngIf="_icon" [ngClass]="['fa', _icon, 'biglup-text-input-icon']" aria-hidden="true"></i>
-  <label [ngStyle]="{'left': _icon ? '20px' : '0'}" #hint attr.for="{{_name}}">{{ _hint }}</label>
-  <span [ngStyle]="{'padding-left': _icon ? '20px' : '0'}" class="biglup-text-error">{{ _errorMessage }}</span>
+  <label
+    [class.biglup-text-input-label-padding-left]="_icon && (!_hasFocus && _value === '')"
+    [class.biglup-text-input-error-color]="_floatingHint && _invalid"
+    [class.biglup-text-input-valid-color]="_floatingHint && !_invalid && _hasFocus"
+    #hint
+    attr.for="{{_name}}">{{ _hint }}</label>
+  <span class="biglup-text-error">{{ _errorMessage }}</span>
 </div>

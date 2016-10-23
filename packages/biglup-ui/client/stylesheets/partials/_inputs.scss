@@ -32,23 +32,6 @@
     }
     &:focus {
         outline: none;
-        ~ label:after {
-            visibility: visible;
-            width: 100%;
-            left: 0;
-        }
-    }
-    ~ label:after {
-        content: '';
-        height: 2px;
-        width: 10px;
-        bottom: 0;
-        left: 45%;
-        visibility: hidden;
-        position: absolute;
-        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
     }
     &.dirty ~ label {
         visibility: hidden;
@@ -71,37 +54,12 @@
 }
 
 .biglup-text-input-valid-float {
-    :focus ~ label, .dirty ~ label {
-        color: $primary-color;
-        :after {
-            background-color: $primary-color;
-            color: $primary-color;
-        }
-    }
-    label:after {
-        background-color: $primary-color;
-        color: $primary-color;
-    }
     span {
         visibility: hidden;
     }
 }
 
 .biglup-text-input-invalid-float {
-    :focus ~ label, .dirty ~ label {
-        color: $warn-color;
-        :after {
-            background-color: $warn-color;
-            color: $warn-color;
-        }
-    }
-    label:after {
-        background-color: $warn-color;
-        color: $warn-color;
-        visibility: visible;
-        width: 100%;
-        left: 0;
-    }
     span {
         visibility: visible;
     }
@@ -111,10 +69,6 @@
     :focus ~ label, .dirty ~ label {
         color: $secondary-text-color;
     }
-    label:after {
-        background-color: $primary-color;
-        color: $primary-color;
-    }
     span {
         visibility: hidden;
     }
@@ -123,13 +77,6 @@
 .biglup-text-input-invalid {
     :focus ~ label, .dirty ~ label {
         color: $secondary-text-color;
-    }
-    label:after {
-        background-color: $warn-color;
-        color: $warn-color;
-        visibility: visible;
-        width: 100%;
-        left: 0;
     }
     span {
         visibility: visible;
@@ -142,4 +89,49 @@
     margin-top: -25px;
     position: relative;
     z-index: 2;
+}
+
+.biglup-text-input-bar {
+    content: '';
+    height: 2px;
+    width: 10px;
+    bottom: 0;
+    left: 45%;
+    visibility: hidden;
+    position: absolute;
+    transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -moz-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -webkit-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+}
+
+.biglup-text-input-bar-active {
+    visibility: visible;
+    width: 100%;
+    left: 0;
+    background-color: $primary-color;
+    color: $primary-color;
+}
+
+.biglup-text-input-bar-active-invalid {
+    background-color: $warn-color;
+    color: $warn-color;
+    visibility: visible;
+    width: 100%;
+    left: 0;
+}
+
+.biglup-text-input-label-padding-left {
+    left: 20px;
+}
+
+.biglup-text-input-margin-left {
+    padding-left: 20px;
+}
+
+.biglup-text-input-error-color {
+    color: $warn-color!important;
+}
+
+.biglup-text-input-valid-color {
+    color: $primary-color!important;
 }
