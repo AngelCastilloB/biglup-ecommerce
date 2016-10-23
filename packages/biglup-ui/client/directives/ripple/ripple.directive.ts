@@ -124,6 +124,7 @@ export class RippleDirective implements OnInit, OnDestroy {
             .mergeMap((elements: any) => Observable.interval(10).take(1).map((index: any) => elements))
             .do((elements: any)       => elements.ripple.classList.add('fixed-ripple-effect-on'))
             .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
+            .mergeMap((elements: any) => Observable.interval(100).take(1).map((index: any) => elements))
             .do((elements: any)       =>
             {
                 const style:  any    = elements.ripple.style;
@@ -137,7 +138,7 @@ export class RippleDirective implements OnInit, OnDestroy {
 
                 elements.ripple.classList.add('fixed-ripple-effect-off');
             })
-            .mergeMap((elements: any) => Observable.fromEvent(elements.ripple, 'animationend').map((index: any) => elements))
+            .mergeMap((elements: any) => Observable.interval(300).take(1).map((index: any) => elements))
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }
