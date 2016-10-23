@@ -1,0 +1,16 @@
+<div class="biglup-radio-button">
+  <label>
+    <div (click)="_onClick($event)"
+         class="biglup-radio-button-body"
+         [class.biglup-radio-button-body-enabled]="!_isDisabled"
+         [class.biglup-radio-button-body-enabled-checked]="!_isDisabled && _selected"
+         [class.biglup-radio-button-body-disabled]="_isDisabled"
+         [class.biglup-radio-button-body-disabled-checked]="_isDisabled && _selected">
+      <div [class.biglup-radio-button-select-mark-hide]="!_selected" [class.biglup-radio-button-select-mark-show]="_selected" [class.biglup-radio-button-select-mark-disabled]="_isDisabled"></div>
+    </div>
+    <div (click)="_onClick($event)" [class.biglup-radio-button-text]="!_isDisabled" [class.biglup-radio-button-text-disabled]="_isDisabled">
+      <ng-content></ng-content>
+    </div>
+    <input type="radio" [name]="_name" [disabled]="_isDisabled" [value]="_value" [(ngModel)]="_selected" hidden/>
+  </label>
+</div>

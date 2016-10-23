@@ -72,9 +72,10 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     @Input('filter')
     private _filter: (keyCode: number) => boolean = null;
     @Input('icon')
-    private _icon: string = '';
-    private _inputChange: any = null;
-    private _inputBlur: any = null;
+    private _icon: string  = '';
+    private _inputChange: any     = null;
+    private _inputBlur:   any     = null;
+    private _hasFocus:    boolean = false;
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
@@ -202,7 +203,7 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     /**
      * @summary Key ip event handler for the input field.
      *
-     * @param event The key down event
+     * @param event The key up event
      */
     private _onKeyUp(event: any)
     {
@@ -216,11 +217,22 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     /**
      * @summary Blur event handler for the input field.
      *
-     * @param event The key up event
+     * @param event The blur event
      */
     private _onBlur(event: any)
     {
+        this._hasFocus = false;
         this._updateStateFromDom();
+    }
+
+    /**
+     * @summary Focus event handler for the input field.
+     *
+     * @param event The focus event
+     */
+    private _onFocus(event: any)
+    {
+        this._hasFocus = true;
     }
 
     /**
@@ -242,5 +254,5 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
         }
 
         this._changeDetector.detectChanges();
-    }
+    }9
 }

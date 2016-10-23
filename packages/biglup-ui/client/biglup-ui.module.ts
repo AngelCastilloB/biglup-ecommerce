@@ -17,13 +17,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { NgModule }               from '@angular/core';
-import { BrowserModule }          from '@angular/platform-browser';
-import { FormsModule }            from '@angular/forms';
-import { BiglupButtonComponent }  from './components/button/biglup-button.component';
-import { BiglupInputComponent }   from './components/input/biglup-input.component';
-import { BiglupCheckboxComponent} from './components/checkbox/biglup-checkbox.component';
-import { RippleDirective }        from './directives/ripple/ripple.directive';
+import { NgModule }                  from '@angular/core';
+import { BrowserModule }             from '@angular/platform-browser';
+import { FormsModule }               from '@angular/forms';
+import { BiglupButtonComponent }     from './components/button/biglup-button.component';
+import { BiglupInputComponent }      from './components/input/biglup-input.component';
+import { BiglupCheckboxComponent}    from './components/checkbox/biglup-checkbox.component';
+import { BiglupRadioButtonComponent} from './components/radio-group/radio-button/biglup-radio-button.component';
+import { BiglupRadioGroupComponent}  from './components/radio-group/biglup-radio-group.component';
+import { RippleDirective }           from './directives/ripple/ripple.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,12 +40,16 @@ import { RippleDirective }        from './directives/ripple/ripple.directive';
         BiglupButtonComponent,
         BiglupInputComponent,
         BiglupCheckboxComponent,
+        BiglupRadioButtonComponent,
+        BiglupRadioGroupComponent,
         RippleDirective
     ],
     exports: [
         BiglupButtonComponent,
         BiglupInputComponent,
         BiglupCheckboxComponent,
+        BiglupRadioButtonComponent,
+        BiglupRadioGroupComponent,
         RippleDirective
     ]
 })

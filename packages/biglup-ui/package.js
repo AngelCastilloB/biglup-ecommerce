@@ -22,6 +22,9 @@ Package.onUse(function(api)
     api.addFiles([
         'client/components/input/biglup-input.component.ts',
         'client/components/button/biglup-button.component.ts',
+        'client/components/checkbox/biglup-checkbox.component.ts',
+        'client/components/radio-group/biglup-radio-group.component.ts',
+        'client/components/radio-group/radio-button/biglup-radio-button.component.ts',
         'client/directives/ripple/ripple.directive.ts',
         'client/components/input/filters/input-filters.ts',
         'client/biglup-ui.module.ts'
