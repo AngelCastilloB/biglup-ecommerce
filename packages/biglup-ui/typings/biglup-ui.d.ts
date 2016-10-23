@@ -18,6 +18,8 @@
 declare module BiglupUi
 {
     class BiglupButtonComponent {}
+    class BiglupRadioGroupComponent {}
+    class BiglupRadioButtonComponent {}
     class BiglupInputComponent {
         public observeValue(): any;
         public observeValueChanges(): any;

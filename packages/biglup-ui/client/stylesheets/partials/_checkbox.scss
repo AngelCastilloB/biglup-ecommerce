@@ -7,19 +7,14 @@
     padding-top: 5px;
     label {
         cursor: pointer;
-        text {
-            padding-bottom: -4px;
-        }
     }
 
     .biglup-checkbox-text {
         display: inline-block;
-        padding-top: 0;
     }
 
     .biglup-checkbox-text-disabled {
         display: inline-block;
-        padding-top: 2px;
         color: $disabled-text-color;
         cursor: default;
     }

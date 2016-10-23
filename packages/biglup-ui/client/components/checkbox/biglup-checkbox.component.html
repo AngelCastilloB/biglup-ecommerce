@@ -5,8 +5,7 @@
          [class.biglup-checkbox-body-enabled]="!_isDisabled"
          [class.biglup-checkbox-body-disabled]="_isDisabled"
          [class.biglup-checkbox-body-disabled-checked]="_isDisabled && _checked"
-         [class.biglup-checkbox-body-active]="_checked"
-         ripple>
+         [class.biglup-checkbox-body-active]="_checked">
       <div [class.biglup-checkbox-checkmark]="_checked"></div>
     </div>
     <div (click)="_onClick($event)" [class.biglup-checkbox-text]="!_isDisabled" [class.biglup-checkbox-text-disabled]="_isDisabled">

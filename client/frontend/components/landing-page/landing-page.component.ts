@@ -52,6 +52,7 @@ export class LandingPageComponent extends AfterViewInit
     @ViewChild('email')
     private _emailInput: BiglupInputComponent;
     private InputFilters:           InputFilters = InputFilters;
+    private _radioGroupValue: string = '';
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.

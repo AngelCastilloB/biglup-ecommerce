@@ -57,4 +57,19 @@
   <biglup-checkbox checked="true">Checked</biglup-checkbox><br>
   <biglup-checkbox disabled="true">Disabled</biglup-checkbox><br>
   <biglup-checkbox disabled="true" checked="true">Disabled Checked</biglup-checkbox>
+
+  <h3>RADIO GROUP</h3>
+  <hr>
+  <br>
+  <biglup-radio-group [(value)]="_radioGroupValue">
+    <biglup-radio-button name="a" value="1">Option 1</biglup-radio-button>
+    <biglup-radio-button name="b" value="2">Option 2</biglup-radio-button>
+    <biglup-radio-button name="c" value="3">Option 3</biglup-radio-button>
+    <biglup-radio-button name="d" value="4">Option 4</biglup-radio-button>
+    <biglup-radio-button name="e" value="5" disabled="true">Disabled</biglup-radio-button>
+  </biglup-radio-group>
+  <biglup-radio-button name="f" value="6" disabled="true" selected="true">Disabled Checked</biglup-radio-button>
+
+  <br>
+  <p>Radio Group Value: {{ _radioGroupValue }}</p>
 </div>
