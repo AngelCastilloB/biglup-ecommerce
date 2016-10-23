@@ -1,8 +1,17 @@
 <div class="biglup-checkbox">
   <label>
-    <div [class.biglup-checkbox-text]="!_isDisabled" [class.biglup-checkbox-text-disabled]="_isDisabled">
+    <div (click)="_onClick($event)"
+         class="biglup-checkbox-body"
+         [class.biglup-checkbox-body-enabled]="!_isDisabled"
+         [class.biglup-checkbox-body-disabled]="_isDisabled"
+         [class.biglup-checkbox-body-disabled-checked]="_isDisabled && _checked"
+         [class.biglup-checkbox-body-active]="_checked"
+         ripple>
+      <div [class.biglup-checkbox-checkmark]="_checked"></div>
+    </div>
+    <div (click)="_onClick($event)" [class.biglup-checkbox-text]="!_isDisabled" [class.biglup-checkbox-text-disabled]="_isDisabled">
       <ng-content></ng-content>
     </div>
-    <input type="checkbox" [checked]="_checked" [disabled]="_isDisabled"/>
+    <input type="checkbox" [checked]="_checked" [disabled]="_isDisabled" hidden/>
   </label>
 </div>

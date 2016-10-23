@@ -46,4 +46,19 @@ export class BiglupCheckboxComponent
     constructor()
     {
     }
+
+    /**
+     * @summary Event handler for the on click event.
+     *
+     * @param $event The click event.
+     */
+    private _onClick(event)
+    {
+        if (this._isDisabled)
+            return;
+
+        this._checked = !this._checked;
+
+        event.preventDefault();
+    }
 }
