@@ -43,6 +43,10 @@ import 'rxjs/add/operator/mergeMap';
     }
 })
 export class RippleDirective implements OnInit, OnDestroy {
+    @Input('rippleDisabled')
+    private _rippledDisabled: boolean = false;
+    @Input('fixedRipple')
+    private _fixedRipple: boolean = false;
     @Input('rippleColor')
     private _rippleColor:           string = '#FFFFFF';
     private _mouseDownObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
@@ -63,6 +67,89 @@ export class RippleDirective implements OnInit, OnDestroy {
      */
     public ngOnInit(): any
     {
+        if (this._rippledDisabled)
+            return;
+
+        if (this._fixedRipple)
+            this._startFixedRipple();
+        else
+            this._startVariableRipple();
+    }
+
+    /**
+     * @summary Cleanup that needs to occur when the instance is destroyed.
+     */
+    public ngOnDestroy(): void
+    {
+        if (this._mouseDownSubscription)
+            this._mouseDownSubscription.unsubscribe();
+    }
+
+    /**
+     * @summary Starts a ripple on the parent container. This ripple will always gro to the same size, sont be contained
+     * on the parent and will be centered.
+     *
+     * @private
+     */
+    private _startFixedRipple()
+    {
+        this._mouseDownSubscription = this._mouseDownObservable
+            .do((event: any)  => event.preventDefault())
+            .map((event: any) =>
+            {
+                const container: any    = event.currentTarget;
+                let   ripple:    any    = document.createElement('div');
+                const xPos:      number = Math.floor(this._el.nativeElement.getBoundingClientRect().width / 2) - 2;
+                const yPos:      number = Math.floor(this._el.nativeElement.getBoundingClientRect().height / 2) - 2;
+
+                ripple.classList.add('fixed-ripple-effect');
+                ripple.classList.add('ripple-fixed');
+
+                let size: number = 10;
+
+                let backgroundColor = getComputedStyle(this._el.nativeElement).getPropertyValue('color');
+
+                ripple.style.top        = yPos + 'px';
+                ripple.style.left       = xPos + 'px';
+                ripple.style.background = backgroundColor;
+                ripple.style.width      = size + 'px';
+                ripple.style.height     = size + 'px';
+                ripple.style.marginTop  = -(size / 2) + 'px';
+                ripple.style.marginLeft = -(size / 2) + 'px';
+
+                container.appendChild(ripple);
+
+                return { ripple, container, event };
+            })
+            .mergeMap((elements: any) => Observable.interval(10).take(1).map((index: any) => elements))
+            .do((elements: any)       => elements.ripple.classList.add('fixed-ripple-effect-on'))
+            .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
+            .do((elements: any)       =>
+            {
+                const style:  any    = elements.ripple.style;
+                let   size:   number = elements.ripple.getBoundingClientRect().width;
+                let   offset: number = -(size / 2);
+
+                style.height     = size + 'px';
+                style.width      = size + 'px';
+                style.marginTop  = offset + 'px';
+                style.marginLeft = offset + 'px';
+
+                elements.ripple.classList.add('fixed-ripple-effect-off');
+            })
+            .mergeMap((elements: any) => Observable.fromEvent(elements.ripple, 'animationend').map((index: any) => elements))
+            .do((elements: any)       => elements.container.removeChild(elements.ripple))
+            .subscribe();
+    }
+
+    /**
+     * @summary Starts a ripple on the parent container that changes it size depending on how long the user
+     * keep the mouse pressed.
+     *
+     * @private
+     */
+    private _startVariableRipple()
+    {
         this._mouseDownSubscription = this._mouseDownObservable
             .do((event: any)  => event.preventDefault())
             .map((event: any) =>
@@ -73,6 +160,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 const yPos:      number = event.pageY - container.offsetTop;
 
                 ripple.classList.add('ripple-effect');
+                ripple.classList.add('ripple-variable');
 
                 let size: number = this._el.nativeElement.getBoundingClientRect().width * 0.6;
 
@@ -108,14 +196,5 @@ export class RippleDirective implements OnInit, OnDestroy {
             .mergeMap((elements: any) => Observable.interval(1500).take(1).map((index: any) => elements))
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
-    }
-
-    /**
-     * @summary Cleanup that needs to occur when the instance is destroyed.
-     */
-    public ngOnDestroy(): void
-    {
-        if (this._mouseDownSubscription)
-            this._mouseDownSubscription.unsubscribe();
     }
 }

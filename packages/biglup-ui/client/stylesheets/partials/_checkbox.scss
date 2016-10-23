@@ -3,8 +3,8 @@
 .biglup-checkbox {
     cursor: default;
     display: inline-block;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     label {
         cursor: pointer;
     }
@@ -21,6 +21,7 @@
 
     .biglup-checkbox-body-enabled {
         border-color: black;
+        color: #383838;
     }
 
     .biglup-checkbox-body-disabled {
@@ -64,6 +65,7 @@
     .biglup-checkbox-body-active {
         background-color: $primary-color;
         border-color: $primary-color;
+        color: $primary-color;
     }
 }
 

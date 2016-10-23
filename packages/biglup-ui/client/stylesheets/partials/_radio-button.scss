@@ -22,10 +22,12 @@
 
     .biglup-radio-button-body-enabled {
         border-color: black!important;
+        color: #383838;
     }
 
     .biglup-radio-button-body-enabled-checked {
         border-color: $primary-color!important;
+        color: $primary-color!important;
     }
 
     .biglup-radio-button-body-disabled {
