@@ -64,11 +64,6 @@ export class I18nSingletonService
     public         _localeChanged: EventEmitter<string> = new EventEmitter<string>();
     private        _currentLocale: string               = DEFAULT_LOCALE;
 
-    /**
-     * @summary Controls console logs on client side.
-     */
-    private _logWarnings: boolean;
-
     private _translations: {[key: string]: {[key: string]: string}} = {};
 
     /**
@@ -83,17 +78,13 @@ export class I18nSingletonService
 
     /**
      * @summary Lazy initialise a new instance of the I18nSingletonService singleton class.
-     *
-     * @param {boolean} logWarnings Controls console logs on client side.
      */
-    constructor(logWarnings?: boolean)
+    constructor()
     {
         if (I18nSingletonService._instance)
         {
             throw new Error('Error: Instantiation failed: Use I18nSingletonService.getInstance() instead of new.');
         }
-
-        this._logWarnings = logWarnings || Meteor.settings.public['i18nSingletonService']['logWarnings'];
 
         I18nSingletonService._instance = this;
     }
@@ -140,10 +131,7 @@ export class I18nSingletonService
 
         if (!(key in this._translations[this._currentLocale]))
         {
-            if (this._logWarnings)
-            {
-                console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
-            }
+            console.warn(`Translation for '${key}' not found in <${this._currentLocale}> locale.`);
 
             return key;
         }
