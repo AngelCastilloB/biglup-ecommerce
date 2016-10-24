@@ -42,10 +42,6 @@ const TWITTER_SETTINGS = {
     secret: ''
 };
 
-const I18NSINGLETONSERVICE_SETTINGS = {
-    logWarnings: true
-};
-
 /* EXPORTS ************************************************************************************************************/
 
 /**
@@ -89,10 +85,5 @@ export const checkMeteorSettings = () =>
     else
     {
         Meteor.settings.public.twitter = true;
-    }
-
-    if (!Meteor.settings.public['i18nSingletonService'])
-    {
-        Meteor.settings.public['i18nSingletonService'] = I18NSINGLETONSERVICE_SETTINGS;
     }
 };
