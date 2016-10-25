@@ -1,0 +1,168 @@
+@import 'base';
+
+.biglup-data-table-container {
+  display: block;
+  max-width: 100%;
+  @include elevation(1);
+}
+
+.biglup-data-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  border-spacing: 0;
+  border-collapse: collapse;
+  > {
+    thead > tr, tbody > tr, tfoot > tr {
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+
+    thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
+      text-align: left;
+      padding: 0.9rem;
+      vertical-align: middle;
+      border-top: 0;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+    thead > tr > th {
+      color: #757575;
+      vertical-align: bottom;
+    }
+    caption + thead > tr:first-child > th, colgroup + thead > tr:first-child > th, thead:first-child > tr:first-child > th, caption + thead > tr:first-child > td, colgroup + thead > tr:first-child > td, thead:first-child > tr:first-child > td {
+      border-top: 0;
+    }
+    tbody + tbody {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+  .biglup-data-table {
+    background-color: #fff;
+  }
+  .no-border {
+    border: 0;
+  }
+
+  td.biglup-data-table-checkbox-cell,
+  th.biglup-data-table-checkbox-column {
+    width: $checkbox-size;
+    font-size: 0 !important;
+  }
+}
+
+.biglup-data-table-condensed > {
+  thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
+    padding: 0.8rem;
+  }
+}
+
+.biglup-data-table-bordered {
+  border: 0;
+  > {
+    thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
+      border: 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+}
+
+.biglup-data-table-striped > tbody > tr:nth-child(odd) > {
+  td, th {
+    background-color: #f5f5f5;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .biglup-data-table {
+    thead > tr {
+      height: 56px;
+    }
+
+    tbody > tr,
+    tfoot > tr {
+      height: 48px;
+    }
+
+    td, th {
+      vertical-align: middle;
+      text-align: left;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      &.numeric {
+        text-align: right;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .biglup-data-table-container {
+    box-shadow: none;
+  }
+  .biglup-data-table-responsive-vertical {
+    > .biglup-data-table {
+      margin-bottom: 0;
+      background-color: transparent;
+      > {
+        thead, tfoot {
+          display: none;
+        }
+        tbody {
+          display: block;
+          > tr {
+            display: block;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 1.6rem;
+            @include elevation(1);
+            > td {
+              background-color: #fff;
+              display: block;
+              vertical-align: middle;
+              text-align: right;
+              &[data-title]:before {
+                content: attr(data-title);
+                float: left;
+                font-size: inherit;
+                font-weight: 400;
+                color: #757575;
+              }
+            }
+          }
+        }
+      }
+    }
+    > {
+      .biglup-data-table-bordered {
+        border: 0;
+        > tbody > tr > td {
+          border: 0;
+          border-bottom: 1px solid #e0e0e0;
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+      .biglup-data-table-striped > tbody > tr {
+        > td, &:nth-child(odd) {
+          background-color: #fff;
+        }
+        > td:nth-child(odd) {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+    td.biglup-data-table-checkbox-cell,
+    th.biglup-data-table-checkbox-column {
+      width: 100%;
+      font-size: 0 !important;
+    }
+  }
+}

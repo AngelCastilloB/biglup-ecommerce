@@ -1,103 +1,105 @@
 @import 'base';
 
 .biglup-radio-button {
-    cursor: default;
+  cursor: default;
+  display: inline-block;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-right: 5px;
+  position: relative;
+  z-index: 1;
+  label {
+    cursor: pointer;
+  }
+
+  .biglup-radio-button-text {
     display: inline-block;
-    padding-bottom: 5px;
-    padding-top: 5px;
+  }
+
+  .biglup-radio-button-text-disabled {
+    display: inline-block;
+    color: $disabled-text-color;
+    cursor: default;
+  }
+
+  .biglup-radio-button-body-enabled {
+    border-color: black !important;
+    color: #383838;
+  }
+
+  .biglup-radio-button-body-enabled-checked {
+    border-color: $primary-color !important;
+    color: $primary-color !important;
+  }
+
+  .biglup-radio-button-body-disabled {
+    border-color: $disabled-text-color !important;
+    cursor: default !important;
+  }
+
+  .biglup-radio-button-body-disabled-checked {
+    border-color: $disabled-text-color !important;
+    cursor: default !important;
+  }
+
+  .biglup-radio-button-body {
+    border: 2px solid;
+    border-radius: 50%;
+    content: '';
+    height: 16px;
+    transition: 280ms;
+    width: 16px;
+    cursor: pointer;
     margin-right: 5px;
-    label {
-        cursor: pointer;
-    }
+    float: left;
+  }
 
-    .biglup-radio-button-text {
-        display: inline-block;
-    }
+  .biglup-radio-button-select-mark {
+    border-radius: 50%;
+    width: 16px;
+    float: left;
+    margin-top: -2px;
+    margin-left: -2px;
+    height: 16px;
+    background-color: $primary-color;
+    cursor: inherit;
+  }
 
-    .biglup-radio-button-text-disabled {
-        display: inline-block;
-        color: $disabled-text-color;
-        cursor: default;
-    }
+  .biglup-radio-button-select-mark-show {
+    @extend .biglup-radio-button-select-mark;
+    -webkit-animation: biglup-radio-button-select-mark-show 280ms ease forwards;
+    animation: biglup-radio-button-select-mark-show 280ms ease forwards;
+  }
 
-    .biglup-radio-button-body-enabled {
-        border-color: black!important;
-        color: #383838;
-    }
+  .biglup-radio-button-select-mark-hide {
+    @extend .biglup-radio-button-select-mark;
+    -webkit-animation: biglup-radio-button-select-mark-hide 280ms ease forwards;
+    animation: biglup-radio-button-select-mark-hide 280ms ease forwards;
+  }
 
-    .biglup-radio-button-body-enabled-checked {
-        border-color: $primary-color!important;
-        color: $primary-color!important;
-    }
-
-    .biglup-radio-button-body-disabled {
-        border-color: $disabled-text-color!important;
-        cursor: default!important;
-    }
-
-    .biglup-radio-button-body-disabled-checked {
-        border-color: $disabled-text-color!important;
-        cursor: default!important;
-    }
-
-    .biglup-radio-button-body {
-        border: 2px solid;
-        border-radius: 50%;
-        content: '';
-        height: 16px;
-        transition: 280ms;
-        width: 16px;
-        cursor: pointer;
-        margin-right: 5px;
-        float: left;
-    }
-
-    .biglup-radio-button-select-mark {
-        border-radius: 50%;
-        width: 16px;
-        float: left;
-        margin-top: -2px;
-        margin-left: -2px;
-        height: 16px;
-        background-color: $primary-color;
-        cursor: inherit;
-    }
-
-    .biglup-radio-button-select-mark-show {
-        @extend .biglup-radio-button-select-mark;
-        -webkit-animation: biglup-radio-button-select-mark-show 280ms ease forwards;
-        animation: biglup-radio-button-select-mark-show 280ms ease forwards;
-    }
-
-    .biglup-radio-button-select-mark-hide {
-        @extend .biglup-radio-button-select-mark;
-        -webkit-animation: biglup-radio-button-select-mark-hide 280ms ease forwards;
-        animation: biglup-radio-button-select-mark-hide 280ms ease forwards;
-    }
-
-    .biglup-radio-button-select-mark-disabled {
-        background-color: $disabled-text-color!important;
-    }
+  .biglup-radio-button-select-mark-disabled {
+    background-color: $disabled-text-color !important;
+  }
 }
 
 @keyframes biglup-radio-button-select-mark-show {
-    from {
-        -webkit-transform: scale(0);
-        transform: scale(0);
-    }
-    to {
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-    }
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
 }
 
 @keyframes biglup-radio-button-select-mark-hide {
-    from {
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-    }
-    to {
-        -webkit-transform: scale(0);
-        transform: scale(0);
-    }
+  from {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  to {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
 }

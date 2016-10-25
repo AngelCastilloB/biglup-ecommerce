@@ -1,3 +1,5 @@
+@import 'base';
+
 .ripple {
     display: inline-block;
 }
@@ -21,8 +23,8 @@
     position: absolute;
     border-radius: 50%;
     background: transparent;
-    opacity: 0.2;
-    z-index: -1;
+    opacity: 0.0;
+    z-index: 0;
 }
 
 .ripple-effect-on {
@@ -36,11 +38,13 @@
 
 .fixed-ripple-effect-on {
     @extend .ripple-effect;
-    animation: fixed-ripple-animation-on 100ms ease forwards;
+    animation: fixed-ripple-animation-on 100ms forwards;
 }
 
 .fixed-ripple-effect-off {
-    animation: fixed-ripple-animation-off 300ms ease forwards;
+    animation: fixed-ripple-animation-off 300ms forwards;
+    color: $primary-color;
+    pointer-events: none;
 }
 
 @keyframes ripple-animation-on {
@@ -71,10 +75,12 @@
     from {
         -webkit-transform: scale(1);
         transform: scale(1);
+        opacity: 0.0;
     }
     to {
-        -webkit-transform: scale(4);
-        transform: scale(4);
+        opacity: 0.2;
+        -webkit-transform: scale(4.5);
+        transform: scale(4.5);
     }
 }
 

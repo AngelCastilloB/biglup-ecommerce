@@ -20,6 +20,7 @@ declare module BiglupUi
     class BiglupButtonComponent {}
     class BiglupRadioGroupComponent {}
     class BiglupRadioButtonComponent {}
+    class BiglupDataTableComponent {}
     class BiglupInputComponent {
         public observeValue(): any;
         public observeValueChanges(): any;
@@ -30,6 +31,14 @@ declare module BiglupUi
     class BiglupUiModule {}
     class InputFilters {
         public static numerical(keyCode: number): boolean;
+    }
+
+    interface DataTableColumn
+    {
+        name: string;
+        label: string;
+        numeric?: boolean;
+        format?: { (value: any): any };
     }
 }
 

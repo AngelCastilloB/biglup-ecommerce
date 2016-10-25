@@ -254,5 +254,5 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
         }
 
         this._changeDetector.detectChanges();
-    }9
+    }
 }

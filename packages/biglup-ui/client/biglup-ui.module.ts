@@ -26,6 +26,7 @@ import { BiglupCheckboxComponent}    from './components/checkbox/biglup-checkbox
 import { BiglupRadioButtonComponent} from './components/radio-group/radio-button/biglup-radio-button.component';
 import { BiglupRadioGroupComponent}  from './components/radio-group/biglup-radio-group.component';
 import { RippleDirective }           from './directives/ripple/ripple.directive';
+import { BiglupDataTableComponent }  from './components/data-table/biglup-data-table.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -42,6 +43,7 @@ import { RippleDirective }           from './directives/ripple/ripple.directive'
         BiglupCheckboxComponent,
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
+        BiglupDataTableComponent,
         RippleDirective
     ],
     exports: [
@@ -50,6 +52,7 @@ import { RippleDirective }           from './directives/ripple/ripple.directive'
         BiglupCheckboxComponent,
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
+        BiglupDataTableComponent,
         RippleDirective
     ]
 })

@@ -28,6 +28,7 @@ import { Directive,
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -94,7 +95,6 @@ export class RippleDirective implements OnInit, OnDestroy {
     private _startFixedRipple()
     {
         this._mouseDownSubscription = this._mouseDownObservable
-            .do((event: any)  => event.preventDefault())
             .map((event: any) =>
             {
                 const container: any    = event.currentTarget;
@@ -118,28 +118,33 @@ export class RippleDirective implements OnInit, OnDestroy {
                 ripple.style.marginLeft = -(size / 2) + 'px';
 
                 container.appendChild(ripple);
-
                 return { ripple, container, event };
             })
-            .mergeMap((elements: any) => Observable.interval(10).take(1).map((index: any) => elements))
-            .do((elements: any)       => elements.ripple.classList.add('fixed-ripple-effect-on'))
-            .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
-            .mergeMap((elements: any) => Observable.interval(100).take(1).map((index: any) => elements))
+            .delay(10)
             .do((elements: any)       =>
             {
-                const style:  any    = elements.ripple.style;
-                let   size:   number = elements.ripple.getBoundingClientRect().width;
-                let   offset: number = -(size / 2);
+              elements.ripple.classList.add('fixed-ripple-effect-on');
+            })
+            .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
+            .delay(100)
+            .do((elements: any)       =>
+            {
+                const style:  any     = elements.ripple.style;
+                const size:   number  = elements.ripple.getBoundingClientRect().width;
+                const backgroundColor = getComputedStyle(this._el.nativeElement).getPropertyValue('color');
 
                 style.height     = size + 'px';
                 style.width      = size + 'px';
-                style.marginTop  = offset + 'px';
-                style.marginLeft = offset + 'px';
-
+                style.marginTop  = -(size / 2) + 'px';
+                style.marginLeft = -(size / 2) + 'px';
+                style.background = backgroundColor;
                 elements.ripple.classList.add('fixed-ripple-effect-off');
             })
-            .mergeMap((elements: any) => Observable.interval(300).take(1).map((index: any) => elements))
-            .do((elements: any)       => elements.container.removeChild(elements.ripple))
+            .delay(300)
+            .do((elements: any)       =>
+            {
+              elements.container.removeChild(elements.ripple);
+            })
             .subscribe();
     }
 
@@ -152,7 +157,6 @@ export class RippleDirective implements OnInit, OnDestroy {
     private _startVariableRipple()
     {
         this._mouseDownSubscription = this._mouseDownObservable
-            .do((event: any)  => event.preventDefault())
             .map((event: any) =>
             {
                 const container: any    = event.currentTarget;
@@ -177,7 +181,7 @@ export class RippleDirective implements OnInit, OnDestroy {
 
                 return { ripple, container, event };
             })
-            .mergeMap((elements: any) => Observable.interval(10).take(1).map((index: any) => elements))
+            .delay(10)
             .do((elements: any)       => elements.ripple.classList.add('ripple-effect-on'))
             .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
             .do((elements: any)       =>
@@ -194,7 +198,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.remove('ripple-effect-on');
                 elements.ripple.classList.add('ripple-effect-off');
             })
-            .mergeMap((elements: any) => Observable.interval(1500).take(1).map((index: any) => elements))
+            .delay(1500)
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }
