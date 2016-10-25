@@ -1,19 +1,16 @@
-<div class="biglup-data-table-responsive-vertical biglup-data-table-container" *ngIf="_data.length > 0">
-  <table class="biglup-data-table biglup-data-table-bordered biglup-data-table-no-border">
+<div class="biglup-data-table-container" *ngIf="_data.length > 0">
+  <div class="biglup-data-table-header">
+    <div class="biglup-data-table-title"><span>Users</span></div>
+    <div class="biglup-data-table-input"><biglup-input hint="Search..." icon="search"></biglup-input></div>
+  </div>
+  <div class="biglup-data-table-body">
+    <table class="biglup-data-table biglup-data-table-bordered biglup-data-table-no-border">
       <thead>
       <tr>
         <th *ngIf="_rowSelection" class="biglup-data-table-checkbox-column"><biglup-checkbox></biglup-checkbox></th>
         <th *ngFor="let column of _columns">
-          <!--
-          <md-icon
-            class="md-sort-icon"
-            *ngIf="_sorting && !column.numeric"
-            [class.md-asc]="(!(column === _sortBy) || isAscending())"
-            [class.md-desc]="(column === _sortBy && isDescending())"
-            (click)="_sorting && setSorting(column)">
-            arrow_upward
-          </md-icon> -->
-          {{column.label}}
+          <div class="biglup-icon-button-sort-icon"><biglup-icon-button icon="arrow_drop_down" color="#737373"></biglup-icon-button></div>
+          <span class="biglup-icon-button-column-title">{{column.label}}</span>
         </th>
       </tr>
       </thead>
@@ -29,4 +26,5 @@
       </tr>
       </tbody>
     </table>
+  </div>
 </div>

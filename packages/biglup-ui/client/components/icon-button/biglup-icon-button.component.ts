@@ -38,6 +38,8 @@ export class BiglupIconButtonComponent
     private _isDisabled: boolean = false;
     @Input('icon')
     private _icon: string = '';
+    @Input('color')
+    private _color: string = 'black';
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.

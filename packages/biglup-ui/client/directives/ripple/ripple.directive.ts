@@ -162,7 +162,6 @@ export class RippleDirective implements OnInit, OnDestroy {
                   style.marginTop  = -(size / 2) + 2 + 'px';
                   style.marginLeft = -(size / 2) + 2 + 'px';
 
-                  style.background = backgroundColor;
                   elements.ripple.classList.add('icon-ripple-effect-off');
                 }
                 else

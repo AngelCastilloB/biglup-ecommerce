@@ -4,6 +4,32 @@
   display: block;
   max-width: 100%;
   @include elevation(1);
+
+  .biglup-data-table-title {
+      font-size: 20px!important;
+      -webkit-font-smoothing: antialiased;
+      color: rgba(0, 0, 0, .87)!important;
+      margin-top: 40px!important;
+      margin-left: 15px!important;
+      float: left;
+  }
+
+  .biglup-data-table-input {
+    padding-right: 25px;
+    float: right;
+    width: 250px;
+    margin-bottom: -15px;
+
+    .biglup-data-table-header {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .biglup-data-table-body {
+    overflow: auto;
+    -webkit-overflow: auto;
+  }
 }
 
 .biglup-data-table {
@@ -47,122 +73,23 @@
     border: 0;
   }
 
+  .biglup-icon-button-sort-icon {
+    position: absolute;
+    margin-top: -27px;
+    margin-left: -33px;
+    font-size: 13px!important;
+  }
+
+  .biglup-icon-button-column-title {
+    float: left;
+    font-size: 13px;
+    color: rgba(0, 0, 0, .87);
+    margin-top: -10px;
+  }
+
   td.biglup-data-table-checkbox-cell,
   th.biglup-data-table-checkbox-column {
     width: $checkbox-size;
     font-size: 0 !important;
-  }
-}
-
-.biglup-data-table-condensed > {
-  thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
-    padding: 0.8rem;
-  }
-}
-
-.biglup-data-table-bordered {
-  border: 0;
-  > {
-    thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
-      border: 0;
-      border-bottom: 1px solid #e0e0e0;
-    }
-  }
-}
-
-.biglup-data-table-striped > tbody > tr:nth-child(odd) > {
-  td, th {
-    background-color: #f5f5f5;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .biglup-data-table {
-    thead > tr {
-      height: 56px;
-    }
-
-    tbody > tr,
-    tfoot > tr {
-      height: 48px;
-    }
-
-    td, th {
-      vertical-align: middle;
-      text-align: left;
-
-      > * {
-        vertical-align: middle;
-      }
-
-      &.numeric {
-        text-align: right;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .biglup-data-table-container {
-    box-shadow: none;
-  }
-  .biglup-data-table-responsive-vertical {
-    > .biglup-data-table {
-      margin-bottom: 0;
-      background-color: transparent;
-      > {
-        thead, tfoot {
-          display: none;
-        }
-        tbody {
-          display: block;
-          > tr {
-            display: block;
-            border: 1px solid #e0e0e0;
-            border-radius: 2px;
-            margin-bottom: 1.6rem;
-            @include elevation(1);
-            > td {
-              background-color: #fff;
-              display: block;
-              vertical-align: middle;
-              text-align: right;
-              &[data-title]:before {
-                content: attr(data-title);
-                float: left;
-                font-size: inherit;
-                font-weight: 400;
-                color: #757575;
-              }
-            }
-          }
-        }
-      }
-    }
-    > {
-      .biglup-data-table-bordered {
-        border: 0;
-        > tbody > tr > td {
-          border: 0;
-          border-bottom: 1px solid #e0e0e0;
-          &:last-child {
-            border-bottom: 0;
-          }
-        }
-      }
-      .biglup-data-table-striped > tbody > tr {
-        > td, &:nth-child(odd) {
-          background-color: #fff;
-        }
-        > td:nth-child(odd) {
-          background-color: #f5f5f5;
-        }
-      }
-    }
-    td.biglup-data-table-checkbox-cell,
-    th.biglup-data-table-checkbox-column {
-      width: 100%;
-      font-size: 0 !important;
-    }
   }
 }

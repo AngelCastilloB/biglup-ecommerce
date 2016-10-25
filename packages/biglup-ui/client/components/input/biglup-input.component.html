@@ -23,9 +23,11 @@
        [class.biglup-text-input-bar-active]="_hasFocus || _invalid"
        [class.biglup-text-input-bar-active-invalid]='_invalid'>
   </div>
-  <i *ngIf="_icon" [ngClass]="['fa', _icon, 'biglup-text-input-icon']" aria-hidden="true"></i>
+  <i *ngIf="_icon" class="material-icons md-18 biglup-text-input-icon">{{_icon}}</i>
   <label
-    [class.biglup-text-input-label-padding-left]="_icon && (!_hasFocus && _value === '')"
+    [class.biglup-text-input-label-padding-left]="
+    (_icon && !_floatingHint) ||
+     (_icon && (!_hasFocus && _value === ''))"
     [class.biglup-text-input-error-color]="_floatingHint && _invalid"
     [class.biglup-text-input-valid-color]="_floatingHint && !_invalid && _hasFocus"
     #hint

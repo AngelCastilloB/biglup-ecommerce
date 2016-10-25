@@ -14,11 +14,6 @@
     overflow-x: hidden;
 }
 
-::-webkit-scrollbar { /* TODO: How portable is this? */
-    width: 0px;
-    background: transparent;
-}
-
 .overlay-content {
     margin: 0;
     position: absolute;

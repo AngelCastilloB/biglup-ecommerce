@@ -15,6 +15,6 @@
   [class.monochrome-inverted-flat]='_color === "monochrome-inverted" && !_raised && !_isDisabled'
   [class.disabled]='_isDisabled && _raised'
   [class.disabled-flat]='_isDisabled && !_raised'>
-  <i (click)="_onIconClick($event)" *ngIf="_icon" [ngClass]="['fa', _icon, 'fa-lg']" aria-hidden="true"></i>
+  <i (click)="_onIconClick($event)" *ngIf="_icon" class="material-icons md-24">{{_icon}}</i>
   <ng-content></ng-content>
 </button>
