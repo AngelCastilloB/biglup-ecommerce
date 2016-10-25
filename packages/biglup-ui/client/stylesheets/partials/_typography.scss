@@ -7,9 +7,9 @@
 };
 
 .font-table-base {
-    font-family: $base-font-family;
-    font-size: 14px;
-    font-weight: 200;
+    font-family: $base-font-family!important;
+    font-size: 13px!important;
+    color: rgba(0, 0, 0, .87);
 };
 
 .font-common-nowrap {
@@ -175,8 +175,12 @@
 
     input, label, span { @extend .font-common-base; }
     table, td, tr {
-        word-wrap: break-word;
+      @extend .font-table-base;
+      > span
+      {
         @extend .font-table-base;
+        word-wrap: break-word;
+      }
     }
 
     button { @extend .font-button}

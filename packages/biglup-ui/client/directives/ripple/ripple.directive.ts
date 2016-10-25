@@ -48,6 +48,8 @@ export class RippleDirective implements OnInit, OnDestroy {
     private _rippledDisabled: boolean = false;
     @Input('fixedRipple')
     private _fixedRipple: boolean = false;
+    @Input('iconRipple')
+    private _iconRipple: boolean = false;
     @Input('rippleColor')
     private _rippleColor:           string = '#FFFFFF';
     private _mouseDownObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
@@ -99,6 +101,7 @@ export class RippleDirective implements OnInit, OnDestroy {
             {
                 const container: any    = event.currentTarget;
                 let   ripple:    any    = document.createElement('div');
+                // TODO: Figure out why this random adjustment values are needed.
                 const xPos:      number = Math.floor(this._el.nativeElement.getBoundingClientRect().width / 2) - 2;
                 const yPos:      number = Math.floor(this._el.nativeElement.getBoundingClientRect().height / 2) - 2;
 
@@ -114,8 +117,18 @@ export class RippleDirective implements OnInit, OnDestroy {
                 ripple.style.background = backgroundColor;
                 ripple.style.width      = size + 'px';
                 ripple.style.height     = size + 'px';
-                ripple.style.marginTop  = -(size / 2) + 'px';
-                ripple.style.marginLeft = -(size / 2) + 'px';
+
+                if (this._iconRipple)
+                {
+                  // TODO: Figure out why this random adjustment values are needed.
+                  ripple.style.marginTop  = '-3px';
+                  ripple.style.marginLeft = '-3px';
+                }
+                else
+                {
+                  ripple.style.marginTop  = -(size / 2) + 'px';
+                  ripple.style.marginLeft = -(size / 2) + 'px';
+                }
 
                 container.appendChild(ripple);
                 return { ripple, container, event };
@@ -123,22 +136,43 @@ export class RippleDirective implements OnInit, OnDestroy {
             .delay(10)
             .do((elements: any)       =>
             {
-              elements.ripple.classList.add('fixed-ripple-effect-on');
+              if (this._iconRipple)
+              {
+                elements.ripple.classList.add('icon-ripple-effect-on');
+              }
+              else
+              {
+                elements.ripple.classList.add('fixed-ripple-effect-on');
+              }
             })
             .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
             .delay(100)
-            .do((elements: any)       =>
+            .do((elements: any) =>
             {
                 const style:  any     = elements.ripple.style;
                 const size:   number  = elements.ripple.getBoundingClientRect().width;
                 const backgroundColor = getComputedStyle(this._el.nativeElement).getPropertyValue('color');
 
-                style.height     = size + 'px';
-                style.width      = size + 'px';
-                style.marginTop  = -(size / 2) + 'px';
-                style.marginLeft = -(size / 2) + 'px';
-                style.background = backgroundColor;
-                elements.ripple.classList.add('fixed-ripple-effect-off');
+                style.height = size + 'px';
+                style.width  = size + 'px';
+
+                if (this._iconRipple)
+                {
+                  // TODO: Figure out why this random adjustment values are needed.
+                  style.marginTop  = -(size / 2) + 2 + 'px';
+                  style.marginLeft = -(size / 2) + 2 + 'px';
+
+                  style.background = backgroundColor;
+                  elements.ripple.classList.add('icon-ripple-effect-off');
+                }
+                else
+                {
+                  style.marginTop  = -(size / 2) + 'px';
+                  style.marginLeft = -(size / 2) + 'px';
+
+                  style.background = backgroundColor;
+                  elements.ripple.classList.add('fixed-ripple-effect-off');
+                }
             })
             .delay(300)
             .do((elements: any)       =>

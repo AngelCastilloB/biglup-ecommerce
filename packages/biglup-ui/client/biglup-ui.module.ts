@@ -27,6 +27,7 @@ import { BiglupRadioButtonComponent} from './components/radio-group/radio-button
 import { BiglupRadioGroupComponent}  from './components/radio-group/biglup-radio-group.component';
 import { RippleDirective }           from './directives/ripple/ripple.directive';
 import { BiglupDataTableComponent }  from './components/data-table/biglup-data-table.component';
+import { BiglupIconButtonComponent }  from './components/icon-button/biglup-icon-button.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -44,6 +45,7 @@ import { BiglupDataTableComponent }  from './components/data-table/biglup-data-t
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
         BiglupDataTableComponent,
+        BiglupIconButtonComponent,
         RippleDirective
     ],
     exports: [
@@ -53,6 +55,7 @@ import { BiglupDataTableComponent }  from './components/data-table/biglup-data-t
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
         BiglupDataTableComponent,
+        BiglupIconButtonComponent,
         RippleDirective
     ]
 })

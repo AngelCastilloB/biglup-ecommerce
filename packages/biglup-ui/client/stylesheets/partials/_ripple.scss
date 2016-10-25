@@ -47,6 +47,17 @@
     pointer-events: none;
 }
 
+.icon-ripple-effect-on {
+  @extend .ripple-effect;
+  animation: icon-ripple-animation-on 100ms forwards;
+}
+
+.icon-ripple-effect-off {
+  animation: icon-ripple-animation-off 300ms forwards;
+  color: $primary-color;
+  pointer-events: none;
+}
+
 @keyframes ripple-animation-on {
     from {
         -webkit-transform: scale(1);
@@ -91,4 +102,26 @@
     to {
         opacity: 0.0;
     }
+}
+
+@keyframes icon-ripple-animation-on {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.0;
+  }
+  to {
+    opacity: 0.2;
+    -webkit-transform: scale(3.7);
+    transform: scale(3.7);
+  }
+}
+
+@keyframes icon-ripple-animation-off {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 0.0;
+  }
 }
