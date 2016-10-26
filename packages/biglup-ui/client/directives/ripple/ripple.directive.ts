@@ -29,6 +29,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/race';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -51,10 +52,13 @@ export class RippleDirective implements OnInit, OnDestroy {
     @Input('iconRipple')
     private _iconRipple: boolean = false;
     @Input('rippleColor')
-    private _rippleColor:           string = '#FFFFFF';
-    private _mouseDownObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
-    private _mouseUpObservable:     any    = Observable.fromEvent(document.body, 'mouseup');
-    private _mouseDownSubscription: any;
+    private _rippleColor:            string = '#FFFFFF';
+    private _mouseDownObservable:    any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
+    private _touchstartObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'touchstart');
+    private _mouseUpObservable:      any    = Observable.fromEvent(document.body, 'mouseup');
+    private _touchendObservable:     any    = Observable.fromEvent(document.body, 'touchend');
+    private _animationendObservable: any    = Observable.fromEvent(this._el.nativeElement, 'animationend');
+    private _mouseDownSubscription:  any;
 
     /**
      * @summary Initializes a new instance of the RippleDirective class.
@@ -96,7 +100,9 @@ export class RippleDirective implements OnInit, OnDestroy {
      */
     private _startFixedRipple()
     {
-        this._mouseDownSubscription = this._mouseDownObservable
+        this._mouseDownSubscription = Observable.race(
+                this._mouseDownObservable,
+                this._touchstartObservable)
             .map((event: any) =>
             {
                 const container: any    = event.currentTarget;
@@ -145,8 +151,12 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.add('fixed-ripple-effect-on');
               }
             })
-            .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
-            .delay(100)
+            .mergeMap((elements: any) =>
+            {
+              return Observable.forkJoin(
+                  Observable.race(this._mouseUpObservable.take(1), this._touchendObservable.take(1)),
+                  this._animationendObservable.take(1)).map((event: any) => elements);
+            })
             .do((elements: any) =>
             {
                 const style:  any     = elements.ripple.style;
@@ -173,7 +183,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                   elements.ripple.classList.add('fixed-ripple-effect-off');
                 }
             })
-            .delay(300)
+            .mergeMap((elements: any) => this._animationendObservable.take(1).map((event: any) => elements))
             .do((elements: any)       =>
             {
               elements.container.removeChild(elements.ripple);
@@ -189,7 +199,9 @@ export class RippleDirective implements OnInit, OnDestroy {
      */
     private _startVariableRipple()
     {
-        this._mouseDownSubscription = this._mouseDownObservable
+            this._mouseDownSubscription = Observable.race(
+                this._mouseDownObservable,
+                this._touchstartObservable)
             .map((event: any) =>
             {
                 const container: any    = event.currentTarget;
@@ -200,7 +212,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 ripple.classList.add('ripple-effect');
                 ripple.classList.add('ripple-variable');
 
-                let size: number = this._el.nativeElement.getBoundingClientRect().width * 0.6;
+                let size: number = 50;
 
                 ripple.style.top        = yPos + 'px';
                 ripple.style.left       = xPos + 'px';
@@ -216,8 +228,13 @@ export class RippleDirective implements OnInit, OnDestroy {
             })
             .delay(10)
             .do((elements: any)       => elements.ripple.classList.add('ripple-effect-on'))
-            .mergeMap((elements: any) => this._mouseUpObservable.take(1).map((event: any) => elements))
-            .do((elements: any)       =>
+            .mergeMap((elements: any) =>
+            {
+              return Observable.forkJoin(
+                Observable.race(this._mouseUpObservable.take(1), this._touchendObservable.take(1)),
+                this._animationendObservable.take(1)).map((event: any) => elements);
+            })
+            .do((elements: any) =>
             {
                 const style:  any    = elements.ripple.style;
                 let   size:   number = elements.ripple.getBoundingClientRect().width;
@@ -231,7 +248,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.remove('ripple-effect-on');
                 elements.ripple.classList.add('ripple-effect-off');
             })
-            .delay(1500)
+            .mergeMap((elements: any) => this._animationendObservable.take(1).map((event: any) => elements))
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }

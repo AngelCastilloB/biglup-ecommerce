@@ -49,14 +49,4 @@ export class BiglupButtonComponent
     constructor()
     {
     }
-
-    /**
-     * @summary Hack to avoid triggering the click event when the button is disabled but the user click on the icon.
-     * @param event The click event.
-     */
-    private _onIconClick(event: any)
-    {
-        if (this._isDisabled)
-            event.stopPropagation();
-    }
 }

@@ -3,3 +3,11 @@
     $font: unquote($font);
     @import url("https://fonts.googleapis.com/css?family=#{$font}");
 }
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

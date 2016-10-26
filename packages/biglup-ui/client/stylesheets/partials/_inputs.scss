@@ -10,8 +10,10 @@
     width: 100%;
     border: none;
     border-bottom: 1px solid $secondary-text-color;
+    border-radius: 0%;
     font-size: 16px;
     padding: 8px 0;
+    line-height: 0;
     &[disabled] {
         border-bottom: 1px dashed $disabled-text-color;
         background-color: transparent;
@@ -46,9 +48,10 @@
 }
 
 .biglup-text-error {
-    display:block;
+    display:inline-block;
     float: left;
     margin-top: 3px;
+    margin-top: -25px;
     color: $warn-color;
     font-size: 12px;
 }
@@ -117,11 +120,11 @@
     color: $warn-color;
     visibility: visible;
     width: 100%;
-    left: 0;
+    padding-left: 0;
 }
 
 .biglup-text-input-label-padding-left {
-    left: 20px;
+    padding-left: 20px;
 }
 
 .biglup-text-input-margin-left {

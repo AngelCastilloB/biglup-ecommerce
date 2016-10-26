@@ -32,5 +32,5 @@
     [class.biglup-text-input-valid-color]="_floatingHint && !_invalid && _hasFocus"
     #hint
     attr.for="{{_name}}">{{ _hint }}</label>
-  <span class="biglup-text-error">{{ _errorMessage }}</span>
 </div>
+<span *ngIf="_invalid" class="biglup-text-error">{{ _errorMessage }}</span>

@@ -2,6 +2,7 @@
   [disabled]="_isDisabled"
   biglup-button
   ripple
+  [rippleDisabled]="_isDisabled"
   [class.raised]='_raised && !_isDisabled'
   [class.primary]='_color === "primary" && _raised && !_isDisabled'
   [class.primary-flat]='_color === "primary" && !_raised && !_isDisabled'
@@ -15,6 +16,6 @@
   [class.monochrome-inverted-flat]='_color === "monochrome-inverted" && !_raised && !_isDisabled'
   [class.disabled]='_isDisabled && _raised'
   [class.disabled-flat]='_isDisabled && !_raised'>
-  <i (click)="_onIconClick($event)" *ngIf="_icon" class="material-icons md-24">{{_icon}}</i>
+  <i *ngIf="_icon" class="material-icons md-24">{{_icon}}</i>
   <ng-content></ng-content>
 </button>

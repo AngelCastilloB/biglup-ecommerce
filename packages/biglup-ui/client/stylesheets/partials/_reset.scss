@@ -52,3 +52,6 @@ button {
     border: 0;
     cursor: pointer;
 }
+
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
