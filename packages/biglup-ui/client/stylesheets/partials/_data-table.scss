@@ -6,12 +6,12 @@
   @include elevation(1);
 
   .biglup-data-table-title {
-      font-size: 20px!important;
-      -webkit-font-smoothing: antialiased;
-      color: rgba(0, 0, 0, .87)!important;
-      margin-top: 40px!important;
-      margin-left: 15px!important;
-      float: left;
+    font-size: 25px !important;
+    -webkit-font-smoothing: antialiased;
+    color: rgba(0, 0, 0, .87) !important;
+    margin-top: 40px !important;
+    margin-left: 15px !important;
+    float: left;
   }
 
   .biglup-data-table-input {
@@ -30,12 +30,20 @@
     overflow: auto;
     -webkit-overflow: auto;
   }
+
+  .biglup-data-table-footer {
+    vertical-align: middle;
+    text-align: right;
+    font-size: 13px !important;
+    font-family: $base-font-family;
+    line-height: 3;
+    color: rgba(0, 0, 0, .60);
+  }
 }
 
 .biglup-data-table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 2rem;
   background-color: #fff;
   border-spacing: 0;
   border-collapse: collapse;
@@ -44,48 +52,54 @@
       -webkit-transition: all 0.3s ease;
       -o-transition: all 0.3s ease;
       transition: all 0.3s ease;
-      white-space:nowrap;
-      table-layout:fixed;
+      white-space: nowrap;
+      table-layout: fixed;
     }
 
     thead > tr > th, tbody > tr > th, tfoot > tr > th, thead > tr > td, tbody > tr > td, tfoot > tr > td {
       text-align: left;
-      padding: 0.9rem;
+      padding: 0.8rem;
       vertical-align: middle;
-      border-bottom: 1px solid $light-theme-divider-color;
-      -webkit-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
-      transition: all 0.3s ease;
+      border-bottom: 1px solid $divider-color;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+      cursor: pointer;
     }
     thead > tr > th {
       color: #757575;
       vertical-align: bottom;
     }
-    caption + thead > tr:first-child > th, colgroup + thead > tr:first-child > th, thead:first-child > tr:first-child > th, caption + thead > tr:first-child > td, colgroup + thead > tr:first-child > td, thead:first-child > tr:first-child > td {
-      border-top: 0;
-    }
-    tbody + tbody {
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    tbody > td {
-      min-width: 56px;
-    }
   }
+  caption + thead > tr:first-child > th, colgroup + thead > tr:first-child > th, thead:first-child > tr:first-child > th, caption + thead > tr:first-child > td, colgroup + thead > tr:first-child > td, thead:first-child > tr:first-child > td {
+    border-top: 0;
+  }
+  tbody + tbody {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  tbody > td {
+    min-width: 56px;
+  }
+
+  > tbody > tr:hover {
+    background-color: $table-hover-color;
+  }
+
   .biglup-data-table {
     background-color: #fff;
   }
 
   .biglup-icon-button-sort-icon {
-    font-size: 13px!important;
-    display:  inline-block;
+    font-size: 13px !important;
+    display: inline-block;
     position: relative;
     width: 100%;
     text-align: left;
-    margin:0!important;
+    margin: 0 !important;
 
     [biglup-icon-button] {
-      margin:0 0 -5px -1px!important;
+      margin: 0 0 -5px -1px !important;
     }
   }
 
@@ -94,7 +108,7 @@
     color: rgba(0, 0, 0, .87);
     margin-top: -12px;
     float: left;
-    display: inline-block!important;
+    display: inline-block !important;
   }
 
   td.biglup-data-table-checkbox-cell,
