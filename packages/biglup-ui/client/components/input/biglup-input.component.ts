@@ -73,6 +73,8 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _filter: (keyCode: number) => boolean = null;
     @Input('icon')
     private _icon: string  = '';
+    @Input('readonly')
+    private _readonly: boolean    = false;
     private _inputChange: any     = null;
     private _inputBlur:   any     = null;
     private _hasFocus:    boolean = false;

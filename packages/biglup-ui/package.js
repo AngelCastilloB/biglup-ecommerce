@@ -29,6 +29,7 @@ Package.onUse(function(api)
         'client/components/input/filters/input-filters.ts',
         'client/components/data-table/biglup-data-table.component.ts',
         'client/components/icon-button/biglup-icon-button.component.ts',
+        'client/components/dropdown-menu/biglup-dropdown-menu.component.ts',
         'client/biglup-ui.module.ts'
     ], 'client');
 

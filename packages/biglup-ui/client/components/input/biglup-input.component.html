@@ -6,6 +6,7 @@
   [class.biglup-text-input-invalid-float]='_invalid && _floatingHint'>
 
   <input
+    [attr.readonly]="_readonly"
     #input
     (keydown)="_onKeyDown($event)"
     (keyup)="_onKeyUp($event)"
