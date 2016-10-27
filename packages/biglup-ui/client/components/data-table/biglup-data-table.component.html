@@ -4,13 +4,14 @@
     <div class="biglup-data-table-input"><biglup-input hint="Search..." icon="search"></biglup-input></div>
   </div>
   <div class="biglup-data-table-body">
-    <table class="biglup-data-table biglup-data-table-bordered biglup-data-table-no-border">
+    <table class="biglup-data-table">
       <thead>
       <tr>
         <th *ngIf="_rowSelection" class="biglup-data-table-checkbox-column"><biglup-checkbox></biglup-checkbox></th>
         <th *ngFor="let column of _columns">
-          <div class="biglup-icon-button-sort-icon"><biglup-icon-button icon="arrow_drop_down" color="#555555"></biglup-icon-button></div>
-          <span class="biglup-icon-button-column-title">{{column.label}}</span>
+          <div class="biglup-icon-button-sort-icon">
+            <biglup-icon-button icon="arrow_drop_down" color="#555555"></biglup-icon-button>{{column.label}}
+          </div>
         </th>
       </tr>
       </thead>
