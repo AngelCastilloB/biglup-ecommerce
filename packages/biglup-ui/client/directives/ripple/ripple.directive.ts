@@ -212,7 +212,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 ripple.classList.add('ripple-effect');
                 ripple.classList.add('ripple-variable');
 
-                let size: number = 50;
+                let size: number = this._el.nativeElement.getBoundingClientRect().width * 0.3;
 
                 ripple.style.top        = yPos + 'px';
                 ripple.style.left       = xPos + 'px';
@@ -232,7 +232,7 @@ export class RippleDirective implements OnInit, OnDestroy {
             {
               return Observable.forkJoin(
                 Observable.race(this._mouseUpObservable.take(1), this._touchendObservable.take(1)),
-                this._animationendObservable.take(1)).map((event: any) => elements);
+                Observable.timer(200)).map((event: any) => elements);
             })
             .do((elements: any) =>
             {
@@ -248,7 +248,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 elements.ripple.classList.remove('ripple-effect-on');
                 elements.ripple.classList.add('ripple-effect-off');
             })
-            .mergeMap((elements: any) => this._animationendObservable.take(1).map((event: any) => elements))
+            .delay(500)
             .do((elements: any)       => elements.container.removeChild(elements.ripple))
             .subscribe();
     }

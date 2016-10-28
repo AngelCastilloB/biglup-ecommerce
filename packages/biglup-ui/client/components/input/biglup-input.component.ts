@@ -71,8 +71,10 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _isDisabled: boolean = false;
     @Input('filter')
     private _filter: (keyCode: number) => boolean = null;
-    @Input('icon')
-    private _icon: string  = '';
+    @Input('leftIcon')
+    private _leftIcon: string  = '';
+    @Input('rightIcon')
+    private _rightIcon: string  = '';
     @Input('readonly')
     private _readonly: boolean    = false;
     private _inputChange: any     = null;
@@ -235,6 +237,11 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _onFocus(event: any)
     {
         this._hasFocus = true;
+    }
+
+    private _onClick(event)
+    {
+        console.error(event);
     }
 
     /**

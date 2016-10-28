@@ -34,7 +34,7 @@
 }
 
 .ripple-effect-off {
-    animation: ripple-animation-off 500ms cubic-bezier(0.165, 0.84, 0.44, 0.50) forwards;
+    animation: ripple-animation-off 500ms forwards;
 }
 
 .fixed-ripple-effect-on {
@@ -62,8 +62,8 @@
         transform: scale(1);
     }
     to {
-        -webkit-transform: scale(3.8);
-        transform: scale(3.8);
+        -webkit-transform: scale(7);
+        transform: scale(7);
     }
 }
 
@@ -74,8 +74,8 @@
         opacity: 0.4;
     }
     to {
-        -webkit-transform: scale(3.8);
-        transform: scale(3.8);
+        -webkit-transform: scale(7);
+        transform: scale(7);
         opacity: 0.0;
     }
 }

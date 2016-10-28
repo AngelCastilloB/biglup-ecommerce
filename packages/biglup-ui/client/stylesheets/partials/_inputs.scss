@@ -85,12 +85,20 @@
     }
 }
 
-.biglup-text-input-icon {
+.biglup-text-input-left-icon {
     float: left;
     margin-left: -3px;
     margin-top: -31px;
     position: relative;
     z-index: 2;
+}
+
+.biglup-text-input-right-icon {
+  float: right;
+  margin-left: -3px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
 }
 
 .biglup-text-input-bar {

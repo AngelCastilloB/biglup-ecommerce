@@ -47,7 +47,20 @@
     <biglup-input #validate errorMessage="Numbers Only!" name="validate" hint="Numbers"></biglup-input>
     <biglup-input #validate2 errorMessage="Letters Only!" name="validate2" hint="A-Z Floating" floatingHint="true"></biglup-input>
     <h5>ICONS</h5>
-    <biglup-input #email name="email" hint="Email" icon="email" floatingHint="true" errorMessage="Please a valid email!"></biglup-input>
+    <biglup-input #email name="email" hint="Email" leftIcon="email" floatingHint="true" errorMessage="Please a valid email!"></biglup-input>
+  </div>
+
+  <h3>DROP BOX</h3>
+  <hr>
+  <br>
+
+  <div style="width: 1000px">
+    <biglup-dropdown-menu title="Dinosaurs" [label]="Dinosaurs"></biglup-dropdown-menu>
+    <br>
+    <br>
+    <br>
+    <br>
+    <biglup-dropdown-menu title="Numbers"></biglup-dropdown-menu>
   </div>
 
   <h3>CHECKBOX</h3>
@@ -88,8 +101,5 @@
   <hr>
   <br>
   <div style="width:95%; margin: 0 auto;"><biglup-data-table [columns]="_dataTableColums" [data]="_dataTableData" ></biglup-data-table></div><br><br><br><br>
-  <div style="width: 40%">
-    <biglup-dropdown-menu title="Dinosaurs"></biglup-dropdown-menu>
-  </div>
   <br><br><br><br>
 </div>
