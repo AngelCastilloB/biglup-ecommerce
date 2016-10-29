@@ -1,27 +1,27 @@
 @import 'base';
 
 .biglup-dropdown-menu-container-main {
-  margin-top:10px!important;
-  margin-bottom:10px!important;
+  margin-top:10px;
+  margin-bottom:10px;
   display: inline-block;
 }
 
 .biglup-dropdown-menu-container-enabled {
   .biglup-text-container {
-    cursor: pointer!important;
+    cursor: pointer;
 
     .biglup-text-input {
-      cursor: pointer!important;
+      cursor: pointer;
     }
   }
 }
 
 .biglup-dropdown-menu-container-disabled {
   .biglup-text-container {
-    cursor: default!important;
+    cursor: default;
 
     .biglup-text-input {
-      cursor: default!important;
+      cursor: default;
     }
   }
 }
@@ -29,12 +29,12 @@
 .biglup-dropdown-menu-container {
   display: block;
   overflow: visible;
-  margin:0!important;
+  margin:0;
   float: left;
 
   .biglup-text-container {
     margin: 0;
-    width: auto!important;
+    width: auto;
 
     .biglup-text-input {
       padding: 4px;
@@ -68,7 +68,7 @@
   }
 
   ul li {
-    font: $base-font-family;
+    font-family: $base-font-family;
     margin-right: -4px;
     position: relative;
     padding: 15px 20px;

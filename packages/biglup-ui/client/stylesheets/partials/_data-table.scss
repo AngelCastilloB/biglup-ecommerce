@@ -5,6 +5,27 @@
   max-width: 100%;
   @include elevation(1);
 
+  .biglup-dropdown-menu-container-main {
+    margin-top: 0!important;;
+    margin-bottom: 0!important;
+    display: inline-block;
+    width: 50px;
+    span
+    {
+      font-size: 13px!important;
+      margin: 0!important;
+    }
+
+    input {
+      font-size: 13px!important;
+    }
+  }
+
+  .biglup-dropdown-menu-options ul li {
+    padding: 0!important;
+    text-align: center!important;
+  }
+
   .biglup-data-table-title {
     font-size: 25px !important;
     -webkit-font-smoothing: antialiased;
@@ -38,6 +59,20 @@
     font-family: $base-font-family;
     line-height: 3;
     color: rgba(0, 0, 0, .60);
+
+    .biglup-data-table-footer-text {
+      font-size: 12px!important;
+      margin-top: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+
+    [biglup-icon-button] {
+      margin: 2px!important;
+      margin-bottom: 13px!important;
+      margin-top: 0!important;
+    }
   }
 }
 
