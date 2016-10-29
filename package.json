@@ -42,6 +42,7 @@
     "faker": "^3.1.0",
     "gm": "^1.22.0",
     "jimp": "^0.2.27",
+    "lodash": "^4.16.4",
     "meteor-node-stubs": "0.2.3",
     "meteor-rxjs": "0.2.3",
     "ng2-dragula": "^1.1.10",

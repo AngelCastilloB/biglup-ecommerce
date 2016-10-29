@@ -69,13 +69,13 @@ export class LandingPageComponent extends AfterViewInit
         this._dataTableColums = [
             { name: 'dessert', label: 'Desert(100g serving)'},
             { name: 'type', label: 'Type' },
-            { name: 'calories', label: 'Calories' },
-            { name: 'fat',  label: 'Fat(g)' },
-            { name: 'carbs',  label: 'Carbs(g)'},
-            { name: 'protein', label: 'Proteing(g)' },
-            { name: 'sodium', label: 'Sodium(mg)'},
-            { name: 'calcium', label: 'Calcium(%)'},
-            { name: 'iron', label: 'Iron(%)' }
+            { name: 'calories', label: 'Calories', numeric: true },
+            { name: 'fat',  label: 'Fat(g)', numeric: true  },
+            { name: 'carbs',  label: 'Carbs(g)', numeric: true },
+            { name: 'protein', label: 'Proteing(g)', numeric: true  },
+            { name: 'sodium', label: 'Sodium(mg)', numeric: true },
+            { name: 'calcium', label: 'Calcium(%)', numeric: true },
+            { name: 'iron', label: 'Iron(%)', numeric: true  }
         ];
 
         let yogurt = {};
@@ -177,7 +177,7 @@ export class LandingPageComponent extends AfterViewInit
         lollipop['calcium'] = '0';
         lollipop['iron'] = '2';
 
-        this._dataTableData = [ yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop ];
+        this._dataTableData = [ yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop ];
     }
 
     /**

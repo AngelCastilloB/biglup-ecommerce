@@ -1,4 +1,4 @@
-<div class="biglup-data-table-container" *ngIf="_data.length > 0">
+<div class="biglup-data-table-container">
   <div class="biglup-data-table-header">
     <div class="biglup-data-table-title"><span>Users</span></div>
     <div class="biglup-data-table-input"><biglup-input hint="Search..." icon="search"></biglup-input></div>
@@ -9,26 +9,28 @@
       <tr>
         <th *ngIf="_rowSelection" class="biglup-data-table-checkbox-column"><biglup-checkbox></biglup-checkbox></th>
         <th *ngFor="let column of _columns">
-          <div class="biglup-icon-button-sort-icon">
-            <biglup-icon-button icon="arrow_drop_down" color="#555555"></biglup-icon-button>{{column.label}}
+          <div [class.biglup-data-table-numeric]="column.numeric" class="biglup-icon-button-sort-icon">
+            <biglup-icon-button *ngIf="column.numeric" icon="arrow_drop_down" color="#555555"></biglup-icon-button>
+            {{column.label}}
+            <biglup-icon-button *ngIf="!column.numeric" icon="arrow_drop_down" color="#555555"></biglup-icon-button>
           </div>
         </th>
       </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let row of _data">
+      <tbody *ngIf="_visibleData.length > 0">
+      <tr *ngFor="let row of _visibleData">
         <td *ngIf="_rowSelection" class="biglup-data-table-checkbox-cell" data-title="Selecttion">
           <biglup-checkbox></biglup-checkbox>
         </td>
 
         <td [class.biglup-data-table-numeric]="column.numeric" *ngFor="let column of _columns" [attr.data-title]="column.label">
-          <span>{{ row[column.name] }}</span>
+          <span >{{ row[column.name] }}</span>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div class="biglup-data-table-footer">
+  <div class="biglup-data-table-footer" *ngIf="_visibleData.length > 0">
     <span class="biglup-data-table-footer-text">Rows per page:</span>
     <biglup-dropdown-menu>
       <biglup-dropdown-option value="10">10</biglup-dropdown-option>
@@ -36,8 +38,9 @@
       <biglup-dropdown-option value="50">50</biglup-dropdown-option>
       <biglup-dropdown-option value="100">100</biglup-dropdown-option>
     </biglup-dropdown-menu>
-    <span class="biglup-data-table-footer-text">0-15 of 99</span>
+    <span class="biglup-data-table-footer-text">0-15 of {{ _visibleData.length }}</span>
     <biglup-icon-button icon="navigate_before" color="#555555"></biglup-icon-button>
     <biglup-icon-button icon="navigate_next" color="#555555"></biglup-icon-button>
   </div>
+  <div  *ngIf="_visibleData.length <= 0">No data found.</div>
 </div>

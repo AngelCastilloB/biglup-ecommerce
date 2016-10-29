@@ -276,8 +276,6 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _onIconClick()
     {
         if (this._isDisabled)
-            return;
-
         this._hasFocus = true;
         this._input.nativeElement.focus();
     }

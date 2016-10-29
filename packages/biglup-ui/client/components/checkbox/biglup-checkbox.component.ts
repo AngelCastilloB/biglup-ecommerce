@@ -23,7 +23,6 @@ import { Component, Input, AfterViewInit, ViewChild } from '@angular/core';
 // noinspection TypeScriptCheckImport
 import template from './biglup-checkbox.component.html';
 
-
 // EXPORTS ************************************************************************************************************/
 
 /**

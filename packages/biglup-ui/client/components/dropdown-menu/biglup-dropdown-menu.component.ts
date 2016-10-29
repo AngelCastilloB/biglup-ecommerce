@@ -156,6 +156,8 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
      */
     private _onFocusChange(hasFocus: boolean)
     {
+        this._menuList.nativeElement.style.left = this._container.nativeElement.offsetLeft + 'px';
+
         if (this._isDisabled)
             return;
 

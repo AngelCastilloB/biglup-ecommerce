@@ -5,6 +5,10 @@
   max-width: 100%;
   @include elevation(1);
 
+  .biglup-data-table-numeric {
+    text-align: right!important;
+  }
+
   .biglup-dropdown-menu-container-main {
     margin-top: 0!important;;
     margin-bottom: 0!important;
@@ -21,9 +25,14 @@
     }
   }
 
-  .biglup-dropdown-menu-options ul li {
-    padding: 0!important;
-    text-align: center!important;
+  .biglup-dropdown-menu-options
+  {
+    overflow: hidden!important;
+    ul li {
+      overflow: hidden!important;
+      padding: 0!important;
+      text-align: center!important;
+    }
   }
 
   .biglup-data-table-title {
