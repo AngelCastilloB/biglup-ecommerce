@@ -55,14 +55,47 @@
   <br>
 
   <div style="width: 1000px">
-    <biglup-dropdown-menu title="Dinosaurs" [label]="Dinosaurs"></biglup-dropdown-menu>
+    <h5>TITLE</h5>
+    <biglup-dropdown-menu title="Your favourite pastry" [(value)]="_dropdownOneValue">
+      <biglup-dropdown-option value="Croissant">Croissant</biglup-dropdown-option>
+      <biglup-dropdown-option value="Donut">Donut</biglup-dropdown-option>
+      <biglup-dropdown-option value="Financier">Financier</biglup-dropdown-option>
+      <biglup-dropdown-option value="Madeleine">Madeleine</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownOneValue }}
     <br>
     <br>
+    <biglup-dropdown-menu title="Numbers" [(value)]="_dropdownTwoValue">
+      <biglup-dropdown-option value="10">10</biglup-dropdown-option>
+      <biglup-dropdown-option value="25">25</biglup-dropdown-option>
+      <biglup-dropdown-option value="50" selected="true">50</biglup-dropdown-option>
+      <biglup-dropdown-option value="100">100</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownTwoValue }}
     <br>
     <br>
-    <biglup-dropdown-menu title="Numbers"></biglup-dropdown-menu>
+    <h5>NO TITLE</h5>
+    <biglup-dropdown-menu [(value)]="_dropdownThreeValue">
+      <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+      <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+      <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+      <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownThreeValue }}
+    <br>
+    <br>
+    <h5>DISABLED</h5>
+    <biglup-dropdown-menu title="Colors" disabled="true">
+      <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+      <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+      <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+      <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
   </div>
-
   <h3>CHECKBOX</h3>
   <hr>
   <br>

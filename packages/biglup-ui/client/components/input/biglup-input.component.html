@@ -1,4 +1,4 @@
-<div
+<div #container
   class="biglup-text-container"
   [class.biglup-text-input-valid]='!_invalid && !_floatingHint'
   [class.biglup-text-input-invalid]='_invalid && !_floatingHint'
@@ -19,13 +19,12 @@
     [(ngModel)]="_value"
     [attr.type]="_isPassword ? 'password' : 'text'"
     [disabled]="_isDisabled"
-    (click)="_click($event)"
   />
   <div class="biglup-text-input-bar"
        [class.biglup-text-input-bar-active]="_hasFocus || _invalid"
        [class.biglup-text-input-bar-active-invalid]='_invalid'>
   </div>
-  <i *ngIf="_leftIcon" class="material-icons md-18 biglup-text-input-left-icon">{{_leftIcon}}</i>
+  <i (click)="_onIconClick()" *ngIf="_leftIcon" class="material-icons md-18 biglup-text-input-left-icon">{{_leftIcon}}</i>
   <label
     [class.biglup-text-input-label-padding-left]="
     (_leftIcon && !_floatingHint) ||
@@ -34,6 +33,6 @@
     [class.biglup-text-input-valid-color]="_floatingHint && !_invalid && _hasFocus"
     #hint
     attr.for="{{_name}}">{{ _hint }}</label>
-  <i *ngIf="_rightIcon" class="material-icons md-18 biglup-text-input-right-icon">{{_rightIcon}}</i>
+  <i (click)="_onIconClick()" *ngIf="_rightIcon" class="material-icons md-18 biglup-text-input-right-icon">{{_rightIcon}}</i>
 </div>
-<span *ngIf="_invalid" class="biglup-text-error">{{ _errorMessage }}</span>
+<span #spanErrorMessage *ngIf="_invalid" class="biglup-text-error">{{ _errorMessage }}</span>

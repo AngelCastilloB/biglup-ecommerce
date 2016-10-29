@@ -55,7 +55,10 @@ export class LandingPageComponent extends AfterViewInit
     private InputFilters:           InputFilters = InputFilters;
     private _radioGroupValue: string = '';
     private _dataTableColums: any = {};
-    private _dataTableData: any = {}
+    private _dataTableData: any = {};
+    private _dropdownOneValue: string = '';
+    private _dropdownTwoValue: string = '';
+    private _dropdownThreeValue: string = '';
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.

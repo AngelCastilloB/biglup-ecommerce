@@ -1,22 +1,44 @@
 @import 'base';
 
+.biglup-dropdown-menu-container-main {
+  margin-top:10px!important;
+  margin-bottom:10px!important;
+  display: inline-block;
+}
+
+.biglup-dropdown-menu-container-enabled {
+  .biglup-text-container {
+    cursor: pointer!important;
+
+    .biglup-text-input {
+      cursor: pointer!important;
+    }
+  }
+}
+
+.biglup-dropdown-menu-container-disabled {
+  .biglup-text-container {
+    cursor: default!important;
+
+    .biglup-text-input {
+      cursor: default!important;
+    }
+  }
+}
+
 .biglup-dropdown-menu-container {
   display: block;
-  overflow:hidden;
+  overflow: visible;
   margin:0!important;
   float: left;
 
-  .ripple-effect {
-    cursor: pointer!important;
-  }
   .biglup-text-container {
     margin: 0;
-    cursor: pointer!important;
     width: auto!important;
 
     .biglup-text-input {
       padding: 4px;
-      cursor: pointer!important;
+      z-index: 10;
     }
   }
 }
@@ -28,6 +50,7 @@
   margin-top: 29px;
   overflow: auto;
   max-height: 0;
+  background: $primary-background-color;
   @include elevation(1);
 
   -webkit-transition: all 0.2s;
@@ -41,6 +64,7 @@
     padding: 0 4px 0 0;
     list-style: none;
     width: 100%;
+    background: $primary-background-color;
   }
 
   ul li {
@@ -48,7 +72,6 @@
     margin-right: -4px;
     position: relative;
     padding: 15px 20px;
-    background: $primary-background-color;
     cursor: pointer;
 
     -webkit-transition: all 0.3s;

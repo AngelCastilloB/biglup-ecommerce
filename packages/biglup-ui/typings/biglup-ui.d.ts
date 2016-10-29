@@ -17,6 +17,7 @@
 
 declare module BiglupUi
 {
+    class BiglupDropdownOptionComponent {}
     class BiglupIconButtonComponent {}
     class BiglupButtonComponent {}
     class BiglupRadioGroupComponent {}

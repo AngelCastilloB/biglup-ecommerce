@@ -21,11 +21,17 @@ import { Component,
          Input,
          AfterViewInit,
          ViewChild,
+         ContentChildren,
          OnInit,
          OnDestroy,
          ElementRef,
-         Renderer }   from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+         Renderer,
+         Output,
+         EventEmitter,
+         QueryList,
+         ChangeDetectorRef }             from '@angular/core';
+import { Observable }                    from 'rxjs/Observable';
+import { BiglupDropdownOptionComponent } from './dropdown-option/biglup-dropdown-option.component';
 
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
@@ -48,6 +54,8 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
 {
     @ViewChild('list')
     private _menuList;
+    @ViewChild('input')
+    private _input;
     @ViewChild('container')
     private _container;
     @Input('value')
@@ -58,18 +66,18 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
     private _title: string = '';
     @Input('label')
     private _label: string = '';
-    private _displayOptions: boolean = false;
-    private _mouseDownObservable:    any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
-    private _touchstartObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'touchstart');
-    private _mouseUpObservable:      any    = Observable.fromEvent(document.body, 'mouseup');
-    private _touchendObservable:     any    = Observable.fromEvent(document.body, 'touchend');
-    private _animationendObservable: any    = Observable.fromEvent(this._el.nativeElement, 'animationend');
-    private _mouseDownSubscription:  any;
+    private _text: string = '';
+    private _touchStartSubscription:  any;
+    @ContentChildren(BiglupDropdownOptionComponent)
+    private _options: QueryList<BiglupDropdownOptionComponent>;
+    private _selectedOption: BiglupDropdownOptionComponent;
+    @Output('valueChange')
+    private _valueChange = new EventEmitter();
 
     /**
      * @summary Initializes a new instance of the BiglupDropdownMenuComponent class.
      */
-    constructor(private _el: ElementRef, private _renderer: Renderer)
+    constructor(private _el: ElementRef, private _renderer: Renderer, private _changeDetector: ChangeDetectorRef)
     {
     }
 
@@ -78,8 +86,8 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
      */
     public ngOnDestroy(): void
     {
-        if (this._mouseDownSubscription)
-            this._mouseDownSubscription.unsubscribe();
+        if (this._touchStartSubscription)
+            this._touchStartSubscription.unsubscribe();
     }
 
     /**
@@ -94,42 +102,86 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
      */
     public ngAfterViewInit(): any
     {
+        let defaultSelection: boolean = true;
+
+        this._options.forEach((option) =>
+        {
+            if (option.getSelected())
+            {
+                this._value = option.getValue();
+                this._text = option.getText();
+                this._valueChange.emit(this._value);
+                this._selectedOption = option;
+
+                defaultSelection = false;
+            }
+
+            option.getSelectedEmitter().subscribe((selected) =>
+            {
+                if (this._selectedOption)
+                    this._selectedOption.setSelected(false);
+
+                this._selectedOption = selected;
+                this._value = selected.getValue();
+                this._text = option.getText();
+                this._valueChange.emit(this._value);
+
+                selected.setSelected(true);
+            });
+        });
+
+        if (defaultSelection && this._options && this._options.length > 0)
+        {
+            this._options.first.setSelected(true);
+
+            this._selectedOption = this._options.first;
+            this._value = this._options.first.getValue();
+            this._text = this._options.first.getText();
+            this._valueChange.emit(this._value);
+        }
+
         this._menuList.nativeElement.style.left = this._container.nativeElement.offsetLeft + 'px';
 
-        this._mouseDownSubscription = Observable.race(this._mouseDownObservable, this._touchstartObservable)
-            .mergeMap((event) =>
-            {
-                this._menuList.nativeElement.style.visibility = 'hidden';
+        this._touchStartSubscription = Observable.fromEvent(
+            this._el.nativeElement, 'touchstart').subscribe(() => this._input.getInputNativeElement().focus());
 
-                return Observable.forkJoin(
-                    Observable.race(this._mouseUpObservable.take(1), this._touchendObservable.take(1)),
-                    Observable.timer(290));
-            })
-            .map((event) =>
-            {
-                this._displayOptions = !this._displayOptions;
+        this._input.setDirty();
+    }
 
-                if (this._displayOptions)
-                {
-                    this._menuList.nativeElement.style.visibility = 'visible';
-                }
-                else
-                {
-                    this._menuList.nativeElement.style.width =
-                        this._container.nativeElement.getBoundingClientRect().width / 3 + 'px';
-                    this._menuList.nativeElement.style.maxHeight = '100px';
-                }
+    /**
+     * @summary Event handler for when the focus changes.
+     *
+     * @param hasFocus True if the component now has focus, otherwise, false.
+     * @private
+     */
+    private _onFocusChange(hasFocus: boolean)
+    {
+        if (this._isDisabled)
+            return;
 
-                return event;
-            })
-            .map(() =>
+        const rect: ClientRect = this._container.nativeElement.getBoundingClientRect();
+
+        if (hasFocus)
+        {
+            this._menuList.nativeElement.style.visibility = 'hidden';
+            this._menuList.nativeElement.style.display = 'block';
+            Observable.timer(300).take(1).subscribe(
+            () =>
             {
-                if (this._displayOptions)
-                {
-                    this._menuList.nativeElement.style.width =
-                        this._container.nativeElement.getBoundingClientRect().width + 'px';
-                    this._menuList.nativeElement.style.maxHeight = '300px';
-                }
-            }).subscribe();
+                this._menuList.nativeElement.style.visibility = 'visible';
+                this._menuList.nativeElement.style.width      = rect.width + 'px';
+                this._menuList.nativeElement.style.maxHeight  = '300px';
+            });
+        }
+        else
+        {
+            Observable.timer(100).take(1).subscribe(
+            () =>
+            {
+                this._menuList.nativeElement.style.width     = rect.width / 3 + 'px';
+                this._menuList.nativeElement.style.maxHeight = '100px';
+                this._menuList.nativeElement.style.display   = 'none';
+            });
+        }
     }
 }
