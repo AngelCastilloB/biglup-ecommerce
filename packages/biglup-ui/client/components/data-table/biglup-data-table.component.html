@@ -1,0 +1,65 @@
+<div class="biglup-data-table-container">
+  <div *ngIf="_getSelectedCount() === 1" class="biglup-data-table-header-actions">
+    <biglup-icon-button (click)="_onEdit()" icon="mode_edit"></biglup-icon-button>
+    <biglup-icon-button (click)="_onDelete()" icon="delete"></biglup-icon-button>
+  </div>
+  <div *ngIf="_getSelectedCount() > 1" class="biglup-data-table-header-actions">
+    <biglup-icon-button (click)="_onDelete()" icon="delete"></biglup-icon-button>
+  </div>
+  <div [style.display]="_getSelectedCount() === 0 ? 'block' : 'none'" class="biglup-data-table-header">
+    <div class="biglup-data-table-title"><span>Users</span></div>
+    <div class="biglup-data-table-input"><biglup-input [hint]="_getSearchString()" icon="search"></biglup-input></div>
+  </div>
+  <div class="biglup-data-table-body">
+    <table class="biglup-data-table">
+      <thead>
+      <tr>
+        <th *ngIf="_rowSelection && _multiple" class="biglup-data-table-checkbox-column">
+          <biglup-checkbox
+            [checked]="_areAllSelected()"
+            (checkedChange)="_toggleAll($event)">
+          </biglup-checkbox></th>
+        <th *ngFor="let column of _columns">
+          <div (click)="_setSortColumn(column)" [class.biglup-data-table-numeric]="column.numeric" class="biglup-icon-button-sort-icon">
+            <biglup-icon-button
+              *ngIf="column.numeric"
+              [style.opacity]="_sortBy === column ? '1' : '0'"
+              [icon]="_sortOrder === DataTableSortingOrder.Ascending ? 'arrow_drop_up' : 'arrow_drop_down'"
+              color="#555555"></biglup-icon-button>
+            <span [class.biglup-data-table-header-text-sorting]="_sortBy === column" class="biglup-data-table-header-text">{{column.label}}</span>
+            <biglup-icon-button
+              *ngIf="!column.numeric"
+              [style.opacity]="_sortBy === column ? '1' : '0'"
+              [icon]="_sortOrder === DataTableSortingOrder.Ascending ? 'arrow_drop_up' : 'arrow_drop_down'"
+              color="#555555"></biglup-icon-button>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody *ngIf="_hasData">
+      <tr [class.biglup-data-table-selected-row]="row._dataTableSelected" *ngFor="let row of _visibleData">
+        <td *ngIf="_rowSelection" class="biglup-data-table-checkbox-cell" data-title="Selecttion">
+          <biglup-checkbox [(checked)]="row._dataTableSelected"></biglup-checkbox>
+        </td>
+
+        <td [class.biglup-data-table-numeric]="column.numeric" *ngFor="let column of _columns; let last=last;" [attr.data-title]="column.label">
+          <span >{{ row[column.name] }}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="biglup-data-table-footer" *ngIf="_hasData">
+    <span class="biglup-data-table-footer-text">{{ 'Rows per page:' | translate }}</span>
+    <biglup-dropdown-menu (valueChange)="_setPageSize($event)">
+      <biglup-dropdown-option value="10">10</biglup-dropdown-option>
+      <biglup-dropdown-option value="25">25</biglup-dropdown-option>
+      <biglup-dropdown-option value="50">50</biglup-dropdown-option>
+      <biglup-dropdown-option value="100">100</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <span class="biglup-data-table-footer-text">{{ _currentPage + 1 }} {{ 'of' | translate }} {{ _totalPages }}</span>
+    <biglup-icon-button (click)="_prevPage()" icon="navigate_before" color="#555555"></biglup-icon-button>
+    <biglup-icon-button (click)="_nextPage()" icon="navigate_next" color="#555555"></biglup-icon-button>
+  </div>
+  <div class="biglup-data-table-no-data-found" *ngIf="!_hasData">{{ 'No data found.' | translate }}</div>
+</div>

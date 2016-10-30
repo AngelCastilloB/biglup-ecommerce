@@ -1,0 +1,90 @@
+@import 'base';
+
+.biglup-dropdown-menu-container-main {
+  margin-top:10px;
+  margin-bottom:10px;
+  display: inline-block;
+}
+
+.biglup-dropdown-menu-container-enabled {
+  .biglup-text-container {
+    cursor: pointer;
+
+    .biglup-text-input {
+      cursor: pointer;
+    }
+  }
+}
+
+.biglup-dropdown-menu-container-disabled {
+  .biglup-text-container {
+    cursor: default;
+
+    .biglup-text-input {
+      cursor: default;
+    }
+  }
+}
+
+.biglup-dropdown-menu-container {
+  display: block;
+  overflow: visible;
+  margin:0;
+  float: left;
+
+  .biglup-text-container {
+    margin: 0;
+    width: auto;
+
+    .biglup-text-input {
+      padding: 4px;
+      z-index: 10;
+    }
+  }
+}
+
+.biglup-dropdown-menu-options {
+  float:left;
+  position: absolute;
+  width: 0;
+  margin-top: 29px;
+  overflow: auto;
+  max-height: 0;
+  background: $primary-background-color;
+  @include elevation(1);
+
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  z-index: 100;
+
+  ul {
+    text-align: left;
+    padding: 0 4px 0 0;
+    list-style: none;
+    width: 100%;
+    background: $primary-background-color;
+  }
+
+  ul li {
+    font-family: $base-font-family;
+    margin-right: -4px;
+    position: relative;
+    padding: 15px 20px;
+    cursor: pointer;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    color: $text-color;
+  }
+
+  ul li:hover {
+    background: #cccccc;
+    color: $text-color;
+  }
+}

@@ -1,137 +1,147 @@
 @import 'base';
 
 .biglup-text-container {
-    position: relative;
-    margin: 30px 0;
+  position: relative;
+  margin: 30px 0;
 }
 
 .biglup-text-input {
-    display: block;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid $secondary-text-color;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $secondary-text-color;
+  border-radius: 0%;
+  font-size: 16px;
+  padding: 8px 0;
+  line-height: 0;
+  &[disabled] {
+    border-bottom: 1px dashed $disabled-text-color;
+    background-color: transparent;
+  }
+  ~ label {
     font-size: 16px;
-    padding: 8px 0;
-    &[disabled] {
-        border-bottom: 1px dashed $disabled-text-color;
-        background-color: transparent;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    bottom: 0;
+    color: $secondary-text-color;
+  }
+  &.floating-label ~ label {
+    transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+  }
+  &:focus {
+    outline: none;
+  }
+  &.dirty ~ label {
+    visibility: hidden;
+  }
+  &.floating-label {
+    &:focus ~ label, &.dirty ~ label {
+      visibility: visible;
+      top: -10px;
+      font-size: 12px;
     }
-    ~ label {
-        font-size: 16px;
-        width: 100%;
-        position: absolute;
-        pointer-events: none;
-        top: 10px;
-        bottom: 0;
-        color: $secondary-text-color;
-    }
-    &.floating-label ~ label {
-        transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-        -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-        -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-    }
-    &:focus {
-        outline: none;
-    }
-    &.dirty ~ label {
-        visibility: hidden;
-    }
-    &.floating-label {
-        &:focus ~ label, &.dirty ~ label {
-            visibility: visible;
-            top: -10px;
-            font-size: 12px;
-        }
-    }
+  }
 }
 
 .biglup-text-error {
-    display:block;
-    float: left;
-    margin-top: 3px;
-    color: $warn-color;
-    font-size: 12px;
+  display: inline-block;
+  float: left;
+  margin-top: -25px;
+  color: $warn-color;
+  font-size: 12px;
 }
 
 .biglup-text-input-valid-float {
-    span {
-        visibility: hidden;
-    }
+  span {
+    visibility: hidden;
+  }
 }
 
 .biglup-text-input-invalid-float {
-    span {
-        visibility: visible;
-    }
+  span {
+    visibility: visible;
+  }
 }
 
 .biglup-text-input-valid {
-    :focus ~ label, .dirty ~ label {
-        color: $secondary-text-color;
-    }
-    span {
-        visibility: hidden;
-    }
+  :focus ~ label, .dirty ~ label {
+    color: $secondary-text-color;
+  }
+  span {
+    visibility: hidden;
+  }
 }
 
 .biglup-text-input-invalid {
-    :focus ~ label, .dirty ~ label {
-        color: $secondary-text-color;
-    }
-    span {
-        visibility: visible;
-    }
+  :focus ~ label, .dirty ~ label {
+    color: $secondary-text-color;
+  }
+  span {
+    visibility: visible;
+  }
 }
 
-.biglup-text-input-icon {
-    float: left;
-    margin-right: 6px;
-    margin-top: -25px;
-    position: relative;
-    z-index: 2;
+.biglup-text-input-left-icon {
+  float: left;
+  margin-left: -3px;
+  margin-top: -31px;
+  position: relative;
+  z-index: 2;
+}
+
+.biglup-text-input-right-icon {
+  float: right;
+  margin-left: -3px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
 }
 
 .biglup-text-input-bar {
-    content: '';
-    height: 2px;
-    width: 10px;
-    bottom: 0;
-    left: 45%;
-    visibility: hidden;
-    position: absolute;
-    transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-    -moz-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
-    -webkit-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+  content: '';
+  height: 2px;
+  width: 10px;
+  bottom: 0;
+  left: 45%;
+  visibility: hidden;
+  position: absolute;
+  transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+  -moz-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+  -webkit-transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) all;
 }
 
 .biglup-text-input-bar-active {
-    visibility: visible;
-    width: 100%;
-    left: 0;
-    background-color: $primary-color;
-    color: $primary-color;
+  visibility: visible;
+  width: 100%;
+  left: 0;
+  background-color: $primary-color;
+  color: $primary-color;
 }
 
 .biglup-text-input-bar-active-invalid {
-    background-color: $warn-color;
-    color: $warn-color;
-    visibility: visible;
-    width: 100%;
-    left: 0;
+  background-color: $warn-color;
+  color: $warn-color;
+  visibility: visible;
+  width: 100%;
+  padding-left: 0;
 }
 
 .biglup-text-input-label-padding-left {
-    left: 20px;
+  padding-left: 25px;
 }
 
 .biglup-text-input-margin-left {
-    padding-left: 20px;
+  padding-left: 25px;
 }
 
 .biglup-text-input-error-color {
-    color: $warn-color!important;
+  color: $warn-color !important;
 }
 
 .biglup-text-input-valid-color {
-    color: $primary-color!important;
+  color: $primary-color !important;
 }

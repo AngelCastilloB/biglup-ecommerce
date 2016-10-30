@@ -18,8 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { NgModule }                         from '@angular/core';
-import { TranslatePipe }                    from 'meteor/biglup:i18n';
-import { MongoTranslatePipe }               from 'meteor/biglup:i18n';
+import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
 import { TruncateStringPipe }               from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,21 +31,19 @@ import { Ng2MaterialModule }                from './ng2-material.module';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        Ng2MaterialModule
+        Ng2MaterialModule,
+        BiglupI18nModule
     ],
     declarations: [
-        TranslatePipe,
-        MongoTranslatePipe,
         TruncateStringPipe
     ],
     exports: [
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        TranslatePipe,
-        MongoTranslatePipe,
         TruncateStringPipe,
-        Ng2MaterialModule
+        Ng2MaterialModule,
+        BiglupI18nModule
     ]
 })
 export class SharedModule

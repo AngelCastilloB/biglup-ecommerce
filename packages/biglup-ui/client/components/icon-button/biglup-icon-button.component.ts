@@ -1,10 +1,10 @@
 /**
- * @file biglup-button.component.ts
+ * @file biglup-icon-button.component.ts
  *
- * @summary A simple animated button.
+ * @summary Polymer like checkbox input component.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   September 24 2016
+ * @date   October 25 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -21,32 +21,41 @@ import { Component, Input } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './biglup-button.component.html';
+import template from './biglup-icon-button.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays an animated button.
+ * @summary This component displays an animated icon button.
  */
 @Component({
-    selector: 'biglup-button',
+    selector: 'biglup-icon-button',
     template
 })
-export class BiglupButtonComponent
+export class BiglupIconButtonComponent
 {
-    @Input('color')
-    private _color: string = 'primary';
-    @Input('raised')
-    private _raised: boolean = false;
     @Input('disabled')
     private _isDisabled: boolean = false;
     @Input('icon')
     private _icon: string = '';
+    @Input('color')
+    private _color: string = 'black';
 
     /**
-     * @brief Initializes a new instance of the BiglupButtonComponent class.
+     * @summary Initializes a new instance of the BiglupInputComponent class.
      */
     constructor()
     {
+    }
+
+    /**
+     * @summary Event handler for when the icon button is clicked
+     *
+     * @param event the click event.
+     */
+    private _onClick(event: any)
+    {
+        if (this._isDisabled)
+            event.preventDefault();
     }
 }

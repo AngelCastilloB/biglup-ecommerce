@@ -17,15 +17,20 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { NgModule }                  from '@angular/core';
-import { BrowserModule }             from '@angular/platform-browser';
-import { FormsModule }               from '@angular/forms';
-import { BiglupButtonComponent }     from './components/button/biglup-button.component';
-import { BiglupInputComponent }      from './components/input/biglup-input.component';
-import { BiglupCheckboxComponent}    from './components/checkbox/biglup-checkbox.component';
-import { BiglupRadioButtonComponent} from './components/radio-group/radio-button/biglup-radio-button.component';
-import { BiglupRadioGroupComponent}  from './components/radio-group/biglup-radio-group.component';
-import { RippleDirective }           from './directives/ripple/ripple.directive';
+import { NgModule }                      from '@angular/core';
+import { BrowserModule }                 from '@angular/platform-browser';
+import { FormsModule }                   from '@angular/forms';
+import { BiglupButtonComponent }         from './components/button/biglup-button.component';
+import { BiglupInputComponent }          from './components/input/biglup-input.component';
+import { BiglupCheckboxComponent}        from './components/checkbox/biglup-checkbox.component';
+import { BiglupRadioButtonComponent}     from './components/radio-group/radio-button/biglup-radio-button.component';
+import { BiglupRadioGroupComponent}      from './components/radio-group/biglup-radio-group.component';
+import { RippleDirective }               from './directives/ripple/ripple.directive';
+import { BiglupDataTableComponent }      from './components/data-table/biglup-data-table.component';
+import { BiglupIconButtonComponent }     from './components/icon-button/biglup-icon-button.component';
+import { BiglupDropdownMenuComponent }   from './components/dropdown-menu/biglup-dropdown-menu.component';
+import { BiglupDropdownOptionComponent } from './components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
+import { BiglupI18nModule }              from 'meteor/biglup:i18n';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -35,14 +40,19 @@ import { RippleDirective }           from './directives/ripple/ripple.directive'
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule],
+        FormsModule,
+        BiglupI18nModule],
     declarations: [
         BiglupButtonComponent,
         BiglupInputComponent,
         BiglupCheckboxComponent,
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
-        RippleDirective
+        BiglupDataTableComponent,
+        BiglupIconButtonComponent,
+        BiglupDropdownMenuComponent,
+        RippleDirective,
+        BiglupDropdownOptionComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -50,7 +60,11 @@ import { RippleDirective }           from './directives/ripple/ripple.directive'
         BiglupCheckboxComponent,
         BiglupRadioButtonComponent,
         BiglupRadioGroupComponent,
-        RippleDirective
+        BiglupDataTableComponent,
+        BiglupIconButtonComponent,
+        BiglupDropdownMenuComponent,
+        RippleDirective,
+        BiglupDropdownOptionComponent
     ]
 })
 export class BiglupUiModule

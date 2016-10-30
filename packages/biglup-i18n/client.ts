@@ -24,3 +24,6 @@ export * from './client/pipes/translate.pipe';
 
 // Models
 export * from './common/models/i18n-string';
+
+// Modules
+export * from './client/biglup-i18n.module';

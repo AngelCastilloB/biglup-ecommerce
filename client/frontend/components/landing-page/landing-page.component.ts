@@ -23,6 +23,7 @@ import { InputFilters, BiglupInputComponent }  from 'meteor/biglup:ui';
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './landing-page.component.html';
+import { DataTableColumn } from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -53,6 +54,11 @@ export class LandingPageComponent extends AfterViewInit
     private _emailInput: BiglupInputComponent;
     private InputFilters:           InputFilters = InputFilters;
     private _radioGroupValue: string = '';
+    private _dataTableColums: any = {};
+    private _dataTableData: any = {};
+    private _dropdownOneValue: string = '';
+    private _dropdownTwoValue: string = '';
+    private _dropdownThreeValue: string = '';
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.
@@ -60,6 +66,120 @@ export class LandingPageComponent extends AfterViewInit
     constructor()
     {
         super();
+        this._dataTableColums = [
+            { name: 'dessert', label: 'Desert(100g serving)'},
+            { name: 'type', label: 'Type' },
+            { name: 'calories', label: 'Calories', numeric: true },
+            { name: 'fat',  label: 'Fat(g)', numeric: true  },
+            { name: 'carbs',  label: 'Carbs(g)', numeric: true },
+            { name: 'protein', label: 'Proteing(g)', numeric: true  },
+            { name: 'sodium', label: 'Sodium(mg)', numeric: true },
+            { name: 'calcium', label: 'Calcium(%)', numeric: true },
+            { name: 'iron', label: 'Iron(%)', numeric: true  }
+        ];
+
+        let yogurt = {};
+        yogurt['dessert'] = 'Frozen yogurt';
+        yogurt['type'] = 'Ice cream';
+        yogurt['calories'] = '159';
+        yogurt['fat'] = '6.00';
+        yogurt['carbs'] = '24';
+        yogurt['protein'] = '4.00';
+        yogurt['sodium'] = '87';
+        yogurt['calcium'] = '14';
+        yogurt['iron'] = '1';
+
+        let eclair = {};
+        eclair['dessert'] = 'Eclair';
+        eclair['type'] = 'Pastry';
+        eclair['calories'] = '262';
+        eclair['fat'] = '16.00';
+        eclair['carbs'] = '24';
+        eclair['protein'] = '6.00';
+        eclair['sodium'] = '337';
+        eclair['calcium'] = '6';
+        eclair['iron'] = '7';
+
+        let iceCreamSandwich = {};
+        iceCreamSandwich['dessert'] = 'Ice cream sandwich';
+        iceCreamSandwich['type'] = 'Ice cream';
+        iceCreamSandwich['calories'] = '237';
+        iceCreamSandwich['fat'] = '9.00';
+        iceCreamSandwich['carbs'] = '37';
+        iceCreamSandwich['protein'] = '4.30';
+        iceCreamSandwich['sodium'] = '129';
+        iceCreamSandwich['calcium'] = '8';
+        iceCreamSandwich['iron'] = '1';
+
+        let donut = {};
+        donut['dessert'] = 'Donut';
+        donut['type'] = 'Pastry';
+        donut['calories'] = '452';
+        donut['fat'] = '25.00';
+        donut['carbs'] = '51';
+        donut['protein'] = '4.90';
+        donut['sodium'] = '326';
+        donut['calcium'] = '2';
+        donut['iron'] = '22';
+
+        let kitKat = {};
+        kitKat['dessert'] = 'KitKat';
+        kitKat['type'] = 'Candy';
+        kitKat['calories'] = '518';
+        kitKat['fat'] = '26.00';
+        kitKat['carbs'] = '65';
+        kitKat['protein'] = '7.00';
+        kitKat['sodium'] = '54';
+        kitKat['calcium'] = '12';
+        kitKat['iron'] = '6';
+
+        let cupcake = {};
+        cupcake['dessert'] = 'Pastry';
+        cupcake['type'] = 'Cupcake';
+        cupcake['calories'] = '305';
+        cupcake['fat'] = '3.70';
+        cupcake['carbs'] = '67';
+        cupcake['protein'] = '4.3';
+        cupcake['sodium'] = '413';
+        cupcake['calcium'] = '3';
+        cupcake['iron'] = '8';
+
+        let honeycomb = {};
+        honeycomb['dessert'] = 'Honeycomb';
+        honeycomb['type'] = 'Other';
+        honeycomb['calories'] = '408';
+        honeycomb['fat'] = '3.20';
+        honeycomb['carbs'] = '87';
+        honeycomb['protein'] = '6.50';
+        honeycomb['sodium'] = '562';
+        honeycomb['calcium'] = '0';
+        honeycomb['iron'] = '45';
+
+        let jellyBean = {};
+        jellyBean['dessert'] = 'Jelly Bean';
+        jellyBean['type'] = 'Candy';
+        jellyBean['calories'] = '375';
+        jellyBean['fat'] = '0.00';
+        jellyBean['carbs'] = '94';
+        jellyBean['protein'] = '0.00';
+        jellyBean['sodium'] = '50';
+        jellyBean['calcium'] = '0';
+        jellyBean['iron'] = '0';
+
+        let lollipop = {};
+        lollipop['dessert'] = 'Lollipop';
+        lollipop['type'] = 'Candy';
+        lollipop['calories'] = '392';
+        lollipop['fat'] = '0.20';
+        lollipop['carbs'] = '98';
+        lollipop['protein'] = '0.00';
+        lollipop['sodium'] = '38';
+        lollipop['calcium'] = '0';
+        lollipop['iron'] = '2';
+
+        this._dataTableData = [
+            yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop
+        ];
     }
 
     /**
@@ -144,5 +264,14 @@ export class LandingPageComponent extends AfterViewInit
     private _isEmail(value: any)
     {
         return /^[^@]+@[^@]+$/.test(value);
+    }
+
+    /**
+     * @summary logs incoming data from event handlers.
+     * @param data The data to be logged.
+     */
+    private _logEvent(data)
+    {
+        console.info(data);
     }
 }

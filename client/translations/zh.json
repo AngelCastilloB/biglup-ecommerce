@@ -414,5 +414,21 @@
     {
        "key":   "Already a member",
        "value": "已經是會員"
+    },
+    {
+       "key":   "Rows per page:",
+       "value": "每頁行數:"
+    },
+    {
+       "key":   "of",
+       "value": "的"
+    },
+    {
+       "key":   "No data found.",
+       "value": "沒有找到數據."
+    },
+    {
+       "key":   "Search...",
+       "value": "搜索..."
     }
 ]

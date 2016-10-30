@@ -21,6 +21,10 @@ export * from './client/components/input/filters/input-filters';
 export * from './client/components/checkbox/biglup-checkbox.component';
 export * from './client/components/radio-group/radio-button/biglup-radio-button.component';
 export * from './client/components/radio-group/biglup-radio-group.component'
+export * from './client/components/data-table/biglup-data-table.component';
+export * from './client/components/icon-button/biglup-icon-button.component';
+export * from './client/components/dropdown-menu/biglup-dropdown-menu.component';
+export * from './client/components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
 export * from './client/directives/ripple/ripple.directive';
 export * from './client/biglup-ui.module';
 

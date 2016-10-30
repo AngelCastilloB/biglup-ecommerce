@@ -17,12 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, AfterViewInit, ViewChild, EventEmitter } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './biglup-checkbox.component.html';
-
 
 // EXPORTS ************************************************************************************************************/
 
@@ -33,12 +32,17 @@ import template from './biglup-checkbox.component.html';
     selector: 'biglup-checkbox',
     template
 })
-export class BiglupCheckboxComponent
+export class BiglupCheckboxComponent implements AfterViewInit
 {
     @Input('checked')
-    private _checked: boolean = false;
+    private _checked:       boolean = false;
+    @Output('checkedChange')
+    private _checkedChange: any     = new EventEmitter();
     @Input('disabled')
-    private _isDisabled: boolean = false;
+    private _isDisabled:    boolean = false;
+    private _showLabel:     boolean = true;
+    @ViewChild('reference')
+    private _contentWrapper;
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
@@ -48,9 +52,17 @@ export class BiglupCheckboxComponent
     }
 
     /**
+     * @summary Respond after Angular initializes the component's views and child views.
+     */
+    public ngAfterViewInit(): any
+    {
+        this._showLabel = this._contentWrapper.nativeElement.childNodes.length > 2;
+    }
+
+    /**
      * @summary Event handler for the on click event.
      *
-     * @param $event The click event.
+     * @param event The click event.
      */
     private _onClick(event)
     {
@@ -58,6 +70,9 @@ export class BiglupCheckboxComponent
             return;
 
         this._checked = !this._checked;
+
+        if (this._checkedChange)
+            this._checkedChange.emit(this._checked);
 
         event.preventDefault();
     }

@@ -1,0 +1,21 @@
+<div
+  class="biglup-dropdown-menu-container-main"
+  [class.biglup-dropdown-menu-container-enabled]="!_isDisabled"
+  [class.biglup-dropdown-menu-container-disabled]="_isDisabled">
+  <div #container class="biglup-dropdown-menu-container">
+    <biglup-input #input
+                  [disabled]="_isDisabled"
+                  (hasFocus)="_onFocusChange($event)"
+                  floatingHint="true"
+                  readonly="true"
+                  [value]="_text"
+                  rightIcon="arrow_drop_down"
+                  [hint]="_title">
+    </biglup-input>
+  </div>
+  <div #list class="biglup-dropdown-menu-options">
+    <ul>
+      <ng-content></ng-content>
+    </ul>
+  </div>
+</div>

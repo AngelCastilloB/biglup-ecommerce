@@ -1,4 +1,4 @@
-<div
+<div #container
   class="biglup-text-container"
   [class.biglup-text-input-valid]='!_invalid && !_floatingHint'
   [class.biglup-text-input-invalid]='_invalid && !_floatingHint'
@@ -6,13 +6,14 @@
   [class.biglup-text-input-invalid-float]='_invalid && _floatingHint'>
 
   <input
+    [attr.readonly]="_readonly ? true : null"
     #input
     (keydown)="_onKeyDown($event)"
     (keyup)="_onKeyUp($event)"
     (blur)="_onBlur($event)"
     (focus)="_onFocus($event)"
     [class.floating-label]='_floatingHint'
-    [class.biglup-text-input-margin-left]="_icon"
+    [class.biglup-text-input-margin-left]="_leftIcon"
     class="biglup-text-input"
     attr.name="{{_name}}"
     [(ngModel)]="_value"
@@ -23,12 +24,15 @@
        [class.biglup-text-input-bar-active]="_hasFocus || _invalid"
        [class.biglup-text-input-bar-active-invalid]='_invalid'>
   </div>
-  <i *ngIf="_icon" [ngClass]="['fa', _icon, 'biglup-text-input-icon']" aria-hidden="true"></i>
+  <i (click)="_onIconClick()" *ngIf="_leftIcon" class="material-icons md-18 biglup-text-input-left-icon">{{_leftIcon}}</i>
   <label
-    [class.biglup-text-input-label-padding-left]="_icon && (!_hasFocus && _value === '')"
+    [class.biglup-text-input-label-padding-left]="
+    (_leftIcon && !_floatingHint) ||
+     (_leftIcon && (!_hasFocus && _value === ''))"
     [class.biglup-text-input-error-color]="_floatingHint && _invalid"
     [class.biglup-text-input-valid-color]="_floatingHint && !_invalid && _hasFocus"
     #hint
     attr.for="{{_name}}">{{ _hint }}</label>
-  <span class="biglup-text-error">{{ _errorMessage }}</span>
+  <i (click)="_onIconClick()" *ngIf="_rightIcon" class="material-icons md-18 biglup-text-input-right-icon">{{_rightIcon}}</i>
 </div>
+<span #spanErrorMessage *ngIf="_invalid" class="biglup-text-error">{{ _errorMessage }}</span>

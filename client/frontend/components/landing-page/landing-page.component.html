@@ -17,18 +17,18 @@
   <biglup-button raised="true" disabled="true" color="disabled">Disabled</biglup-button>
 
   <h5>ICONS</h5>
-  <biglup-button icon="fa-check" color="primary">Primary</biglup-button>
-  <biglup-button icon="fa-cloud-upload" color="accent">Accent</biglup-button>
-  <biglup-button icon="fa-heart" color="warn">Warn</biglup-button>
-  <biglup-button icon="fa-github" color="monochrome">Monochrome</biglup-button>
-  <biglup-button icon="fa-times-circle-o" disabled="true" color="primary">Disabled</biglup-button>
+  <biglup-button icon="done" color="primary">Primary</biglup-button>
+  <biglup-button icon="backup" color="accent">Accent</biglup-button>
+  <biglup-button icon="favorite" color="warn">Warn</biglup-button>
+  <biglup-button icon="access_time" color="monochrome">Monochrome</biglup-button>
+  <biglup-button icon="block" disabled="true" color="primary">Disabled</biglup-button>
   <br><br><br>
-  <biglup-button icon="fa-check" raised="true" color="primary">Primary</biglup-button>
-  <biglup-button icon="fa-cloud-upload" raised="true" color="accent">Accent</biglup-button>
-  <biglup-button icon="fa-heart" raised="true" color="warn">Warn</biglup-button>
-  <biglup-button icon="fa-github" raised="true" color="monochrome">Monochrome</biglup-button>
-  <biglup-button icon="fa-github" raised="true" color="monochrome-inverted">Inverted</biglup-button>
-  <biglup-button icon="fa-times-circle-o" raised="true" disabled="true" color="disabled" icon="fa-times-circle-o">Disabled</biglup-button>
+  <biglup-button icon="done" raised="true" color="primary">Primary</biglup-button>
+  <biglup-button icon="backup" raised="true" color="accent">Accent</biglup-button>
+  <biglup-button icon="favorite" raised="true" color="warn">Warn</biglup-button>
+  <biglup-button icon="access_time" raised="true" color="monochrome">Monochrome</biglup-button>
+  <biglup-button icon="access_time" raised="true" color="monochrome-inverted">Inverted</biglup-button>
+  <biglup-button icon="block" raised="true" disabled="true" color="disabled">Disabled</biglup-button>
 
   <h3>INPUTS</h3>
   <hr>
@@ -47,9 +47,55 @@
     <biglup-input #validate errorMessage="Numbers Only!" name="validate" hint="Numbers"></biglup-input>
     <biglup-input #validate2 errorMessage="Letters Only!" name="validate2" hint="A-Z Floating" floatingHint="true"></biglup-input>
     <h5>ICONS</h5>
-    <biglup-input #email name="email" hint="Email" icon="fa-envelope" floatingHint="true" errorMessage="Please a valid email!"></biglup-input>
+    <biglup-input #email name="email" hint="Email" leftIcon="email" floatingHint="true" errorMessage="Please a valid email!"></biglup-input>
   </div>
 
+  <h3>DROP BOX</h3>
+  <hr>
+  <br>
+
+  <div style="width: 1000px">
+    <h5>TITLE</h5>
+    <biglup-dropdown-menu title="Your favourite pastry" [(value)]="_dropdownOneValue">
+      <biglup-dropdown-option value="Croissant">Croissant</biglup-dropdown-option>
+      <biglup-dropdown-option value="Donut">Donut</biglup-dropdown-option>
+      <biglup-dropdown-option value="Financier">Financier</biglup-dropdown-option>
+      <biglup-dropdown-option value="Madeleine">Madeleine</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownOneValue }}
+    <br>
+    <br>
+    <biglup-dropdown-menu title="Numbers" [(value)]="_dropdownTwoValue">
+      <biglup-dropdown-option value="10">10</biglup-dropdown-option>
+      <biglup-dropdown-option value="25">25</biglup-dropdown-option>
+      <biglup-dropdown-option value="50" selected="true">50</biglup-dropdown-option>
+      <biglup-dropdown-option value="100">100</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownTwoValue }}
+    <br>
+    <br>
+    <h5>NO TITLE</h5>
+    <biglup-dropdown-menu [(value)]="_dropdownThreeValue">
+      <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+      <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+      <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+      <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+    Value: {{ _dropdownThreeValue }}
+    <br>
+    <br>
+    <h5>DISABLED</h5>
+    <biglup-dropdown-menu title="Colors" disabled="true">
+      <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+      <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+      <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+      <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+    </biglup-dropdown-menu>
+    <br>
+  </div>
   <h3>CHECKBOX</h3>
   <hr>
   <br>
@@ -72,4 +118,22 @@
 
   <br>
   <p>Radio Group Value: {{ _radioGroupValue }}</p>
+
+  <h3>ICON BUTTON</h3>
+  <hr>
+  <br>
+  <biglup-icon-button icon="backup" color="red"></biglup-icon-button>
+  <biglup-icon-button icon="search" color="#3f51b5"></biglup-icon-button>
+  <biglup-icon-button icon="arrow_upward" color="violet"></biglup-icon-button>
+  <biglup-icon-button icon="arrow_downward" color="#737373"></biglup-icon-button>
+  <biglup-icon-button icon="delete" color="#737373"></biglup-icon-button>
+  <biglup-icon-button icon="chevron_right" color="#737373"></biglup-icon-button>
+  <biglup-icon-button icon="chevron_left" color="#737373"></biglup-icon-button>
+
+  <h3>DATA TABLE</h3>
+  <hr>
+  <br>
+  <div style="width:80%; margin: 0 auto;">
+    <biglup-data-table (delete)="_logEvent($event)" (edit)="_logEvent($event)" [columns]="_dataTableColums" [data]="_dataTableData" ></biglup-data-table></div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </div>

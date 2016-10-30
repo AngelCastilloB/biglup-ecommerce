@@ -10,6 +10,7 @@ Package.onUse(function(api)
     api.versionsFrom('1.4.1.1');
     api.use('ecmascript');
     api.use('angular2-compilers');
+    api.use('biglup:i18n');
 
     api.addFiles([
         'typings/biglup-ui.d.ts'
@@ -27,6 +28,10 @@ Package.onUse(function(api)
         'client/components/radio-group/radio-button/biglup-radio-button.component.ts',
         'client/directives/ripple/ripple.directive.ts',
         'client/components/input/filters/input-filters.ts',
+        'client/components/data-table/biglup-data-table.component.ts',
+        'client/components/icon-button/biglup-icon-button.component.ts',
+        'client/components/dropdown-menu/biglup-dropdown-menu.component.ts',
+        'client/components/dropdown-menu/dropdown-option/biglup-dropdown-option.component.ts',
         'client/biglup-ui.module.ts'
     ], 'client');
 

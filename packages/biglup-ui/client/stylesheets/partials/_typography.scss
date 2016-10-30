@@ -2,7 +2,14 @@
 
 .font-common-base {
     font-family: $base-font-family;
-    -webkit-font-smoothing: antialiased;
+    font-size: $base-font-size;
+    font-weight: $base-font-weight;
+};
+
+.font-table-base {
+    font-family: $base-font-family!important;
+    font-size: 13px!important;
+    color: rgba(0, 0, 0, .87);
 };
 
 .font-common-nowrap {
@@ -164,7 +171,17 @@
     ul { @extend .unordered-list; }
     ol { @extend .ordered-list; }
 
-    pre, code, input, label, span { @extend .fixed; }
+    pre, code { @extend .fixed; }
+
+    input, label, span { @extend .font-common-base; }
+    table, td, tr {
+      @extend .font-table-base;
+      > span
+      {
+        @extend .font-table-base;
+        word-wrap: break-word;
+      }
+    }
 
     button { @extend .font-button}
 }

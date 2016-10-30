@@ -19,6 +19,8 @@
 
 import { Component,
          Input,
+         Output,
+         EventEmitter,
          ElementRef,
          Renderer,
          ViewChild,
@@ -49,10 +51,14 @@ const DELETE_KEYCODE:    number = 46;
 })
 export class BiglupInputComponent implements OnInit, AfterViewInit
 {
+    @ViewChild('container')
+    private _container: ElementRef;
     @ViewChild('input')
     private _input: ElementRef;
     @ViewChild('hint')
     private _hintElement: ElementRef;
+    @ViewChild('spanErrorMessage')
+    private _spanErrorMessage: ElementRef;
     @Input('name')
     private _name: string = '';
     @Input('hint')
@@ -71,11 +77,17 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _isDisabled: boolean = false;
     @Input('filter')
     private _filter: (keyCode: number) => boolean = null;
-    @Input('icon')
-    private _icon: string  = '';
+    @Input('leftIcon')
+    private _leftIcon: string  = '';
+    @Input('rightIcon')
+    private _rightIcon: string = '';
+    @Input('readonly')
+    private _readonly:    boolean = false;
     private _inputChange: any     = null;
     private _inputBlur:   any     = null;
     private _hasFocus:    boolean = false;
+    @Output('hasFocus')
+    private _focusEmitter: any = new EventEmitter();
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
@@ -137,6 +149,16 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     }
 
     /**
+     * @summary Gets the underliying native input element.
+     *
+     * @returns {ElementRef} The underliying input native element.
+     */
+    public getInputNativeElement(): any
+    {
+        return this._input.nativeElement;
+    }
+
+    /**
      * @summary Respond after Angular initializes the component's views and child views.
      */
     public ngAfterViewInit(): any
@@ -167,12 +189,21 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
 
             if (autofilled)
             {
-                this._renderer.setElementClass(this._input.nativeElement, 'dirty', true);
-
-                this._renderer.setElementStyle(
-                    this._hintElement.nativeElement, 'visibility', !this._floatingHint ? 'hidden' : 'visible');
+                this.setDirty();
             }
         });
+    }
+
+    /**
+     * @summary Gives the input element the firty style.
+     */
+    public setDirty()
+    {
+        this._renderer.setElementClass(this._input.nativeElement, 'dirty', true);
+
+        if (this._hintElement)
+            this._renderer.setElementStyle(
+                this._hintElement.nativeElement, 'visibility', !this._floatingHint ? 'hidden' : 'visible');
     }
 
     /**
@@ -222,6 +253,8 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _onBlur(event: any)
     {
         this._hasFocus = false;
+        this._focusEmitter.emit(this._hasFocus);
+
         this._updateStateFromDom();
     }
 
@@ -233,6 +266,18 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _onFocus(event: any)
     {
         this._hasFocus = true;
+        this._focusEmitter.emit(this._hasFocus);
+    }
+
+    /**
+     * @summary Event handler for when an Icon is clicked.
+     * @private
+     */
+    private _onIconClick()
+    {
+        if (this._isDisabled)
+        this._hasFocus = true;
+        this._input.nativeElement.focus();
     }
 
     /**
@@ -240,6 +285,9 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
      */
     private _updateStateFromDom()
     {
+        if (this._invalid && this._errorMessage)
+            this._spanErrorMessage.nativeElement.style.left = this._container.nativeElement.offsetLeft + 'px';
+
         if (this._value !== '')
         {
             this._renderer.setElementClass(this._input.nativeElement, 'dirty', true);
@@ -254,5 +302,5 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
         }
 
         this._changeDetector.detectChanges();
-    }9
+    }
 }

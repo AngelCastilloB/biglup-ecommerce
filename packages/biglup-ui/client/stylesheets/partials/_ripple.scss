@@ -1,3 +1,5 @@
+@import 'base';
+
 .ripple {
     display: inline-block;
 }
@@ -18,29 +20,40 @@
 }
 
 .fixed-ripple-effect {
+    float: left;
     position: absolute;
     border-radius: 50%;
     background: transparent;
-    opacity: 0.2;
+    opacity: 0.0;
     z-index: -1;
 }
 
 .ripple-effect-on {
     @extend .ripple-effect;
-    animation: ripple-animation-on 1500ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation: ripple-animation-on 400ms cubic-bezier(0.165, 0.84, 0.44, 0.50) forwards;
 }
 
 .ripple-effect-off {
-    animation: ripple-animation-off 1500ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation: ripple-animation-off 500ms forwards;
 }
 
 .fixed-ripple-effect-on {
     @extend .ripple-effect;
-    animation: fixed-ripple-animation-on 100ms ease forwards;
+    animation: fixed-ripple-animation-on 200ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 .fixed-ripple-effect-off {
-    animation: fixed-ripple-animation-off 300ms ease forwards;
+    animation: fixed-ripple-animation-off 500ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    color: $primary-color;
+}
+
+.icon-ripple-effect-on {
+  @extend .ripple-effect;
+  animation: icon-ripple-animation-on 200ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.icon-ripple-effect-off {
+  animation: icon-ripple-animation-off 500ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 @keyframes ripple-animation-on {
@@ -49,8 +62,8 @@
         transform: scale(1);
     }
     to {
-        -webkit-transform: scale(3.8);
-        transform: scale(3.8);
+        -webkit-transform: scale(7);
+        transform: scale(7);
     }
 }
 
@@ -61,8 +74,8 @@
         opacity: 0.4;
     }
     to {
-        -webkit-transform: scale(3.8);
-        transform: scale(3.8);
+        -webkit-transform: scale(7);
+        transform: scale(7);
         opacity: 0.0;
     }
 }
@@ -71,10 +84,12 @@
     from {
         -webkit-transform: scale(1);
         transform: scale(1);
+        opacity: 0.0;
     }
     to {
-        -webkit-transform: scale(4);
-        transform: scale(4);
+        opacity: 0.2;
+        -webkit-transform: scale(4.5);
+        transform: scale(4.5);
     }
 }
 
@@ -85,4 +100,26 @@
     to {
         opacity: 0.0;
     }
+}
+
+@keyframes icon-ripple-animation-on {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.0;
+  }
+  to {
+    opacity: 0.15;
+    -webkit-transform: scale(3.7);
+    transform: scale(3.7);
+  }
+}
+
+@keyframes icon-ripple-animation-off {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 0.0;
+  }
 }
