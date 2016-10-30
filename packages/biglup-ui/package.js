@@ -10,6 +10,7 @@ Package.onUse(function(api)
     api.versionsFrom('1.4.1.1');
     api.use('ecmascript');
     api.use('angular2-compilers');
+    api.use('biglup:i18n');
 
     api.addFiles([
         'typings/biglup-ui.d.ts'

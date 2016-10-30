@@ -414,5 +414,21 @@
     {
        "key":   "Already a member",
        "value": "Already a member"
+    },
+    {
+       "key":   "Rows per page:",
+       "value": "Rows per page:"
+    },
+    {
+       "key":   "of",
+       "value": "of"
+    },
+    {
+       "key":   "No data found.",
+       "value": "No data found."
+    },
+    {
+       "key":   "Search...",
+       "value": "Search..."
     }
 ]

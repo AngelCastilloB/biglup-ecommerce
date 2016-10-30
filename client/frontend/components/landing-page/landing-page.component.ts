@@ -177,7 +177,9 @@ export class LandingPageComponent extends AfterViewInit
         lollipop['calcium'] = '0';
         lollipop['iron'] = '2';
 
-        this._dataTableData = [ yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop, yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop ];
+        this._dataTableData = [
+            yogurt, eclair, iceCreamSandwich, donut, kitKat, cupcake, honeycomb, jellyBean, lollipop
+        ];
     }
 
     /**
@@ -262,5 +264,14 @@ export class LandingPageComponent extends AfterViewInit
     private _isEmail(value: any)
     {
         return /^[^@]+@[^@]+$/.test(value);
+    }
+
+    /**
+     * @summary logs incoming data from event handlers.
+     * @param data The data to be logged.
+     */
+    private _logEvent(data)
+    {
+        console.info(data);
     }
 }

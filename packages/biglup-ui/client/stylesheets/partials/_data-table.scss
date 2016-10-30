@@ -5,6 +5,34 @@
   max-width: 100%;
   @include elevation(1);
 
+  .biglup-data-table-header-actions {
+    background-color: $table-selection-color;
+    display: inline-block;
+    text-align: right;
+    width: 100%;
+    height: 81px;
+    i {
+      color: $primary-color!important;
+    }
+
+    div {
+      margin-top: 30px;
+    }
+  }
+
+  .biglup-data-table-no-data-found {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    font-family: $base-font-family;
+    color: rgba(0, 0, 0, .60);
+  }
+
   .biglup-data-table-numeric {
     text-align: right!important;
   }
@@ -53,6 +81,7 @@
 
   .biglup-data-table-header {
     width: 100%;
+    height: 81px;
     display: inline-block;
   }
 
@@ -135,7 +164,6 @@
   }
 
   .biglup-icon-button-sort-icon {
-    font-size: 13px !important;
     display: inline-block;
     position: relative;
     width: 100%;
@@ -145,6 +173,20 @@
     [biglup-icon-button] {
       margin: 0 0 -5px -1px !important;
     }
+  }
+
+  .biglup-data-table-selected-row {
+    background-color: $table-selection-color;
+  }
+
+  .biglup-data-table-header-text {
+    font-size: 12px !important;
+    font-weight: 100;
+  }
+
+  .biglup-data-table-header-text-sorting {
+    font-weight: bold;
+    color: black;
   }
 
   .biglup-icon-button-column-title {

@@ -47,4 +47,15 @@ export class BiglupIconButtonComponent
     constructor()
     {
     }
+
+    /**
+     * @summary Event handler for when the icon button is clicked
+     *
+     * @param event the click event.
+     */
+    private _onClick(event: any)
+    {
+        if (this._isDisabled)
+            event.preventDefault();
+    }
 }

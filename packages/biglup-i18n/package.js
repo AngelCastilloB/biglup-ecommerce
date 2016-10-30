@@ -37,6 +37,11 @@ Package.onUse(function(api)
         'client/pipes/translate.pipe.ts'
     ], 'client');
 
+    // Module
+    api.addFiles([
+        'client/biglup-i18n.module.ts'
+    ], 'client');
+
     api.mainModule ('client.ts', "client");
     api.mainModule ('server.ts', "server");
 });

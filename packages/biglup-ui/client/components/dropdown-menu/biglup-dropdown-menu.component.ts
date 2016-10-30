@@ -118,6 +118,9 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
 
             option.getSelectedEmitter().subscribe((selected) =>
             {
+                if (this._selectedOption === selected)
+                    return;
+
                 if (this._selectedOption)
                     this._selectedOption.setSelected(false);
 
@@ -137,6 +140,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
             this._selectedOption = this._options.first;
             this._value = this._options.first.getValue();
             this._text = this._options.first.getText();
+
             this._valueChange.emit(this._value);
         }
 
@@ -167,7 +171,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
         {
             this._menuList.nativeElement.style.visibility = 'hidden';
             this._menuList.nativeElement.style.display = 'block';
-            Observable.timer(300).take(1).subscribe(
+            Observable.timer(100).take(1).subscribe(
             () =>
             {
                 this._menuList.nativeElement.style.visibility = 'visible';
