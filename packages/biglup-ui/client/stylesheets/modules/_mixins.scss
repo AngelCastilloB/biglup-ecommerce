@@ -1,13 +1,30 @@
+/**
+ * @summary Immport a given font from the google font CDN.
+ */
 @mixin google-font($font)
 {
     $font: unquote($font);
     @import url("https://fonts.googleapis.com/css?family=#{$font}");
 }
 
+/**
+ * @summary Clearfix mixin.
+ */
 @mixin clearfix {
   &:after {
     content: "";
     display: table;
     clear: both;
   }
+}
+
+/**
+ * @summary Responsive image.
+ *
+ * Keep images from scaling beyond the width of their parents.
+ */
+@mixin img-responsive($display: block) {
+  display: $display;
+  max-width: 100%; // Part 1: Set a maximum relative to the parent
+  height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
 }

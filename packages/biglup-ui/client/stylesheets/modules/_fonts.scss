@@ -23,3 +23,24 @@ $fixed-line-height: 1.2;
 
 $heading-font-family: 'Roboto', sans-serif;
 $heading-font-weight: 700;
+
+/**
+ * @summary Resets inherited text style.
+ */
+@mixin reset-text() {
+  font-family: $base-font-family;
+  // We deliberately do NOT reset font-size.
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-break: auto;
+  text-align: left; // Fallback for where `start` is not supported
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  white-space: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+}

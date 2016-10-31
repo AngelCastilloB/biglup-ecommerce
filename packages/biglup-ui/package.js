@@ -32,6 +32,8 @@ Package.onUse(function(api)
         'client/components/icon-button/biglup-icon-button.component.ts',
         'client/components/dropdown-menu/biglup-dropdown-menu.component.ts',
         'client/components/dropdown-menu/dropdown-option/biglup-dropdown-option.component.ts',
+        'client/components/badge/biglup-badge.component.ts',
+        './client/components/paper/biglup-paper.component.ts',
         'client/biglup-ui.module.ts'
     ], 'client');
 
