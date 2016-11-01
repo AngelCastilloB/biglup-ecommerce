@@ -17,6 +17,7 @@
 
 declare module BiglupUi
 {
+    class BiglupChartDirective {}
     class BiglupToastService {
         public displayToast(message: string, dismissable: boolean = true);
     }

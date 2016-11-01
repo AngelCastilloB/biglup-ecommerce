@@ -5,6 +5,10 @@ Package.describe({
     documentation: 'README.md'
 });
 
+Npm.depends({
+    "chart.js": "2.3.0"
+});
+
 Package.onUse(function(api)
 {
     api.versionsFrom('1.4.1.1');
@@ -35,7 +39,8 @@ Package.onUse(function(api)
         'client/components/badge/biglup-badge.component.ts',
         'client/components/paper/biglup-paper.component.ts',
         'client/services/toast/biglup-toast.service.ts',
-        'client/biglup-ui.module.ts'
+        'client/biglup-ui.module.ts',
+        'client/directives/charts/biglup-chart.directive.ts'
     ], 'client');
 
     api.mainModule ('index.ts', "client");

@@ -32,17 +32,7 @@ import { DataTableColumn } from 'meteor/biglup:ui';
  */
 @Component({
     selector: 'landing-page',
-    template,
-    styles: [`
-        .app-content 
-        {
-            padding: 20px;
-        }
-        .app-content md-card 
-        {
-            margin: 20px;
-        }`
-    ]
+    template
 })
 export class LandingPageComponent extends AfterViewInit
 {
@@ -59,6 +49,61 @@ export class LandingPageComponent extends AfterViewInit
     private _dropdownOneValue: string = '';
     private _dropdownTwoValue: string = '';
     private _dropdownThreeValue: string = '';
+
+    // Charts
+
+    // Bars
+    private _barChartOptions: any = {
+        _scaleShowVerticalLines: false,
+        _responsive: true
+    };
+    private _barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    private _barChartType:   string = 'bar';
+    private _barChartLegend: boolean = true;
+
+    private _barChartData: any[] = [
+        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+        {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    ];
+
+    // Lines
+    private _lineChartData: Array<any> = [
+        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+        {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
+        {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+    ];
+    private _lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    private _lineChartOptions: any = {
+        animation: false,
+        responsive: true
+    };
+    private _lineChartLegend: boolean = true;
+    private _lineChartType:   string = 'line';
+
+    // doughnut
+    private _doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+    private _doughnutChartData:   number[] = [350, 450, 100];
+    private _doughnutChartType:   string   = 'doughnut';
+
+    // Radar
+    private _radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+
+    private _radarChartData: any = [
+        {data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A'},
+        {data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B'}
+    ];
+    private _radarChartType: string = 'radar';
+
+    // Pie
+    private _pieChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+    private _pieChartData: number[] = [300, 500, 100];
+    private _pieChartType: string = 'pie';
+
+    // PolarArea
+    private _polarAreaChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
+    private _polarAreaChartData: number[] = [300, 500, 100, 40, 120];
+    private _polarAreaLegend: boolean = true;
+    private _polarAreaChartType: string = 'polarArea';
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.
@@ -272,7 +317,7 @@ export class LandingPageComponent extends AfterViewInit
      */
     private _logEvent(data)
     {
-        console.info(data);
+        console.log(data);
     }
 
     /**
