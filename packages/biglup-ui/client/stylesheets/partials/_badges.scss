@@ -1,0 +1,23 @@
+@import 'base';
+
+.biglup-badge {
+  font-family: $base-font-family;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
+  font-size: 11px;
+  color: $button-text-and-icon-color;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  background-color: $accent-color;
+  border-radius: 10px;
+
+  // Empty badges collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+}

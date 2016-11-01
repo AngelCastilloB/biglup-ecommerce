@@ -430,5 +430,9 @@
     {
        "key":   "Search...",
        "value": "搜索..."
+    },
+    {
+       "key":   "Dismiss",
+       "value": "解僱"
     }
 ]

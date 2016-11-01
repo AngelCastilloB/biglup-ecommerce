@@ -1,0 +1,13 @@
+@import 'base';
+
+@for $i from 1 through 9 {
+  .biglup-paper-#{$i} {
+    display: inline-block;
+    background: white;
+    box-sizing: border-box;
+    margin: 8px;
+    padding: 16px;
+    border-radius: 2px;
+    @include elevation($i);
+  }
+}

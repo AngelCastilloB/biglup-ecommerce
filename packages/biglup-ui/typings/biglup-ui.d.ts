@@ -17,6 +17,11 @@
 
 declare module BiglupUi
 {
+    class BiglupToastService {
+        public displayToast(message: string, dismissable: boolean = true);
+    }
+    class BiglupPaperComponent {}
+    class BiglupBadgeComponent {}
     class BiglupDropdownOptionComponent {}
     class BiglupIconButtonComponent {}
     class BiglupButtonComponent {}

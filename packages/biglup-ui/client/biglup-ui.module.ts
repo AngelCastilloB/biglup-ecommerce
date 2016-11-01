@@ -30,6 +30,8 @@ import { BiglupDataTableComponent }      from './components/data-table/biglup-da
 import { BiglupIconButtonComponent }     from './components/icon-button/biglup-icon-button.component';
 import { BiglupDropdownMenuComponent }   from './components/dropdown-menu/biglup-dropdown-menu.component';
 import { BiglupDropdownOptionComponent } from './components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
+import { BiglupBadgeComponent }          from './components/badge/biglup-badge.component';
+import { BiglupPaperComponent }          from './components/paper/biglup-paper.component';
 import { BiglupI18nModule }              from 'meteor/biglup:i18n';
 
 // EXPORTS ************************************************************************************************************/
@@ -52,7 +54,9 @@ import { BiglupI18nModule }              from 'meteor/biglup:i18n';
         BiglupIconButtonComponent,
         BiglupDropdownMenuComponent,
         RippleDirective,
-        BiglupDropdownOptionComponent
+        BiglupDropdownOptionComponent,
+        BiglupBadgeComponent,
+        BiglupPaperComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -64,7 +68,9 @@ import { BiglupI18nModule }              from 'meteor/biglup:i18n';
         BiglupIconButtonComponent,
         BiglupDropdownMenuComponent,
         RippleDirective,
-        BiglupDropdownOptionComponent
+        BiglupDropdownOptionComponent,
+        BiglupBadgeComponent,
+        BiglupPaperComponent
     ]
 })
 export class BiglupUiModule

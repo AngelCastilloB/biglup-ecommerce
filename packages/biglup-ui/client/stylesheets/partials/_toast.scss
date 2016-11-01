@@ -1,0 +1,53 @@
+@import 'base';
+
+.biglup-toast {
+  position: fixed;
+  transition-property: opacity, bottom, left, right, width, margin, border-radius;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  font-family: $base-font-family;
+  font-size: 14px;
+  min-height: 14px;
+  background-color: #323232;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  line-height: 22px;
+  padding: 18px 24px;
+  bottom: 0px;
+  opacity: 0;
+  z-index: 10;
+
+}
+
+@media (min-width: 640px) {
+  .biglup-toast {
+    min-width: 288px;
+    max-width: 568px;
+    display: inline-flex;
+    border-radius: 2px;
+    margin: 24px;
+    bottom: -100px;
+
+  }
+}
+
+@media (max-width: 640px) {
+  .biglup-toast {
+    left: 0px;
+    right: 0px;
+  }
+}
+
+.biglup-toast .action {
+  background: inherit;
+  display: inline-block;
+  border: none;
+  font-size: inherit;
+  text-transform: uppercase;
+  color: #ffeb3b;
+  margin: 0px 0px 0px 24px;
+  padding: 0px;
+  min-width: min-content;
+}

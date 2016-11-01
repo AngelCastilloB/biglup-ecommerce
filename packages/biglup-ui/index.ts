@@ -25,6 +25,9 @@ export * from './client/components/data-table/biglup-data-table.component';
 export * from './client/components/icon-button/biglup-icon-button.component';
 export * from './client/components/dropdown-menu/biglup-dropdown-menu.component';
 export * from './client/components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
+export * from './client/components/badge/biglup-badge.component';
+export * from './client/components/paper/biglup-paper.component';
 export * from './client/directives/ripple/ripple.directive';
 export * from './client/biglup-ui.module';
+export * from './client/services/toast/biglup-toast.service';
 
