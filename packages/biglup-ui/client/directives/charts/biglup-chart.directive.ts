@@ -111,14 +111,16 @@ export class BiglupChartDirective implements OnDestroy, OnChanges, OnInit
     public chartClick: EventEmitter<any> = new EventEmitter();
     @Output()
     public  chartHover: EventEmitter<any> = new EventEmitter();
-    public  ctx:      any;
-    public  chart:    any;
-    private _cvs:      any;
+
+    // Private fields.
+    public  ctx:            any;
+    public  chart:          any;
+    private _cvs:           any;
     private _isInitialized: boolean = false;
 
     /**
      * @summary Initializes a new instance of the constructor class.
-     * @param _element           The element this attribute will enhance.
+     * @param _element The element this attribute will enhance.
      */
     public constructor(private _element: ElementRef)
     {
@@ -273,15 +275,42 @@ export class BiglupChartDirective implements OnDestroy, OnChanges, OnInit
 
 // INNER FUNCTIONS ****************************************************************************************************/
 
-function rgba(colour:Array<number>, alpha:number):string {
+// TODO: Move this to a chart color generator class.
+/**
+ * @summary Gets an RGBA color representation given a collection of values.
+ *
+ * @param colour The values representing the color.
+ * @param alpha The alpha channel value.
+ *
+ * @return {string} The RGBA color representation.
+ */
+const rgba = (colour: Array<number>, alpha: number): string =>
+{
     return 'rgba(' + colour.concat(alpha).join(',') + ')';
-}
+};
 
-function getRandomInt(min:number, max:number):number {
+/**
+ * @summary Gets a random int between a given range.
+ *
+ * @param min The minimun value.
+ * @param max The maximun value.
+ *
+ * @return {number} The randomly generated number.
+ */
+const getRandomInt = (min: number, max: number): number =>
+{
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
-function formatLineColor(colors:Array<number>):Color {
+/**
+ * @summary Formats the color values for the line chart.
+ *
+ * @param colors The color values.
+ *
+ * @return The color object.
+ */
+const formatLineColor = (colors: Array<number>): Color =>
+{
     return {
         backgroundColor: rgba(colors, 0.4),
         borderColor: rgba(colors, 1),
@@ -290,85 +319,122 @@ function formatLineColor(colors:Array<number>):Color {
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: rgba(colors, 0.8)
     };
-}
+};
 
-function formatBarColor(colors:Array<number>):Color {
+/**
+ * @summary Formats the color values for the bar chart.
+ *
+ * @param colors The color values.
+ *
+ * @return The color object.
+ */
+const formatBarColor = (colors: Array<number>): Color =>
+{
     return {
         backgroundColor: rgba(colors, 0.6),
         borderColor: rgba(colors, 1),
         hoverBackgroundColor: rgba(colors, 0.8),
         hoverBorderColor: rgba(colors, 1)
     };
-}
+};
 
-function formatPieColors(colors:Array<number[]>):Colors {
+/**
+ * @summary Formats the color values for the pie chart.
+ *
+ * @param colors The color values.
+ *
+ * @return The color object.
+ */
+const formatPieColors = (colors: Array<number[]>): Colors =>
+{
     return {
-        backgroundColor: colors.map((color:number[]) => rgba(color, 0.6)),
+        backgroundColor: colors.map((color: number[]) => rgba(color, 0.6)),
         borderColor: colors.map(() => '#fff'),
-        pointBackgroundColor: colors.map((color:number[]) => rgba(color, 1)),
+        pointBackgroundColor: colors.map((color: number[]) => rgba(color, 1)),
         pointBorderColor: colors.map(() => '#fff'),
-        pointHoverBackgroundColor: colors.map((color:number[]) => rgba(color, 1)),
-        pointHoverBorderColor: colors.map((color:number[]) => rgba(color, 1))
+        pointHoverBackgroundColor: colors.map((color: number[]) => rgba(color, 1)),
+        pointHoverBorderColor: colors.map((color: number[]) => rgba(color, 1))
     };
-}
+};
 
-function formatPolarAreaColors(colors:Array<number[]>):Color {
+/**
+ * @summary Formats the color values for the polar area chart.
+ *
+ * @param colors The color values.
+ *
+ * @return The color object.
+ */
+const formatPolarAreaColors = (colors: Array<number[]>): Color =>
+{
     return {
-        backgroundColor: colors.map((color:number[]) => rgba(color, 0.6)),
-        borderColor: colors.map((color:number[]) => rgba(color, 1)),
-        hoverBackgroundColor: colors.map((color:number[]) => rgba(color, 0.8)),
-        hoverBorderColor: colors.map((color:number[]) => rgba(color, 1))
+        backgroundColor: colors.map((color: number[]) => rgba(color, 0.6)),
+        borderColor: colors.map((color: number[]) => rgba(color, 1)),
+        hoverBackgroundColor: colors.map((color: number[]) => rgba(color, 0.8)),
+        hoverBorderColor: colors.map((color: number[]) => rgba(color, 1))
     };
-}
+};
 
-function getRandomColor():number[] {
+/**
+ * @summary Generates a random color value collection.
+ *
+ * @return {number[]} The collection fo random color values.
+ */
+const getRandomColor = (): number[] =>
+{
     return [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
-}
+};
 
 /**
- * Generate colors for line|bar charts
- * @param index
- * @returns {number[]|Color}
+ * Generate colors for line or bar charts
+ *
+ * @param index The index of the default value.
+ *
+ * @returns {number[]|Color} The color collection.
  */
-function generateColor(index:number):number[] {
+const generateColor = (index: number): number[] =>
+{
     return BiglupChartDirective.defaultColors[index] || getRandomColor();
-}
+};
 
 /**
- * Generate colors for pie|doughnut charts
- * @param count
- * @returns {Colors}
+ * @summary Generate colors for pie or doughnut charts.
+ *
+ * @param count The color count to be generated.
+ *
+ * @returns {Colors} The generated colors.
  */
-function generateColors(count:number):Array<number[]> {
-    let colorsArr:Array<number[]> = new Array(count);
-    for (let i = 0; i < count; i++) {
+const generateColors = (count: number): Array<number[]> =>
+{
+    let colorsArr: Array<number[]> = new Array(count);
+
+    for (let i = 0; i < count; i++)
         colorsArr[i] = BiglupChartDirective.defaultColors[i] || getRandomColor();
-    }
+
     return colorsArr;
-}
+};
 
 /**
- * Generate colors by chart type
- * @param chartType
- * @param index
- * @param count
- * @returns {Color}
+ * @summary Generate colors by chart type.
+ *
+ * @param chartType The chart type.
+ * @param index     The index of the default colot.
+ * @param count     The count of colors needed.
+ *
+ * @returns {Color} The random color values.
  */
-function getColors(chartType:string, index:number, count:number):Color {
-    if (chartType === 'pie' || chartType === 'doughnut') {
+const getColors = (chartType: string, index: number, count: number): Color =>
+{
+    if (chartType === 'pie' || chartType === 'doughnut')
         return formatPieColors(generateColors(count));
-    }
 
-    if (chartType === 'polarArea') {
+    if (chartType === 'polarArea')
         return formatPolarAreaColors(generateColors(count));
-    }
 
-    if (chartType === 'line' || chartType === 'radar') {
+    if (chartType === 'line' || chartType === 'radar')
         return formatLineColor(generateColor(index));
-    }
 
-    if (chartType === 'bar' || chartType === 'horizontalBar') {
+    if (chartType === 'bar' || chartType === 'horizontalBar')
         return formatBarColor(generateColor(index));
-    }
+
     return generateColor(index);
-}
+};
