@@ -430,5 +430,9 @@
     {
        "key":   "Search...",
        "value": "Search..."
+    },
+    {
+       "key":   "Dismiss",
+       "value": "Dismiss"
     }
 ]

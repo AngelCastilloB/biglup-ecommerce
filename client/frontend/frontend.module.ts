@@ -38,6 +38,7 @@ import { CartComponent }                  from './components/header/components/c
 import { CategoriesService }              from 'meteor/biglup:business';
 import { ProductsService }                from 'meteor/biglup:business';
 import { CartsService }                   from 'meteor/biglup:business';
+import { BiglupToastService }             from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -76,7 +77,8 @@ import { CartsService }                   from 'meteor/biglup:business';
     providers: [
         CategoriesService,
         ProductsService,
-        CartsService
+        CartsService,
+        BiglupToastService
     ]
 })
 export class FrontendModule

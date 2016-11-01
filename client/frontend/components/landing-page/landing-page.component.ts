@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { InputFilters, BiglupInputComponent }  from 'meteor/biglup:ui';
+import { Component, ViewChild, AfterViewInit }                    from '@angular/core';
+import { InputFilters, BiglupInputComponent, BiglupToastService } from 'meteor/biglup:ui';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -63,7 +63,7 @@ export class LandingPageComponent extends AfterViewInit
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.
      */
-    constructor()
+    constructor(private _toastService: BiglupToastService)
     {
         super();
         this._dataTableColums = [
@@ -273,5 +273,16 @@ export class LandingPageComponent extends AfterViewInit
     private _logEvent(data)
     {
         console.info(data);
+    }
+
+    /**
+     * @summary Display a toast using the toast service.
+     *
+     * @param message The message to be displayed.
+     * @param dismissable True if the toast can be dismissed, otherwise, false.
+     */
+    private _displayToast(message: string, dissmisable)
+    {
+        this._toastService.displayToast(message, dissmisable);
     }
 }

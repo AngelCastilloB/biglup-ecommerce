@@ -157,4 +157,16 @@
   <biglup-paper elevation="7">7</biglup-paper>
   <biglup-paper elevation="8">8</biglup-paper>
   <biglup-paper elevation="9">9</biglup-paper>
+
+  <h3>TOAST</h3>
+  <hr>
+  <br>
+  <br>
+  <h5>NOT DISSMISABLE</h5>
+  <biglup-button (click)="_displayToast('Your message was sent', false)" raised="true" color="primary">Single Line</biglup-button>
+  <biglup-button (click)="_displayToast('This is a longer message that wont fit on one line. It is, inevitably, quite a boring thing. Hopefully it is still useful.', false)" raised="true" color="primary">Multi Line</biglup-button>
+  <h5>DISSMISABLE</h5>
+  <biglup-button (click)="_displayToast('Your message was sent')" raised="true" color="primary">Single Line</biglup-button>
+  <biglup-button (click)="_displayToast('This is a longer message that wont fit on one line. It is, inevitably, quite a boring thing. Hopefully it is still useful.')" raised="true" color="primary">Multi Line</biglup-button>
+
 </div>
