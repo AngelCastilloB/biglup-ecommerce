@@ -1,0 +1,38 @@
+@import 'base';
+
+.biglup-vertical-menu {
+  .biglup-vertical-menu-header-image {
+    @include img-responsive();
+    @include elevation(1);
+  }
+
+  .menu {
+    margin: 0 auto;
+    padding: 0;
+    width: 270px;
+  }
+
+  .menu li {
+    list-style: none;
+    transition: max-height 500ms cubic-bezier(0.23, 1, 0.32, 1);
+    display: block;
+    margin-top: 0;
+    padding: 0 10px;
+    color: black;
+  }
+
+  .menu li ul {
+    margin: 0;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .menu > li:hover ul {
+    display: block;
+    max-height: 100px;
+    transition: max-height 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}

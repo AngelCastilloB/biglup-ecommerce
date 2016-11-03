@@ -5,8 +5,9 @@
     font-weight: 200;
     background-color: #2e353d;
     position: fixed;
-    top: 0px;
+    top: 0;
     width: 300px;
+    min-width: 200px;
     height: 100%;
     color: #e1ffff;
 }
@@ -45,8 +46,8 @@
   */
 }
 
-.nav-side-menu ul :not(collapsed) .arrow:before,
-.nav-side-menu li :not(collapsed) .arrow:before {
+.nav-side-menu ul :not(collapsed) .biglup-arrow-icon:before,
+.nav-side-menu li :not(collapsed) .biglup-arrow-icon:before {
     font-family: FontAwesome;
     content: "\f078";
     display: inline-block;

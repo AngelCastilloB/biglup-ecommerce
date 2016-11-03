@@ -1,0 +1,17 @@
+<div biglupToolbar>
+  <div left>
+    <div (click)="_onMenuButtonClick()"
+         [class.biglup-arrow-icon]="_showleftNavbar"
+         [class.biglup-menu-icon]="!_showleftNavbar"
+         class="biglup-animated-menu-icon"
+         ripple [fixedRipple]="true" [iconRipple]="true" [rippleDisabled]="_isDisabled" [style.color]="_color">
+      <span class="first"></span>
+      <span class="second"></span>
+      <span class="third"></span>
+    </div>
+  </div>
+  <div title>{{_title}}</div>
+  <div right>
+    <ng-content></ng-content>
+    </div>
+</div>

@@ -33,7 +33,6 @@ import { CategoryItemComponent }          from './components/category-item/categ
 import { CategoryComponent }              from './components/category/category.component';
 import { SharedModule }                   from '../shared.module';
 import { FrontendComponent }              from './frontend.component';
-import { BiglupUiModule }                 from 'meteor/biglup:ui';
 import { CartComponent }                  from './components/header/components/cart.component';
 import { CategoriesService }              from 'meteor/biglup:business';
 import { ProductsService }                from 'meteor/biglup:business';
@@ -71,8 +70,7 @@ import { BiglupToastService }             from 'meteor/biglup:ui';
     ],
     imports: [
         SharedModule,
-        FrontendRoutesModule,
-        BiglupUiModule
+        FrontendRoutesModule
     ],
     providers: [
         CategoriesService,

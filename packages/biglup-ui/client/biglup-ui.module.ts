@@ -17,23 +17,28 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { NgModule }                      from '@angular/core';
-import { BrowserModule }                 from '@angular/platform-browser';
-import { FormsModule }                   from '@angular/forms';
-import { BiglupButtonComponent }         from './components/button/biglup-button.component';
-import { BiglupInputComponent }          from './components/input/biglup-input.component';
-import { BiglupCheckboxComponent}        from './components/checkbox/biglup-checkbox.component';
-import { BiglupRadioButtonComponent}     from './components/radio-group/radio-button/biglup-radio-button.component';
-import { BiglupRadioGroupComponent}      from './components/radio-group/biglup-radio-group.component';
-import { RippleDirective }               from './directives/ripple/ripple.directive';
-import { BiglupDataTableComponent }      from './components/data-table/biglup-data-table.component';
-import { BiglupIconButtonComponent }     from './components/icon-button/biglup-icon-button.component';
-import { BiglupDropdownMenuComponent }   from './components/dropdown-menu/biglup-dropdown-menu.component';
-import { BiglupDropdownOptionComponent } from './components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
-import { BiglupBadgeComponent }          from './components/badge/biglup-badge.component';
-import { BiglupPaperComponent }          from './components/paper/biglup-paper.component';
-import { BiglupI18nModule }              from 'meteor/biglup:i18n';
-import { BiglupChartDirective }          from './directives/charts/biglup-chart.directive';
+import { NgModule }                               from '@angular/core';
+import { BrowserModule }                          from '@angular/platform-browser';
+import { FormsModule }                            from '@angular/forms';
+import { BiglupButtonComponent }                  from './components/button/biglup-button.component';
+import { BiglupInputComponent }                   from './components/input/biglup-input.component';
+import { BiglupCheckboxComponent}                 from './components/checkbox/biglup-checkbox.component';
+import { BiglupRadioButtonComponent}              from './components/radio-group/radio-button/biglup-radio-button.component';
+import { BiglupRadioGroupComponent}               from './components/radio-group/biglup-radio-group.component';
+import { RippleDirective }                        from './directives/ripple/ripple.directive';
+import { BiglupDataTableComponent }               from './components/data-table/biglup-data-table.component';
+import { BiglupIconButtonComponent }              from './components/icon-button/biglup-icon-button.component';
+import { BiglupDropdownMenuComponent }            from './components/dropdown-menu/biglup-dropdown-menu.component';
+import { BiglupDropdownOptionComponent }          from './components/dropdown-menu/dropdown-option/biglup-dropdown-option.component';
+import { BiglupBadgeComponent }                   from './components/badge/biglup-badge.component';
+import { BiglupPaperComponent }                   from './components/paper/biglup-paper.component';
+import { BiglupI18nModule }                       from 'meteor/biglup:i18n';
+import { BiglupChartDirective }                   from './directives/charts/biglup-chart.directive';
+import { BiglupToolbarComponent }                 from './components/toolbar/biglup-toolbar.component';
+import { BiglupLeftNavbarLayoutComponent }        from './components/layout/left-navbar/biglup-left-navbar-layout.component';
+import { BiglupLeftNavbarLayoutMenuComponent }    from './components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component';
+import { BiglupLeftNavbarLayoutContentComponent } from './components/layout/left-navbar/content/biglup-left-navbar-layout-content.component';
+import { BiglupVerticalMenuComponent }            from './components/vertical-menu/biglup-vertical-menu.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -58,7 +63,12 @@ import { BiglupChartDirective }          from './directives/charts/biglup-chart.
         BiglupDropdownOptionComponent,
         BiglupBadgeComponent,
         BiglupPaperComponent,
-        BiglupChartDirective
+        BiglupChartDirective,
+        BiglupToolbarComponent,
+        BiglupLeftNavbarLayoutComponent,
+        BiglupLeftNavbarLayoutMenuComponent,
+        BiglupLeftNavbarLayoutContentComponent,
+        BiglupVerticalMenuComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -73,7 +83,12 @@ import { BiglupChartDirective }          from './directives/charts/biglup-chart.
         BiglupDropdownOptionComponent,
         BiglupBadgeComponent,
         BiglupPaperComponent,
-        BiglupChartDirective
+        BiglupChartDirective,
+        BiglupToolbarComponent,
+        BiglupLeftNavbarLayoutComponent,
+        BiglupLeftNavbarLayoutMenuComponent,
+        BiglupLeftNavbarLayoutContentComponent,
+        BiglupVerticalMenuComponent
     ]
 })
 export class BiglupUiModule

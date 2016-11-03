@@ -17,8 +17,6 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { NgModule }                      from '@angular/core';
 import { SharedModule }                  from '../shared.module';
 import { BackofficeRoutesModule }        from './backoffice.routes';
@@ -54,6 +52,7 @@ import { ImagesService }                 from 'meteor/biglup:business';
 import { I18nInputComponent }            from './components/i18n-input/i18n-input.component';
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
 import { CartsService }                  from 'meteor/biglup:business';
+import { BiglupToastService }            from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -113,7 +112,8 @@ import { CartsService }                  from 'meteor/biglup:business';
         ImagesService,
         IdGeneratorService,
         DragulaService,
-        CartsService
+        CartsService,
+        BiglupToastService
     ]
 })
 export class BackofficeModule

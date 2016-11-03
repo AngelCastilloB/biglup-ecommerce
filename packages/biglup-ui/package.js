@@ -21,6 +21,7 @@ Package.onUse(function(api)
     ], 'client');
 
     api.addFiles([
+        'client/stylesheets/partials/_base.scss',
         'client/stylesheets/_main.scss'
     ], 'client', {isImport: true});
 
@@ -40,8 +41,15 @@ Package.onUse(function(api)
         'client/components/paper/biglup-paper.component.ts',
         'client/services/toast/biglup-toast.service.ts',
         'client/biglup-ui.module.ts',
-        'client/directives/charts/biglup-chart.directive.ts'
+        'client/directives/charts/biglup-chart.directive.ts',
+        'client/components/toolbar/biglup-toolbar.component.ts',
+        'client/components/layout/left-navbar/biglup-left-navbar-layout.component.ts',
+        'client/components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component.ts',
+        'client/components/layout/left-navbar/content/biglup-left-navbar-layout-content.component.ts',
+        'client/components/vertical-menu/biglup-vertical-menu.component.ts'
     ], 'client');
+
+    api.addAssets(['assets/images/biglup-menu-header.png'], "client");
 
     api.mainModule ('index.ts', "client");
 });

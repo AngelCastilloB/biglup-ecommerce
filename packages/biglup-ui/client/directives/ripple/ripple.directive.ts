@@ -140,7 +140,7 @@ export class RippleDirective implements OnInit, OnDestroy {
                 return { ripple, container, event };
             })
             .delay(10)
-            .do((elements: any)       =>
+            .do((elements: any) =>
             {
               if (this._iconRipple)
               {

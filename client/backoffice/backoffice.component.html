@@ -1,12 +1,16 @@
-<div class="fill" id="container">
-  <div class="sidebar">
-    <sidebar></sidebar>
-  </div>
-  <div id="header">
-    <div class="logo">
-    </div>
-  </div>
-  <div class="content">
+<biglup-left-navbar-layout>
+  <biglup-toolbar [title]="'Test'">
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+    <biglup-icon-button icon="chat"></biglup-icon-button>
+  </biglup-toolbar>
+  <biglup-left-navbar-layout-menu>
+    <biglup-vertical-menu></biglup-vertical-menu>
+  </biglup-left-navbar-layout-menu>
+  <biglup-left-navbar-layout-content>
     <router-outlet></router-outlet>
-  </div>
-</div>
+  </biglup-left-navbar-layout-content>
+</biglup-left-navbar-layout>

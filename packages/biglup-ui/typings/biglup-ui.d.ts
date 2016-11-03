@@ -17,6 +17,11 @@
 
 declare module BiglupUi
 {
+    class BiglupVerticalMenuComponent {}
+    class BiglupLeftNavbarLayoutComponent {}
+    class BiglupLeftNavbarLayoutMenuComponent {}
+    class BiglupLeftNavbarLayoutContentComponent {}
+    class BiglupToolbarComponent {}
     class BiglupChartDirective {}
     class BiglupToastService {
         public displayToast(message: string, dismissable: boolean = true);
