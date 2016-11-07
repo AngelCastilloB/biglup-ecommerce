@@ -40,6 +40,7 @@ Package.onUse(function(api)
         'client/components/badge/biglup-badge.component.ts',
         'client/components/paper/biglup-paper.component.ts',
         'client/services/toast/biglup-toast.service.ts',
+        'client/services/media/biglup-media.service.ts',
         'client/biglup-ui.module.ts',
         'client/directives/charts/biglup-chart.directive.ts',
         'client/components/toolbar/biglup-toolbar.component.ts',

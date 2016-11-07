@@ -17,7 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
+import { Component,
+         Input,
+         Output,
+         EventEmitter,
+         OnInit,
+         OnDestroy,
+         NgZone }             from '@angular/core';
+import { BiglupMediaService } from '../../services/media/biglup-media.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -32,23 +39,39 @@ import template from './biglup-toolbar.component.html';
     selector: 'biglup-toolbar',
     template
 })
-export class BiglupToolbarComponent implements OnChanges
+export class BiglupToolbarComponent implements OnInit, OnDestroy
 {
     @Input('title')
-    private _title:          string  = '';
-    private _showleftNavbar: boolean = false;
+    private _title:             string  = '';
+    private _showleftNavbar:    boolean = false;
     @Output('toggleNavbar')
-    private _toggleNavbar: any = new EventEmitter();
+    private _toggleNavbar:      any = new EventEmitter();
+    private _querySubscription: any;
 
     /**
      * @summary Initializes a new instance of the BiglupToolbarComponent class.
+     *
+     * @param {BiglupMediaService} _mediaService Service that reports changes on the view port.
+     * @param {NgZone} _ngZone The angular 2 zone service..
      */
-    constructor()
+    constructor(private _mediaService: BiglupMediaService, private _ngZone: NgZone)
     {
     }
 
-    public ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-        console.error(changes);
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
+    public ngOnInit(): void
+    {
+        this._watchScreen();
+    }
+
+    /**
+     * @summary Perform any custom cleanup that needs to occur when the instance is destroyed.
+     */
+    public ngOnDestroy(): void
+    {
+        this._querySubscription.unsubscribe();
     }
 
     /**
@@ -60,5 +83,25 @@ export class BiglupToolbarComponent implements OnChanges
 
         if (this._toggleNavbar)
             this._toggleNavbar.emit(this._showleftNavbar);
+    }
+
+    /**
+     * @summary Watchs the screen resize events.
+     */
+    private _watchScreen(): void
+    {
+        this._querySubscription = this._mediaService.registerQuery('gt-sm').subscribe((matches: boolean) =>
+        {
+            this._ngZone.run(() =>
+            {
+                if (this._showleftNavbar !== matches)
+                {
+                    this._showleftNavbar = matches;
+
+                    if (this._toggleNavbar)
+                        this._toggleNavbar.emit(this._showleftNavbar);
+                }
+            });
+        });
     }
 }

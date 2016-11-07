@@ -30,6 +30,7 @@ export * from './client/components/paper/biglup-paper.component';
 export * from './client/directives/ripple/ripple.directive';
 export * from './client/biglup-ui.module';
 export * from './client/services/toast/biglup-toast.service';
+export * from './client/services/media/biglup-media.service';
 export * from './client/directives/charts/biglup-chart.directive';
 export * from './client/components/toolbar/biglup-toolbar.component';
 export * from './client/components/layout/left-navbar/biglup-left-navbar-layout.component';

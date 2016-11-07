@@ -17,6 +17,7 @@
 
 declare module BiglupUi
 {
+    class BiglupMediaService {}
     class BiglupVerticalMenuOptionComponent {}
     class BiglupVerticalSubmenuComponent {}
     class BiglupVerticalMenuComponent {}

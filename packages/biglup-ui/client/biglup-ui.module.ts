@@ -42,6 +42,7 @@ import { BiglupLeftNavbarLayoutContentComponent } from './components/layout/left
 import { BiglupVerticalMenuComponent }            from './components/vertical-menu/biglup-vertical-menu.component';
 import { BiglupVerticalMenuOptionComponent }      from './components/vertical-menu/menu-option/biglup-vertical-menu-option.component';
 import { BiglupVerticalSubmenuComponent }         from './components/vertical-menu/sub-menu/biglup-vertical-submenu.component';
+import { BiglupMediaService }                     from './services/media/biglup-media.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,6 +50,9 @@ import { BiglupVerticalSubmenuComponent }         from './components/vertical-me
  * @summary This module export all the biglup user interface components.
  */
 @NgModule({
+    providers: [
+        BiglupMediaService
+    ],
     imports: [
         BrowserModule,
         FormsModule,
