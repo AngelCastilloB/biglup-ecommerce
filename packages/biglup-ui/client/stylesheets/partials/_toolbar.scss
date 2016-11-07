@@ -5,6 +5,17 @@
     color: $button-text-and-icon-color!important;
     margin: 21px;
   }
+
+  .biglup-animated-menu-icon {
+    display: block!important;
+  }
+
+  @media (min-width: $layout-breakpoint-sm) {
+    .biglup-animated-menu-icon {
+      display: none!important;
+    }
+  }
+
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   color: $button-text-and-icon-color;
@@ -18,6 +29,7 @@
   @include elevation(2);
   padding: 0 4px;
   background-color: $primary-color;
+  overflow: hidden;
 
   + * {
     margin-top: 70px;

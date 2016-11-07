@@ -36,4 +36,5 @@ export * from './client/components/layout/left-navbar/biglup-left-navbar-layout.
 export * from './client/components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component';
 export * from './client/components/layout/left-navbar/content/biglup-left-navbar-layout-content.component';
 export * from './client/components/vertical-menu/biglup-vertical-menu.component';
-
+export * from './client/components/vertical-menu/sub-menu/biglup-vertical-submenu.component';
+export * from './client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component';

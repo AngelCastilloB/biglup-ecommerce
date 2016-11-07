@@ -1,10 +1,10 @@
 /**
- * @file backoffice.component.ts
+ * @file biglup-vertical-submenu.component.ts
  *
- * @summary The backoffice root component.
+ * @summary Animated vertical submenu.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @date   November 04 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,30 +17,42 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './backoffice.component.html';
+import template from './biglup-vertical-submenu.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The back office root component.
+ * @summary This component displays an option inside a menu option.
  */
 @Component({
-    template,
-    styleUrls: ['backoffice.component.css']
+    selector: 'biglup-vertical-submenu',
+    template
 })
-export class BackofficeComponent
+export class BiglupVerticalSubmenuComponent
 {
-    private _hideDrawer: boolean = false;
+    @Input('label')
+    private _label:  string  = '';
+    @Input('icon')
+    private _icon:  string   = '';
+    private _isOpen: boolean = false;
 
     /**
-     * @summary Event handler for the drawer toggle.
+     * @summary Initializes a new instance of the BiglupVerticalSubmenuComponent class.
      */
-    private _onToggleDrawer(toggle: boolean)
+    constructor()
     {
-        this._hideDrawer = toggle;
+    }
+
+    /**
+     * @summary Event handler for when the submenu is clicked.
+     * @private
+     */
+    private _onSubmenuClick()
+    {
+        this._isOpen = !this._isOpen;
     }
 }

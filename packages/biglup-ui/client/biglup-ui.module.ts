@@ -20,6 +20,7 @@
 import { NgModule }                               from '@angular/core';
 import { BrowserModule }                          from '@angular/platform-browser';
 import { FormsModule }                            from '@angular/forms';
+import { RouterModule }                           from '@angular/router';
 import { BiglupButtonComponent }                  from './components/button/biglup-button.component';
 import { BiglupInputComponent }                   from './components/input/biglup-input.component';
 import { BiglupCheckboxComponent}                 from './components/checkbox/biglup-checkbox.component';
@@ -39,6 +40,8 @@ import { BiglupLeftNavbarLayoutComponent }        from './components/layout/left
 import { BiglupLeftNavbarLayoutMenuComponent }    from './components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component';
 import { BiglupLeftNavbarLayoutContentComponent } from './components/layout/left-navbar/content/biglup-left-navbar-layout-content.component';
 import { BiglupVerticalMenuComponent }            from './components/vertical-menu/biglup-vertical-menu.component';
+import { BiglupVerticalMenuOptionComponent }      from './components/vertical-menu/menu-option/biglup-vertical-menu-option.component';
+import { BiglupVerticalSubmenuComponent }         from './components/vertical-menu/sub-menu/biglup-vertical-submenu.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,7 +52,8 @@ import { BiglupVerticalMenuComponent }            from './components/vertical-me
     imports: [
         BrowserModule,
         FormsModule,
-        BiglupI18nModule],
+        BiglupI18nModule,
+        RouterModule],
     declarations: [
         BiglupButtonComponent,
         BiglupInputComponent,
@@ -68,7 +72,9 @@ import { BiglupVerticalMenuComponent }            from './components/vertical-me
         BiglupLeftNavbarLayoutComponent,
         BiglupLeftNavbarLayoutMenuComponent,
         BiglupLeftNavbarLayoutContentComponent,
-        BiglupVerticalMenuComponent
+        BiglupVerticalMenuComponent,
+        BiglupVerticalMenuOptionComponent,
+        BiglupVerticalSubmenuComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -88,7 +94,9 @@ import { BiglupVerticalMenuComponent }            from './components/vertical-me
         BiglupLeftNavbarLayoutComponent,
         BiglupLeftNavbarLayoutMenuComponent,
         BiglupLeftNavbarLayoutContentComponent,
-        BiglupVerticalMenuComponent
+        BiglupVerticalMenuComponent,
+        BiglupVerticalMenuOptionComponent,
+        BiglupVerticalSubmenuComponent
     ]
 })
 export class BiglupUiModule

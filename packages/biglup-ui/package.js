@@ -46,7 +46,9 @@ Package.onUse(function(api)
         'client/components/layout/left-navbar/biglup-left-navbar-layout.component.ts',
         'client/components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component.ts',
         'client/components/layout/left-navbar/content/biglup-left-navbar-layout-content.component.ts',
-        'client/components/vertical-menu/biglup-vertical-menu.component.ts'
+        'client/components/vertical-menu/biglup-vertical-menu.component.ts',
+        'client/components/vertical-menu/sub-menu/biglup-vertical-submenu.component.ts',
+        'client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

@@ -1,10 +1,10 @@
 /**
- * @file backoffice.component.ts
+ * @file biglup-vertical-menu-option.component.ts
  *
- * @summary The backoffice root component.
+ * @summary Animated vertical menu option.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @date   November 04 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,30 +17,34 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './backoffice.component.html';
+import template from './biglup-vertical-menu-option.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary The back office root component.
+ * @summary This component displays an option inside a menu option.
  */
 @Component({
-    template,
-    styleUrls: ['backoffice.component.css']
+    selector: 'biglup-vertical-menu-option',
+    template
 })
-export class BackofficeComponent
+export class BiglupVerticalMenuOptionComponent
 {
-    private _hideDrawer: boolean = false;
+    @Input('label')
+    private _label: string = '';
+    @Input('routerLink')
+    private _routerLink: any;
+    @Input('icon')
+    private _icon: string  = '';
 
     /**
-     * @summary Event handler for the drawer toggle.
+     * @summary Initializes a new instance of the BiglupVerticalMenuOptionComponent class.
      */
-    private _onToggleDrawer(toggle: boolean)
+    constructor()
     {
-        this._hideDrawer = toggle;
     }
 }

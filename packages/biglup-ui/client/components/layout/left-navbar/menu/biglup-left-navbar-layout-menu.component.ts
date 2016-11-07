@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,6 +34,9 @@ import template from './biglup-left-navbar-layout-menu.component.html';
 })
 export class BiglupLeftNavbarLayoutMenuComponent
 {
+    @Input('hideDrawer')
+    private _hideDrawer: boolean = true;
+
     /**
      * @summary Initializes a new instance of the BiglupLeftNavbarLayoutMenuComponent class.
      */

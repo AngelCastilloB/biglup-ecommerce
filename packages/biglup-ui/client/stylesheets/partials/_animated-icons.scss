@@ -57,10 +57,11 @@
 // Animated expand
 
 .biglup-animated-collapse-icon {
+  display: inline-block;
   width: 20px;
   height: 20px;
   position: relative;
-  margin: 27px;
+  float: right;
   cursor: pointer;
   z-index: 2;
   span {

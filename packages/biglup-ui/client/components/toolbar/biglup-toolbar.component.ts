@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -32,11 +32,13 @@ import template from './biglup-toolbar.component.html';
     selector: 'biglup-toolbar',
     template
 })
-export class BiglupToolbarComponent
+export class BiglupToolbarComponent implements OnChanges
 {
     @Input('title')
     private _title:          string  = '';
     private _showleftNavbar: boolean = false;
+    @Output('toggleNavbar')
+    private _toggleNavbar: any = new EventEmitter();
 
     /**
      * @summary Initializes a new instance of the BiglupToolbarComponent class.
@@ -45,11 +47,18 @@ export class BiglupToolbarComponent
     {
     }
 
+    public ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+        console.error(changes);
+    }
+
     /**
      * @summary Event handler for when the menu button is clicked.
      */
     private _onMenuButtonClick()
     {
         this._showleftNavbar = !this._showleftNavbar;
+
+        if (this._toggleNavbar)
+            this._toggleNavbar.emit(this._showleftNavbar);
     }
 }
