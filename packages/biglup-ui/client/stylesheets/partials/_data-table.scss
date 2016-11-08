@@ -3,6 +3,7 @@
 .biglup-data-table-container {
   display: block;
   max-width: 100%;
+  background-color: $primary-background-color;
   @include elevation(1);
 
   .biglup-data-table-header-actions {
@@ -68,8 +69,22 @@
     -webkit-font-smoothing: antialiased;
     color: rgba(0, 0, 0, .87) !important;
     margin-top: 40px !important;
-    margin-left: 15px !important;
+    margin-left: 11px !important;
     float: left;
+
+    i {
+      font-size: 36px!important;
+      color: rgba(0, 0, 0, .87);
+    }
+    .biglup-data-table-title-text {
+      margin-top: -34px;
+      margin-left: 45px;
+      a {
+        color: rgba(0, 0, 0, .87);
+        font-family: $base-font-family;
+        font-size: 18px;
+      }
+    }
   }
 
   .biglup-data-table-input {
@@ -88,6 +103,7 @@
   .biglup-data-table-body {
     overflow: auto;
     -webkit-overflow: auto;
+    width: 100%;
   }
 
   .biglup-data-table-footer {

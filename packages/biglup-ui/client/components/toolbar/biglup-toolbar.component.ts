@@ -24,6 +24,7 @@ import { Component,
          OnInit,
          OnDestroy,
          NgZone }             from '@angular/core';
+import { Router }             from '@angular/router';
 import { BiglupMediaService } from '../../services/media/biglup-media.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -52,10 +53,15 @@ export class BiglupToolbarComponent implements OnInit, OnDestroy
      * @summary Initializes a new instance of the BiglupToolbarComponent class.
      *
      * @param {BiglupMediaService} _mediaService Service that reports changes on the view port.
-     * @param {NgZone} _ngZone The angular 2 zone service..
+     * @param {NgZone} _ngZone The angular 2 zone service.
+     * @param {Router} _router the router service.
      */
-    constructor(private _mediaService: BiglupMediaService, private _ngZone: NgZone)
+    constructor(private _mediaService: BiglupMediaService, private _ngZone: NgZone, private _router: Router)
     {
+        this._router.events.subscribe(() =>
+        {
+            this._hideNavbar();
+        });
     }
 
     /**
@@ -90,18 +96,28 @@ export class BiglupToolbarComponent implements OnInit, OnDestroy
      */
     private _watchScreen(): void
     {
-        this._querySubscription = this._mediaService.registerQuery('gt-sm').subscribe((matches: boolean) =>
+        this._querySubscription = this._mediaService.registerQuery('gt-sm').subscribe(() =>
         {
-            this._ngZone.run(() =>
-            {
-                if (this._showleftNavbar !== matches)
-                {
-                    this._showleftNavbar = matches;
-
-                    if (this._toggleNavbar)
-                        this._toggleNavbar.emit(this._showleftNavbar);
-                }
-            });
+            this._ngZone.run(() => this._hideNavbar());
         });
+    }
+
+    /**
+     * @summary Event handler for when the overlay is clicked.
+     */
+    private _onOverlayClick()
+    {
+        this._hideNavbar();
+    }
+
+    /**
+     * @summary Hides the navbar.
+     */
+    private _hideNavbar()
+    {
+        this._showleftNavbar = false;
+
+        if (this._toggleNavbar)
+            this._toggleNavbar.emit(this._showleftNavbar);
     }
 }

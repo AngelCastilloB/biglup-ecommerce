@@ -11,6 +11,10 @@ audio, video {
     vertical-align: baseline;
 }
 
+html, body {
+  height: 100%;
+}
+
 article, aside, details, figcaption, figure, footer, header, menu, nav, section {
     display: block;
 }

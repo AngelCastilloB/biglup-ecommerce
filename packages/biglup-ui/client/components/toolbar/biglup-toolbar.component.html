@@ -13,5 +13,6 @@
   <div title>{{_title}}</div>
   <div right>
     <ng-content></ng-content>
-    </div>
+  </div>
 </div>
+<div (click)="_onOverlayClick()" [class.biglup-toolbar-overlay-show]="_showleftNavbar" class="biglup-toolbar-overlay"></div>

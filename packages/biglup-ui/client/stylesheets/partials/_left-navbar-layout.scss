@@ -1,0 +1,23 @@
+@import 'base';
+
+.biglup-left-navbar-layout-main {
+  min-height: 100%;
+  overflow-x: hidden;
+  margin-left: 0;
+  transition: margin-left 0.2s;
+  margin-top: 70px;
+  background-color: $secondary-background-color;
+
+  .biglup-left-navbar-layout-content {
+    padding-top: 40px;
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 90%;
+  }
+}
+
+@media (min-width: $layout-breakpoint-sm) {
+  .biglup-left-navbar-layout-main {
+    margin-left: 270px;
+  }
+}

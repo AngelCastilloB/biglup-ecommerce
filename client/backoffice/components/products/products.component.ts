@@ -17,9 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component }       from '@angular/core';
-import { Router }          from '@angular/router';
-import { ProductsService } from 'meteor/biglup:business';
+import { Component }                from '@angular/core';
+import { Router }                   from '@angular/router';
+import { ProductsService }          from 'meteor/biglup:business';
+import { _T, I18nSingletonService } from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,10 +37,35 @@ import template from './products.component.html';
 })
 export class ProductsComponent
 {
+    private _dataTableColums: any = {};
+
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
      */
     constructor(private _router: Router, private _productsService: ProductsService)
     {
+        this._dataTableColums = [
+            { name: 'sku', label: _T('SKU') },
+            { name: 'title', label: _T('Title'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)},
+            { name: 'stock', label: _T('Inventory'), numeric: true },
+            { name: 'price',  label: _T('Price'), numeric: true },
+            { name: 'categories',  label: _T('Categories'), format:
+                (value: any) =>
+                {
+                    let categories: string  = '';
+
+                    if (value && value.length > 0)
+                        value.forEach((category) => categories = categories + ' ' + category);
+
+                    return categories;
+                }},
+            { name: 'color', label: _T('Color'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) },
+            { name: 'size', label: _T('Size'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) }
+        ];
+    }
+
+    private _logEvent(event)
+    {
+        console.error(event);
     }
 }

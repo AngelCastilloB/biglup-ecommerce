@@ -74,6 +74,10 @@ export interface DataTableColumn
 })
 export class BiglupDataTableComponent implements AfterViewInit, OnInit
 {
+    @Input('title')
+    private _title: string = '';
+    @Input('icon')
+    private _icon: string = '';
     @Input('data')
     private _data:               any[];
     @Input('dataStream')
@@ -128,7 +132,7 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
         {
             this._dataStream.subscribe((data) =>
             {
-                this._data = data;
+                this._data = _.cloneDeep(data);
                 this._preprocessData();
                 this._initialized = true;
                 this.filterData();
