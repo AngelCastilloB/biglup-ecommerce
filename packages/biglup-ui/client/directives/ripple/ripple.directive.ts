@@ -52,7 +52,7 @@ export class RippleDirective implements OnInit, OnDestroy {
     @Input('iconRipple')
     private _iconRipple: boolean = false;
     @Input('rippleColor')
-    private _rippleColor:            string = '#FFFFFF';
+    private _rippleColor:            string = '';
     private _mouseDownObservable:    any    = Observable.fromEvent(this._el.nativeElement, 'mousedown');
     private _touchstartObservable:   any    = Observable.fromEvent(this._el.nativeElement, 'touchstart');
     private _mouseUpObservable:      any    = Observable.fromEvent(document.body, 'mouseup');
@@ -120,7 +120,7 @@ export class RippleDirective implements OnInit, OnDestroy {
 
                 ripple.style.top        = yPos + 'px';
                 ripple.style.left       = xPos + 'px';
-                ripple.style.background = backgroundColor;
+                ripple.style.background = this._rippleColor ? this._rippleColor : backgroundColor;
                 ripple.style.width      = size + 'px';
                 ripple.style.height     = size + 'px';
 

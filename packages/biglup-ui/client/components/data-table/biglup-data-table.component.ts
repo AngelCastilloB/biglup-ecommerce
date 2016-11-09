@@ -144,6 +144,17 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
             this._initialized = true;
             this.filterData();
         }
+
+        I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() =>
+        {
+            this._dataStream.take(1).subscribe((data) =>
+            {
+                this._data = _.cloneDeep(data);
+                this._preprocessData();
+                this._initialized = true;
+                this.filterData();
+            });
+        });
     }
 
     /**

@@ -40,6 +40,8 @@ export class BiglupIconButtonComponent
     private _icon: string = '';
     @Input('color')
     private _color: string = 'black';
+    @Input('rippleColor')
+    private _rippleColor: string = '';
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.

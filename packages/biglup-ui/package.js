@@ -53,6 +53,7 @@ Package.onUse(function(api)
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");
+    api.addAssets(['assets/images/avatar.png'], "client");
 
     api.mainModule ('index.ts', "client");
 });

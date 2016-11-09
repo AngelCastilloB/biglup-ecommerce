@@ -44,6 +44,15 @@ export class ProductsComponent
      */
     constructor(private _router: Router, private _productsService: ProductsService)
     {
+        this._buildTableFormat();
+        I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() => this._buildTableFormat());
+    }
+
+    /**
+     * @summary Builds the data table format.
+     */
+    private _buildTableFormat()
+    {
         this._dataTableColums = [
             { name: 'sku', label: _T('SKU') },
             { name: 'title', label: _T('Title'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)},

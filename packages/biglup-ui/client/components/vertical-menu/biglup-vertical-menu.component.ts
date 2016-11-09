@@ -17,8 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input } from '@angular/core';
-import { Meteor }           from 'meteor/meteor';
+import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Meteor }                                     from 'meteor/meteor';
+import { I18nSingletonService }                       from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -33,12 +34,21 @@ import template from './biglup-vertical-menu.component.html';
     selector: 'biglup-vertical-menu',
     template
 })
-export class BiglupVerticalMenuComponent
+export class BiglupVerticalMenuComponent implements AfterViewInit
 {
+    private _showUserMenu: boolean = false;
+
     /**
      * @summary Initializes a new instance of the BiglupVerticalMenuComponent class.
      */
     constructor()
+    {
+    }
+
+    /**
+     * @summary Respond after Angular initializes the component's views and child views.
+     */
+    public ngAfterViewInit(): any
     {
     }
 
@@ -50,5 +60,33 @@ export class BiglupVerticalMenuComponent
     private _getImageHeaderPath(): string
     {
         return Meteor.absoluteUrl('packages/biglup_ui/assets/images/biglup-menu-header.png');
+    }
+
+    /**
+     * @summary Gets the absolute path of the avatar image resource.
+     *
+     * @return {string} The absolute path of the avatar image resource.
+     */
+    private _getImageAvatarPath(): string
+    {
+        return Meteor.absoluteUrl('packages/biglup_ui/assets/images/avatar.png');
+    }
+
+    /**
+     * @summary Event handler for when the user menu is clicked.
+     */
+    private _onUserMenuClick()
+    {
+        this._showUserMenu = !this._showUserMenu;
+    }
+
+    /**
+     * @summary language change event handler.
+     *
+     * @param language The language to se bet.
+     */
+    private _changeLanguage(language: string)
+    {
+        I18nSingletonService.getInstance().setLocale(language);
     }
 }
