@@ -49,6 +49,8 @@ import { SuccessAnimationComponent }              from './components/modal/compo
 import { InformationAnimationComponent }          from './components/modal/components/information-animation/information-animation.component';
 import { WaitingAnimationComponent }              from './components/modal/components/waiting-animation/waiting-animation.component';
 import { WarningAnimationComponent }              from './components/modal/components/warning-animation/warning-animation.component';
+import { BiglupTabComponent }                     from './components/tab/tab/biglup-tab.component';
+import { BiglupTabsComponent }                    from './components/tab/biglup-tabs.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -90,7 +92,9 @@ import { WarningAnimationComponent }              from './components/modal/compo
         SuccessAnimationComponent,
         InformationAnimationComponent,
         WarningAnimationComponent,
-        WaitingAnimationComponent
+        WaitingAnimationComponent,
+        BiglupTabComponent,
+        BiglupTabsComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -118,7 +122,9 @@ import { WarningAnimationComponent }              from './components/modal/compo
         SuccessAnimationComponent,
         InformationAnimationComponent,
         WarningAnimationComponent,
-        WaitingAnimationComponent
+        WaitingAnimationComponent,
+        BiglupTabComponent,
+        BiglupTabsComponent
     ]
 })
 export class BiglupUiModule

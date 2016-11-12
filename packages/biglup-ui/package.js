@@ -55,7 +55,9 @@ Package.onUse(function(api)
         'client/components/modal/components/information-animation/information-animation.component.ts',
         'client/components/modal/components/success-animation/success-animation.component.ts',
         'client/components/modal/components/waiting-animation/waiting-animation.component.ts',
-        'client/components/modal/components/warning-animation/warning-animation.component.ts'
+        'client/components/modal/components/warning-animation/warning-animation.component.ts',
+        'client/components/tab/biglup-tabs.component.ts',
+        'client/components/tab/tab/biglup-tab.component.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

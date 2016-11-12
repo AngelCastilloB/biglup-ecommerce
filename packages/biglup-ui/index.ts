@@ -44,4 +44,6 @@ export * from './client/components/modal/components/information-animation/inform
 export * from './client/components/modal/components/success-animation/success-animation.component';
 export * from './client/components/modal/components/waiting-animation/waiting-animation.component';
 export * from './client/components/modal/components/warning-animation/warning-animation.component';
+export * from './client/components/tab/tab/biglup-tab.component';
+export * from './client/components/tab/biglup-tabs.component';
 export * from './client/biglup-ui.module';

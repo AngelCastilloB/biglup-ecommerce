@@ -1,0 +1,8 @@
+<ul class="biglup-nav biglup-nav-tabs">
+  <li *ngFor="let tab of m_tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+    <a>{{tab.title}}</a>
+  </li>
+</ul>
+<biglup-paper class="biglup-tab-content" elevation="1">
+  <ng-content></ng-content>
+</biglup-paper>

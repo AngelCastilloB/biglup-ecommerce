@@ -17,6 +17,8 @@
 
 declare module BiglupUi
 {
+    class BiglupTabsComponent {}
+    class BiglupTabComponent {}
     enum BiglupModalType
     {
         Success     = 0,

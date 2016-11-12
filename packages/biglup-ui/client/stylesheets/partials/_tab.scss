@@ -1,0 +1,63 @@
+@import 'base';
+
+.biglup-pane{
+  padding: 1em;
+}
+
+.biglup-nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.biglup-tab-content {
+
+  div {
+    width: 100%;
+    border-top-color: transparent;
+    margin: 0;
+  }
+}
+
+.biglup-nav-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  @include clearfix();
+
+  li {
+    float: left;
+    margin-bottom: -4px;
+  }
+
+  a {
+    color: $disabled-text-color;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    font-weight: $base-font-weight;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+    background: $light-primary-color;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-bottom: none;
+  }
+
+  a:hover {
+    color: $disabled-text-color;
+  }
+
+  .active {
+    a:hover {
+      color: $button-text-and-icon-color;
+    }
+
+    a {
+      background-color: $primary-color;
+      color: $button-text-and-icon-color;
+      border-bottom-color: transparent;
+      cursor: default;
+    }
+  }
+}
