@@ -22,9 +22,9 @@ import { Component,
          ViewChild }                 from '@angular/core';
 import { Router, ActivatedRoute }    from '@angular/router';
 import { I18nSingletonService, _T }  from 'meteor/biglup:i18n';
-import { ModalComponent,
-         ModalType,
-         ModalResult }               from '../../components/modal/modal.component';
+import { BiglupModalComponent,
+         BiglupModalType,
+         BiglupModalResult }         from 'meteor/biglup:ui';
 import { Category }                  from 'meteor/biglup:business';
 import { CategoriesService }         from 'meteor/biglup:business';
 import { I18nString }                from 'meteor/biglup:i18n';
@@ -45,8 +45,8 @@ import template from './add-collection.component.html';
 })
 export class AddCollectionComponent implements OnInit
 {
-    @ViewChild(ModalComponent)
-    private _modal:                 ModalComponent;
+    @ViewChild(BiglupModalComponent)
+    private _modal:                 BiglupModalComponent;
     private _category:              Category             = new Category();
     private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
     private _waitModalResult:       boolean              = false;
@@ -130,7 +130,7 @@ export class AddCollectionComponent implements OnInit
             this._modal.show(
                 _T('Information'),
                 _T('Please fill all the required fields.'),
-                ModalType.Information);
+                BiglupModalType.Information);
 
             return;
         }
@@ -184,7 +184,7 @@ export class AddCollectionComponent implements OnInit
             this._modal.show(
                 _T('Information'),
                 _T('Please fill all the required fields.'),
-                ModalType.Information);
+                BiglupModalType.Information);
 
             return;
         }
@@ -219,7 +219,7 @@ export class AddCollectionComponent implements OnInit
      *
      * @param result The modal result.
      */
-    private _onModalClosed(result: ModalResult): void
+    private _onModalClosed(result: BiglupModalResult): void
     {
         if (this._waitModalResult)
         {

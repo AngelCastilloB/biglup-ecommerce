@@ -28,7 +28,6 @@ export * from './client/components/dropdown-menu/dropdown-option/biglup-dropdown
 export * from './client/components/badge/biglup-badge.component';
 export * from './client/components/paper/biglup-paper.component';
 export * from './client/directives/ripple/ripple.directive';
-export * from './client/biglup-ui.module';
 export * from './client/services/toast/biglup-toast.service';
 export * from './client/services/media/biglup-media.service';
 export * from './client/directives/charts/biglup-chart.directive';
@@ -39,3 +38,10 @@ export * from './client/components/layout/left-navbar/content/biglup-left-navbar
 export * from './client/components/vertical-menu/biglup-vertical-menu.component';
 export * from './client/components/vertical-menu/sub-menu/biglup-vertical-submenu.component';
 export * from './client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component';
+export * from './client/components/modal/biglup-modal.component';
+export * from './client/components/modal/components/error-animation/error-animation.component';
+export * from './client/components/modal/components/information-animation/information-animation.component';
+export * from './client/components/modal/components/success-animation/success-animation.component';
+export * from './client/components/modal/components/waiting-animation/waiting-animation.component';
+export * from './client/components/modal/components/warning-animation/warning-animation.component';
+export * from './client/biglup-ui.module';

@@ -1,7 +1,7 @@
 /**
- * @file success-animation.component.ts
+ * @file warning-animation.component.ts
  *
- * @summary CSS only success icon animation.
+ * @summary CSS only warning icon animation.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   September 18 2016
@@ -17,24 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './success-animation.component.html';
+import template from './warning-animation.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Component that displays a success icon animation.
+ * @summary Component that displays a error icon animation.
  */
 @Component({
-    selector: 'success-animation',
-    template,
-    styleUrls: ['./success-animation.component.css']
+    selector: 'warning-animation',
+    template
 })
-export class SuccessAnimationComponent extends Component
+export class WarningAnimationComponent extends Component
 {
 }

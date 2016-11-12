@@ -28,12 +28,6 @@ import { AddProductComponent }           from './components/add-product/add-prod
 import { CollectionsComponent }          from './components/collections/collections.component';
 import { CustomersComponent }            from './components/customers/customers.component';
 import { DashboardComponent }            from './components/dashboard/dashboard.component';
-import { ModalComponent }                from './components/modal/modal.component';
-import { SuccessAnimationComponent }     from './components/modal/components/success-animation/success-animation.component';
-import { ErrorAnimationComponent }       from './components/modal/components/error-animation/error-animation.component';
-import { WarningAnimationComponent }     from './components/modal/components/warning-animation/warning-animation.component';
-import { WaitingAnimationComponent }     from './components/modal/components/waiting-animation/waiting-animation.component';
-import { InformationAnimationComponent } from './components/modal/components/information-animation/information-animation.component';
 import { OrdersComponent }               from './components/orders/orders.component';
 import { ProductsComponent }             from './components/products/products.component';
 import { ProductImageManagerComponent }  from './components/product-images-manager/product-image-manager.component';
@@ -66,12 +60,6 @@ import { BiglupToastService }            from 'meteor/biglup:ui';
         SidebarComponent,
         BreadcrumbComponent,
         DashboardComponent,
-        ModalComponent,
-        SuccessAnimationComponent,
-        ErrorAnimationComponent,
-        WarningAnimationComponent,
-        WaitingAnimationComponent,
-        InformationAnimationComponent,
         TextEditorComponent,
         ColorPickerComponent,
 

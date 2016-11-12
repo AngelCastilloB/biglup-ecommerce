@@ -17,10 +17,16 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component }                from '@angular/core';
+import { Component,
+         OnDestroy,
+         ViewChild }                from '@angular/core';
 import { Router }                   from '@angular/router';
 import { ProductsService }          from 'meteor/biglup:business';
 import { _T, I18nSingletonService } from 'meteor/biglup:i18n';
+import { BiglupModalComponent,
+         BiglupModalType,
+         BiglupModalButtons,
+         BiglupModalResult }        from 'meteor/biglup:ui';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,9 +41,13 @@ import template from './products.component.html';
     selector: 'products',
     template,
 })
-export class ProductsComponent
+export class ProductsComponent implements OnDestroy
 {
-    private _dataTableColums: any = {};
+    @ViewChild(BiglupModalComponent)
+    private _modal:            BiglupModalComponent;
+    private _dataTableColums:  any = {};
+    private _i18nSubscription: any;
+    private _productsToDelete: Array<string>;
 
     /**
      * @summary Initializes a new instance of the ProductsComponent class.
@@ -46,6 +56,15 @@ export class ProductsComponent
     {
         this._buildTableFormat();
         I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() => this._buildTableFormat());
+    }
+
+    /**
+     * @summary Perform any custom cleanup that needs to occur when the instance is destroyed.
+     */
+    public ngOnDestroy()
+    {
+        if (this._i18nSubscription)
+            this._i18nSubscription.unsubscribe();
     }
 
     /**
@@ -73,8 +92,56 @@ export class ProductsComponent
         ];
     }
 
-    private _logEvent(event)
+    /**
+     * @summary Event handler for when the edit button is clicked.
+     * @param event The edit event.
+     */
+    private _onEdit(event)
     {
-        console.error(event);
+        this._router.navigate(['/admin/products/edit-product', event._id]);
+    }
+
+    /**
+     * @summary Event handler for when the delete button is clicked.
+     * @private
+     */
+    private _onDelete(event)
+    {
+        this._productsToDelete = event.map((product) => product._id);
+
+        this._modal.show(
+            _T('Delete Products'),
+            _T('Are you sure you want to delete this products?'),
+            BiglupModalType.Warning,
+            BiglupModalButtons.NoYes);
+    }
+
+    /**
+     * @summary Event handler for when the modal closes.
+     *
+     * @param result The modal result.
+     */
+    private _onModalClose(result: BiglupModalResult)
+    {
+        if (result === BiglupModalResult.Yes)
+        {
+            this._modal.showObservable(
+                _T('Delete Products'),
+                _T('Deleting...'),
+                this._productsService.deteleProducts(this._productsToDelete),
+                {
+                    title:   _T('Delete Products'),
+                    message: _T('Products Deleted.')
+                },
+                {
+                    title:   _T('Error'),
+                    message: _T('There was an error deleting the products.')
+                },
+            );
+        }
+        else
+        {
+            this._productsToDelete.length = 0;
+        }
     }
 }

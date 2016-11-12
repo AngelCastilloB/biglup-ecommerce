@@ -1,5 +1,5 @@
 /**
- * @file modal.component.ts
+ * @file biglup-modal.component.ts
  *
  * @summary This is a modal component.
  *
@@ -27,11 +27,11 @@ import { Component,
          transition,
          animate,
          keyframes }       from '@angular/core';
-import {_T }               from 'meteor/biglup:i18n';
+import { _T }              from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './modal.component.html';
+import template from './biglup-modal.component.html';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -43,7 +43,7 @@ const MODAL_STATE_SHOWING = 'showing';
 /**
  * @summary The modal window type.
  */
-export enum ModalType
+export enum BiglupModalType
 {
     Success     = 0,
     Error       = 1,
@@ -55,7 +55,7 @@ export enum ModalType
 /**
  * @summary The modal result.
  */
-export enum ModalResult
+export enum BiglupModalResult
 {
     None     = 0,
     Ok       = 1,
@@ -68,7 +68,7 @@ export enum ModalResult
 /**
  * @summary The modal buttons.
  */
-export enum ModalButtons
+export enum BiglupModalButtons
 {
     None           = 0,
     Ok             = 1,
@@ -84,9 +84,8 @@ export enum ModalButtons
  * @summary Component that displays a modal windows. The modal will remain open until the user inputs a response.
  */
 @Component({
-    selector: 'modal-message',
+    selector: 'biglup-modal-message',
     template,
-    styleUrls: ['./modal.component.css'],
     animations: [
         trigger('modalBackground', [
             state(MODAL_STATE_HIDDEN, style({
@@ -129,25 +128,25 @@ export enum ModalButtons
         ])
     ]
 })
-export class ModalComponent
+export class BiglupModalComponent
 {
     @Output('onClose')
-    private _onClose:      EventEmitter<ModalResult> = new EventEmitter<ModalResult>();
-    private _title:        string                    = '';
-    private _message:      string                    = '';
-    private _state:        string                    = MODAL_STATE_HIDDEN;
-    private _type:         ModalType                 = ModalType.Information;
-    private _buttons:      ModalButtons              = ModalButtons.Ok;
-    private _busy:         Boolean                   = false;
+    private _onClose:      EventEmitter<BiglupModalResult> = new EventEmitter<BiglupModalResult>();
+    private _title:        string                          = '';
+    private _message:      string                          = '';
+    private _state:        string                          = MODAL_STATE_HIDDEN;
+    private _type:         BiglupModalType                 = BiglupModalType.Information;
+    private _buttons:      BiglupModalButtons              = BiglupModalButtons.Ok;
+    private _busy:         Boolean                         = false;
     private _subscription: any;
 
-    // HACK: Allows to use ModalType, ModalResult & ModalButtons in template
-    private ModalType    = ModalType;
-    private ModalResult  = ModalResult;
-    private ModalButtons = ModalButtons;
+    // HACK: Allows to use BiglupModalType, BiglupModalResult & BiglupModalButtons in template
+    private BiglupModalType    = BiglupModalType;
+    private BiglupModalResult  = BiglupModalResult;
+    private BiglupModalButtons = BiglupModalButtons;
 
     /**
-     * @summary Initializes a new instance of the ModalComponent class.
+     * @summary Initializes a new instance of the BiglupModalComponent class.
      */
     constructor(private _changeDetectorRef: ChangeDetectorRef)
     {
@@ -158,14 +157,14 @@ export class ModalComponent
      *
      * @param {string}       title   The title to be shown.
      * @param {string}       message The message to be shown.
-     * @param {ModalType}    type    The type of modal windows to be displayed.
-     * @param {ModalButtons} buttons The buttons to be displayed on the modal.
+     * @param {BiglupModalType}    type    The type of modal windows to be displayed.
+     * @param {BiglupModalButtons} buttons The buttons to be displayed on the modal.
      */
     public show(
         title: string,
         message: string,
-        type: ModalType = ModalType.Information,
-        buttons: ModalButtons = ModalButtons.Ok)
+        type: BiglupModalType = BiglupModalType.Information,
+        buttons: BiglupModalButtons = BiglupModalButtons.Ok)
     {
         if (this._busy)
             return;
@@ -203,8 +202,8 @@ export class ModalComponent
         this._busy    = true;
         this._title   = title;
         this._message = message;
-        this._type    = ModalType.Waiting;
-        this._buttons = ModalButtons.Cancel;
+        this._type    = BiglupModalType.Waiting;
+        this._buttons = BiglupModalButtons.Cancel;
 
         this._subscription = observable.subscribe(
             () => {},
@@ -214,8 +213,8 @@ export class ModalComponent
 
                 this._title        = errorOptions.title;
                 this._message      = errorOptions.message;
-                this._type         = ModalType.Error;
-                this._buttons      = ModalButtons.Ok;
+                this._type         = BiglupModalType.Error;
+                this._buttons      = BiglupModalButtons.Ok;
                 this._busy         = false;
                 this._subscription = null;
 
@@ -225,8 +224,8 @@ export class ModalComponent
             {
                 this._title        = successOptions.title;
                 this._message      = successOptions.message;
-                this._type         = ModalType.Success;
-                this._buttons      = ModalButtons.Ok;
+                this._type         = BiglupModalType.Success;
+                this._buttons      = BiglupModalButtons.Ok;
                 this._busy         = false;
                 this._subscription = null;
 
@@ -244,16 +243,16 @@ export class ModalComponent
      *
      * @param result The user input result on the modal.
      */
-    private _onButtonClick(result: ModalResult)
+    private _onButtonClick(result: BiglupModalResult)
     {
-        if (this._busy && result === ModalResult.Cancel && this._subscription)
+        if (this._busy && result === BiglupModalResult.Cancel && this._subscription)
         {
             this._subscription.unsubscribe();
 
             this._busy    = false;
             this._message = _T('The operation was canceled.');
-            this._type    = ModalType.Warning;
-            this._buttons = ModalButtons.Ok;
+            this._type    = BiglupModalType.Warning;
+            this._buttons = BiglupModalButtons.Ok;
 
             this._changeDetectorRef.detectChanges();
 
@@ -264,8 +263,8 @@ export class ModalComponent
         this._message      = '';
         this._title        = '';
         this._state        = MODAL_STATE_HIDDEN;
-        this._type         = ModalType.Information;
-        this._buttons      = ModalButtons.Ok;
+        this._type         = BiglupModalType.Information;
+        this._buttons      = BiglupModalButtons.Ok;
 
         this._onClose.emit(result);
     }

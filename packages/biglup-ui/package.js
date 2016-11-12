@@ -49,7 +49,13 @@ Package.onUse(function(api)
         'client/components/layout/left-navbar/content/biglup-left-navbar-layout-content.component.ts',
         'client/components/vertical-menu/biglup-vertical-menu.component.ts',
         'client/components/vertical-menu/sub-menu/biglup-vertical-submenu.component.ts',
-        'client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component.ts'
+        'client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component.ts',
+        'client/components/modal/biglup-modal.component.ts',
+        'client/components/modal/components/error-animation/error-animation.component.ts',
+        'client/components/modal/components/information-animation/information-animation.component.ts',
+        'client/components/modal/components/success-animation/success-animation.component.ts',
+        'client/components/modal/components/waiting-animation/waiting-animation.component.ts',
+        'client/components/modal/components/warning-animation/warning-animation.component.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

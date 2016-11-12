@@ -22,7 +22,7 @@ import { Component,
          ViewChild }                from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { I18nSingletonService, _T } from 'meteor/biglup:i18n';
-import { ModalComponent }           from '../modal/modal.component';
+import { BiglupModalComponent }     from 'meteor/biglup:ui';
 import { ProductsService }          from 'meteor/biglup:business';
 import { CategoriesService }        from 'meteor/biglup:business';
 import { Product }                  from 'meteor/biglup:business';
@@ -45,8 +45,8 @@ export class AddProductComponent implements OnInit
 {
     private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
     private _product:               Product              = new Product();
-    @ViewChild(ModalComponent)
-    private _modal:                 ModalComponent;
+    @ViewChild(BiglupModalComponent)
+    private _modal:                 BiglupModalComponent;
     private _waitModalResult:       boolean              = false;
     private _isEditMode:            boolean              = false;
     private _i18nTitleReferenceMap: Object               = {};

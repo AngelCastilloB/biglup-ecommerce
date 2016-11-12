@@ -1,7 +1,7 @@
 /**
- * @file information-animation.component.ts
+ * @file error-animation.component.ts
  *
- * @summary CSS only information icon animation.
+ * @summary CSS only error icon animation.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   September 18 2016
@@ -17,24 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './information-animation.component.html';
+import template from './error-animation.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Component that displays a information icon animation.
+ * @summary Component that displays a error icon animation.
  */
 @Component({
-    selector: 'information-animation',
-    template,
-    styleUrls: ['./information-animation.component.css']
+    selector: 'error-animation',
+    template
 })
-export class InformationAnimationComponent extends Component
+export class ErrorAnimationComponent extends Component
 {
 }

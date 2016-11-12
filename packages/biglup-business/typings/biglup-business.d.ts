@@ -57,6 +57,7 @@ declare module Business
         public createProduct(product: Product): any;
         public updateProduct(product: Product): any;
         public deteleProduct(productId: string): any;
+        public deteleProducts(productsId: Array<string>): any;
     }
 
     class UserAuthService

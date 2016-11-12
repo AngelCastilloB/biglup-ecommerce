@@ -17,6 +17,46 @@
 
 declare module BiglupUi
 {
+    enum BiglupModalType
+    {
+        Success     = 0,
+        Error       = 1,
+        Waiting     = 2,
+        Warning     = 3,
+        Information = 4
+    }
+    enum BiglupModalResult
+    {
+        None     = 0,
+        Ok       = 1,
+        Cancel   = 2,
+        Yes      = 3,
+        No       = 4,
+        Continue = 5
+    }
+    enum BiglupModalButtons
+    {
+        None           = 0,
+        Ok             = 1,
+        Cancel         = 2,
+        CancelOk       = 3,
+        CancelContinue = 4,
+        NoYes          = 5
+    }
+    class BiglupModalComponent {
+        public show(
+            title: string,
+            message: string,
+            type: BiglupModalType = BiglupModalType.Information,
+            buttons: BiglupModalButtons = BiglupModalButtons.Ok);
+        public showObservable(
+            title: string,
+            message: string,
+            observable: any,
+            successOptions: { title: string, message: string },
+            errorOptions: { title: string, message: string });
+
+    }
     class BiglupMediaService {}
     class BiglupVerticalMenuOptionComponent {}
     class BiglupVerticalSubmenuComponent {}

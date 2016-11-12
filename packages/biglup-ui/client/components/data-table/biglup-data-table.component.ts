@@ -24,7 +24,8 @@ import { Component,
          Output,
          ChangeDetectorRef,
          EventEmitter,
-         OnInit }                   from '@angular/core';
+         OnInit,
+         OnDestroy }                from '@angular/core';
 import { BiglupInputComponent }     from '../input/biglup-input.component';
 import { I18nSingletonService, _T } from 'meteor/biglup:i18n';
 
@@ -72,7 +73,7 @@ export interface DataTableColumn
     selector: 'biglup-data-table',
     template
 })
-export class BiglupDataTableComponent implements AfterViewInit, OnInit
+export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestroy
 {
     @Input('title')
     private _title: string = '';
@@ -96,6 +97,8 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
     private _hasData:             boolean = false;
     private _initialized:         boolean = false;
     private _locale:              string  = '';
+    private _i18nSubscription:    any;
+    private _dataSubscription:    any;
 
     // pagination
     private _pageSize:    number  = 10;
@@ -130,7 +133,7 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
     {
         if (this._dataStream)
         {
-            this._dataStream.subscribe((data) =>
+            this._dataSubscription = this._dataStream.subscribe((data) =>
             {
                 this._data = _.cloneDeep(data);
                 this._preprocessData();
@@ -145,7 +148,7 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
             this.filterData();
         }
 
-        I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() =>
+        this._i18nSubscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() =>
         {
             this._dataStream.take(1).subscribe((data) =>
             {
@@ -155,6 +158,18 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit
                 this.filterData();
             });
         });
+    }
+
+    /**
+     * @summary Perform any custom cleanup that needs to occur when the instance is destroyed.
+     */
+    public ngOnDestroy()
+    {
+        if (this._i18nSubscription)
+            this._i18nSubscription.unsubscribe();
+
+        if (this._dataSubscription)
+            this._dataSubscription.unsubscribe();
     }
 
     /**

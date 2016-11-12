@@ -130,6 +130,36 @@ Meteor.methods({
 });
 
 /**
+ * @summary Registers the delete products method to Meteor's DDP system. This method deletes the given products
+ * (and all its variants) from the system.
+ *
+ * @param products The collection of products id of the products to be deleted.
+ */
+Meteor.methods({
+    deleteProducts(productsId: Array<string>)
+    {
+        /*
+         if (!Meteor.users.findOne(this.userId).isAdmin)
+         {
+         throw new Meteor.Error(
+         'deleteProducts.unauthorized',
+         'You are not authorized to perform this action.');
+         }
+         */
+
+        productsId.forEach(
+        (id) =>
+        {
+            Meteor.call('deleteProduct', id, (error) =>
+            {
+                if (error)
+                    console.error(error);
+            });
+        });
+    }
+});
+
+/**
  * @summary Registers the update product method to Meteor's DDP system. This method modifies the given product
  * with all the changes.
  *

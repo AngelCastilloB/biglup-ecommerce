@@ -1,8 +1,9 @@
+<biglup-modal-message (onClose)="_onModalClose($event)"></biglup-modal-message>
 <biglup-data-table
   icon='card_travel'
   title="{{ 'Product List' | translate }}"
-  (delete)="_logEvent($event)"
-  (edit)="_logEvent($event)"
+  (delete)="_onDelete($event)"
+  (edit)="_onEdit($event)"
   [columns]="_dataTableColums"
   [dataStream]="_productsService.getProducts()">
 </biglup-data-table>

@@ -43,6 +43,12 @@ import { BiglupVerticalMenuComponent }            from './components/vertical-me
 import { BiglupVerticalMenuOptionComponent }      from './components/vertical-menu/menu-option/biglup-vertical-menu-option.component';
 import { BiglupVerticalSubmenuComponent }         from './components/vertical-menu/sub-menu/biglup-vertical-submenu.component';
 import { BiglupMediaService }                     from './services/media/biglup-media.service';
+import { BiglupModalComponent }                   from './components/modal/biglup-modal.component';
+import { ErrorAnimationComponent }                from './components/modal/components/error-animation/error-animation.component';
+import { SuccessAnimationComponent }              from './components/modal/components/success-animation/success-animation.component';
+import { InformationAnimationComponent }          from './components/modal/components/information-animation/information-animation.component';
+import { WaitingAnimationComponent }              from './components/modal/components/waiting-animation/waiting-animation.component';
+import { WarningAnimationComponent }              from './components/modal/components/warning-animation/warning-animation.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -78,7 +84,13 @@ import { BiglupMediaService }                     from './services/media/biglup-
         BiglupLeftNavbarLayoutContentComponent,
         BiglupVerticalMenuComponent,
         BiglupVerticalMenuOptionComponent,
-        BiglupVerticalSubmenuComponent
+        BiglupVerticalSubmenuComponent,
+        BiglupModalComponent,
+        ErrorAnimationComponent,
+        SuccessAnimationComponent,
+        InformationAnimationComponent,
+        WarningAnimationComponent,
+        WaitingAnimationComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -100,7 +112,13 @@ import { BiglupMediaService }                     from './services/media/biglup-
         BiglupLeftNavbarLayoutContentComponent,
         BiglupVerticalMenuComponent,
         BiglupVerticalMenuOptionComponent,
-        BiglupVerticalSubmenuComponent
+        BiglupVerticalSubmenuComponent,
+        BiglupModalComponent,
+        ErrorAnimationComponent,
+        SuccessAnimationComponent,
+        InformationAnimationComponent,
+        WarningAnimationComponent,
+        WaitingAnimationComponent
     ]
 })
 export class BiglupUiModule

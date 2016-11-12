@@ -1,7 +1,7 @@
 /**
- * @file error-animation.component.ts
+ * @file waiting-animation.component.ts
  *
- * @summary CSS only error icon animation.
+ * @summary CSS only waiting icon animation.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   September 18 2016
@@ -17,24 +17,21 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { Component } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './error-animation.component.html';
+import template from './waiting-animation.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Component that displays a error icon animation.
+ * @summary Component that displays a waiting icon animation.
  */
 @Component({
-    selector: 'error-animation',
-    template,
-    styleUrls: ['./error-animation.component.css']
+    selector: 'waiting-animation',
+    template
 })
-export class ErrorAnimationComponent extends Component
+export class WaitingAnimationComponent extends Component
 {
 }
