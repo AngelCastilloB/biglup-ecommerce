@@ -1,32 +1,32 @@
 <div class="text-editor" (click)="_onTextEditorClick()">
   <div class="buttons">
-    <i (click)="_onBold()"
+    <button (click)="_onBold()"
             [ngClass]="_boldToggle ? 'active': 'inactive'"
             class="material-icons md-24"
-            title="{{ 'Bold' | translate }}" unselectable="on">format_bold
-    </i>
+            title="{{ 'Bold' | translate }}">format_bold
+    </button>
 
-    <i (click)="_onItalic()"
+    <button (click)="_onItalic()"
             [ngClass]="_italicToggle ? 'active': 'inactive'"
             class="material-icons md-24" aria-hidden="true"
-            title="{{ 'Italic' | translate }}" unselectable="on">format_italic
-    </i>
+            title="{{ 'Italic' | translate }}">format_italic
+    </button>
 
-    <i (click)="_onUnderline()"
+    <button (click)="_onUnderline()"
             [ngClass]="_underlineToggle ? 'active': 'inactive'"
             class="material-icons md-24" aria-hidden="true"
-            title="{{ 'Underline' | translate }}" unselectable="on">format_underline
-    </i>
+            title="{{ 'Underline' | translate }}">format_underline
+    </button>
 
-    <i (click)="_onStrikethrough()"
+    <button (click)="_onStrikethrough()"
             [ngClass]="_strikethroughToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Strikethrough' | translate }}" unselectable="on">format_strikethrough
-    </i>
+            title="{{ 'Strikethrough' | translate }}">format_strikethrough
+    </button>
     <!-- TODO: Remove bootstrap dependency.
     <div class="btn-group dispensable">
-      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Family' | translate }}" unselectable="on">font_download</i>
+      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Family' | translate }}">font_download</i>
       <ul class="dropdown-menu scrollable-menu font-menu" role="menu">
         <li class="font-menu font-menu-entry" *ngFor="let font of _fonts">
           <button class="font-menu font-menu-entry" (click)="_changeFontType($event.srcElement.textContent)">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="btn-group dispensable">
-      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Size' | translate }}" unselectable="on">format_size</i>
+      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Size' | translate }}">format_size</i>
       <ul class="dropdown-menu scrollable-menu sizes-menu"  role="menu">
         <li class="sizes-menu" *ngFor="let size of _sizes">
           <button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button>
@@ -45,67 +45,67 @@
       </ul>
     </div>
     -->
-    <i (click)="_onTextFontColor($event)"
+    <button (click)="_onTextFontColor($event)"
        type="button"
        class="material-icons md-24"
        data-toggle="dropdown"
        title="{{ 'Text Color' | translate }}"
-       unselectable="on">format_color_text</i>
-    <color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></color-picker>
+      >format_color_text</button>
+    <biglup-color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></biglup-color-picker>
 
-    <i (click)="_onTextBackgroundColor($event)"
+    <button (click)="_onTextBackgroundColor($event)"
        type="button"
        class="material-icons md-24"
        data-toggle="dropdown"
        title="{{ 'Background Color' | translate }}"
-       unselectable="on">format_color_fill</i>
-    <color-picker #backgroundColor (onClear)="_onBackgroundColorClear()" (onColorPicked)="_onBackgroundColorChanged($event)"></color-picker>
+      >format_color_fill</button>
+    <biglup-color-picker #backgroundColor (onClear)="_onBackgroundColorClear()" (onColorPicked)="_onBackgroundColorChanged($event)"></biglup-color-picker>
 
     <div class="vr dispensable"></div>
 
-    <i (click)="_onJustifyLeft()"
+    <button (click)="_onJustifyLeft()"
             [ngClass]="_justifyLeftToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Align Left' | translate }}" unselectable="on">format_align_left
-    </i>
+            title="{{ 'Align Left' | translate }}">format_align_left
+    </button>
 
-    <i (click)="_onJustifyCenter()"
+    <button (click)="_onJustifyCenter()"
             [ngClass]="_justifyCenterToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Align Center' | translate }}" unselectable="on">format_align_center
-    </i>
+            title="{{ 'Align Center' | translate }}">format_align_center
+    </button>
 
-    <i (click)="_onJustifyRight()"
+    <button (click)="_onJustifyRight()"
             [ngClass]="_justifyRightToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Align Right' | translate }}" unselectable="on">format_align_right
-    </i>
+            title="{{ 'Align Right' | translate }}">format_align_right
+    </button>
 
-    <i (click)="_onJustifyFull()"
+    <button (click)="_onJustifyFull()"
             [ngClass]="_justifyFullToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Align Justify' | translate }}" unselectable="on">format_align_justify
-    </i>
+            title="{{ 'Align Justify' | translate }}">format_align_justify
+    </button>
 
     <div class="vr dispensable"></div>
 
-    <i (click)="_onOrderedList()"
+    <button (click)="_onOrderedList()"
             [ngClass]="_orderedListToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Ordered List' | translate }}" unselectable="on"><i class="material-icons">format_list_numbered</i>
-    </i>
+            title="{{ 'Ordered List' | translate }}"><i class="material-icons">format_list_numbered</i>
+    </button>
 
-    <i (click)="_onUnorderedList()"
+    <button (click)="_onUnorderedList()"
             [ngClass]="_unorderedListToggle ? 'active': 'inactive'"
             class="material-icons md-24 dispensable"
             aria-hidden="true"
-            title="{{ 'Unordered List' | translate }}" unselectable="on"><i class="material-icons">format_list_bulleted</i>
-    </i>
+            title="{{ 'Unordered List' | translate }}"><i class="material-icons">format_list_bulleted</i>
+    </button>
 
   </div>
   <div class="editablearea" #editable id="editable-area" contenteditable (click)="_onEditableClick()" (blur)="_onContentChange()">

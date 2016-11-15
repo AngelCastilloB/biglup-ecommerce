@@ -10,8 +10,11 @@
   <ul [class.user-menu-hidden]="!_showUserMenu" [class.user-menu-open]="_showUserMenu" class="menu">
     <biglup-vertical-menu-option icon='person' [routerLink]="['profile']" label="{{'View Profile' | translate }}"></biglup-vertical-menu-option>
     <biglup-vertical-submenu icon='translate' label="{{'Language' | translate }}">
-      <biglup-vertical-menu-option (click)="_changeLanguage('en')" label='English'></biglup-vertical-menu-option>
-      <biglup-vertical-menu-option (click)="_changeLanguage('zh')" label='中文'></biglup-vertical-menu-option>
+      <biglup-vertical-menu-option
+        *ngFor="let lang of _i18nService.getSupportedLanguages()"
+        [label]="_i18nService.getOriginalName(lang)"
+        (click)="_changeLanguage(lang)">
+      </biglup-vertical-menu-option>
     </biglup-vertical-submenu>
     <biglup-vertical-menu-option icon='history' [routerLink]="['logout']" label="{{'Logout' | translate }}"></biglup-vertical-menu-option>
   </ul>

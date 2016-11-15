@@ -1,0 +1,46 @@
+<div [ngStyle]="locationCss" class="color-picker">
+  <table>
+    <tbody>
+    <tr>
+      <td style="background-color: #61bd6d; border: 1px solid #61bd6d;"><button class="color" (click)="_colorPicked('#61bd6d')"></button></td>
+      <td style="background-color: #1abc9c; border: 1px solid #1abc9c;"><button class="color" (click)="_colorPicked('#1abc9c')"></button></td>
+      <td style="background-color: #54acd2; border: 1px solid #54acd2;"><button class="color" (click)="_colorPicked('#54acd2')"></button></td>
+      <td style="background-color: #2c82c9; border: 1px solid #2c82c9;"><button class="color" (click)="_colorPicked('#2c82c9')"></button></td>
+      <td style="background-color: #9365b8; border: 1px solid #9365b8;"><button class="color" (click)="_colorPicked('#9365b8')"></button></td>
+      <td style="background-color: #475577; border: 1px solid #475577;"><button class="color" (click)="_colorPicked('#475577')"></button></td>
+      <td style="background-color: #cccccc; border: 1px solid #cccccc;"><button class="color" (click)="_colorPicked('#cccccc')"></button></td>
+    </tr>
+    <tr>
+      <td style="background-color: #41a85f; border: 1px solid #41a85f;"><button class="color" (click)="_colorPicked('#41a85f')"></button></td>
+      <td style="background-color: #00a885; border: 1px solid #00a885;"><button class="color" (click)="_colorPicked('#00a885')"></button></td>
+      <td style="background-color: #3d8eb9; border: 1px solid #3d8eb9;"><button class="color" (click)="_colorPicked('#3d8eb9')"></button></td>
+      <td style="background-color: #2969b0; border: 1px solid #2969b0;"><button class="color" (click)="_colorPicked('#2969b0')"></button></td>
+      <td style="background-color: #553982; border: 1px solid #553982;"><button class="color" (click)="_colorPicked('#553982')"></button></td>
+      <td style="background-color: #28324e; border: 1px solid #28324e;"><button class="color" (click)="_colorPicked('#28324e')"></button></td>
+      <td style="background-color: #000000; border: 1px solid #000000;"><button class="color" (click)="_colorPicked('#000000')"></button></td>
+    </tr>
+    <tr>
+      <td style="background-color: #f7da64; border: 1px solid #f7da64;"><button class="color" (click)="_colorPicked('#f7da64')"></button></td>
+      <td style="background-color: #fba026; border: 1px solid #fba026;"><button class="color" (click)="_colorPicked('#fba026')"></button></td>
+      <td style="background-color: #eb6b56; border: 1px solid #eb6b56;"><button class="color" (click)="_colorPicked('#eb6b56')"></button></td>
+      <td style="background-color: #e25041; border: 1px solid #e25041;"><button class="color" (click)="_colorPicked('#e25041')"></button></td>
+      <td style="background-color: #a38f84; border: 1px solid #a38f84;"><button class="color" (click)="_colorPicked('#a38f84')"></button></td>
+      <td style="background-color: #efefef; border: 1px solid #efefef;"><button class="color" (click)="_colorPicked('#efefef')"></button></td>
+      <td style="background-color: #ffffff; border: 1px solid #ffffff;"><button class="color" (click)="_colorPicked('#ffffff')"></button></td>
+    </tr>
+    <tr>
+      <td style="background-color: #fac51c; border: 1px solid #fac51c;"><button class="color" (click)="_colorPicked('#fac51c')"></button></td>
+      <td style="background-color: #f37934; border: 1px solid #f37934;"><button class="color" (click)="_colorPicked('#f37934')"></button></td>
+      <td style="background-color: #d14841; border: 1px solid #d14841;"><button class="color" (click)="_colorPicked('#d14841')"></button></td>
+      <td style="background-color: #b8312f; border: 1px solid #b8312f;"><button class="color" (click)="_colorPicked('#b8312f')"></button></td>
+      <td style="background-color: #7c706b; border: 1px solid #7c706b;"><button class="color" (click)="_colorPicked('#7c706b')"></button></td>
+      <td style="background-color: #d1d5d8; border: 1px solid #d1d5d8;"><button class="color" (click)="_colorPicked('#d1d5d8')"></button></td>
+      <td style="background-color: #ffffff; border: 1px solid #ffffff;">
+          <button (click)="_clear()" title="{{ 'Clear Formatting' | translate }}">
+            X
+          </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

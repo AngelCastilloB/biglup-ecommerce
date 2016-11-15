@@ -46,4 +46,7 @@ export * from './client/components/modal/components/waiting-animation/waiting-an
 export * from './client/components/modal/components/warning-animation/warning-animation.component';
 export * from './client/components/tab/tab/biglup-tab.component';
 export * from './client/components/tab/biglup-tabs.component';
+export * from './client/components/breadcrumb/biglup-breadcrumb.component';
 export * from './client/biglup-ui.module';
+export * from './client/components/text-editor/biglup-text-editor.component';
+export * from './client/components/text-editor/components/biglup-color-picker.component';

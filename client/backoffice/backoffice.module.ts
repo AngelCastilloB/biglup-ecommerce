@@ -21,8 +21,6 @@ import { NgModule }                      from '@angular/core';
 import { SharedModule }                  from '../shared.module';
 import { BackofficeRoutesModule }        from './backoffice.routes';
 import { BackofficeComponent }           from './backoffice.component';
-import { SidebarComponent }              from './components/sidebar/sidebar.component';
-import { BreadcrumbComponent }           from './components/breadcrumbs/breadcrumbs.component';
 import { AddCollectionComponent }        from './components/add-collection/add-collection.component';
 import { AddProductComponent }           from './components/add-product/add-product.component';
 import { CollectionsComponent }          from './components/collections/collections.component';
@@ -40,8 +38,6 @@ import { ImagePreviewComponent }         from './components/product-images-manag
 import { DragulaService, DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }             from './components/product-images-manager/directives/file-drop.directive';
 import { FileSelectDirective }           from './components/product-images-manager/directives/file-select.directive';
-import { TextEditorComponent }           from './components/text-editor/text-editor.component';
-import { ColorPickerComponent }          from './components/text-editor/components/color-picker.component';
 import { ImagesService }                 from 'meteor/biglup:business';
 import { I18nInputComponent }            from './components/i18n-input/i18n-input.component';
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
@@ -57,11 +53,7 @@ import { BiglupToastService }            from 'meteor/biglup:ui';
         // TODO: refactor into child feature modules
 
         // Common
-        SidebarComponent,
-        BreadcrumbComponent,
         DashboardComponent,
-        TextEditorComponent,
-        ColorPickerComponent,
 
         // collection
         AddCollectionComponent,

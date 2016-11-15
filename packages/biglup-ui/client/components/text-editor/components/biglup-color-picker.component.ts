@@ -1,5 +1,5 @@
 /**
- * @file color-picker.component.ts
+ * @file biglup-color-picker.component.ts
  *
  * @summary A simple color picker component.
  *
@@ -21,7 +21,7 @@ import { Component, EventEmitter, HostListener } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './color-picker.component.html';
+import template from './biglup-color-picker.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -29,11 +29,11 @@ import template from './color-picker.component.html';
  * @summary This component displays the simple color picker component.
  */
 @Component({
-    selector: 'color-picker',
+    selector: 'biglup-color-picker',
     template,
     outputs: ['onClear', 'onColorPicked']
 })
-export class ColorPickerComponent
+export class BiglupColorPickerComponent
 {
     public onClear:       EventEmitter<any>    = new EventEmitter<any>();
     public onColorPicked: EventEmitter<string> = new EventEmitter<string>();
@@ -43,7 +43,7 @@ export class ColorPickerComponent
     private _isOpening:   boolean                       = false;
 
     /**
-     * @summary Initializes a new instance of the ColorPickerComponent class.
+     * @summary Initializes a new instance of the BiglupColorPickerComponent class.
      */
     constructor()
     {

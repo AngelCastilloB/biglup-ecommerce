@@ -17,13 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { EventEmitter } from '@angular/core';
-import { I18nString }   from '../../common/models/i18n-string';
-import { Meteor }       from 'meteor/meteor';
+import { EventEmitter }        from '@angular/core';
+import { I18nString }          from '../../common/models/i18n-string';
+import { languageRegionNames } from './language-region-names';
 
 // CONSTANTS **********************************************************************************************************/
 
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = 'en_US';
 
 // GLOBALS ************************************************************************************************************/
 
@@ -108,6 +108,23 @@ export class I18nSingletonService
     public getSupportedLanguages()
     {
         return Object.keys(this._translations);
+    }
+
+    /**
+     * @summary Resturns the locale name on its original language.
+     *
+     * @param i18nCode The I18N code.
+     *
+     * @return {string} The locale original name.
+     */
+    public getOriginalName(i18nCode: string): string
+    {
+        const name: string = languageRegionNames[i18nCode];
+
+        if (!name)
+            return 'UNKNOWN';
+
+        return name;
     }
 
     /**

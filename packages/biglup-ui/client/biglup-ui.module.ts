@@ -51,6 +51,9 @@ import { WaitingAnimationComponent }              from './components/modal/compo
 import { WarningAnimationComponent }              from './components/modal/components/warning-animation/warning-animation.component';
 import { BiglupTabComponent }                     from './components/tab/tab/biglup-tab.component';
 import { BiglupTabsComponent }                    from './components/tab/biglup-tabs.component';
+import { BiglupBreadcrumbComponent }              from './components/breadcrumb/biglup-breadcrumb.component';
+import { BiglupColorPickerComponent }             from './components/text-editor/components/biglup-color-picker.component';
+import { BiglupTextEditorComponent }              from './components/text-editor/biglup-text-editor.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -94,7 +97,10 @@ import { BiglupTabsComponent }                    from './components/tab/biglup-
         WarningAnimationComponent,
         WaitingAnimationComponent,
         BiglupTabComponent,
-        BiglupTabsComponent
+        BiglupTabsComponent,
+        BiglupBreadcrumbComponent,
+        BiglupTextEditorComponent,
+        BiglupColorPickerComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -124,7 +130,10 @@ import { BiglupTabsComponent }                    from './components/tab/biglup-
         WarningAnimationComponent,
         WaitingAnimationComponent,
         BiglupTabComponent,
-        BiglupTabsComponent
+        BiglupTabsComponent,
+        BiglupBreadcrumbComponent,
+        BiglupTextEditorComponent,
+        BiglupColorPickerComponent
     ]
 })
 export class BiglupUiModule

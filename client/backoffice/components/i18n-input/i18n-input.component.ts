@@ -30,7 +30,7 @@ import { I18nString }     from 'meteor/biglup:i18n';
  */
 @Component({
     selector: 'i18n-input',
-    template: `<md-input [style.width]="'100%'" [(ngModel)]="_model.value" placeholder="{{_placeholder}}"></md-input>`
+    template: `<biglup-input [style.width]="'100%'" hint="{{_placeholder}}" floatingHint="true" [(value)]="_model.value"></biglup-input>`
 })
 export class I18nInputComponent
 {

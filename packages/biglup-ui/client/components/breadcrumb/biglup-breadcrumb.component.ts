@@ -1,10 +1,10 @@
 /**
- * @file sidebar.component.ts
+ * @file biglup-breadcrumb.component.ts
  *
- * @summary The admin panel sidebar.
+ * @summary Custom breadcrumb component..
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   July 22 2016
+ * @date   November 14 2016
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -21,21 +21,21 @@ import { Component } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './sidebar.component.html';
+import template from './biglup-breadcrumb.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component displays the admin panel sidebar.
+ * @summary This component displays a breadcrumb.
  */
 @Component({
-    selector: 'sidebar',
+    selector: 'biglup-breadcrumb',
     template
 })
-export class SidebarComponent
+export class BiglupBreadcrumbComponent
 {
     /**
-     * @summary Initializes a new instance of the SidebarComponent class.
+     * @summary Initializes a new instance of the BiglupBreadcrumbComponent class.
      */
     constructor()
     {

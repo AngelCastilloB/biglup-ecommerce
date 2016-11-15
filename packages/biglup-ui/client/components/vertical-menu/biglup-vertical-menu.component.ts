@@ -36,7 +36,8 @@ import template from './biglup-vertical-menu.component.html';
 })
 export class BiglupVerticalMenuComponent implements AfterViewInit
 {
-    private _showUserMenu: boolean = false;
+    private _showUserMenu: boolean              = false;
+    private _i18nService:  I18nSingletonService = I18nSingletonService.getInstance();
 
     /**
      * @summary Initializes a new instance of the BiglupVerticalMenuComponent class.

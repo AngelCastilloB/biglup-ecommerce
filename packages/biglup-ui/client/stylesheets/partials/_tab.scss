@@ -1,5 +1,15 @@
 @import 'base';
 
+.biglup-tabs-container {
+  margin-left: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+
+  ul {
+    margin: 0;
+  }
+}
+
 .biglup-pane{
   padding: 1em;
 }
@@ -13,7 +23,6 @@
 .biglup-tab-content {
 
   div {
-    width: 100%;
     border-top-color: transparent;
     margin: 0;
   }
@@ -31,12 +40,12 @@
   a {
     color: $disabled-text-color;
     font-family: $base-font-family;
-    font-size: $base-font-size;
+    font-size: 14px;
     font-weight: $base-font-weight;
     position: relative;
     display: block;
     padding: 10px 15px;
-    margin-right: 10px;
+    margin-left: 10px;
     border-radius: 4px 4px 4px 4px;
     cursor: pointer;
     background: $light-primary-color;

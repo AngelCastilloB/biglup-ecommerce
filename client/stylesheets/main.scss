@@ -1,4 +1,6 @@
 @import '{biglup:ui}/client/stylesheets/main';
+@import './partials/add-product';
+@import './partials/products';
 
 body {
     @extend .typography;

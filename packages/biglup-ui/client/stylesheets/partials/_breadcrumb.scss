@@ -1,0 +1,98 @@
+@import 'base';
+
+.biglup-breadcrumb-container {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.biglup-breadcrumb {
+  text-align: center;
+  display: inline-block;
+  @include elevation(1);
+  overflow: hidden;
+  border-radius: 5px;
+  counter-reset: flag;
+
+  i {
+    float: left;
+    margin-top: 4px;
+    margin-left: -10px;
+    margin-right: 10px;
+  }
+
+  > a {
+    min-width: 60px;
+    text-decoration: none;
+    outline: none;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-family: $base-font-family;
+    line-height: 36px;
+    color: $text-color;
+    padding: 0 10px 0 40px;
+    position: relative;
+    &:first-child {
+      padding-left: 20px;
+      border-radius: 5px 0 0 5px;
+      &::before {
+        left: 14px;
+      }
+    }
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+      padding-right: 20px;
+      &::after {
+        content: none;
+      }
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -18px;
+      width: 36px;
+      height: 36px;
+      transform: scale(0.707) rotate(45deg);
+      z-index: 1;
+      box-shadow: 2px -2px 0 2px $dark-primary-color;
+      border-radius: 0 5px 0 50px;
+    }
+  }
+
+  &.biglup-flat a {
+    background: $primary-background-color;
+    color: $primary-color;
+    transition: all 0.5s;
+    &::after {
+      background: $primary-background-color;
+      color: $primary-color;
+      transition: all 0.5s;
+    }
+    &::before {
+      background: $primary-background-color;
+      box-shadow: 0 0 0 1px $primary-color;
+    }
+    &:hover, &.active, &:hover::after {
+      background: $primary-color;
+    }
+    &.active {
+      &::after {
+        background: $primary-color;
+        cursor: default;
+      }
+      &:hover {
+        background: $primary-color;
+        cursor: default;
+      }
+    }
+    &:hover, &.active {
+      color: $primary-background-color;
+    }
+    &:hover::before, &.active::before {
+      color: $primary-color;
+    }
+  }
+}

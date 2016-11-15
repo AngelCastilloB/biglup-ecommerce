@@ -30,7 +30,7 @@ import { I18nString }     from 'meteor/biglup:i18n';
  */
 @Component({
     selector: 'i18n-text-editor',
-    template: `<text-editor [(model)]="_model.value"></text-editor>`
+    template: `<biglup-text-editor [(model)]="_model.value"></biglup-text-editor>`
 })
 export class I18nTextEditorComponent
 {

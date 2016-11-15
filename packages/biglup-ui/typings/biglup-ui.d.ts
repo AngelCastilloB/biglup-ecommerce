@@ -17,6 +17,9 @@
 
 declare module BiglupUi
 {
+    class BiglupTextEditorComponent {}
+    class BiglupColorPickerComponent {}
+    class BiglupBreadcrumbComponent {}
     class BiglupTabsComponent {}
     class BiglupTabComponent {}
     enum BiglupModalType

@@ -1,5 +1,5 @@
 /**
- * @file text-editor.component.ts
+ * @file biglup-text-editor.component.ts
  *
  * @summary This is a simple WYSIWYG editor component.
  *
@@ -23,12 +23,12 @@ import { Component,
          Output,
          OnChanges,
          SimpleChanges,
-         EventEmitter }         from '@angular/core';
-import { ColorPickerComponent } from './components/color-picker.component';
+         EventEmitter }               from '@angular/core';
+import { BiglupColorPickerComponent } from './components/biglup-color-picker.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template    from './text-editor.component.html';
+import template from './biglup-text-editor.component.html';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -41,18 +41,17 @@ const MAX_FONT_SIZE = 96;
  * @summary This is a simple WYSIWYG text editor.
  */
 @Component({
-    selector: 'text-editor',
-    template,
-    styleUrls: ['./text-editor.component.css']
+    selector: 'biglup-text-editor',
+    template
 })
-export class TextEditorComponent implements OnChanges
+export class BiglupTextEditorComponent implements OnChanges
 {
     @ViewChild('editable')
     private _editableArea;
     @ViewChild('fontColor')
-    private _fontColorPicker: ColorPickerComponent;
+    private _fontColorPicker: BiglupColorPickerComponent;
     @ViewChild('backgroundColor')
-    private _backgroundColorPicker: ColorPickerComponent;
+    private _backgroundColorPicker: BiglupColorPickerComponent;
     @Output('modelChange')
     private _update                             = new EventEmitter();
     @Input('model')
@@ -71,7 +70,7 @@ export class TextEditorComponent implements OnChanges
     private _fonts:               Array<string> = Array<string>();
 
     /**
-     * @summary Initializes a new instance of the TextEditorComponent class.
+     * @summary Initializes a new instance of the BiglupTextEditorComponent class.
      */
     constructor()
     {

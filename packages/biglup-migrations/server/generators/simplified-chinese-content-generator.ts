@@ -146,7 +146,7 @@ export class SimplifiedChineseContentGenerator extends AbstractContentGenerator
      */
     public getLocale()
     {
-        return 'zh';
+        return 'zh_TW';
     }
 
     /**

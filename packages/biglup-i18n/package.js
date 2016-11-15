@@ -18,7 +18,8 @@ Package.onUse(function(api)
 
     // Services
     api.addFiles([
-        'client/services/i18n-singleton.service.ts'
+        'client/services/i18n-singleton.service.ts',
+        'client/services/language-region-names.ts'
     ], 'client');
 
     // Models

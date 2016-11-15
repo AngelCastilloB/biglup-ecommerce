@@ -1,0 +1,195 @@
+@import 'base';
+
+.text-editor {
+  @include elevation(2);
+  min-height: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  cursor: text;
+  overflow: hidden;
+  margin-top: 10px!important;
+}
+
+.buttons {
+  width: 100%;
+  @include elevation(1);
+  display: flex;
+  padding-right: 10px;
+
+  > button {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+.vr {
+  border-left: 1px solid #e1e1e1;
+  margin: 1px 7px;
+}
+
+#editable-area {
+  margin: 10px;
+  height: auto;
+  &:read-write:focus {
+    outline: none;
+  }
+}
+
+.text-editor i {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  width: 40px;
+  height: 24px;
+  -webkit-transition: background 0.1s linear;
+  -moz-transition: background 0.1s linear;
+  -ms-transition: background 0.1s linear;
+  -o-transition: background 0.1s linear;
+  transition: background 0.1s linear;
+  -moz-user-select: -moz-none;
+  text-align: center;
+}
+
+.inactive {
+  color: black;
+}
+
+.active {
+  color: #1E90FF;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.sizes-menu {
+  width: 50px !important;
+  min-width: 50px !important;
+}
+
+.font-menu {
+  width: 155px !important;
+  min-width: 155px !important;
+}
+
+.font-menu-entry {
+  height: 30px !important;
+  min-height: 30px !important;
+  text-align: left;
+  margin: 0;
+}
+
+.tooltip:hover:after {
+  content: attr(title);
+}
+
+.editablearea {
+  ol {
+    display: block;
+    list-style-type: decimal;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+    cursor: text;
+  }
+  ul {
+    li {
+      list-style: disc;
+      margin-top: 1em;
+      margin-bottom: 1 em;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    list-style: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .dispensable {
+    display: none !important;
+  }
+}
+
+// Color picker
+.color-picker {
+
+  table {
+    height: 120px;
+    max-height:120px;
+    border: 1px solid #f0f0ee;
+    table-layout: fixed;
+  }
+  th {
+    border: none;
+  }
+
+  td {
+    height: 30px;
+    width: 30px;
+    max-height: 30px;
+    max-width: 30px;
+    margin: 0!important;
+    padding: 0!important;
+  }
+
+  tr {
+    max-height: 30px;
+    max-width: 30px;
+    margin: 0!important;
+    padding: 0!important;
+  }
+
+  width: 212px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.09);
+  .color {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0!important;
+    padding: 0!important;
+  }
+
+  button {
+    i {
+      font-size: 12px;
+      height: 30px;
+      width: 30px;
+      max-height: 30px;
+      max-width: 30px;
+      margin: 0!important;
+      padding: 0!important;
+    }
+    margin: 0!important;
+    padding: 0!important;
+    height: 30px;
+    width: 30px;
+    max-height: 30px;
+    max-width: 30px;
+  }
+
+  button:hover {
+    background-color: transparent !important;
+  }
+  margin: 0;
+  padding: 0;
+}
