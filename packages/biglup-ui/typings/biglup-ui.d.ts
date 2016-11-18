@@ -121,6 +121,7 @@ declare module BiglupUi
         public observeValue(): any;
         public observeValueChanges(): any;
         public setInvalid(isInvalid: boolean);
+        public getValue(): string;
     }
     class BiglupCheckboxComponent {}
     class RippleDirective {}

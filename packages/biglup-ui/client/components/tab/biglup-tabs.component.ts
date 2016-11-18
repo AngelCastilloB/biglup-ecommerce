@@ -17,8 +17,11 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import { BiglupTabComponent }                                      from './tab/biglup-tab.component';
+import { Component,
+         ContentChildren,
+         QueryList,
+         AfterContentInit }   from '@angular/core';
+import { BiglupTabComponent } from './tab/biglup-tab.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,6 +40,13 @@ export class BiglupTabsComponent implements AfterContentInit
 {
     @ContentChildren(BiglupTabComponent)
     private m_tabs: QueryList<BiglupTabComponent>;
+
+    /**
+     * @summary Initializes a new instance of the BiglupTabsComponent class.
+     */
+    constructor()
+    {
+    }
 
     /**
      * @summary Respond after Angular initializes the component's views and child views.

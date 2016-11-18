@@ -121,6 +121,8 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
 
     /**
      * @summary Initializes a new instance of the BiglupDataTableComponent class.
+     *
+     * @param {ChangeDetectorRef} _changeDetector The change detector service.
      */
     constructor(private _changeDetector: ChangeDetectorRef)
     {

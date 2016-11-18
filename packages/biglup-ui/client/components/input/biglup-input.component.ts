@@ -71,6 +71,8 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _floatingHint: boolean = false;
     @Input('value')
     private _value: string = '';
+    @Output('valueChange')
+    private _valueChange: any    = new EventEmitter();
     @Input('isPassword')
     private _isPassword: boolean = false;
     @Input('disabled')
@@ -88,6 +90,8 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     private _hasFocus:    boolean = false;
     @Output('hasFocus')
     private _focusEmitter: any = new EventEmitter();
+    @Input('isNumeric')
+    private _isNumeric: boolean = false;
 
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
@@ -109,6 +113,14 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
         this._inputBlur   = Observable.fromEvent(this._input.nativeElement, 'blur');
 
         this._updateStateFromDom();
+    }
+
+    /**
+     * @summary Gets the current value of this input box.
+     */
+    public getValue(): string
+    {
+        return this._value;
     }
 
     /**
@@ -254,6 +266,7 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     {
         this._hasFocus = false;
         this._focusEmitter.emit(this._hasFocus);
+        this._valueChange.emit(this._value);
 
         this._updateStateFromDom();
     }
