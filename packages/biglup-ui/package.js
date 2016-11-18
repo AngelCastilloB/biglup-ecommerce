@@ -6,7 +6,8 @@ Package.describe({
 });
 
 Npm.depends({
-    "chart.js": "2.3.0"
+    "chart.js": "2.3.0",
+    "quill": "1.1.5"
 });
 
 Package.onUse(function(api)
@@ -60,7 +61,7 @@ Package.onUse(function(api)
         'client/components/tab/tab/biglup-tab.component.ts',
         'client/components/breadcrumb/biglup-breadcrumb.component.ts',
         'client/components/text-editor/biglup-text-editor.component.ts',
-        'client/components/text-editor/components/biglup-color-picker.component.ts'
+        'client/services/dom/dom-handler.service.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

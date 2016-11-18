@@ -1,113 +1,34 @@
-<div class="text-editor" (click)="_onTextEditorClick()">
-  <div class="buttons">
-    <button (click)="_onBold()"
-            [ngClass]="_boldToggle ? 'active': 'inactive'"
-            class="material-icons md-24"
-            title="{{ 'Bold' | translate }}">format_bold
-    </button>
-
-    <button (click)="_onItalic()"
-            [ngClass]="_italicToggle ? 'active': 'inactive'"
-            class="material-icons md-24" aria-hidden="true"
-            title="{{ 'Italic' | translate }}">format_italic
-    </button>
-
-    <button (click)="_onUnderline()"
-            [ngClass]="_underlineToggle ? 'active': 'inactive'"
-            class="material-icons md-24" aria-hidden="true"
-            title="{{ 'Underline' | translate }}">format_underline
-    </button>
-
-    <button (click)="_onStrikethrough()"
-            [ngClass]="_strikethroughToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Strikethrough' | translate }}">format_strikethrough
-    </button>
-    <!-- TODO: Remove bootstrap dependency.
-    <div class="btn-group dispensable">
-      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Family' | translate }}">font_download</i>
-      <ul class="dropdown-menu scrollable-menu font-menu" role="menu">
-        <li class="font-menu font-menu-entry" *ngFor="let font of _fonts">
-          <button class="font-menu font-menu-entry" (click)="_changeFontType($event.srcElement.textContent)">
-            <font style="margin-left: 10px;" face="{{font}}">{{font}}</font>
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <div class="btn-group dispensable">
-      <i type="button" class="material-icons md-24" data-toggle="dropdown" title="{{ 'Font Size' | translate }}">format_size</i>
-      <ul class="dropdown-menu scrollable-menu sizes-menu"  role="menu">
-        <li class="sizes-menu" *ngFor="let size of _sizes">
-          <button class="sizes-menu" (click)="_changeFontSize($event.srcElement.textContent)">{{size}}</button>
-        </li>
-      </ul>
-    </div>
-    -->
-    <button (click)="_onTextFontColor($event)"
-       type="button"
-       class="material-icons md-24"
-       data-toggle="dropdown"
-       title="{{ 'Text Color' | translate }}"
-      >format_color_text</button>
-    <biglup-color-picker #fontColor (onClear)="_onTextColorClear()" (onColorPicked)="_onTextColorChanged($event)"></biglup-color-picker>
-
-    <button (click)="_onTextBackgroundColor($event)"
-       type="button"
-       class="material-icons md-24"
-       data-toggle="dropdown"
-       title="{{ 'Background Color' | translate }}"
-      >format_color_fill</button>
-    <biglup-color-picker #backgroundColor (onClear)="_onBackgroundColorClear()" (onColorPicked)="_onBackgroundColorChanged($event)"></biglup-color-picker>
-
-    <div class="vr dispensable"></div>
-
-    <button (click)="_onJustifyLeft()"
-            [ngClass]="_justifyLeftToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Align Left' | translate }}">format_align_left
-    </button>
-
-    <button (click)="_onJustifyCenter()"
-            [ngClass]="_justifyCenterToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Align Center' | translate }}">format_align_center
-    </button>
-
-    <button (click)="_onJustifyRight()"
-            [ngClass]="_justifyRightToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Align Right' | translate }}">format_align_right
-    </button>
-
-    <button (click)="_onJustifyFull()"
-            [ngClass]="_justifyFullToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Align Justify' | translate }}">format_align_justify
-    </button>
-
-    <div class="vr dispensable"></div>
-
-    <button (click)="_onOrderedList()"
-            [ngClass]="_orderedListToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Ordered List' | translate }}"><i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <button (click)="_onUnorderedList()"
-            [ngClass]="_unorderedListToggle ? 'active': 'inactive'"
-            class="material-icons md-24 dispensable"
-            aria-hidden="true"
-            title="{{ 'Unordered List' | translate }}"><i class="material-icons">format_list_bulleted</i>
-    </button>
-
+<div [ngClass]="'ui-widget ui-editor-container ui-corner-all'" [class]="_styleClass">
+  <div id="toolbar" class="ui-editor-toolbar ui-widget-header ui-corner-top">
+                <span class="ql-formats">
+                    <select class="ql-header">
+                      <option value="1">{{"Huge" | translate}}</option>
+                      <option value="2">{{"Large" | translate}}</option>
+                      <option selected>{{"Normal" | translate}}</option>
+                    </select>
+                </span>
+    <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                </span>
+    <span class="ql-formats">
+                    <select class="ql-color"></select>
+                    <select class="ql-background"></select>
+                </span>
+    <span class="ql-formats">
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <select class="ql-align">
+                        <option selected></option>
+                        <option value="center"></option>
+                        <option value="right"></option>
+                        <option value="justify"></option>
+                    </select>
+                </span>
+    <span class="ql-formats">
+                    <button class="ql-clean"></button>
+                </span>
   </div>
-  <div class="editablearea" #editable id="editable-area" contenteditable (click)="_onEditableClick()" (blur)="_onContentChange()">
-  </div>
+  <div class="ui-editor-content" [ngStyle]="_style"></div>
 </div>

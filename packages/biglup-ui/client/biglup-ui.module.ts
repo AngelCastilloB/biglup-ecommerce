@@ -52,8 +52,8 @@ import { WarningAnimationComponent }              from './components/modal/compo
 import { BiglupTabComponent }                     from './components/tab/tab/biglup-tab.component';
 import { BiglupTabsComponent }                    from './components/tab/biglup-tabs.component';
 import { BiglupBreadcrumbComponent }              from './components/breadcrumb/biglup-breadcrumb.component';
-import { BiglupColorPickerComponent }             from './components/text-editor/components/biglup-color-picker.component';
 import { BiglupTextEditorComponent }              from './components/text-editor/biglup-text-editor.component';
+import { DomHandlerService }                      from './services/dom/dom-handler.service';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -62,7 +62,8 @@ import { BiglupTextEditorComponent }              from './components/text-editor
  */
 @NgModule({
     providers: [
-        BiglupMediaService
+        BiglupMediaService,
+        DomHandlerService
     ],
     imports: [
         BrowserModule,
@@ -99,8 +100,7 @@ import { BiglupTextEditorComponent }              from './components/text-editor
         BiglupTabComponent,
         BiglupTabsComponent,
         BiglupBreadcrumbComponent,
-        BiglupTextEditorComponent,
-        BiglupColorPickerComponent
+        BiglupTextEditorComponent
     ],
     exports: [
         BiglupButtonComponent,
@@ -132,8 +132,7 @@ import { BiglupTextEditorComponent }              from './components/text-editor
         BiglupTabComponent,
         BiglupTabsComponent,
         BiglupBreadcrumbComponent,
-        BiglupTextEditorComponent,
-        BiglupColorPickerComponent
+        BiglupTextEditorComponent
     ]
 })
 export class BiglupUiModule

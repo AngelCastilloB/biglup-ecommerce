@@ -17,8 +17,43 @@
 
 declare module BiglupUi
 {
+    export class DomHandlerService
+    {
+        public static zindex: number;
+        public addClass(element: any, className: string): void;
+        public addMultipleClasses(element: any, className: string): void;
+        public removeClass(element: any, className: string): void;
+        public hasClass(element: any, className: string): boolean;
+        public siblings(element: any): any;
+        public find(element: any, selector: string): any[];
+        public findSingle(element: any, selector: string): any;
+        public index(element: any): number;
+        public relativePosition(element: any, target: any): void;
+        public absolutePosition(element: any, target: any): void;
+        public getHiddenElementOuterHeight(element: any): number;
+        public getHiddenElementOuterWidth(element: any): number;
+        public getHiddenElementDimensions(element: any): any;
+        public scrollInView(container, item);
+        public fadeIn(element, duration: number): void;
+        public fadeOut(element, ms);
+        public getWindowScrollTop(): number;
+        public getWindowScrollLeft(): number;
+        public matches(element, selector: string): boolean;
+        public getOuterWidth(el, margin?);
+        public getHorizontalPadding(el);
+        public getHorizontalMargin(el);
+        public innerWidth(el);
+        public width(el);
+        public getOuterHeight(el, margin?);
+        public getHeight(el): number;
+        public getWidth(el): number;
+        public getViewport(): any;
+        public equals(obj1: any, obj2: any): boolean;
+        public getUserAgent(): string;
+        public isIE();
+    }
+
     class BiglupTextEditorComponent {}
-    class BiglupColorPickerComponent {}
     class BiglupBreadcrumbComponent {}
     class BiglupTabsComponent {}
     class BiglupTabComponent {}

@@ -49,4 +49,4 @@ export * from './client/components/tab/biglup-tabs.component';
 export * from './client/components/breadcrumb/biglup-breadcrumb.component';
 export * from './client/biglup-ui.module';
 export * from './client/components/text-editor/biglup-text-editor.component';
-export * from './client/components/text-editor/components/biglup-color-picker.component';
+export * from './client/services/dom/dom-handler.service';
