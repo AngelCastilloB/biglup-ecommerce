@@ -1,6 +1,6 @@
 <div>
-<b>{{ 'Images' | translate }}</b>
-  <label md-raised-button class="select-files-button pull-right">
+<span><b>{{ 'Images' | translate }}</b></span>
+  <label ripple class="select-files-button pull-right">
     {{ 'Select Files' | translate }} <input type="file" file-select style="display: none;" multiple (onSelected)="_onFileDrop($event)"/>
   </label>
 </div>

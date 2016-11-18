@@ -44,8 +44,7 @@ const NUMBER_OF_COLUMNS = 5;
  */
 @Component({
     selector: 'product-image-manager',
-    template,
-    styleUrls: ['./product-image-manager.component.css']
+    template
 })
 export class ProductImageManagerComponent
 {

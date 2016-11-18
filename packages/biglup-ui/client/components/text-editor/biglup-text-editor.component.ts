@@ -52,6 +52,8 @@ export const EDITOR_VALUE_ACCESSOR: any = {
 })
 export class BiglupTextEditorComponent implements AfterViewInit, ControlValueAccessor
 {
+    private static s_count: number = 0;
+
     public onModelChange: Function = () => {};
     public onModelTouched: Function = () => {};
     @Output('onTextChange')
@@ -70,6 +72,7 @@ export class BiglupTextEditorComponent implements AfterViewInit, ControlValueAcc
     private _formats: string[];
     private _value: string;
     private _quill: any;
+    private _id: string;
 
     /**
      * @summary Initializes a new instance of BiglupTextEditorComponent.
@@ -79,6 +82,8 @@ export class BiglupTextEditorComponent implements AfterViewInit, ControlValueAcc
      */
     constructor(public el: ElementRef, public domHandler: DomHandlerService)
     {
+        ++BiglupTextEditorComponent.s_count;
+        this._id = 'toolbar-' + BiglupTextEditorComponent.s_count;
     }
 
     /**
@@ -93,7 +98,7 @@ export class BiglupTextEditorComponent implements AfterViewInit, ControlValueAcc
             {
             modules:
             {
-                toolbar: '#toolbar'
+                toolbar: '#'+this._id
             },
             placeholder: this._placeholder,
             readOnly: this._readOnly,
