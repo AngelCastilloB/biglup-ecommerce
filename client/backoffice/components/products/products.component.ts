@@ -55,7 +55,7 @@ export class ProductsComponent implements OnDestroy
     constructor(private _router: Router, private _productsService: ProductsService)
     {
         this._buildTableFormat();
-        I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() => this._buildTableFormat());
+        this._i18nSubscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() => this._buildTableFormat());
     }
 
     /**
@@ -77,16 +77,6 @@ export class ProductsComponent implements OnDestroy
             { name: 'title', label: _T('Title'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)},
             { name: 'stock', label: _T('Inventory'), numeric: true },
             { name: 'price',  label: _T('Price'), numeric: true },
-            { name: 'categories',  label: _T('Categories'), format:
-                (value: any) =>
-                {
-                    let categories: string  = '';
-
-                    if (value && value.length > 0)
-                        value.forEach((category) => categories = categories + ' ' + category);
-
-                    return categories;
-                }},
             { name: 'color', label: _T('Color'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) },
             { name: 'size', label: _T('Size'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) }
         ];

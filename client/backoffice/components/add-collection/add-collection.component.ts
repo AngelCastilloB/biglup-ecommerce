@@ -19,6 +19,9 @@
 
 import { Component,
          OnInit,
+         ViewChildren,
+         QueryList,
+         ChangeDetectorRef,
          ViewChild }                 from '@angular/core';
 import { Router, ActivatedRoute }    from '@angular/router';
 import { I18nSingletonService, _T }  from 'meteor/biglup:i18n';
@@ -28,6 +31,7 @@ import { BiglupModalComponent,
 import { Category }                  from 'meteor/biglup:business';
 import { CategoriesService }         from 'meteor/biglup:business';
 import { I18nString }                from 'meteor/biglup:i18n';
+import { I18nInputComponent }        from '../i18n-input/i18n-input.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -45,6 +49,8 @@ import template from './add-collection.component.html';
 })
 export class AddCollectionComponent implements OnInit
 {
+    @ViewChildren(I18nInputComponent)
+    private _names:                 QueryList<I18nInputComponent>;
     @ViewChild(BiglupModalComponent)
     private _modal:                 BiglupModalComponent;
     private _category:              Category             = new Category();
@@ -60,7 +66,8 @@ export class AddCollectionComponent implements OnInit
     constructor(
         private _router: Router,
         private _route: ActivatedRoute,
-        private _categoriesService: CategoriesService)
+        private _categoriesService: CategoriesService,
+        private _changeDetector: ChangeDetectorRef)
     {
     }
 
@@ -116,6 +123,8 @@ export class AddCollectionComponent implements OnInit
                         this._i18nNameReferenceMap[lang] = name;
                         this._i18nInfoReferenceMap[lang] = info;
                     });
+
+                    this._changeDetector.detectChanges();
                 });
         });
     }
@@ -125,15 +134,20 @@ export class AddCollectionComponent implements OnInit
      */
     private _saveCategory(): void
     {
-        if (!this._category.name || !this._category.info)
+        let isRequieredMissing: any = this._names.toArray().find((i18nInput: I18nInputComponent) =>
         {
-            this._modal.show(
-                _T('Information'),
-                _T('Please fill all the required fields.'),
-                BiglupModalType.Information);
+            if (!i18nInput.getIsValid())
+            {
+                this._modal.show(
+                    _T('Requiered Field Missing'),
+                    _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
+            }
 
+            return !i18nInput.getIsValid();
+        });
+
+        if (isRequieredMissing)
             return;
-        }
 
         this._waitModalResult = true;
 
@@ -179,15 +193,17 @@ export class AddCollectionComponent implements OnInit
      */
     private _updateCategory(): void
     {
-        if (!this._category.name || !this._category.info)
+        let isRequieredMissing: any = this._names.toArray().find((i18nInput: I18nInputComponent) =>
         {
-            this._modal.show(
-                _T('Information'),
-                _T('Please fill all the required fields.'),
-                BiglupModalType.Information);
+            if (!i18nInput.getIsValid())
+            {
+                this._modal.show(
+                    _T('Requiered Field Missing'),
+                    _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
+            }
 
-            return;
-        }
+            return !i18nInput.getIsValid();
+        });
 
         this._waitModalResult = true;
 
@@ -227,16 +243,5 @@ export class AddCollectionComponent implements OnInit
 
             this._router.navigate(['/admin/collections']);
         }
-    }
-
-    /**
-     * @summary Gets the translation for 'Title' for the given language.
-     *
-     * @returns {string} The translation.
-     * @private
-     */
-    private _getTitleTranslation(): string
-    {
-        return _T('Title');
     }
 }

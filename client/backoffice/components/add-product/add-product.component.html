@@ -4,7 +4,8 @@
   <biglup-breadcrumb>
     <a [routerLink]="['/admin/dashboard']"><i class="material-icons md-16">home</i>{{ 'Dashboard' | translate }}</a>
     <a [routerLink]="['/admin/products']"><i class="material-icons md-16">card_travel</i>{{ 'Products' | translate }}</a>
-    <a class="active"><i class="material-icons md-16">add_circle_outline</i> {{ 'Add Product' | translate }}</a>
+    <a *ngIf="!_isEditMode" class="active"><i class="material-icons md-16">add_circle_outline</i> {{ 'Add Product' | translate }}</a>
+    <a *ngIf="_isEditMode" class="active"><i class="material-icons md-16">mode_edit</i> {{ 'Edit Product' | translate }}</a>
   </biglup-breadcrumb>
 
   <div *ngIf="_product.title[0]">

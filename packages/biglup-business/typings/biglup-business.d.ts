@@ -41,6 +41,7 @@ declare module Business
         public createCategory(category: Category): any;
         public updateCategory(category: Category): any;
         public deleteCategory(categoryId: string): any;
+        public deleteCategories(categoriesId: Array<string>): any;
     }
 
     class ImagesService

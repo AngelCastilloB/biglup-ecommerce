@@ -1,0 +1,38 @@
+@import '{biglup:ui}/client/stylesheets/partials/base';
+
+.add-collection-content
+{
+  .biglup-add-collection-title {
+    color: $secondary-text-color;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .biglup-paper-1 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+
+  .biglup-tabs-container {
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  .add-collection-right-buttons {
+    float:right;
+  }
+
+  .add-collection-left-buttons {
+    float:left;
+  }
+
+  .add-collection-buttons {
+    margin-bottom: 20px!important;
+  }
+
+  .add-collection-buttons-cancel {
+    margin-bottom: 20px!important;
+    margin-right: 20px!important;
+  }
+}

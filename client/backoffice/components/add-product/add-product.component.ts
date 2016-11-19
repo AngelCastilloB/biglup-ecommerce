@@ -187,10 +187,9 @@ export class AddProductComponent implements OnInit, AfterViewInit
         {
             if (!i18nInput.getIsValid())
             {
-                console.error('Show Title message');
                 this._modal.show(
                     _T('Requiered Field Missing'),
-                    _T('Title is required ') + '(' + i18nInput.getLanguage() + ')');
+                    _T('Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
             return !i18nInput.getIsValid();
@@ -221,8 +220,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
         this._product.price = Number.parseFloat(this._product.price.toString());
         this._product.discount = Number.parseFloat(this._product.discount.toString());
         this._product.stock = Number.parseFloat(this._product.stock.toString());
-
-        console.error(this._product);
 
         this._waitModalResult = true;
 
@@ -268,6 +265,45 @@ export class AddProductComponent implements OnInit, AfterViewInit
      */
     private _updateProduct(): void
     {
+        let isRequieredMissing: any = this._titles.toArray().find((i18nInput: I18nInputComponent) =>
+        {
+            if (!i18nInput.getIsValid())
+            {
+                console.error('Show Title message');
+                this._modal.show(
+                    _T('Requiered Field Missing'),
+                    _T('The Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
+            }
+
+            return !i18nInput.getIsValid();
+        });
+
+        if (isRequieredMissing)
+            return;
+
+        if (!this._skuInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product SKU (Stock Keeping Unit) is required'));
+
+            return;
+        }
+
+        if (!this._barcodeInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product barcode is required'));
+
+            return;
+        }
+
+        // Fix number types.
+        this._product.price = Number.parseFloat(this._product.price.toString());
+        this._product.discount = Number.parseFloat(this._product.discount.toString());
+        this._product.stock = Number.parseFloat(this._product.stock.toString());
+
         this._waitModalResult = true;
 
         this._modal.showObservable(

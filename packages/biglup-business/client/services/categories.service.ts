@@ -163,4 +163,29 @@ export class CategoriesService extends MeteorReactive
             });
         });
     }
+
+    /**
+     * @summary Deletes the given categories from the database.
+     *
+     * @param categoriesId The category Id collection.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deleteCategories(categoriesId: Array<string>): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('deleteCategories', categoriesId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
 }

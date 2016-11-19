@@ -90,7 +90,6 @@ export class I18nInputComponent implements AfterViewInit
      */
     public getIsValid(): boolean
     {
-        console.error(this._input.getValue());
         return !!this._input.getValue();
     }
 

@@ -89,6 +89,36 @@ Meteor.methods({
 });
 
 /**
+ * @summary Registers the delete categories method to Meteor's DDP system. This method deletes the given categories
+ * from the system.
+ *
+ * @param products The collection of categories id of the categories to be deleted.
+ */
+Meteor.methods({
+    deleteCategories(categoriesId: Array<string>)
+    {
+        /*
+         if (!Meteor.users.findOne(this.userId).isAdmin)
+         {
+         throw new Meteor.Error(
+         'deleteCategories.unauthorized',
+         'You are not authorized to perform this action.');
+         }
+         */
+
+        categoriesId.forEach(
+            (id) =>
+            {
+                Meteor.call('deleteCategory', id, (error) =>
+                {
+                    if (error)
+                        console.error(error);
+                });
+            });
+    }
+});
+
+/**
  * @summary Registers the update category method to Meteor's DDP system. This method modifies the given category
  * with all the changes.
  *

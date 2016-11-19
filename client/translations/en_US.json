@@ -1,7 +1,47 @@
 [
     {
+       "key":   "Ecommerce",
+       "value": "Ecommerce"
+    },
+    {
+       "key":   "Dashboard",
+       "value": "Dashboard"
+    },
+    {
+       "key":   "Orders",
+       "value": "Orders"
+    },
+    {
+       "key":   "Customers",
+       "value": "Customers"
+    },
+    {
+       "key":   "Products",
+       "value": "Products"
+    },
+    {
+       "key":   "Inventory",
+       "value": "Inventory"
+    },
+    {
+       "key":   "Collections",
+       "value": "Collections"
+    },
+    {
+       "key":   "Reports",
+       "value": "Reports"
+    },
+    {
        "key":   "Add Collection",
        "value": "Add Collection"
+    },
+    {
+       "key":   "Edit Collection",
+       "value": "Edit Collection"
+    },
+    {
+       "key":   "Title",
+       "value": "Title"
     },
     {
        "key":   "Description",
@@ -12,8 +52,8 @@
        "value": "Visibility"
     },
     {
-       "key":   "Show this category in the store",
-       "value": "Show this category in the store"
+       "key":   "Show this collection in the store",
+       "value": "Show this collection in the store"
     },
     {
        "key":   "Delete",
@@ -32,12 +72,12 @@
        "value": "Cancel"
     },
     {
-       "key":   "Information",
-       "value": "Information"
+       "key":   "Requiered Field Missing",
+       "value": "Requiered Field Missing"
     },
     {
-       "key":   "Please fill all the required fields.",
-       "value": "Please fill all the required fields."
+       "key":   "Collection Name is required ",
+       "value": "Collection Name is required "
     },
     {
        "key":   "Create Category",
@@ -92,24 +132,36 @@
        "value": "There was an error updating the category."
     },
     {
-       "key":   "Title",
-       "value": "Title"
-    },
-    {
        "key":   "Add Product",
        "value": "Add Product"
+    },
+    {
+       "key":   "Edit Product",
+       "value": "Edit Product"
     },
     {
        "key":   "Pricing",
        "value": "Pricing"
     },
     {
+       "key":   "Price",
+       "value": "Price"
+    },
+    {
+       "key":   "Discount",
+       "value": "Discount"
+    },
+    {
        "key":   "Categories",
        "value": "Categories"
     },
     {
-       "key":   "Inventory",
-       "value": "Inventory"
+       "key":   "SKU (Stock Keeping Unit)",
+       "value": "SKU (Stock Keeping Unit)"
+    },
+    {
+       "key":   "Barcode (ISBN, UPC, GTIN, etc.)",
+       "value": "Barcode (ISBN, UPC, GTIN, etc.)"
     },
     {
        "key":   "Inventory Policy",
@@ -118,6 +170,10 @@
     {
        "key":   "Track Inventory",
        "value": "Track Inventory"
+    },
+    {
+       "key":   "Quantity",
+       "value": "Quantity"
     },
     {
        "key":   "Allow customers to purchase this product when it's out of stock",
@@ -130,6 +186,18 @@
     {
        "key":   "Show this product in the store",
        "value": "Show this product in the store"
+    },
+    {
+       "key":   "Product Title is required ",
+       "value": "Product Title is required "
+    },
+    {
+       "key":   "Product SKU (Stock Keeping Unit) is required",
+       "value": "Product SKU (Stock Keeping Unit) is required"
+    },
+    {
+       "key":   "Product barcode is required",
+       "value": "Product barcode is required"
     },
     {
        "key":   "Create Product",
@@ -156,6 +224,10 @@
        "value": "There was an error deleting the product."
     },
     {
+       "key":   "The Product Title is required ",
+       "value": "The Product Title is required "
+    },
+    {
        "key":   "Update Product",
        "value": "Update Product"
     },
@@ -168,32 +240,36 @@
        "value": "There was an error updating the product."
     },
     {
-       "key":   "Collection list",
-       "value": "Collection list"
+       "key":   "Collection List",
+       "value": "Collection List"
     },
     {
-       "key":   "Number of Products",
-       "value": "Number of Products"
+       "key":   "Name",
+       "value": "Name"
     },
     {
-       "key":   "Ok",
-       "value": "Ok"
+       "key":   "Delete Collections",
+       "value": "Delete Collections"
     },
     {
-       "key":   "No",
-       "value": "No"
+       "key":   "Are you sure you want to delete this collections?",
+       "value": "Are you sure you want to delete this collections?"
     },
     {
-       "key":   "Yes",
-       "value": "Yes"
+       "key":   "Delete Products",
+       "value": "Delete Products"
     },
     {
-       "key":   "Continue",
-       "value": "Continue"
+       "key":   "Collections Deleted.",
+       "value": "Collections Deleted."
     },
     {
-       "key":   "The operation was canceled.",
-       "value": "The operation was canceled."
+       "key":   "There was an error deleting the collections.",
+       "value": "There was an error deleting the collections."
+    },
+    {
+       "key":   "The product title is empty",
+       "value": "The product title is empty"
     },
     {
        "key":   "Images",
@@ -208,20 +284,12 @@
        "value": "Drop images to upload"
     },
     {
-       "key":   "Product list",
-       "value": "Product list"
+       "key":   "Product List",
+       "value": "Product List"
     },
     {
        "key":   "SKU",
        "value": "SKU"
-    },
-    {
-       "key":   "Price",
-       "value": "Price"
-    },
-    {
-       "key":   "Category",
-       "value": "Category"
     },
     {
        "key":   "Color",
@@ -232,92 +300,16 @@
        "value": "Size"
     },
     {
-       "key":   "Ecommerce",
-       "value": "Ecommerce"
+       "key":   "Are you sure you want to delete this products?",
+       "value": "Are you sure you want to delete this products?"
     },
     {
-       "key":   "Dashboard",
-       "value": "Dashboard"
+       "key":   "Products Deleted.",
+       "value": "Products Deleted."
     },
     {
-       "key":   "Orders",
-       "value": "Orders"
-    },
-    {
-       "key":   "Customers",
-       "value": "Customers"
-    },
-    {
-       "key":   "Products",
-       "value": "Products"
-    },
-    {
-       "key":   "Collections",
-       "value": "Collections"
-    },
-    {
-       "key":   "Reports",
-       "value": "Reports"
-    },
-    {
-       "key":   "Clear Formatting",
-       "value": "Clear Formatting"
-    },
-    {
-       "key":   "Bold",
-       "value": "Bold"
-    },
-    {
-       "key":   "Italic",
-       "value": "Italic"
-    },
-    {
-       "key":   "Underline",
-       "value": "Underline"
-    },
-    {
-       "key":   "Strikethrough",
-       "value": "Strikethrough"
-    },
-    {
-       "key":   "Font Family",
-       "value": "Font Family"
-    },
-    {
-       "key":   "Font Size",
-       "value": "Font Size"
-    },
-    {
-       "key":   "Text Color",
-       "value": "Text Color"
-    },
-    {
-       "key":   "Background Color",
-       "value": "Background Color"
-    },
-    {
-       "key":   "Align Left",
-       "value": "Align Left"
-    },
-    {
-       "key":   "Align Center",
-       "value": "Align Center"
-    },
-    {
-       "key":   "Align Right",
-       "value": "Align Right"
-    },
-    {
-       "key":   "Align Justify",
-       "value": "Align Justify"
-    },
-    {
-       "key":   "Ordered List",
-       "value": "Ordered List"
-    },
-    {
-       "key":   "Unordered List",
-       "value": "Unordered List"
+       "key":   "There was an error deleting the products.",
+       "value": "There was an error deleting the products."
     },
     {
        "key":   "Sku:",
@@ -430,6 +422,46 @@
     {
        "key":   "Search...",
        "value": "Search..."
+    },
+    {
+       "key":   "Ok",
+       "value": "Ok"
+    },
+    {
+       "key":   "No",
+       "value": "No"
+    },
+    {
+       "key":   "Yes",
+       "value": "Yes"
+    },
+    {
+       "key":   "Continue",
+       "value": "Continue"
+    },
+    {
+       "key":   "The operation was canceled.",
+       "value": "The operation was canceled."
+    },
+    {
+       "key":   "Huge",
+       "value": "Huge"
+    },
+    {
+       "key":   "Large",
+       "value": "Large"
+    },
+    {
+       "key":   "Normal",
+       "value": "Normal"
+    },
+    {
+       "key":   "View Profile",
+       "value": "View Profile"
+    },
+    {
+       "key":   "Language",
+       "value": "Language"
     },
     {
        "key":   "Dismiss",
