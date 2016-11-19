@@ -27,3 +27,6 @@ export * from './common/models/i18n-string';
 
 // Modules
 export * from './client/biglup-i18n.module';
+
+// Misc
+export * from './client/services/language-region-names';

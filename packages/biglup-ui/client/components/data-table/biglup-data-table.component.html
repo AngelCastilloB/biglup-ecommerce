@@ -7,7 +7,12 @@
     <biglup-icon-button (click)="_onDelete()" icon="delete"></biglup-icon-button>
   </div>
   <div [style.display]="_getSelectedCount() === 0 ? 'block' : 'none'" class="biglup-data-table-header">
-    <div class="biglup-data-table-title"><span>Users</span></div>
+    <div class="biglup-data-table-title">
+      <i *ngIf="_icon" class="material-icons md-36">{{_icon}}</i>
+      <div class="biglup-data-table-title-text">
+        <a>{{_title}}</a>
+      </div>
+    </div>
     <div class="biglup-data-table-input"><biglup-input [hint]="_getSearchString()" icon="search"></biglup-input></div>
   </div>
   <div class="biglup-data-table-body">

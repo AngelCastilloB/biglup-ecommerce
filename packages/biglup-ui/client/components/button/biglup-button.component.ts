@@ -42,6 +42,8 @@ export class BiglupButtonComponent
     private _isDisabled: boolean = false;
     @Input('icon')
     private _icon: string = '';
+    @Input('routerLink')
+    private _routerLink: any;
 
     /**
      * @brief Initializes a new instance of the BiglupButtonComponent class.

@@ -1,0 +1,16 @@
+<li>
+  <div class="biglup-vertical-menu-label" (click)="_onSubmenuClick()">
+    <i *ngIf="_icon" class="material-icons md-18">{{_icon}}</i>
+    <a>{{_label}}</a>
+    <div [class.plus-two]="_isOpen"
+         [class.plus-one]="!_isOpen"
+         class="biglup-animated-collapse-icon">
+      <span class="first"></span>
+      <span class="second"></span>
+      <span class="third"></span>
+    </div>
+  </div>
+  <ul [class.menu-open]="_isOpen">
+    <ng-content></ng-content>
+  </ul>
+</li>

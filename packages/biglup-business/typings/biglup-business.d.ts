@@ -41,6 +41,7 @@ declare module Business
         public createCategory(category: Category): any;
         public updateCategory(category: Category): any;
         public deleteCategory(categoryId: string): any;
+        public deleteCategories(categoriesId: Array<string>): any;
     }
 
     class ImagesService
@@ -57,6 +58,7 @@ declare module Business
         public createProduct(product: Product): any;
         public updateProduct(product: Product): any;
         public deteleProduct(productId: string): any;
+        public deteleProducts(productsId: Array<string>): any;
     }
 
     class UserAuthService

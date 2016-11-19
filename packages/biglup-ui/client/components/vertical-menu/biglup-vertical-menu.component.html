@@ -1,0 +1,24 @@
+<div class="biglup-vertical-menu">
+    <a class="biglup-vertical-menu-header-image" [style.background-image]="'url(' + this._getImageHeaderPath() + ')'">
+      <div class="biglup-vertical-menu-header-user-avatar" [style.background-image]="'url(' + this._getImageAvatarPath() + ')'">
+      </div>
+      <div (click)="_onUserMenuClick()" class="biglup-vertical-menu-header-user-menu">
+        <label class="biglup-vertical-menu-header-user-menu-user">Angel Castillo</label>
+        <i [class.user-menu-icon-toggle-on]="_showUserMenu" class="material-icons">arrow_drop_down</i>
+      </div>
+    </a>
+  <ul [class.user-menu-hidden]="!_showUserMenu" [class.user-menu-open]="_showUserMenu" class="menu">
+    <biglup-vertical-menu-option icon='person' [routerLink]="['profile']" label="{{'View Profile' | translate }}"></biglup-vertical-menu-option>
+    <biglup-vertical-submenu icon='translate' label="{{'Language' | translate }}">
+      <biglup-vertical-menu-option
+        *ngFor="let lang of _i18nService.getSupportedLanguages()"
+        [label]="_i18nService.getOriginalName(lang)"
+        (click)="_changeLanguage(lang)">
+      </biglup-vertical-menu-option>
+    </biglup-vertical-submenu>
+    <biglup-vertical-menu-option icon='history' [routerLink]="['logout']" label="{{'Logout' | translate }}"></biglup-vertical-menu-option>
+  </ul>
+  <ul class="menu">
+    <ng-content></ng-content>
+  </ul>
+</div>

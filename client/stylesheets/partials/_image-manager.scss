@@ -1,0 +1,68 @@
+@import '{biglup:ui}/client/stylesheets/partials/base';
+
+.dropzone {
+  width:           100%;
+  min-height:      200px;
+  height:          auto;
+  align-items:     center;
+  justify-content: center;
+  overflow:        auto;
+  text-align:      center;
+  margin-top:      20px;
+  border-radius:   10px;
+}
+
+.dropzone-active {
+  border: 3px dashed #0087F6;
+  color:  #0087F6;
+}
+
+.dropzone-inactive {
+  border: 3px dashed #ccc;
+  color: #ccc;
+}
+
+.instructions-container {
+  margin:     60px;
+  padding:    30px;
+  text-align: center;
+}
+
+.instructions {
+  display: block;
+}
+.image-list {
+  margin: 60px;
+}
+div.preview-component {
+  margin:  20px;
+  display: inline-block;
+  width:   180px;
+}
+div.preview-component img {
+  width: 100%;
+  height: auto;
+}
+
+.select-files-button {
+  @include        elevation(1);
+  position:       relative;
+  font-family:    $base-font-family;
+  font-size:      14px;
+  font-weight:    500;
+  letter-spacing: 0.018em;
+  text-transform: uppercase;
+  display:        inline-block;
+  overflow:       hidden;
+  border:         0;
+  outline:        0;
+  background:     0;
+  cursor:         pointer;
+  margin:         $button-margin;
+  min-width:      $button-min-width;
+  line-height:    $button-line-height;
+  padding:        $button-padding;
+  border-radius:  $button-border-radius;
+  margin-bottom:  10px;
+  margin-top:    -10px;
+}

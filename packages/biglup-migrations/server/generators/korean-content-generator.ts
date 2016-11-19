@@ -141,7 +141,7 @@ export class KoreanContentGenerator extends AbstractContentGenerator
      */
     public getLocale()
     {
-        return 'kr';
+        return 'kr_KO';
     }
 
     /**

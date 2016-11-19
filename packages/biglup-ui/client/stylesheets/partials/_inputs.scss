@@ -104,7 +104,7 @@
 .biglup-text-input-bar {
   content: '';
   height: 2px;
-  width: 10px;
+  width: 10px!important;
   bottom: 0;
   left: 45%;
   visibility: hidden;
@@ -116,7 +116,7 @@
 
 .biglup-text-input-bar-active {
   visibility: visible;
-  width: 100%;
+  width: 100%!important;
   left: 0;
   background-color: $primary-color;
   color: $primary-color;

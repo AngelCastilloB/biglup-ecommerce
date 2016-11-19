@@ -242,4 +242,29 @@ export class ProductsService extends MeteorReactive
             });
         });
     }
+
+    /**
+     * @summary Deletes the given products from the database.
+     *
+     * @param productsId The product Id collection.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deteleProducts(productsId: Array<string>): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('deleteProducts', productsId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
 }

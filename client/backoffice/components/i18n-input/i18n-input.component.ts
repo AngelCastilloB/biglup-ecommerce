@@ -20,8 +20,11 @@
 import { Component,
          Input,
          EventEmitter,
-         Output }         from '@angular/core';
-import { I18nString }     from 'meteor/biglup:i18n';
+         Output,
+         ViewChild,
+         AfterViewInit }        from '@angular/core';
+import { I18nString }           from 'meteor/biglup:i18n';
+import { BiglupInputComponent } from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -30,21 +33,73 @@ import { I18nString }     from 'meteor/biglup:i18n';
  */
 @Component({
     selector: 'i18n-input',
-    template: `<md-input [style.width]="'100%'" [(ngModel)]="_model.value" placeholder="{{_placeholder}}"></md-input>`
+    template: `<biglup-input
+                  [style.width]="'100%'"
+                  hint="{{_placeholder}}"
+                  floatingHint="true"
+                  [(value)]="_model.value"
+                  errorMessage="{{ 'The product title is empty' | translate }}">
+               </biglup-input>`
 })
-export class I18nInputComponent
+export class I18nInputComponent implements AfterViewInit
 {
+    @ViewChild(BiglupInputComponent)
+    private _input: BiglupInputComponent;
     @Output('modelChange')
     private _modelUpdate = new EventEmitter();
     @Input('model')
     private _model: I18nString = new I18nString();
     @Input('placeholder')
     private _placeholder: string = '';
+    @Input('isRequiered')
+    private _isRequiered: boolean = false;
+    @Input('language')
+    private _language: string     = '';
 
     /**
      * @summary Initializes a new instance of the I18nInputComponent class.
      */
     constructor()
     {
+    }
+
+    /**
+     * @summary Respond after Angular initializes the component's views and child views.
+     */
+    public ngAfterViewInit(): any
+    {
+        this._input.observeValue()
+            .distinctUntilChanged()
+            .subscribe((value) =>
+            {
+                if (this._isRequiered && !value)
+                {
+                    this._input.setInvalid(true);
+                }
+                else
+                {
+                    this._input.setInvalid(false);
+                }
+            });
+    }
+
+    /**
+     * @summary Gets whther this input field is in a valid state.
+     *
+     * @return {boolean} True if is valid, otherwise, false.
+     */
+    public getIsValid(): boolean
+    {
+        return !!this._input.getValue();
+    }
+
+    /**
+     * @summary Gets this i18n field language.
+     *
+     * @return {string} The language.
+     */
+    public getLanguage(): string
+    {
+        return this._language;
     }
 }

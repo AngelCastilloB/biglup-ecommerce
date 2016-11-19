@@ -1,0 +1,18 @@
+<div biglupToolbar>
+  <div left>
+    <div (click)="_onMenuButtonClick()"
+         [class.biglup-arrow-icon]="_showleftNavbar"
+         [class.biglup-menu-icon]="!_showleftNavbar"
+         class="biglup-animated-menu-icon"
+         [style.color]="_color">
+      <span class="first"></span>
+      <span class="second"></span>
+      <span class="third"></span>
+    </div>
+  </div>
+  <div title>{{_title}}</div>
+  <div right>
+    <ng-content></ng-content>
+  </div>
+</div>
+<div (click)="_onOverlayClick()" [class.biglup-toolbar-overlay-show]="_showleftNavbar" class="biglup-toolbar-overlay"></div>

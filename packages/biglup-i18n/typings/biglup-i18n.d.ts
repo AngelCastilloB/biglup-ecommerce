@@ -37,6 +37,7 @@ declare module I18n
         public getLocale(): string;
         public getLocaleChangeEmitter();
         public loadTranslations(json): {[key: string]: string};
+        public getOriginalName(i18nCode: string): string;
     }
 
 // MODELS *************************************************************************************************************/

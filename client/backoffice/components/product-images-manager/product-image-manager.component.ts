@@ -25,9 +25,10 @@ import { Component,
          Renderer,
          Input,
          Output,
-         EventEmitter}    from '@angular/core';
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { ProductImage }   from 'meteor/biglup:business';
+         EventEmitter ,
+         ChangeDetectorRef } from '@angular/core';
+import { DragulaService }    from 'ng2-dragula/ng2-dragula';
+import { ProductImage }      from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -44,8 +45,7 @@ const NUMBER_OF_COLUMNS = 5;
  */
 @Component({
     selector: 'product-image-manager',
-    template,
-    styleUrls: ['./product-image-manager.component.css']
+    template
 })
 export class ProductImageManagerComponent
 {
@@ -60,10 +60,11 @@ export class ProductImageManagerComponent
     /**
      * @summary Initializes a new instance of the ProductImageManagerComponent class.
      *
-     * @param {Renderer}         _renderer       The angular element renderer.
-     * @param { DragulaService } _dragulaService The dragula service.
+     * @param { Renderer }          _renderer       The angular element renderer.
+     * @param { DragulaService }    _dragulaService The dragula service.
+     * @param { ChangeDetectorRef } _changeDetector The change detector service.
      */
-    constructor(private _renderer: Renderer, private _dragulaService: DragulaService)
+    constructor(private _renderer: Renderer, private _dragulaService: DragulaService, private _changeDetector: ChangeDetectorRef)
     {
         this._dragulaService.drop.subscribe((value) =>
         {
@@ -137,6 +138,7 @@ export class ProductImageManagerComponent
         this._rows = Math.ceil(this._previewFiles.length / NUMBER_OF_COLUMNS);
 
         this._update.emit(this._previewFiles);
+        this._changeDetector.detectChanges();
     }
 
     /**

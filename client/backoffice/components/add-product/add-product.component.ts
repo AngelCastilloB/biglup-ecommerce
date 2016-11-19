@@ -19,14 +19,20 @@
 
 import { Component,
          OnInit,
-         ViewChild }                from '@angular/core';
-import { Router, ActivatedRoute }   from '@angular/router';
-import { I18nSingletonService, _T } from 'meteor/biglup:i18n';
-import { ModalComponent }           from '../modal/modal.component';
-import { ProductsService }          from 'meteor/biglup:business';
-import { CategoriesService }        from 'meteor/biglup:business';
-import { Product }                  from 'meteor/biglup:business';
-import { I18nString }               from 'meteor/biglup:i18n';
+         AfterViewInit,
+         ViewChild,
+         ViewChildren,
+         QueryList,
+         ChangeDetectorRef }                  from '@angular/core';
+import { Router, ActivatedRoute }             from '@angular/router';
+import { I18nSingletonService, _T }           from 'meteor/biglup:i18n';
+import { BiglupModalComponent }               from 'meteor/biglup:ui';
+import { ProductsService }                    from 'meteor/biglup:business';
+import { CategoriesService }                  from 'meteor/biglup:business';
+import { Product }                            from 'meteor/biglup:business';
+import { I18nString }                         from 'meteor/biglup:i18n';
+import { InputFilters, BiglupInputComponent } from 'meteor/biglup:ui';
+import { I18nInputComponent }                 from '../i18n-input/i18n-input.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -41,16 +47,23 @@ import template from './add-product.component.html';
     selector: 'add-products',
     template
 })
-export class AddProductComponent implements OnInit
+export class AddProductComponent implements OnInit, AfterViewInit
 {
+    @ViewChildren(I18nInputComponent)
+    private _titles: QueryList<I18nInputComponent>;
+    @ViewChild('skuInput')
+    private _skuInput: BiglupInputComponent;
+    @ViewChild('barcodeInput')
+    private _barcodeInput: BiglupInputComponent;
     private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
     private _product:               Product              = new Product();
-    @ViewChild(ModalComponent)
-    private _modal:                 ModalComponent;
+    @ViewChild(BiglupModalComponent)
+    private _modal:                 BiglupModalComponent;
     private _waitModalResult:       boolean              = false;
     private _isEditMode:            boolean              = false;
     private _i18nTitleReferenceMap: Object               = {};
     private _i18nDescReferenceMap:  Object               = {};
+    private InputFilters:           InputFilters         = InputFilters;
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -59,7 +72,8 @@ export class AddProductComponent implements OnInit
         private _router: Router,
         private _route: ActivatedRoute,
         private _productsService: ProductsService,
-        private _categoriesService: CategoriesService)
+        private _categoriesService: CategoriesService,
+        private _changeDetector: ChangeDetectorRef)
     {
     }
 
@@ -118,8 +132,17 @@ export class AddProductComponent implements OnInit
                         this._i18nTitleReferenceMap[lang] = title;
                         this._i18nDescReferenceMap[lang]  = description;
                     });
+
+                    this._changeDetector.detectChanges();
                 });
         });
+    }
+
+    /**
+     * @summary Respond after Angular initializes the component's views and child views.
+     */
+    public ngAfterViewInit(): any
+    {
     }
 
     /**
@@ -160,6 +183,44 @@ export class AddProductComponent implements OnInit
      */
     private _saveProduct(): void
     {
+        let isRequieredMissing: any = this._titles.toArray().find((i18nInput: I18nInputComponent) =>
+        {
+            if (!i18nInput.getIsValid())
+            {
+                this._modal.show(
+                    _T('Requiered Field Missing'),
+                    _T('Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
+            }
+
+            return !i18nInput.getIsValid();
+        });
+
+        if (isRequieredMissing)
+            return;
+
+        if (!this._skuInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product SKU (Stock Keeping Unit) is required'));
+
+            return;
+        }
+
+        if (!this._barcodeInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product barcode is required'));
+
+            return;
+        }
+
+        // Fix number types.
+        this._product.price = Number.parseFloat(this._product.price.toString());
+        this._product.discount = Number.parseFloat(this._product.discount.toString());
+        this._product.stock = Number.parseFloat(this._product.stock.toString());
+
         this._waitModalResult = true;
 
         this._modal.showObservable(
@@ -204,6 +265,45 @@ export class AddProductComponent implements OnInit
      */
     private _updateProduct(): void
     {
+        let isRequieredMissing: any = this._titles.toArray().find((i18nInput: I18nInputComponent) =>
+        {
+            if (!i18nInput.getIsValid())
+            {
+                console.error('Show Title message');
+                this._modal.show(
+                    _T('Requiered Field Missing'),
+                    _T('The Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
+            }
+
+            return !i18nInput.getIsValid();
+        });
+
+        if (isRequieredMissing)
+            return;
+
+        if (!this._skuInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product SKU (Stock Keeping Unit) is required'));
+
+            return;
+        }
+
+        if (!this._barcodeInput.getValue())
+        {
+            this._modal.show(
+                _T('Requiered Field Missing'),
+                _T('Product barcode is required'));
+
+            return;
+        }
+
+        // Fix number types.
+        this._product.price = Number.parseFloat(this._product.price.toString());
+        this._product.discount = Number.parseFloat(this._product.discount.toString());
+        this._product.stock = Number.parseFloat(this._product.stock.toString());
+
         this._waitModalResult = true;
 
         this._modal.showObservable(
@@ -242,16 +342,5 @@ export class AddProductComponent implements OnInit
 
             this._router.navigate(['/admin/products']);
         }
-    }
-
-    /**
-     * @summary Gets the translation for 'Title' for the given language.
-     *
-     * @returns {string} The translation.
-     * @private
-     */
-    private _getTitleTranslation(): string
-    {
-        return _T('Title');
     }
 }

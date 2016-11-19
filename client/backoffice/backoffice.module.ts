@@ -17,25 +17,15 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import 'reflect-metadata';
-
 import { NgModule }                      from '@angular/core';
 import { SharedModule }                  from '../shared.module';
 import { BackofficeRoutesModule }        from './backoffice.routes';
 import { BackofficeComponent }           from './backoffice.component';
-import { SidebarComponent }              from './components/sidebar/sidebar.component';
-import { BreadcrumbComponent }           from './components/breadcrumbs/breadcrumbs.component';
 import { AddCollectionComponent }        from './components/add-collection/add-collection.component';
 import { AddProductComponent }           from './components/add-product/add-product.component';
 import { CollectionsComponent }          from './components/collections/collections.component';
 import { CustomersComponent }            from './components/customers/customers.component';
 import { DashboardComponent }            from './components/dashboard/dashboard.component';
-import { ModalComponent }                from './components/modal/modal.component';
-import { SuccessAnimationComponent }     from './components/modal/components/success-animation/success-animation.component';
-import { ErrorAnimationComponent }       from './components/modal/components/error-animation/error-animation.component';
-import { WarningAnimationComponent }     from './components/modal/components/warning-animation/warning-animation.component';
-import { WaitingAnimationComponent }     from './components/modal/components/waiting-animation/waiting-animation.component';
-import { InformationAnimationComponent } from './components/modal/components/information-animation/information-animation.component';
 import { OrdersComponent }               from './components/orders/orders.component';
 import { ProductsComponent }             from './components/products/products.component';
 import { ProductImageManagerComponent }  from './components/product-images-manager/product-image-manager.component';
@@ -48,12 +38,11 @@ import { ImagePreviewComponent }         from './components/product-images-manag
 import { DragulaService, DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { FileDropDirective }             from './components/product-images-manager/directives/file-drop.directive';
 import { FileSelectDirective }           from './components/product-images-manager/directives/file-select.directive';
-import { TextEditorComponent }           from './components/text-editor/text-editor.component';
-import { ColorPickerComponent }          from './components/text-editor/components/color-picker.component';
 import { ImagesService }                 from 'meteor/biglup:business';
 import { I18nInputComponent }            from './components/i18n-input/i18n-input.component';
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
 import { CartsService }                  from 'meteor/biglup:business';
+import { BiglupToastService }            from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -64,17 +53,7 @@ import { CartsService }                  from 'meteor/biglup:business';
         // TODO: refactor into child feature modules
 
         // Common
-        SidebarComponent,
-        BreadcrumbComponent,
         DashboardComponent,
-        ModalComponent,
-        SuccessAnimationComponent,
-        ErrorAnimationComponent,
-        WarningAnimationComponent,
-        WaitingAnimationComponent,
-        InformationAnimationComponent,
-        TextEditorComponent,
-        ColorPickerComponent,
 
         // collection
         AddCollectionComponent,
@@ -113,7 +92,8 @@ import { CartsService }                  from 'meteor/biglup:business';
         ImagesService,
         IdGeneratorService,
         DragulaService,
-        CartsService
+        CartsService,
+        BiglupToastService
     ]
 })
 export class BackofficeModule

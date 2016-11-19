@@ -20,3 +20,9 @@ $grid-phone-margin: $grid-desktop-margin !default;
 
 $grid-cell-default-columns: $grid-phone-columns !default;
 $grid-max-columns: $grid-desktop-columns !default;
+
+// Breakpoints
+$layout-breakpoint-xs: 600px !default;
+$layout-breakpoint-sm: 960px !default;
+$layout-breakpoint-md: 1280px !default;
+$layout-breakpoint-lg: 1920px !default;

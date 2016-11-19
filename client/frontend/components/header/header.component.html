@@ -2,7 +2,7 @@
   <a [routerLink]="['/']">{{'E-commerce' | translate}}</a>
 
   <span *ngFor="let category of _categoriesService.getCategories() | async">
-    <a class="nav-link" [routerLink]="['/category', category._id]">{{category.name | mongoTranslate}}</a>
+    &nbsp;<a class="nav-link" [routerLink]="['/category', category._id]">{{category.name | mongoTranslate}}</a>
   </span>
 
   <span class="fill-space"></span>

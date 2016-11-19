@@ -144,7 +144,7 @@ export class SpanishContentGenerator extends AbstractContentGenerator
      */
     public getLocale()
     {
-        return 'es';
+        return 'es_ES';
     }
 
     /**

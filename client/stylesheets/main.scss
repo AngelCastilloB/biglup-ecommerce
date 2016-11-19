@@ -1,0 +1,11 @@
+@import '{biglup:ui}/client/stylesheets/main';
+@import './partials/add-product';
+@import './partials/products';
+@import './partials/image-manager';
+@import './partials/add-collection';
+@import './partials/collections';
+
+body {
+    @extend .typography;
+}
+

@@ -1,0 +1,15 @@
+@import '{biglup:ui}/client/stylesheets/partials/base';
+
+.biglup-collections-title {
+  color: $secondary-text-color;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.collections-add-collection-button
+{
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  padding-top: 10px;
+}

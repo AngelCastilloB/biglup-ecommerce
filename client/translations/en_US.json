@@ -1,0 +1,470 @@
+[
+    {
+       "key":   "Ecommerce",
+       "value": "Ecommerce"
+    },
+    {
+       "key":   "Dashboard",
+       "value": "Dashboard"
+    },
+    {
+       "key":   "Orders",
+       "value": "Orders"
+    },
+    {
+       "key":   "Customers",
+       "value": "Customers"
+    },
+    {
+       "key":   "Products",
+       "value": "Products"
+    },
+    {
+       "key":   "Inventory",
+       "value": "Inventory"
+    },
+    {
+       "key":   "Collections",
+       "value": "Collections"
+    },
+    {
+       "key":   "Reports",
+       "value": "Reports"
+    },
+    {
+       "key":   "Add Collection",
+       "value": "Add Collection"
+    },
+    {
+       "key":   "Edit Collection",
+       "value": "Edit Collection"
+    },
+    {
+       "key":   "Title",
+       "value": "Title"
+    },
+    {
+       "key":   "Description",
+       "value": "Description"
+    },
+    {
+       "key":   "Visibility",
+       "value": "Visibility"
+    },
+    {
+       "key":   "Show this collection in the store",
+       "value": "Show this collection in the store"
+    },
+    {
+       "key":   "Delete",
+       "value": "Delete"
+    },
+    {
+       "key":   "Create",
+       "value": "Create"
+    },
+    {
+       "key":   "Update",
+       "value": "Update"
+    },
+    {
+       "key":   "Cancel",
+       "value": "Cancel"
+    },
+    {
+       "key":   "Requiered Field Missing",
+       "value": "Requiered Field Missing"
+    },
+    {
+       "key":   "Collection Name is required ",
+       "value": "Collection Name is required "
+    },
+    {
+       "key":   "Create Category",
+       "value": "Create Category"
+    },
+    {
+       "key":   "Creating...",
+       "value": "Creating..."
+    },
+    {
+       "key":   "Category Created.",
+       "value": "Category Created."
+    },
+    {
+       "key":   "Error",
+       "value": "Error"
+    },
+    {
+       "key":   "There was an error creating the category.",
+       "value": "There was an error creating the category."
+    },
+    {
+       "key":   "Delete Category",
+       "value": "Delete Category"
+    },
+    {
+       "key":   "Deleting...",
+       "value": "Deleting..."
+    },
+    {
+       "key":   "Category Deleted.",
+       "value": "Category Deleted."
+    },
+    {
+       "key":   "There was an error deleting the category.",
+       "value": "There was an error deleting the category."
+    },
+    {
+       "key":   "Update Category",
+       "value": "Update Category"
+    },
+    {
+       "key":   "Updating...",
+       "value": "Updating..."
+    },
+    {
+       "key":   "Category Updated.",
+       "value": "Category Updated."
+    },
+    {
+       "key":   "There was an error updating the category.",
+       "value": "There was an error updating the category."
+    },
+    {
+       "key":   "Add Product",
+       "value": "Add Product"
+    },
+    {
+       "key":   "Edit Product",
+       "value": "Edit Product"
+    },
+    {
+       "key":   "Pricing",
+       "value": "Pricing"
+    },
+    {
+       "key":   "Price",
+       "value": "Price"
+    },
+    {
+       "key":   "Discount",
+       "value": "Discount"
+    },
+    {
+       "key":   "Categories",
+       "value": "Categories"
+    },
+    {
+       "key":   "SKU (Stock Keeping Unit)",
+       "value": "SKU (Stock Keeping Unit)"
+    },
+    {
+       "key":   "Barcode (ISBN, UPC, GTIN, etc.)",
+       "value": "Barcode (ISBN, UPC, GTIN, etc.)"
+    },
+    {
+       "key":   "Inventory Policy",
+       "value": "Inventory Policy"
+    },
+    {
+       "key":   "Track Inventory",
+       "value": "Track Inventory"
+    },
+    {
+       "key":   "Quantity",
+       "value": "Quantity"
+    },
+    {
+       "key":   "Allow customers to purchase this product when it's out of stock",
+       "value": "Allow customers to purchase this product when it's out of stock"
+    },
+    {
+       "key":   "This product requires shipping",
+       "value": "This product requires shipping"
+    },
+    {
+       "key":   "Show this product in the store",
+       "value": "Show this product in the store"
+    },
+    {
+       "key":   "Product Title is required ",
+       "value": "Product Title is required "
+    },
+    {
+       "key":   "Product SKU (Stock Keeping Unit) is required",
+       "value": "Product SKU (Stock Keeping Unit) is required"
+    },
+    {
+       "key":   "Product barcode is required",
+       "value": "Product barcode is required"
+    },
+    {
+       "key":   "Create Product",
+       "value": "Create Product"
+    },
+    {
+       "key":   "Product Created.",
+       "value": "Product Created."
+    },
+    {
+       "key":   "There was an error creating the product.",
+       "value": "There was an error creating the product."
+    },
+    {
+       "key":   "Delete Product",
+       "value": "Delete Product"
+    },
+    {
+       "key":   "Product Deleted.",
+       "value": "Product Deleted."
+    },
+    {
+       "key":   "There was an error deleting the product.",
+       "value": "There was an error deleting the product."
+    },
+    {
+       "key":   "The Product Title is required ",
+       "value": "The Product Title is required "
+    },
+    {
+       "key":   "Update Product",
+       "value": "Update Product"
+    },
+    {
+       "key":   "Product Updated.",
+       "value": "Product Updated."
+    },
+    {
+       "key":   "There was an error updating the product.",
+       "value": "There was an error updating the product."
+    },
+    {
+       "key":   "Collection List",
+       "value": "Collection List"
+    },
+    {
+       "key":   "Name",
+       "value": "Name"
+    },
+    {
+       "key":   "Delete Collections",
+       "value": "Delete Collections"
+    },
+    {
+       "key":   "Are you sure you want to delete this collections?",
+       "value": "Are you sure you want to delete this collections?"
+    },
+    {
+       "key":   "Delete Products",
+       "value": "Delete Products"
+    },
+    {
+       "key":   "Collections Deleted.",
+       "value": "Collections Deleted."
+    },
+    {
+       "key":   "There was an error deleting the collections.",
+       "value": "There was an error deleting the collections."
+    },
+    {
+       "key":   "The product title is empty",
+       "value": "The product title is empty"
+    },
+    {
+       "key":   "Images",
+       "value": "Images"
+    },
+    {
+       "key":   "Select Files",
+       "value": "Select Files"
+    },
+    {
+       "key":   "Drop images to upload",
+       "value": "Drop images to upload"
+    },
+    {
+       "key":   "Product List",
+       "value": "Product List"
+    },
+    {
+       "key":   "SKU",
+       "value": "SKU"
+    },
+    {
+       "key":   "Color",
+       "value": "Color"
+    },
+    {
+       "key":   "Size",
+       "value": "Size"
+    },
+    {
+       "key":   "Are you sure you want to delete this products?",
+       "value": "Are you sure you want to delete this products?"
+    },
+    {
+       "key":   "Products Deleted.",
+       "value": "Products Deleted."
+    },
+    {
+       "key":   "There was an error deleting the products.",
+       "value": "There was an error deleting the products."
+    },
+    {
+       "key":   "Sku:",
+       "value": "Sku:"
+    },
+    {
+       "key":   "Color:",
+       "value": "Color:"
+    },
+    {
+       "key":   "Size:",
+       "value": "Size:"
+    },
+    {
+       "key":   "Add to Cart",
+       "value": "Add to Cart"
+    },
+    {
+       "key":   "Remove",
+       "value": "Remove"
+    },
+    {
+       "key":   "E-commerce",
+       "value": "E-commerce"
+    },
+    {
+       "key":   "Administration",
+       "value": "Administration"
+    },
+    {
+       "key":   "Login",
+       "value": "Login"
+    },
+    {
+       "key":   "Logout",
+       "value": "Logout"
+    },
+    {
+       "key":   "Not a member",
+       "value": "Not a member"
+    },
+    {
+       "key":   "Sign up",
+       "value": "Sign up"
+    },
+    {
+       "key":   "Forgot",
+       "value": "Forgot"
+    },
+    {
+       "key":   "Password",
+       "value": "Password"
+    },
+    {
+       "key":   "The credentials provided did not match our records.",
+       "value": "The credentials provided did not match our records."
+    },
+    {
+       "key":   "Reset password",
+       "value": "Reset password"
+    },
+    {
+       "key":   "Login with",
+       "value": "Login with"
+    },
+    {
+       "key":   "Remember your",
+       "value": "Remember your"
+    },
+    {
+       "key":   "The Email provided did not match our records.",
+       "value": "The Email provided did not match our records."
+    },
+    {
+       "key":   "Gallery",
+       "value": "Gallery"
+    },
+    {
+       "key":   "Buy now",
+       "value": "Buy now"
+    },
+    {
+       "key":   "SKU:",
+       "value": "SKU:"
+    },
+    {
+       "key":   "Share with your friends!",
+       "value": "Share with your friends!"
+    },
+    {
+       "key":   "Register",
+       "value": "Register"
+    },
+    {
+       "key":   "Already a member",
+       "value": "Already a member"
+    },
+    {
+       "key":   "Rows per page:",
+       "value": "Rows per page:"
+    },
+    {
+       "key":   "of",
+       "value": "of"
+    },
+    {
+       "key":   "No data found.",
+       "value": "No data found."
+    },
+    {
+       "key":   "Search...",
+       "value": "Search..."
+    },
+    {
+       "key":   "Ok",
+       "value": "Ok"
+    },
+    {
+       "key":   "No",
+       "value": "No"
+    },
+    {
+       "key":   "Yes",
+       "value": "Yes"
+    },
+    {
+       "key":   "Continue",
+       "value": "Continue"
+    },
+    {
+       "key":   "The operation was canceled.",
+       "value": "The operation was canceled."
+    },
+    {
+       "key":   "Huge",
+       "value": "Huge"
+    },
+    {
+       "key":   "Large",
+       "value": "Large"
+    },
+    {
+       "key":   "Normal",
+       "value": "Normal"
+    },
+    {
+       "key":   "View Profile",
+       "value": "View Profile"
+    },
+    {
+       "key":   "Language",
+       "value": "Language"
+    },
+    {
+       "key":   "Dismiss",
+       "value": "Dismiss"
+    }
+]

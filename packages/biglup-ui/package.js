@@ -6,7 +6,8 @@ Package.describe({
 });
 
 Npm.depends({
-    "chart.js": "2.3.0"
+    "chart.js": "2.3.0",
+    "quill": "1.1.5"
 });
 
 Package.onUse(function(api)
@@ -21,6 +22,7 @@ Package.onUse(function(api)
     ], 'client');
 
     api.addFiles([
+        'client/stylesheets/partials/_base.scss',
         'client/stylesheets/_main.scss'
     ], 'client', {isImport: true});
 
@@ -39,9 +41,31 @@ Package.onUse(function(api)
         'client/components/badge/biglup-badge.component.ts',
         'client/components/paper/biglup-paper.component.ts',
         'client/services/toast/biglup-toast.service.ts',
+        'client/services/media/biglup-media.service.ts',
         'client/biglup-ui.module.ts',
-        'client/directives/charts/biglup-chart.directive.ts'
+        'client/directives/charts/biglup-chart.directive.ts',
+        'client/components/toolbar/biglup-toolbar.component.ts',
+        'client/components/layout/left-navbar/biglup-left-navbar-layout.component.ts',
+        'client/components/layout/left-navbar/menu/biglup-left-navbar-layout-menu.component.ts',
+        'client/components/layout/left-navbar/content/biglup-left-navbar-layout-content.component.ts',
+        'client/components/vertical-menu/biglup-vertical-menu.component.ts',
+        'client/components/vertical-menu/sub-menu/biglup-vertical-submenu.component.ts',
+        'client/components/vertical-menu/menu-option/biglup-vertical-menu-option.component.ts',
+        'client/components/modal/biglup-modal.component.ts',
+        'client/components/modal/components/error-animation/error-animation.component.ts',
+        'client/components/modal/components/information-animation/information-animation.component.ts',
+        'client/components/modal/components/success-animation/success-animation.component.ts',
+        'client/components/modal/components/waiting-animation/waiting-animation.component.ts',
+        'client/components/modal/components/warning-animation/warning-animation.component.ts',
+        'client/components/tab/biglup-tabs.component.ts',
+        'client/components/tab/tab/biglup-tab.component.ts',
+        'client/components/breadcrumb/biglup-breadcrumb.component.ts',
+        'client/components/text-editor/biglup-text-editor.component.ts',
+        'client/services/dom/dom-handler.service.ts'
     ], 'client');
+
+    api.addAssets(['assets/images/biglup-menu-header.png'], "client");
+    api.addAssets(['assets/images/avatar.png'], "client");
 
     api.mainModule ('index.ts', "client");
 });

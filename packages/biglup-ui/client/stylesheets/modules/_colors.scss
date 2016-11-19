@@ -4,6 +4,7 @@
  * Material Design Light background theme
  */
 $light-theme-background-color:           #ffffff;
+$light-theme-secondary-background-color: #ececec;
 $light-theme-base-color:                 #000000;
 $light-theme-text-color:                 $grey-900;
 $light-theme-secondary-color:            #737373;
@@ -15,6 +16,7 @@ $light-theme-disabled-background:        #dddddd;
  * Material Design Dark background theme
  */
 $dark-theme-background-color:           $grey-900;
+$dark-theme-secondary-background-color: $grey-700;
 $dark-theme-base-color:                 #ffffff;
 $dark-theme-text-color:                 #ffffff;
 $dark-theme-secondary-color:            #bcbcbc;
@@ -35,6 +37,7 @@ $warn-color:          $red-500;
 
 $primary-text-color:         $light-theme-text-color;
 $primary-background-color:   $light-theme-background-color;
+$secondary-background-color: $light-theme-secondary-background-color;
 $secondary-text-color:       $light-theme-secondary-color;
 $button-text-and-icon-color: $light-theme-button-text-and-icon-color;
 $disabled-text-color:        $light-theme-disabled-color;

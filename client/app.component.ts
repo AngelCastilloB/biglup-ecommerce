@@ -41,7 +41,7 @@ export class AppComponent
     constructor()
     {
         // Bootstrap translations.
-        I18nSingletonService.getInstance().addTranslation(require('./translations/en.json'), 'en');
-        I18nSingletonService.getInstance().addTranslation(require('./translations/zh.json'), 'zh');
+        I18nSingletonService.getInstance().addTranslation(require('./translations/en_US.json'), 'en_US');
+        I18nSingletonService.getInstance().addTranslation(require('./translations/zh_TW.json'), 'zh_TW');
     }
 }

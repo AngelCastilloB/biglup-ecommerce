@@ -34,4 +34,13 @@ import template from './backoffice.component.html';
 })
 export class BackofficeComponent
 {
+    private _hideDrawer: boolean = false;
+
+    /**
+     * @summary Event handler for the drawer toggle.
+     */
+    private _onToggleDrawer(toggle: boolean)
+    {
+        this._hideDrawer = toggle;
+    }
 }

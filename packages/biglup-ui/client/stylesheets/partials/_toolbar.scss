@@ -1,0 +1,129 @@
+@import 'base';
+
+[biglupToolbar] {
+  [biglup-icon-button] {
+    color: $button-text-and-icon-color!important;
+    margin: 21px;
+  }
+
+  .biglup-animated-menu-icon {
+    display: block!important;
+  }
+
+  @media (min-width: $layout-breakpoint-sm) {
+    .biglup-animated-menu-icon {
+      display: none!important;
+    }
+
+    [left] {
+      min-width: 0!important;
+
+      transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+      -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+      -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    }
+  }
+
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  color: $button-text-and-icon-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  @include elevation(2);
+  padding: 0 4px;
+  background-color: $primary-color;
+  overflow: hidden;
+
+  + * {
+    margin-top: 70px;
+  }
+  &[seamed] {
+    box-shadow: none;
+  }
+  &[scroll] {
+    position: relative;
+    + * {
+      margin-top: 0;
+    }
+  }
+  [right], [left] {
+    min-width: 56px;
+    height: 56px;
+    border: none;
+    padding: 0;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+
+    transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -moz-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+    -webkit-transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) all;
+  }
+  [right] [icon], [left] [icon] {
+    text-align: center;
+    vertical-align: middle;
+  }
+  [right] {
+    float: right;
+  }
+  [left] {
+    float: left;
+  }
+  [title] {
+    margin-top: 3px;
+    color: $button-text-and-icon-color;
+    font-family: $base-font-family;
+    margin-left: 4px;
+    font-size: $base-font-size;
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 65%;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
+  }
+
+  .left-items {
+    padding:0;
+    margin:0;
+    list-style-type:none;
+    display: table;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .left-items li {
+    display: table-cell;
+    vertical-align: middle;
+    float:left;
+  }
+
+  .left-items li a {
+    display:block;
+  }
+}
+
+.biglup-toolbar-overlay {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  position: fixed;
+  float: left;
+  margin-top: 0!important;
+  transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
+  opacity: 0;
+  background-color: rgb(0, 0, 0);
+  z-index: 5;
+}
+
+.biglup-toolbar-overlay-show {
+  opacity: 0.3;
+  visibility: visible;
+}

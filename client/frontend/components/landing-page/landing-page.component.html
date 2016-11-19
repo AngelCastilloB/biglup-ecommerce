@@ -139,10 +139,8 @@
   <h3>DATA TABLE</h3>
   <hr>
   <br>
-  <div style="width:80%; margin: 0 auto;">
-    <biglup-data-table (delete)="_logEvent($event)" (edit)="_logEvent($event)" [columns]="_dataTableColums"
-                       [data]="_dataTableData"></biglup-data-table>
-  </div>
+  <biglup-data-table (delete)="_logEvent($event)" (edit)="_logEvent($event)" [columns]="_dataTableColums"
+                     [data]="_dataTableData"></biglup-data-table>
   <br>
   <h3>BADGES</h3>
   <hr>
@@ -269,4 +267,35 @@
               [chartType]="_polarAreaChartType"></canvas>
     </div>
   </div>
+  <br>
+  <h3>TABS</h3>
+  <hr>
+  <br>
+  <biglup-tabs>
+    <biglup-tab [title]="'English'">
+      <canvas biglupChart
+              [data]="_doughnutChartData"
+              [labels]="_doughnutChartLabels"
+              [chartType]="_doughnutChartType"></canvas>
+    </biglup-tab>
+    <biglup-tab title="中文">
+      <canvas biglupChart
+              [data]="_polarAreaChartData"
+              [labels]="_polarAreaChartLabels"
+              [legend]="_polarAreaLegend"
+              [chartType]="_polarAreaChartType"></canvas>
+    </biglup-tab>
+  </biglup-tabs>
+  <br>
+  <h3>BREADCRUMBS</h3>
+  <hr>
+  <br>
+  <biglup-breadcrumb>
+    <a href="#">JavaScript</a>
+    <a href="#">AngularJS</a>
+    <a href="#">CoffeeScript</a>
+    <a href="#">TypeScript</a>
+    <a href="#" class="active">Angular 2</a>
+  </biglup-breadcrumb>
+  <br>  <br>  <br>  <br>
 </div>

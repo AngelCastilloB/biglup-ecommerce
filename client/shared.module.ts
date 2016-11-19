@@ -23,6 +23,7 @@ import { TruncateStringPipe }               from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2MaterialModule }                from './ng2-material.module';
+import { BiglupUiModule }                   from 'meteor/biglup:ui';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -32,7 +33,8 @@ import { Ng2MaterialModule }                from './ng2-material.module';
         FormsModule,
         ReactiveFormsModule,
         Ng2MaterialModule,
-        BiglupI18nModule
+        BiglupI18nModule,
+        BiglupUiModule
     ],
     declarations: [
         TruncateStringPipe
@@ -43,7 +45,8 @@ import { Ng2MaterialModule }                from './ng2-material.module';
         CommonModule,
         TruncateStringPipe,
         Ng2MaterialModule,
-        BiglupI18nModule
+        BiglupI18nModule,
+        BiglupUiModule
     ]
 })
 export class SharedModule

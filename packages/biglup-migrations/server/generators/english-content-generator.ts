@@ -80,7 +80,7 @@ export class EnglishContentGenerator extends AbstractContentGenerator
      */
     public getLocale()
     {
-        return 'en';
+        return 'en_US';
     }
 
     /**
