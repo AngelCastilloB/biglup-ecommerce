@@ -268,6 +268,12 @@
     </div>
   </div>
   <br>
+  <h3>COLOR PICKER</h3>
+  <hr>
+  <br>
+  <input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color1" oKButton="true" (colorPickerChange)="_color1=$event" [style.background]="_color1"/>
+  <input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color2" oKButton="true" (colorPickerChange)="_color2=$event" [style.background]="_color2"/>
+  <input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color3" oKButton="true" (colorPickerChange)="_color3=$event" [style.background]="_color3"/>
   <h3>TABS</h3>
   <hr>
   <br>

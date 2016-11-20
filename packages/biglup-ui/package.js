@@ -61,7 +61,17 @@ Package.onUse(function(api)
         'client/components/tab/tab/biglup-tab.component.ts',
         'client/components/breadcrumb/biglup-breadcrumb.component.ts',
         'client/components/text-editor/biglup-text-editor.component.ts',
-        'client/services/dom/dom-handler.service.ts'
+        'client/services/dom/dom-handler.service.ts',
+        'client/services/color-picker/biglup-color-picker.service.ts',
+        'client/directives/color-picker/biglup-color-picker.directive.ts',
+        'client/directives/color-picker/internals/biglup-color-picker-slider-directive.ts',
+        'client/directives/color-picker/internals/biglup-color-picker-text.directive.ts',
+        'client/components/color-picker/biglup-color-picker.component.ts',
+        'client/services/color-picker/internals/Hsva.ts',
+        'client/services/color-picker/internals/Hsla.ts',
+        'client/services/color-picker/internals/Rgba.ts',
+        'client/services/color-picker/internals/SliderDimension.ts',
+        'client/services/color-picker/internals/SliderPosition.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

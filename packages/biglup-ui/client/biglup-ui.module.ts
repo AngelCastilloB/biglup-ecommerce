@@ -54,6 +54,8 @@ import { BiglupTabsComponent }                    from './components/tab/biglup-
 import { BiglupBreadcrumbComponent }              from './components/breadcrumb/biglup-breadcrumb.component';
 import { BiglupTextEditorComponent }              from './components/text-editor/biglup-text-editor.component';
 import { DomHandlerService }                      from './services/dom/dom-handler.service';
+import { BiglupColorPickerService }               from './services/color-picker/biglup-color-picker.service';
+import { BiglupColorPickerDirective }             from './directives/color-picker/biglup-color-picker.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -63,7 +65,8 @@ import { DomHandlerService }                      from './services/dom/dom-handl
 @NgModule({
     providers: [
         BiglupMediaService,
-        DomHandlerService
+        DomHandlerService,
+        BiglupColorPickerService
     ],
     imports: [
         BrowserModule,
@@ -71,6 +74,7 @@ import { DomHandlerService }                      from './services/dom/dom-handl
         BiglupI18nModule,
         RouterModule],
     declarations: [
+        BiglupColorPickerDirective,
         BiglupButtonComponent,
         BiglupInputComponent,
         BiglupCheckboxComponent,
@@ -103,6 +107,7 @@ import { DomHandlerService }                      from './services/dom/dom-handl
         BiglupTextEditorComponent
     ],
     exports: [
+        BiglupColorPickerDirective,
         BiglupButtonComponent,
         BiglupInputComponent,
         BiglupCheckboxComponent,
