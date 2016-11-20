@@ -49,6 +49,9 @@ export class LandingPageComponent extends AfterViewInit
     private _dropdownOneValue: string = '';
     private _dropdownTwoValue: string = '';
     private _dropdownThreeValue: string = '';
+    private _color1: string = '#2fd534';
+    private _color2: string = '#bdc127';
+    private _color3: string = '#127bdc';
 
     // Charts
 
