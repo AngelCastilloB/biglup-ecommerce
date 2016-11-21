@@ -23,8 +23,11 @@ const PRODUCT_SCHEMA_NAME         = 'ProductSchema';
 
 // IMPORTS ************************************************************************************************************/
 
-import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
-import { I18nStringSchema } from './i18n-string.schema';
+import { SimpleSchema }                   from 'meteor/aldeed:simple-schema';
+import { I18nStringSchema }               from './i18n-string.schema';
+import { ColorVariantAttributeSchema,
+         SizeVariantAttributeSchema,
+         MaterialVariantAttributeSchema } from './variant-attributes.schema';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -62,22 +65,40 @@ export let ProductImageSchema: any = new SimpleSchema({
  * @summary The product variant schema.
  */
 export let ProductVariantSchema: any = new SimpleSchema({
+    sku: {
+        type: String,
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} sk`,
+    },
+    barcode: {
+        type: String,
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} barcode`,
+        optional: true
+    },
     color: {
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} color`,
-        type: [I18nStringSchema],
+        type: ColorVariantAttributeSchema,
         defaultValue: '',
         optional: true
     },
     size: {
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} size`,
-        type: [I18nStringSchema],
+        type: SizeVariantAttributeSchema,
         defaultValue: '',
         optional: true
     },
-    stock: {
-        label: `${PRODUCT_VARIANT_SCHEMA_NAME} stock`,
-        type: Number,
+    material: {
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} material`,
+        type: MaterialVariantAttributeSchema,
+        defaultValue: '',
         optional: true
+    },
+    price: {
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} price`,
+        type: Number
+    },
+    discount: {
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} discount`,
+        type: Number
     },
     // Denormalized field: Indicates if this product stock is too low.
     isLowQuantity: {
@@ -85,12 +106,17 @@ export let ProductVariantSchema: any = new SimpleSchema({
         type: Boolean,
         optional: true
     },
+    stock: {
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} stock`,
+        type: Number,
+        optional: true
+    },
     // Denormalized field: Indicates if this product is sold out.
     isSoldOut: {
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} isSoldOut`,
         type: Boolean,
         optional: true
-    },
+    }
 });
 
 /**
@@ -138,13 +164,19 @@ export let ProductSchema: any = new SimpleSchema({
     },
     color: {
         label: `${PRODUCT_SCHEMA_NAME} color`,
-        type: [I18nStringSchema],
+        type: ColorVariantAttributeSchema,
         defaultValue: '',
         optional: true
     },
     size: {
         label: `${PRODUCT_SCHEMA_NAME} size`,
-        type: [I18nStringSchema],
+        type: SizeVariantAttributeSchema,
+        defaultValue: '',
+        optional: true
+    },
+    material: {
+        label: `${PRODUCT_SCHEMA_NAME} material`,
+        type: MaterialVariantAttributeSchema,
         defaultValue: '',
         optional: true
     },

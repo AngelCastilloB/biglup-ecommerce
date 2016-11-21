@@ -19,6 +19,7 @@
 
 import { ProductSchema } from '../schemas/product.schema';
 import { Product }       from '../models';
+import { Mongo }         from 'meteor/mongo';
 
 // IMPLEMENTATION *****************************************************************************************************/
 

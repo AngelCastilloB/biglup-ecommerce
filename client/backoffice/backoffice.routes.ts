@@ -27,6 +27,7 @@ import { ReportsComponent }       from './components/reports/reports.component';
 import { BackofficeComponent }    from './backoffice.component';
 import { CollectionsComponent }   from './components/collections/collections.component';
 import { AddCollectionComponent } from './components/add-collection/add-collection.component';
+import { VariantsComponent }      from './components/variants/variants.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -46,6 +47,7 @@ const ROUTES: Routes = [
             {path: 'products/add-product', component: AddProductComponent},
             {path: 'products/edit-product/:id', component: AddProductComponent},
             {path: 'reports', component: ReportsComponent},
+            {path: 'products/variants', component: VariantsComponent},
             {path: 'collections', component: CollectionsComponent},
             {path: 'collections/add-collection', component: AddCollectionComponent},
             {path: 'collections/edit-collection/:id', component: AddCollectionComponent},

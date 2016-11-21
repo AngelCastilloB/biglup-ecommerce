@@ -1,0 +1,41 @@
+VARIANTS!
+<br><br>
+COLORS
+
+<div *ngFor="let color of _variantsService.getColors() | async">
+  <div class="biglup-grid">
+    <div class="biglup-cell biglup-cell-3-col">
+      <span>{{color.name | mongoTranslate }}</span>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col">
+      <input
+        style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;"
+        readonly [biglupColorPicker]="color.value"
+        oKButton="true"
+        (colorPickerChange)="color.value=$event"
+        [style.background]="color.value"/>
+    </div>
+  </div>
+</div>
+
+<br><br>
+SIZES
+
+<div *ngFor="let size of _variantsService.getSizes() | async">
+  <div class="biglup-grid">
+    <div class="biglup-cell biglup-cell-3-col">
+      <span>{{size.size | mongoTranslate }}</span>
+    </div>
+  </div>
+</div>
+
+<br><br>
+MATERIALS
+
+<div *ngFor="let material of _variantsService.getMaterials() | async">
+  <div class="biglup-grid">
+    <div class="biglup-cell biglup-cell-3-col">
+      <span>{{material.material | mongoTranslate }}</span>
+    </div>
+  </div>
+</div>

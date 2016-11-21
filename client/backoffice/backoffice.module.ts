@@ -43,6 +43,8 @@ import { I18nInputComponent }            from './components/i18n-input/i18n-inpu
 import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18n-text-editor.component';
 import { CartsService }                  from 'meteor/biglup:business';
 import { BiglupToastService }            from 'meteor/biglup:ui';
+import { VariantsComponent }             from './components/variants/variants.component';
+import { VariantAttributesService }      from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -64,6 +66,9 @@ import { BiglupToastService }            from 'meteor/biglup:ui';
         // product
         AddProductComponent,
         ProductsComponent,
+
+        // Variants
+        VariantsComponent,
 
         // customer
         CustomersComponent,
@@ -93,7 +98,8 @@ import { BiglupToastService }            from 'meteor/biglup:ui';
         IdGeneratorService,
         DragulaService,
         CartsService,
-        BiglupToastService
+        BiglupToastService,
+        VariantAttributesService
     ]
 })
 export class BackofficeModule
