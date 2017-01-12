@@ -1,18 +1,18 @@
 {
   "user": {
-    "name": "",
-    "email": "",
-    "password": ""
+    "name": "username",
+    "email": "user email",
+    "password": "someRandomPassword"
   },
   "migrations": {
-    "migrate": false,
-    "reset": false,
+    "migrate": true,
+    "reset": true,
+    "initialize": true,
     "locales": [
       "en",
-      "zh",
-      "kr",
-      "es"
-    ]
+      "zh"
+    ],
+    "mock": false
   },
   "facebook": {
     "appId": "",
