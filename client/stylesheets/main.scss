@@ -4,6 +4,7 @@
 @import './partials/image-manager';
 @import './partials/add-collection';
 @import './partials/collections';
+@import './partials/variants';
 
 body {
     @extend .typography;

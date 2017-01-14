@@ -28,7 +28,6 @@
   font-family: $base-font-family;
   font-weight: $base-font-weight;
 
-  @include elevation(1);
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -41,7 +40,7 @@
     position:relative;
   }
 
-  input{
+  input {
     text-align: center;
     font-family: $base-font-family;
     font-weight: $base-font-weight;

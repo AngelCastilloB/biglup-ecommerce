@@ -45,6 +45,9 @@ export class MongoTranslatePipe implements PipeTransform
      */
     public transform(i18nStrings: [I18nString]): any
     {
+        if (!(i18nStrings instanceof Array))
+            return '';
+
         let defaultLocale: string = I18nSingletonService.getInstance().getDefaultLocale();
         let currentLocale: string = I18nSingletonService.getInstance().getLocale();
 
@@ -84,6 +87,9 @@ export class MongoTranslatePipe implements PipeTransform
      */
     private _getLocaleString(i18nStrings: [I18nString], locale: string)
     {
+        if (!(i18nStrings instanceof Array))
+            return '';
+
         let value: string;
 
         let found: I18nString = i18nStrings.find(i18nString => i18nString.language === locale);
