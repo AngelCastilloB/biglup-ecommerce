@@ -63,7 +63,7 @@ export class VariantAttributesService extends MeteorReactive
             {
                 this._colors = VariantColors.find().fetch();
                 this._colorsStream.next(this._colors);
-            });
+            }, true);
         });
 
         this.subscribe('variant-sizes', () =>
@@ -72,7 +72,7 @@ export class VariantAttributesService extends MeteorReactive
             {
                 this._sizes = VariantSizes.find().fetch();
                 this._sizesStream.next(this._sizes);
-            });
+            }, true);
         });
 
         this.subscribe('variant-materials', () =>
@@ -81,7 +81,7 @@ export class VariantAttributesService extends MeteorReactive
             {
                 this._materials = VariantMaterials.find().fetch();
                 this._materialStream.next(this._materials);
-            });
+            }, true);
         });
     }
 
@@ -96,6 +96,32 @@ export class VariantAttributesService extends MeteorReactive
     }
 
     /**
+     * @summary Gets one color given its id.
+     *
+     * @param id The id of the color to be found.
+     *
+     * @returns {Observable<ColorVariantAttribute>} The ColorVariantAttribute observable.
+     */
+    public getColor(id: string): Observable<ColorVariantAttribute>
+    {
+        return Observable.create(observer => {
+            this.subscribe('variant-colors', id, () =>
+            {
+                let variantColor: ColorVariantAttribute = VariantColors.findOne({_id: id});
+
+                if (!variantColor)
+                {
+                    observer.error('Color not found');
+                    return;
+                }
+
+                observer.next(variantColor);
+                observer.complete();
+            });
+        });
+    }
+
+    /**
      * @summary Returns all the available product variant sizes.
      *
      * @returns {Observable<Array<SizeVariantAttribute>>} The observable list of product variant sizes.
@@ -106,6 +132,32 @@ export class VariantAttributesService extends MeteorReactive
     }
 
     /**
+     * @summary Gets one size given its id.
+     *
+     * @param id The id of the size to be found.
+     *
+     * @returns {Observable<SizeVariantAttribute>} The SizeVariantAttribute observable.
+     */
+    public getSize(id: string): Observable<SizeVariantAttribute>
+    {
+        return Observable.create(observer => {
+            this.subscribe('variant-sizes', id , () =>
+            {
+                let variantSize: SizeVariantAttribute = VariantSizes.findOne({_id: id});
+
+                if (!variantSize)
+                {
+                    observer.error('Size not found');
+                    return;
+                }
+
+                observer.next(variantSize);
+                observer.complete();
+            });
+        });
+    }
+
+    /**
      * @summary Returns all the available product variant materials.
      *
      * @returns {Observable<Array<MaterialVariantAttribute>>} The observable list of product variant materials.
@@ -113,6 +165,32 @@ export class VariantAttributesService extends MeteorReactive
     public getMaterials(): Observable<Array<MaterialVariantAttribute>>
     {
         return this._materialStream.distinctUntilChanged();
+    }
+
+    /**
+     * @summary Gets one material given its id.
+     *
+     * @param id The id of the material to be found.
+     *
+     * @returns {Observable<MaterialVariantAttribute>} The MaterialVariantAttribute observable.
+     */
+    public getMaterial(id: string): Observable<MaterialVariantAttribute>
+    {
+        return Observable.create(observer => {
+            this.subscribe('variant-materials', id , () =>
+            {
+                let variantMaterial: MaterialVariantAttribute = VariantMaterials.findOne({_id: id});
+
+                if (!variantMaterial)
+                {
+                    observer.error('Material not found');
+                    return;
+                }
+
+                observer.next(variantMaterial);
+                observer.complete();
+            });
+        });
     }
 
     /**

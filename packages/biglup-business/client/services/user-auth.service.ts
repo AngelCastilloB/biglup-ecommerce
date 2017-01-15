@@ -59,7 +59,7 @@ export class UserAuthService extends MeteorComponent
 
                 if (user)
                     this._updateUserStream(user);
-            });
+            }, true);
         });
     }
 

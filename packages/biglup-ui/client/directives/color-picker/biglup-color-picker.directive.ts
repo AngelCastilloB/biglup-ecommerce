@@ -22,6 +22,7 @@ import { OnChanges,
          Input,
          Output,
          ViewContainerRef,
+         ChangeDetectorRef,
          ElementRef,
          EventEmitter,
          OnInit,
@@ -101,16 +102,18 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
     /**
      * @summary Initializes a new instnace of the BiglupColorPickerDirective class.
      *
-     * @param compiler The angular 2 compiler.
-     * @param vcRef    The reference to the container view.
-     * @param el       The element reference.
-     * @param service  The biglup color picker service.
+     * @param compiler        The angular 2 compiler.
+     * @param vcRef           The reference to the container view.
+     * @param el              The element reference.
+     * @param service         The biglup color picker service.
+     * @param _changeDetector The change detector service.
      */
     constructor(
         private compiler: Compiler,
         private vcRef: ViewContainerRef,
         private el: ElementRef,
-        private service: BiglupColorPickerService)
+        private service: BiglupColorPickerService,
+        private _changeDetector: ChangeDetectorRef)
     {
         this._created = false;
     }
@@ -166,7 +169,6 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
     {
         if (this._cpIgnoredElements.filter((item: any) => item === this.el.nativeElement).length === 0)
             this.openDialog();
-
     }
 
     /**
@@ -192,11 +194,13 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
                         this._cpIgnoredElements, this._cpDialogDisplay, this._cpSaveClickOutside, this._cpAlphaChannel);
 
                     this._dialog = cmpRef.instance;
+                    this._changeDetector.detectChanges();
                 });
         }
         else if (this._dialog)
         {
             this._dialog.openDialog(this._colorPicker);
+            this._changeDetector.detectChanges();
         }
     }
 
@@ -210,6 +214,7 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
     {
         this._ignoreChanges = ignore;
         this._colorPickerChange.emit(value);
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -220,6 +225,7 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
     public changeInput(value: string)
     {
         this._dialog.setColorFromString(value, true);
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -230,6 +236,7 @@ export class BiglupColorPickerDirective implements OnInit, OnChanges
     public toggle(value: boolean)
     {
         this._cpToggleChange.emit(value);
+        this._changeDetector.detectChanges();
     }
 }
 

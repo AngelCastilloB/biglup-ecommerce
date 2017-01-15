@@ -44,6 +44,7 @@ import { I18nTextEditorComponent }       from './components/i18n-text-editor/i18
 import { CartsService }                  from 'meteor/biglup:business';
 import { BiglupToastService }            from 'meteor/biglup:ui';
 import { VariantsComponent }             from './components/variants/variants.component';
+import { AddColorVariantComponent }      from './components/add-color-variant/add-color-variant.component';
 import { VariantAttributesService }      from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
@@ -69,6 +70,7 @@ import { VariantAttributesService }      from 'meteor/biglup:business';
 
         // Variants
         VariantsComponent,
+        AddColorVariantComponent,
 
         // customer
         CustomersComponent,

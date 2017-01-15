@@ -1,12 +1,12 @@
 /**
- * @file add-collection.component.ts
+ * @file add-color-variant.component.ts
  *
- * @summary The add collection admin panel functionality.
+ * @summary The add color variant admin panel functionality.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   August 09 2016
+ * @date   Jan 15 2017
  *
- * @copyright Copyright 2016 Biglup. All Rights Reserved.
+ * @copyright Copyright 2017 Biglup. All Rights Reserved.
  *
  * Confidential Information of Biglup. Not for disclosure or distribution
  * prior written consent. This software contains code, techniques and know-how which
@@ -26,39 +26,37 @@ import { Component,
 import { Router, ActivatedRoute }    from '@angular/router';
 import { I18nSingletonService, _T }  from 'meteor/biglup:i18n';
 import { BiglupModalComponent,
-         BiglupModalType,
          BiglupModalResult }         from 'meteor/biglup:ui';
-import { Category }                  from 'meteor/biglup:business';
-import { CategoriesService }         from 'meteor/biglup:business';
 import { I18nString }                from 'meteor/biglup:i18n';
+import { VariantAttributesService,
+         ColorVariantAttribute }     from 'meteor/biglup:business';
 import { I18nInputComponent }        from '../i18n-input/i18n-input.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './add-collection.component.html';
+import template from './add-color-variant.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component allows you to add collections to the site.
+ * @summary This component allows you to add color variants to the site.
  *
  */
 @Component({
-    selector: 'add-collection',
+    selector: 'add-color-variant',
     template
 })
-export class AddCollectionComponent implements OnInit
+export class AddColorVariantComponent implements OnInit
 {
     @ViewChildren(I18nInputComponent)
     private _names:                 QueryList<I18nInputComponent>;
     @ViewChild(BiglupModalComponent)
     private _modal:                 BiglupModalComponent;
-    private _category:              Category             = new Category();
-    private _i18nService:           I18nSingletonService = I18nSingletonService.getInstance();
-    private _waitModalResult:       boolean              = false;
-    private _isEditMode:            boolean              = false;
-    private _i18nNameReferenceMap:  Object               = {};
-    private _i18nInfoReferenceMap:  Object               = {};
+    private _variantColor:          ColorVariantAttribute = new ColorVariantAttribute();
+    private _i18nService:           I18nSingletonService  = I18nSingletonService.getInstance();
+    private _waitModalResult:       boolean               = false;
+    private _isEditMode:            boolean               = false;
+    private _i18nNameReferenceMap:  Object                = {};
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -66,7 +64,7 @@ export class AddCollectionComponent implements OnInit
     constructor(
         private _router: Router,
         private _route: ActivatedRoute,
-        private _categoriesService: CategoriesService,
+        private _variantsService: VariantAttributesService,
         private _changeDetector: ChangeDetectorRef)
     {
     }
@@ -78,51 +76,39 @@ export class AddCollectionComponent implements OnInit
     {
         this._route.params.subscribe((params) =>
         {
-            this._category._id = params['id'];
+            this._variantColor._id = params['id'];
 
-            if (!this._category._id)
+            if (!this._variantColor._id)
             {
                 this._i18nService.getSupportedLanguages().forEach((lang) =>
                 {
-                    let info: I18nString = new I18nString(lang);
                     let name: I18nString = new I18nString(lang);
 
-                    this._category.name.push(name);
+                    this._variantColor.name.push(name);
                     this._i18nNameReferenceMap[lang] = name;
-
-                    this._category.info.push(info);
-                    this._i18nInfoReferenceMap[lang] = info;
                 });
 
                 this._changeDetector.detectChanges();
                 return;
             }
 
-            this._categoriesService.getCategory(this._category._id).subscribe(
-                (category: Category) =>
+            this._variantsService.getColor(this._variantColor._id).subscribe(
+                (color: ColorVariantAttribute) =>
                 {
-                    this._category   = category;
-                    this._isEditMode = true;
+                    this._variantColor = color;
+                    this._isEditMode   = true;
 
                     this._i18nService.getSupportedLanguages().forEach((lang) =>
                     {
-                        let name: I18nString = this._category.name.find((i18nString) => i18nString.language === lang);
-                        let info: I18nString = this._category.info.find((i18nString) => i18nString.language === lang);
+                        let name: I18nString = this._variantColor.name.find((i18nString) => i18nString.language === lang);
 
                         if (!name)
                         {
                             name = new I18nString(lang);
-                            this._category.name.push(name);
-                        }
-
-                        if (!info)
-                        {
-                            info = new I18nString(lang);
-                            this._category.info.push(info);
+                            this._variantColor.name.push(name);
                         }
 
                         this._i18nNameReferenceMap[lang] = name;
-                        this._i18nInfoReferenceMap[lang] = info;
                     });
 
                     this._changeDetector.detectChanges();
@@ -131,9 +117,9 @@ export class AddCollectionComponent implements OnInit
     }
 
     /**
-     * @summary Saves the category in the database.
+     * @summary Saves the color in the database.
      */
-    private _saveCategory(): void
+    private _saveColor(): void
     {
         let isRequieredMissing: any = this._names.toArray().find((i18nInput: I18nInputComponent) =>
         {
@@ -141,7 +127,7 @@ export class AddCollectionComponent implements OnInit
             {
                 this._modal.show(
                     _T('Requiered Field Missing'),
-                    _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
+                    _T('Color Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
             return !i18nInput.getIsValid();
@@ -153,46 +139,46 @@ export class AddCollectionComponent implements OnInit
         this._waitModalResult = true;
 
         this._modal.showObservable(
-            _T('Create Category'),
+            _T('Create Color'),
             _T('Creating...'),
-            this._categoriesService.createCategory(this._category),
+            this._variantsService.createColors(this._variantColor),
             {
-                title:   _T('Create Category'),
-                message: _T('Category Created.')
+                title:   _T('Create Color'),
+                message: _T('Color Created.')
             },
             {
                 title:   _T('Error'),
-                message: _T('There was an error creating the category.')
+                message: _T('There was an error creating the color.')
             },
         );
     }
 
     /**
-     * @summary Deletes the category in the database.
+     * @summary Deletes the color in the database.
      */
-    private _deleteCategory(): void
+    private _deleteColor(): void
     {
         this._waitModalResult = true;
 
         this._modal.showObservable(
-            _T('Delete Category'),
+            _T('Delete Color'),
             _T('Deleting...'),
-            this._categoriesService.deleteCategory(this._category._id),
+            this._variantsService.deleteColor(this._variantColor._id),
             {
-                title:   _T('Delete Category'),
-                message: _T('Category Deleted.')
+                title:   _T('Delete Color'),
+                message: _T('Color Deleted.')
             },
             {
                 title:   _T('Error'),
-                message: _T('There was an error deleting the category.')
+                message: _T('There was an error deleting the color.')
             },
         );
     }
 
     /**
-     * @summary Saves the category in the database.
+     * @summary Updates the color in the database.
      */
-    private _updateCategory(): void
+    private _updateColor(): void
     {
         let isRequieredMissing: any = this._names.toArray().find((i18nInput: I18nInputComponent) =>
         {
@@ -200,7 +186,7 @@ export class AddCollectionComponent implements OnInit
             {
                 this._modal.show(
                     _T('Requiered Field Missing'),
-                    _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
+                    _T('Color Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
             return !i18nInput.getIsValid();
@@ -209,16 +195,16 @@ export class AddCollectionComponent implements OnInit
         this._waitModalResult = true;
 
         this._modal.showObservable(
-            _T('Update Category'),
+            _T('Update Color'),
             _T('Updating...'),
-            this._categoriesService.updateCategory(this._category),
+            this._variantsService.updateColor(this._variantColor),
             {
-                title:   _T('Update Category'),
-                message: _T('Category Updated.')
+                title:   _T('Update Color'),
+                message: _T('Color Updated.')
             },
             {
                 title:   _T('Error'),
-                message: _T('There was an error updating the category.')
+                message: _T('There was an error updating the color.')
             },
         );
     }
@@ -228,7 +214,7 @@ export class AddCollectionComponent implements OnInit
      */
     private _onCancel(): void
     {
-        this._router.navigate(['/admin/collections']);
+        this._router.navigate(['/admin/products/variants']);
     }
 
     /**
@@ -242,7 +228,7 @@ export class AddCollectionComponent implements OnInit
         {
             this._waitModalResult = false;
 
-            this._router.navigate(['/admin/collections']);
+            this._router.navigate(['/admin/products/variants']);
         }
     }
 }

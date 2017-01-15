@@ -24,6 +24,7 @@ import { Meteor }                   from 'meteor/meteor';
 import { VariantColors,
          VariantSizes,
          VariantMaterials }         from '../collections/variant-attributes.collections';
+import { ColorVariantAttributeSchema } from '../schemas/variant-attributes.schema';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -46,7 +47,7 @@ Meteor.methods({
                 'You are not authorized to perform this action.');
         }
         */
-        check(colorVariant, ColorVariantAttribute);
+        check(colorVariant, ColorVariantAttributeSchema);
 
         return VariantColors.insert(colorVariant);
     }
@@ -61,7 +62,7 @@ Meteor.methods({
 Meteor.methods({
     updateColorAttribute(colorVariant: ColorVariantAttribute)
     {
-        check(colorVariant, ColorVariantAttribute);
+        check(colorVariant, ColorVariantAttributeSchema);
 
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)

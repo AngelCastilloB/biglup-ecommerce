@@ -17,17 +17,18 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Routes, RouterModule }   from '@angular/router';
-import { DashboardComponent }     from './components/dashboard/dashboard.component';
-import { OrdersComponent }        from './components/orders/orders.component';
-import { CustomersComponent }     from './components/customers/customers.component';
-import { ProductsComponent }      from './components/products/products.component';
-import { AddProductComponent }    from './components/add-product/add-product.component';
-import { ReportsComponent }       from './components/reports/reports.component';
-import { BackofficeComponent }    from './backoffice.component';
-import { CollectionsComponent }   from './components/collections/collections.component';
-import { AddCollectionComponent } from './components/add-collection/add-collection.component';
-import { VariantsComponent }      from './components/variants/variants.component';
+import { Routes, RouterModule }     from '@angular/router';
+import { DashboardComponent }       from './components/dashboard/dashboard.component';
+import { OrdersComponent }          from './components/orders/orders.component';
+import { CustomersComponent }       from './components/customers/customers.component';
+import { ProductsComponent }        from './components/products/products.component';
+import { AddProductComponent }      from './components/add-product/add-product.component';
+import { ReportsComponent }         from './components/reports/reports.component';
+import { BackofficeComponent }      from './backoffice.component';
+import { CollectionsComponent }     from './components/collections/collections.component';
+import { AddCollectionComponent }   from './components/add-collection/add-collection.component';
+import { VariantsComponent }        from './components/variants/variants.component';
+import { AddColorVariantComponent } from './components/add-color-variant/add-color-variant.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -48,6 +49,8 @@ const ROUTES: Routes = [
             {path: 'products/edit-product/:id', component: AddProductComponent},
             {path: 'reports', component: ReportsComponent},
             {path: 'products/variants', component: VariantsComponent},
+            {path: 'products/add-color-variant', component: AddColorVariantComponent},
+            {path: 'products/edit-color-variant/:id', component: AddColorVariantComponent},
             {path: 'collections', component: CollectionsComponent},
             {path: 'collections/add-collection', component: AddCollectionComponent},
             {path: 'collections/edit-collection/:id', component: AddCollectionComponent},

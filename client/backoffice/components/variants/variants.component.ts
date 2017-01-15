@@ -19,6 +19,7 @@
 
 import { Component }                from '@angular/core';
 import { VariantAttributesService } from 'meteor/biglup:business';
+import { Router }                   from '@angular/router';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -38,9 +39,19 @@ export class VariantsComponent
     /**
      * @summary Initializes a new instance of the VariantsComponent class.
      *
+     * @param { Router } _router The router service.
      * @param { VariantAttributesService } _variantsService The variants service.
      */
-    constructor(private _variantsService: VariantAttributesService)
+    constructor(private _router: Router, private _variantsService: VariantAttributesService)
     {
+    }
+
+    /**
+     * @summary Event handler for when the edit color button is clicked.
+     * @param id The color id.
+     */
+    private _onEditColor(id)
+    {
+        this._router.navigate(['/admin/products/edit-color-variant', id]);
     }
 }

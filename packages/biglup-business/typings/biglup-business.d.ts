@@ -85,8 +85,11 @@ declare module Business
     class VariantAttributesService
     {
         public getColors(): any;
+        public getColor(id: string): any;
         public getSizes(): any;
+        public getSize(id: string): any;
         public getMaterials(): any;
+        public getMaterial(id: string): any;
         public createColors(colorAttribute: ColorVariantAttribute): any;
         public createSizes(sizeAttribute: SizeVariantAttribute): any;
         public createMaterials(materialAttribute: MaterialVariantAttribute): any;

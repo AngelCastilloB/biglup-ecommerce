@@ -79,7 +79,7 @@ export class ProductsService extends MeteorReactive
             {
                 this._products = Products.find().fetch();
                 this._productsStream.next(this._products);
-            });
+            }, true);
         });
     }
 

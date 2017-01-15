@@ -10,16 +10,17 @@
     <div class="biglup-grid">
       <div class="biglup-cell biglup-cell-3-col" *ngFor="let color of _variantsService.getColors() | async">
         <div class="biglup-grid">
-          <div class="biglup-cell biglup-cell-6-col">
-            <span>{{color.name | mongoTranslate }}</span>
+          <div class="biglup-cell biglup-cell-4-col">
+            <span style="line-height: 40px;">{{color.name | mongoTranslate }}</span>
           </div>
-          <div class="biglup-cell biglup-cell-6-col">
-            <input
-              style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer; box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)"
-              readonly [biglupColorPicker]="color.value"
-              oKButton="true"
-              (colorPickerChange)="color.value=$event"
-              [style.background]="color.value"/>
+          <div class="biglup-cell biglup-cell-3-col">
+            <div
+              style="border:none; width: 40px; height: 40px; border-radius: 4px; box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)"
+              [style.background]="color.value">
+            </div>
+          </div>
+          <div class="biglup-cell biglup-cell-5-col">
+            <biglup-icon-button (click)="_onEditColor(color._id)" icon="mode_edit" color="#737373"></biglup-icon-button>
           </div>
         </div>
       </div>
@@ -27,7 +28,7 @@
   </biglup-paper>
   <div class="variants-add-button">
     <biglup-button
-      [routerLink]="['/admin/products/add-variant-color']"
+      [routerLink]="['/admin/products/add-color-variant']"
       raised="true" color="primary">{{'Add Color' | translate }}
     </biglup-button>
   </div>

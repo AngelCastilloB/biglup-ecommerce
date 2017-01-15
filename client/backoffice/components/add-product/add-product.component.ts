@@ -100,6 +100,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     this._i18nDescReferenceMap[lang] = description;
                 });
 
+                this._changeDetector.detectChanges();
                 return;
             }
 
