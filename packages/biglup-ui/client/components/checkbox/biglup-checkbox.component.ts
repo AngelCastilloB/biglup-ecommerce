@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input, Output, AfterViewInit, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, Output, AfterViewInit, ViewChild, EventEmitter, ApplicationRef} from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -47,7 +47,7 @@ export class BiglupCheckboxComponent implements AfterViewInit
     /**
      * @summary Initializes a new instance of the BiglupInputComponent class.
      */
-    constructor()
+    constructor(private _applicationRef: ApplicationRef)
     {
     }
 
@@ -75,5 +75,6 @@ export class BiglupCheckboxComponent implements AfterViewInit
             this._checkedChange.emit(this._checked);
 
         event.preventDefault();
+        this._applicationRef.tick();
     }
 }

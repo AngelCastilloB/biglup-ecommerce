@@ -25,6 +25,7 @@ import { Component,
          Output,
          OnInit,
          EventEmitter,
+         ApplicationRef,
          ViewChild,
          AfterViewInit}          from '@angular/core';
 import { ImageDisplayComponent } from '../image-display/image-display.component';
@@ -56,7 +57,7 @@ export class ImagePreviewComponent implements OnInit, AfterViewInit
     /**
      * @summary Initializes a new instance of the ImagePreviewComponent class.
      */
-    constructor(private element: ElementRef)
+    constructor(private element: ElementRef, private _applicationRef: ApplicationRef)
     {
     }
 
@@ -123,6 +124,7 @@ export class ImagePreviewComponent implements OnInit, AfterViewInit
     private _emitDeleted()
     {
         this._onDeleted.emit(this._model);
+        this._applicationRef.tick();
     }
 
     /**

@@ -20,7 +20,8 @@
 import { Component,
          ContentChildren,
          QueryList,
-         AfterContentInit }   from '@angular/core';
+         AfterContentInit,
+         ApplicationRef }     from '@angular/core';
 import { BiglupTabComponent } from './tab/biglup-tab.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -44,7 +45,7 @@ export class BiglupTabsComponent implements AfterContentInit
     /**
      * @summary Initializes a new instance of the BiglupTabsComponent class.
      */
-    constructor()
+    constructor(private _applicationRef: ApplicationRef)
     {
     }
 
@@ -69,6 +70,8 @@ export class BiglupTabsComponent implements AfterContentInit
         this.m_tabs.toArray().forEach((item) => item.active = false);
 
         tab.active = true;
+
+        this._applicationRef.tick();
     }
 
 }
