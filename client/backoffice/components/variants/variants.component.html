@@ -59,13 +59,21 @@
     <span><b>{{ 'Materials' | translate }}</b></span></br>
     <div class="biglup-grid">
       <div class="biglup-cell biglup-cell-2-col" *ngFor="let material of _variantsService.getMaterials() | async">
-        <span>{{material.material | mongoTranslate }}</span>
+        <div class="biglup-grid">
+          <div class="biglup-cell biglup-cell-6-col">
+            <span style="line-height: 40px;">{{material.material | mongoTranslate }}</span>
+          </div>
+          <div class="biglup-cell biglup-cell-6-col">
+            <biglup-icon-button (click)="_onEditMaterial(material._id)" icon="mode_edit" color="#737373"></biglup-icon-button>
+          </div>
+        </div>
+
       </div>
     </div>
   </biglup-paper>
   <div class="variants-add-button">
     <biglup-button
-      [routerLink]="['/admin/products/add-variant-material']"
+      [routerLink]="['/admin/products/add-material-variant']"
       raised="true" color="primary">{{'Add Material' | translate }}
     </biglup-button>
   </div>

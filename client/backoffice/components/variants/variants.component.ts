@@ -63,4 +63,13 @@ export class VariantsComponent
     {
         this._router.navigate(['/admin/products/edit-size-variant', id]);
     }
+
+    /**
+     * @summary Event handler for when the edit material button is clicked.
+     * @param id The material id.
+     */
+    private _onEditMaterial(id)
+    {
+        this._router.navigate(['/admin/products/edit-material-variant', id]);
+    }
 }
