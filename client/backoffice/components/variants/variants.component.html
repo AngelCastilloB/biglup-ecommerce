@@ -37,13 +37,20 @@
     <span><b>{{ 'Sizes' | translate }}</b></span></br>
     <div class="biglup-grid">
       <div class="biglup-cell biglup-cell-2-col" *ngFor="let size of _variantsService.getSizes() | async">
-        <span>{{size.size | mongoTranslate }}</span>
+        <div class="biglup-grid">
+          <div class="biglup-cell biglup-cell-6-col">
+            <span style="line-height: 40px;">{{size.size | mongoTranslate }}</span>
+          </div>
+          <div class="biglup-cell biglup-cell-6-col">
+            <biglup-icon-button (click)="_onEditSize(size._id)" icon="mode_edit" color="#737373"></biglup-icon-button>
+          </div>
+        </div>
       </div>
     </div>
   </biglup-paper>
   <div class="variants-add-button">
     <biglup-button
-      [routerLink]="['/admin/products/add-variant-size']"
+      [routerLink]="['/admin/products/add-size-variant']"
       raised="true" color="primary">{{'Add Size' | translate }}
     </biglup-button>
   </div>

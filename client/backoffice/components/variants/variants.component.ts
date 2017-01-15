@@ -54,4 +54,13 @@ export class VariantsComponent
     {
         this._router.navigate(['/admin/products/edit-color-variant', id]);
     }
+
+    /**
+     * @summary Event handler for when the edit size button is clicked.
+     * @param id The size id.
+     */
+    private _onEditSize(id)
+    {
+        this._router.navigate(['/admin/products/edit-size-variant', id]);
+    }
 }

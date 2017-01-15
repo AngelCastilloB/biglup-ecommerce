@@ -19,12 +19,14 @@
 
 import { ColorVariantAttribute,
          SizeVariantAttribute,
-         MaterialVariantAttribute } from '../models';
-import { Meteor }                   from 'meteor/meteor';
+         MaterialVariantAttribute }       from '../models';
+import { Meteor }                         from 'meteor/meteor';
 import { VariantColors,
          VariantSizes,
-         VariantMaterials }         from '../collections/variant-attributes.collections';
-import { ColorVariantAttributeSchema } from '../schemas/variant-attributes.schema';
+         VariantMaterials }               from '../collections/variant-attributes.collections';
+import { ColorVariantAttributeSchema,
+         SizeVariantAttributeSchema,
+         MaterialVariantAttributeSchema } from '../schemas/variant-attributes.schema';
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -150,7 +152,7 @@ Meteor.methods({
          'You are not authorized to perform this action.');
          }
          */
-        check(sizeVariant, SizeVariantAttribute);
+        check(sizeVariant, SizeVariantAttributeSchema);
 
         return VariantSizes.insert(sizeVariant);
     }
@@ -165,7 +167,7 @@ Meteor.methods({
 Meteor.methods({
     updateSizeAttribute(sizeVariant: SizeVariantAttribute)
     {
-        check(sizeVariant, SizeVariantAttribute);
+        check(sizeVariant, SizeVariantAttributeSchema);
 
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)
@@ -253,7 +255,7 @@ Meteor.methods({
          'You are not authorized to perform this action.');
          }
          */
-        check(materialVariant, MaterialVariantAttribute);
+        check(materialVariant, MaterialVariantAttributeSchema);
 
         return VariantMaterials.insert(materialVariant);
     }
@@ -268,7 +270,7 @@ Meteor.methods({
 Meteor.methods({
     updateMaterialAttribute(materialVariant: MaterialVariantAttribute)
     {
-        check(materialVariant, MaterialVariantAttribute);
+        check(materialVariant, MaterialVariantAttributeSchema);
 
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)

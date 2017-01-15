@@ -1,7 +1,7 @@
 /**
  * @file product.ts
  *
- * @summary The product collection publication file.
+ * @summary The variant attributes publication file.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   August 17 2016
@@ -32,9 +32,9 @@ Meteor.publish('variant-colors', () => VariantColors.find());
 /**
  * @summary Publishes all the material variant attributes.
  */
-Meteor.publish('variant-materials', id => VariantMaterials.find());
+Meteor.publish('variant-materials', () => VariantMaterials.find());
 
 /**
  * @summary Publishes all sizes variant attributes.
  */
-Meteor.publish('variant-sizes', id => VariantSizes.find());
+Meteor.publish('variant-sizes', () => VariantSizes.find());

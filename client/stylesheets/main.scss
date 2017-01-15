@@ -6,6 +6,7 @@
 @import './partials/collections';
 @import './partials/variants';
 @import './partials/add-color-variant';
+@import './partials/add-size-variant';
 
 body {
     @extend .typography;

@@ -290,7 +290,7 @@ export class VariantAttributesService extends MeteorReactive
      *
      * @param sizeAttribute The size attribute to be updated in the database.
      */
-    public updateSizes(sizeAttribute: SizeVariantAttribute): Observable<string>
+    public updateSize(sizeAttribute: SizeVariantAttribute): Observable<string>
     {
         return Observable.create(observer => {
             this.call('updateSizeAttribute', sizeAttribute, (error, result) =>

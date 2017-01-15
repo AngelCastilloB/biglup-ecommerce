@@ -94,7 +94,7 @@ declare module Business
         public createSizes(sizeAttribute: SizeVariantAttribute): any;
         public createMaterials(materialAttribute: MaterialVariantAttribute): any;
         public updateColor(colorAttribute: ColorVariantAttribute): any;
-        public update(sizeAttribute: SizeVariantAttribute): any;
+        public updateSize(sizeAttribute: SizeVariantAttribute): any;
         public updateMaterial(materialAttribute: MaterialVariantAttribute): any;
         public deleteColor(id: string): any;
         public deleteSize(id: string): any;
