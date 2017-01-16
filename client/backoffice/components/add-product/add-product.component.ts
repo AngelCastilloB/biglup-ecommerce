@@ -29,6 +29,7 @@ import { I18nSingletonService, _T }           from 'meteor/biglup:i18n';
 import { BiglupModalComponent }               from 'meteor/biglup:ui';
 import { ProductsService }                    from 'meteor/biglup:business';
 import { CategoriesService }                  from 'meteor/biglup:business';
+import { VariantAttributesService }           from 'meteor/biglup:business';
 import { Product }                            from 'meteor/biglup:business';
 import { I18nString }                         from 'meteor/biglup:i18n';
 import { InputFilters, BiglupInputComponent } from 'meteor/biglup:ui';
@@ -61,6 +62,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
     private _modal:                 BiglupModalComponent;
     private _waitModalResult:       boolean              = false;
     private _isEditMode:            boolean              = false;
+    private _isVariantsEanbled:     boolean              = false;
     private _i18nTitleReferenceMap: Object               = {};
     private _i18nDescReferenceMap:  Object               = {};
     private InputFilters:           InputFilters         = InputFilters;
@@ -73,7 +75,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
         private _route: ActivatedRoute,
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService,
-        private _changeDetector: ChangeDetectorRef)
+        private _changeDetector: ChangeDetectorRef,
+        private _variantsService: VariantAttributesService)
     {
     }
 
@@ -217,7 +220,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
             return;
         }
 
-        // Fix number types.
+        // Fixes number types.
         this._product.price = Number.parseFloat(this._product.price.toString());
         this._product.discount = Number.parseFloat(this._product.discount.toString());
         this._product.stock = Number.parseFloat(this._product.stock.toString());
@@ -343,5 +346,15 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
             this._router.navigate(['/admin/products']);
         }
+    }
+
+    /**
+     * @summary enables the variants.
+     * @private
+     */
+    private _setEnableVariants(enable: boolean)
+    {
+        this._isVariantsEanbled = enable;
+        this._changeDetector.detectChanges();
     }
 }

@@ -2,6 +2,10 @@
 
 .add-product-content
 {
+  .add-product-variants-button-center {
+    text-align: center;
+  }
+
   .biglup-add-product-title {
     color: $secondary-text-color;
     margin: 0;
@@ -38,5 +42,12 @@
 
   #quantity > div {
     margin: 0!important;
+  }
+
+  .add-variant-product-buttons {
+    button {
+      position: absolute;
+      top: 50%;
+    }
   }
 }
