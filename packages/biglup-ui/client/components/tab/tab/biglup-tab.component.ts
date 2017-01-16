@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,4 +34,22 @@ export class BiglupTabComponent {
     public active: boolean = false;
     @Input('title')
     public title: string = '';
+
+    /**
+     * @summary Initializes a new instance of the BiglupTabsComponent class.
+     */
+    constructor(private _changeDetector: ChangeDetectorRef)
+    {
+    }
+
+    /**
+     * Sets whether this tab is active or not.
+     *
+     * @param isActive True if the tab is active, otherwise, false.
+     */
+    public setActive(isActive: boolean): void
+    {
+        this.active = isActive;
+        this._changeDetector.detectChanges();
+    }
 }
