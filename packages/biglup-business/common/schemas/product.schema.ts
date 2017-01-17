@@ -162,24 +162,6 @@ export let ProductSchema: any = new SimpleSchema({
         type: [I18nStringSchema],
         optional: true
     },
-    color: {
-        label: `${PRODUCT_SCHEMA_NAME} color`,
-        type: ColorVariantAttributeSchema,
-        defaultValue: '',
-        optional: true
-    },
-    size: {
-        label: `${PRODUCT_SCHEMA_NAME} size`,
-        type: SizeVariantAttributeSchema,
-        defaultValue: '',
-        optional: true
-    },
-    material: {
-        label: `${PRODUCT_SCHEMA_NAME} material`,
-        type: MaterialVariantAttributeSchema,
-        defaultValue: '',
-        optional: true
-    },
     price: {
         label: `${PRODUCT_SCHEMA_NAME} price`,
         type: Number

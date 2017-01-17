@@ -179,16 +179,16 @@ declare module Business
     class ProductVariant
     {
         constructor(
-            public barcode:          string                = '',
-            public sku:              string                = '',
-            public color:            Array<I18nString>     = Array<I18nString>(),
-            public size:             Array<I18nString>     = Array<I18nString>(),
-            public material:         Array<I18nString>     = Array<I18nString>(),
-            public price:            number                = 0,
-            public discount:         number                = 0,
-            public stock:            number                = 0,
-            public isLowQuantity:    boolean               = false,
-            public isSoldOut:        boolean               = false)
+            public barcode:          string                   = '',
+            public sku:              string                   = '',
+            public color:            ColorVariantAttribute    = new ColorVariantAttribute(),
+            public size:             SizeVariantAttribute     = new SizeVariantAttribute(),
+            public material:         MaterialVariantAttribute = new MaterialVariantAttribute(),
+            public price:            number                   = 0,
+            public discount:         number                   = 0,
+            public stock:            number                   = 0,
+            public isLowQuantity:    boolean                  = false,
+            public isSoldOut:        boolean                  = false)
     }
 
     class Product
@@ -202,9 +202,6 @@ declare module Business
             public description:      Array<I18nString>     = Array<I18nString>(),
             public barcode:          string                = '',
             public sku:              string                = '',
-            public color:            Array<I18nString>     = Array<I18nString>(),
-            public size:             Array<I18nString>     = Array<I18nString>(),
-            public material:         Array<I18nString>     = Array<I18nString>(),
             public variantProducts:  Array<ProductVariant> = Array<ProductVariant>(),
             public price:            number                = 0,
             public discount:         number                = 0,

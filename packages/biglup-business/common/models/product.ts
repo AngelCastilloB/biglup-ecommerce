@@ -41,9 +41,6 @@ export class Product
      * @param description      The description of the product.
      * @param barcode          The barcode of the product.
      * @param sku              The stock keeping unit code (SKU) of the product.
-     * @param color            The color variant of the product.
-     * @param size             The size variant of the product.
-     * @param material         The material variant of the product.
      * @param variantProducts  The list of variants for this product.
      * @param price            The price of the product.
      * @param discount         The discount of the product.
@@ -68,9 +65,6 @@ export class Product
         public description:      Array<I18nString>        = Array<I18nString>(),
         public barcode:          string                   = '',
         public sku:              string                   = '',
-        public color:            ColorVariantAttribute    = new ColorVariantAttribute(),
-        public size:             SizeVariantAttribute     = new SizeVariantAttribute(),
-        public material:         MaterialVariantAttribute = new MaterialVariantAttribute(),
         public variantProducts:  Array<ProductVariant>    = Array<ProductVariant>(),
         public price:            number                   = 0,
         public discount:         number                   = 0,

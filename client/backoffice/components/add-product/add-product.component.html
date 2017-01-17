@@ -105,7 +105,7 @@
                 <div class="biglup-cell biglup-cell-3-col" *ngFor="let color of _variantsService.getColors() | async">
                   <div class="biglup-grid">
                     <div class="biglup-cell biglup-cell-6-col">
-                      <biglup-checkbox>
+                      <biglup-checkbox [(checked)]="_colorToggle[color._id]" (checkedChange)="_onVariantAttributeChanged()">
                         {{color.name | mongoTranslate }}
                       </biglup-checkbox>
                     </div>
@@ -122,7 +122,7 @@
             <biglup-tab title="{{'Size' | translate }}">
               <div class="biglup-grid">
                 <div class="biglup-cell biglup-cell-2-col" *ngFor="let size of _variantsService.getSizes() | async">
-                  <biglup-checkbox>
+                  <biglup-checkbox [(checked)]="_sizeToggle[size._id]" (checkedChange)="_onVariantAttributeChanged()">
                     {{size.size | mongoTranslate }}
                   </biglup-checkbox>
                 </div>
@@ -131,7 +131,7 @@
             <biglup-tab title="{{'Material' | translate }}">
               <div class="biglup-grid">
                 <div class="biglup-cell biglup-cell-2-col" *ngFor="let material of _variantsService.getMaterials() | async">
-                  <biglup-checkbox>
+                  <biglup-checkbox [(checked)]="_materialToggle[material._id]" (checkedChange)="_onVariantAttributeChanged()">
                     {{material.material | mongoTranslate }}
                   </biglup-checkbox>
                 </div>
