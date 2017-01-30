@@ -55,6 +55,7 @@ const copyProduct = (product: Product) =>
         {
             variant.price = Number(variant.price)
             variant.stock = Number(variant.stock)
+            variant.discount = Number(variant.discount)
         });
 
     return <Product>clone;

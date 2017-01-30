@@ -418,6 +418,21 @@ export class AddProductComponent implements OnInit, AfterViewInit
     private _setEnableVariants(enable: boolean)
     {
         this._isVariantsEanbled = enable;
+
+        if (!this._isVariantsEanbled)
+        {
+            this._product.variantProducts = [];
+
+            for (var key in this._colorToggle)
+                this._colorToggle[key] = false;
+
+            for (var key in this._sizeToggle)
+                this._sizeToggle[key] = false;
+
+            for (var key in this._materialToggle)
+                this._materialToggle[key] = false;
+        }
+
         this._changeDetector.detectChanges();
     }
 
