@@ -50,6 +50,13 @@ const copyProduct = (product: Product) =>
     clone.updatedAt   = new Date(clone.updatedAt.toString());
     clone.publishedAt = new Date(clone.publishedAt.toString());
 
+    clone.variantProducts.forEach(
+        (variant) =>
+        {
+            variant.price = Number(variant.price)
+            variant.stock = Number(variant.stock)
+        });
+
     return <Product>clone;
 };
 

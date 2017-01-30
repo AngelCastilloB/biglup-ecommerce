@@ -45,18 +45,20 @@ export class ProductVariant
      * @param stock            The current stock of this product.
      * @param isLowQuantity    Indicates if this product is in low quantity (denormalization field).
      * @param isSoldOut        Indicates if this product is already sold out (denormalization field).
+     * @param isEnabled        Indicates if this product variant is enabled.
      */
     constructor(
-        public barcode:          string                = '',
-        public sku:              string                = '',
+        public barcode:          string                   = '',
+        public sku:              string                   = '',
         public color:            ColorVariantAttribute    = new ColorVariantAttribute(),
         public size:             SizeVariantAttribute     = new SizeVariantAttribute(),
         public material:         MaterialVariantAttribute = new MaterialVariantAttribute(),
-        public price:            number                = 0,
-        public discount:         number                = 0,
-        public stock:            number                = 0,
-        public isLowQuantity:    boolean               = false,
-        public isSoldOut:        boolean               = false)
+        public price:            number                   = 0,
+        public discount:         number                   = 0,
+        public stock:            number                   = 0,
+        public isLowQuantity:    boolean                  = false,
+        public isSoldOut:        boolean                  = false,
+        public isEnabled:        boolean                  = true)
     {
     }
 }

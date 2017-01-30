@@ -1,0 +1,24 @@
+<div class="add-product-content">
+  <div class="biglup-grid">
+    <div class="biglup-cell biglup-cell-1-col">
+      <biglup-checkbox [(checked)]="_productVariant.isEnabled"></biglup-checkbox>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col">
+      <div *ngIf="_productVariant.color">{{ _productVariant.color.name | mongoTranslate }}</div>
+      <div *ngIf="_productVariant.size"><br>{{ _productVariant.size.size | mongoTranslate }}</div>
+      <div *ngIf="_productVariant.material"><br>{{ _productVariant.material.material | mongoTranslate }}</div>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col">
+      <biglup-input [disabled]="!_productVariant.isEnabled" hint="{{'Price' | translate}}" floatingHint="true" [(value)]="_productVariant.price" [filter]="InputFilters.numerical"></biglup-input>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col">
+      <biglup-input [disabled]="!_productVariant.isEnabled" hint="{{'SKU' | translate}}" floatingHint="true" [(value)]="_productVariant.sku"></biglup-input>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col">
+      <biglup-input [disabled]="!_productVariant.isEnabled" hint="{{'Barcode' | translate}}" floatingHint="true" [(value)]="_productVariant.barcode"></biglup-input>
+    </div>
+    <div class="biglup-cell biglup-cell-2-col" *ngIf="_trackInventory" >
+      <biglup-input [disabled]="!_productVariant.isEnabled" hint="{{ 'Quantity' | translate }}" [(value)]="_productVariant.stock" floatingHint="true"></biglup-input>
+    </div>
+  </div>
+</div>

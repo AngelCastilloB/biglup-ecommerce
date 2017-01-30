@@ -47,6 +47,7 @@ import { VariantsComponent }             from './components/variants/variants.co
 import { AddColorVariantComponent }      from './components/add-color-variant/add-color-variant.component';
 import { AddSizeVariantComponent }       from './components/add-size-variant/add-size-variant.component';
 import { AddMaterialVariantComponent }   from './components/add-material-variant/add-material-variant.component';
+import { AddProductVariantComponent }    from './components/add-product-variant/add-product-variant.component';
 import { VariantAttributesService }      from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
@@ -69,6 +70,7 @@ import { VariantAttributesService }      from 'meteor/biglup:business';
         // product
         AddProductComponent,
         ProductsComponent,
+        AddProductVariantComponent,
 
         // Variants
         VariantsComponent,

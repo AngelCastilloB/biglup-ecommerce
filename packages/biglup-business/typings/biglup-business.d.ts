@@ -188,7 +188,8 @@ declare module Business
             public discount:         number                   = 0,
             public stock:            number                   = 0,
             public isLowQuantity:    boolean                  = false,
-            public isSoldOut:        boolean                  = false)
+            public isSoldOut:        boolean                  = false,
+            public isEnabled:        boolean                  = true)
     }
 
     class Product

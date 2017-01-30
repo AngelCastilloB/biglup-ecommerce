@@ -181,6 +181,25 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         this._i18nDescReferenceMap[lang]  = description;
                     });
 
+
+                    if (this._product.variantProducts.length > 0)
+                    {
+                        this._isVariantsEanbled = true;
+
+                        this._product.variantProducts.forEach(
+                            (variant) =>
+                            {
+                                if (variant.color !== null)
+                                    this._colorToggle[variant.color._id] = true;
+
+                                if (variant.size !== null)
+                                    this._sizeToggle[variant.size._id] = true;
+
+                                if (variant.material !== null)
+                                    this._materialToggle[variant.material._id] = true;
+                            });
+                    }
+
                     this._changeDetector.detectChanges();
                 });
         });
@@ -319,7 +338,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
             {
                 console.error('Show Title message');
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('The Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
@@ -332,7 +351,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
         if (!this._skuInput.getValue())
         {
             this._modal.show(
-                _T('Requiered Field Missing'),
+                _T('Required Field Missing'),
                 _T('Product SKU (Stock Keeping Unit) is required'));
 
             return;
@@ -341,7 +360,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
         if (!this._barcodeInput.getValue())
         {
             this._modal.show(
-                _T('Requiered Field Missing'),
+                _T('Required Field Missing'),
                 _T('Product barcode is required'));
 
             return;
@@ -413,7 +432,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
         const toggledMaterials: [MaterialVariantAttribute] = this._filterMaterialMap(this._materialToggle);
 
         let tempVariants: Array<ProductVariant> = this._product.variantProducts;
-        this._product.variantProducts.length = 0;
+
+        this._product.variantProducts = [];
 
         if (toggledColors.length === 0 && toggledSizes.length > 0 && toggledMaterials.length > 0)
         {
@@ -426,8 +446,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             let variant = tempVariants.find(
                                 (variant) =>
                                     variant.color === null &&
-                                    variant.size === sizeVariantAttribute &&
-                                    variant.material === materialVariantAttribute);
+                                    variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                                    variant.material !== null && variant.material._id === materialVariantAttribute._id);
 
                             if (variant)
                             {
@@ -451,9 +471,9 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         {
                             let variant = tempVariants.find(
                                 (variant) =>
-                                variant.color === colorVariantAttribute &&
+                                variant.color !== null && variant.color._id === colorVariantAttribute._id &&
                                 variant.size === null &&
-                                variant.material === materialVariantAttribute);
+                                variant.material !== null && variant.material._id === materialVariantAttribute._id);
 
                             if (variant)
                             {
@@ -477,8 +497,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         {
                             let variant = tempVariants.find(
                                 (variant) =>
-                                variant.color === colorVariantAttribute &&
-                                variant.size === sizeVariantAttribute &&
+                                variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                                variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
                                 variant.material === null);
 
                             if (variant)
@@ -502,7 +522,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         (variant) =>
                         variant.color === null &&
                         variant.size === null &&
-                        variant.material === materialVariantAttribute);
+                        variant.material !== null && variant.material._id === materialVariantAttribute._id);
 
                     if (variant)
                     {
@@ -523,7 +543,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     let variant = tempVariants.find(
                         (variant) =>
                         variant.color === null &&
-                        variant.size === sizeVariantAttribute &&
+                        variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
                         variant.material === null);
 
                     if (variant)
@@ -544,7 +564,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                 {
                     let variant = tempVariants.find(
                         (variant) =>
-                        variant.color === colorVariantAttribute &&
+                        variant.color !== null && variant.color._id === colorVariantAttribute._id &&
                         variant.size === null &&
                         variant.material === null);
 
@@ -572,9 +592,9 @@ export class AddProductComponent implements OnInit, AfterViewInit
                                 {
                                     let variant = tempVariants.find(
                                         (variant) =>
-                                        variant.color === colorVariantAttribute &&
-                                        variant.size === sizeVariantAttribute &&
-                                        variant.material === materialVariantAttribute);
+                                        variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                                        variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                                        variant.material !== null && variant.material._id === materialVariantAttribute._id);
 
                                     if (variant)
                                     {
@@ -594,6 +614,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         });
                 });
         }
+
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -604,7 +626,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
      * @return [ColorVariantAttribute] The array of color variant attributes.
      * @private
      */
-    private _filterColorMap(map: any): [string]
+    private _filterColorMap(map: any): [ColorVariantAttribute]
     {
         let array: [ColorVariantAttribute] = <[ColorVariantAttribute]>[];
 

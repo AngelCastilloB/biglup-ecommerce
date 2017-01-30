@@ -116,7 +116,12 @@ export let ProductVariantSchema: any = new SimpleSchema({
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} isSoldOut`,
         type: Boolean,
         optional: true
-    }
+    },
+    isEnabled: {
+        label: `${PRODUCT_VARIANT_SCHEMA_NAME} isEnabled`,
+        type: Boolean,
+        optional: false
+    },
 });
 
 /**
