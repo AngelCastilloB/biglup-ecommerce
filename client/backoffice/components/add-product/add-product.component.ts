@@ -265,24 +265,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
         if (isRequieredMissing)
             return;
 
-        if (!this._skuInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product SKU (Stock Keeping Unit) is required'));
-
-            return;
-        }
-
-        if (!this._barcodeInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product barcode is required'));
-
-            return;
-        }
-
         // Fixes number types.
         this._product.price = Number.parseFloat(this._product.price.toString());
         this._product.discount = Number.parseFloat(this._product.discount.toString());
@@ -347,24 +329,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         if (isRequieredMissing)
             return;
-
-        if (!this._skuInput.getValue())
-        {
-            this._modal.show(
-                _T('Required Field Missing'),
-                _T('Product SKU (Stock Keeping Unit) is required'));
-
-            return;
-        }
-
-        if (!this._barcodeInput.getValue())
-        {
-            this._modal.show(
-                _T('Required Field Missing'),
-                _T('Product barcode is required'));
-
-            return;
-        }
 
         // Fix number types.
         this._product.price = Number.parseFloat(this._product.price.toString());

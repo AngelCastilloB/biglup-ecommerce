@@ -132,7 +132,8 @@ declare module BiglupUi
 
     interface DataTableColumn
     {
-        name: string;
+        multiField?: boolean;
+        name?: string;
         label: string;
         numeric?: boolean;
         format?: { (value: any): any };

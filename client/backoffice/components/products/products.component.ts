@@ -23,6 +23,7 @@ import { Component,
 import { Router }                   from '@angular/router';
 import { ProductsService }          from 'meteor/biglup:business';
 import { _T, I18nSingletonService } from 'meteor/biglup:i18n';
+import { StringFormat }             from 'meteor/biglup:core';
 import { BiglupModalComponent,
          BiglupModalType,
          BiglupModalButtons,
@@ -31,6 +32,8 @@ import { BiglupModalComponent,
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './products.component.html';
+
+var dateFormat = require('dateformat');
 
 // EXPORTS ************************************************************************************************************/
 
@@ -73,12 +76,42 @@ export class ProductsComponent implements OnDestroy
     private _buildTableFormat()
     {
         this._dataTableColums = [
-            { name: 'sku', label: _T('SKU') },
             { name: 'title', label: _T('Title'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)},
-            { name: 'stock', label: _T('Inventory'), numeric: true },
-            { name: 'price',  label: _T('Price'), numeric: true },
-            { name: 'color', label: _T('Color'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) },
-            { name: 'size', label: _T('Size'), format: (value) => I18nSingletonService.getInstance().getMongoText(value) }
+            {
+                name: ['variantProducts', 'stock'], multiField: true, label: _T('Inventory'), format: (value, value2) =>
+                {
+                    let totalInventory: number = 0;
+                    let totalVariants: number = 0;
+
+                    value.forEach((variant) =>
+                    {
+                        if (variant.isEnabled)
+                           {
+                               totalInventory += variant.stock;
+                               ++totalVariants;
+                           }
+                    });
+
+                    if (totalVariants > 0)
+                    {
+                        if (totalInventory < 1)
+                            return _T('Out of stock');
+
+                        return StringFormat(_T('%s in stock for %s %s'), [
+                            totalInventory,
+                            totalVariants,
+                            totalVariants > 1 ?
+                                _T('variants') :
+                                _T('variant')]);
+                    }
+
+                    if (value2 < 1)
+                        return _T('Out of stock');
+
+                    return StringFormat(_T('%s in stock'), [value2]);
+                }
+            },
+            { name: 'updatedAt', label: _T('Last Update'), format: (date) => dateFormat(date, "mmmm dS, yyyy, HH:MM:ss")}
         ];
     }
 

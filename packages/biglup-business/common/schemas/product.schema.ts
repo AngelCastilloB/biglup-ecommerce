@@ -68,6 +68,7 @@ export let ProductVariantSchema: any = new SimpleSchema({
     sku: {
         type: String,
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} sk`,
+        optional: true
     },
     barcode: {
         type: String,
@@ -156,6 +157,7 @@ export let ProductSchema: any = new SimpleSchema({
     sku: {
         type: String,
         label: `${PRODUCT_SCHEMA_NAME} sk`,
+        optional: true
     },
     barcode: {
         type: String,

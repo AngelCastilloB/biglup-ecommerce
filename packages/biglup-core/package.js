@@ -31,5 +31,10 @@ Package.onUse(function(api)
         'client/pipes/truncate-string.pipe.ts'
     ], 'client');
 
+    // Others
+    api.addFiles([
+        'client/format/string.format.ts'
+    ], 'client');
+
     api.mainModule ('client.ts', "client");
 });
