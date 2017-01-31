@@ -82,12 +82,34 @@ declare module Business
         public getUserCollectionStream(): any;
     }
 
+    class VariantAttributesService
+    {
+        public getColors(): any;
+        public getColor(id: string): any;
+        public getSizes(): any;
+        public getSize(id: string): any;
+        public getMaterials(): any;
+        public getMaterial(id: string): any;
+        public createColors(colorAttribute: ColorVariantAttribute): any;
+        public createSizes(sizeAttribute: SizeVariantAttribute): any;
+        public createMaterials(materialAttribute: MaterialVariantAttribute): any;
+        public updateColor(colorAttribute: ColorVariantAttribute): any;
+        public updateSize(sizeAttribute: SizeVariantAttribute): any;
+        public updateMaterial(materialAttribute: MaterialVariantAttribute): any;
+        public deleteColor(id: string): any;
+        public deleteSize(id: string): any;
+        public deleteMaterial(id: string): any;
+    }
+
 // COLLECTIONS ********************************************************************************************************/
 
     const Categories: any;
     const Images: any;
     const ImagesStore: any;
     const Products: any;
+    const VariantColors: any;
+    const VariantSizes: any;
+    const VariantMaterials: any;
 
 // MODELS *************************************************************************************************************/
 
@@ -157,11 +179,17 @@ declare module Business
     class ProductVariant
     {
         constructor(
-            public color:         Array<I18nString> = Array<I18nString>(),
-            public size:          Array<I18nString> = Array<I18nString>(),
-            public isLowQuantity: boolean           = false,
-            public stock:         number            = 0,
-            public isSoldOut:     boolean           = false)
+            public barcode:          string                   = '',
+            public sku:              string                   = '',
+            public color:            ColorVariantAttribute    = new ColorVariantAttribute(),
+            public size:             SizeVariantAttribute     = new SizeVariantAttribute(),
+            public material:         MaterialVariantAttribute = new MaterialVariantAttribute(),
+            public price:            number                   = 0,
+            public discount:         number                   = 0,
+            public stock:            number                   = 0,
+            public isLowQuantity:    boolean                  = false,
+            public isSoldOut:        boolean                  = false,
+            public isEnabled:        boolean                  = true)
     }
 
     class Product
@@ -175,8 +203,6 @@ declare module Business
             public description:      Array<I18nString>     = Array<I18nString>(),
             public barcode:          string                = '',
             public sku:              string                = '',
-            public color:            Array<I18nString>     = Array<I18nString>(),
-            public size:             Array<I18nString>     = Array<I18nString>(),
             public variantProducts:  Array<ProductVariant> = Array<ProductVariant>(),
             public price:            number                = 0,
             public discount:         number                = 0,
@@ -190,7 +216,22 @@ declare module Business
             public isVisible:        boolean               = false,
             public createdAt:        Date                  = new Date(),
             public updatedAt:        Date                  = new Date(),
-            public publishedAt:      Date                  = new Date());
+            public publishedAt:      Date                  = new Date())
+    }
+
+    class ColorVariantAttribute
+    {
+        constructor(public _id: string = null, public name: Array<I18nString> = Array<I18nString>(), public value: string = '#FFFFFF');
+    }
+
+    class SizeVariantAttribute
+    {
+        constructor(public _id: string = null, public size: Array<I18nString> = Array<I18nString>());
+    }
+
+    class MaterialVariantAttribute
+    {
+        constructor(public _id: string = null, public material: Array<I18nString> = Array<I18nString>());
     }
 
     class SubCategory
@@ -232,6 +273,9 @@ declare module Business
     const ProductVariantSchema: any;
     const ProductSchema: any;
     const UserSchema: any;
+    const ColorVariantAttributeSchema: any;
+    const SizeVariantAttributeSchema: any;
+    const MaterialVariantAttributeSchema: any;
 }
 
 // MODULE EXPORT ******************************************************************************************************/

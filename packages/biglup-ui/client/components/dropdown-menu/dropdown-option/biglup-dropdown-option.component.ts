@@ -20,6 +20,7 @@
 import { Component,
          Input,
          EventEmitter,
+         ChangeDetectorRef,
          ViewChild } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -50,7 +51,7 @@ export class BiglupDropdownOptionComponent
     /**
      * @summary Initializes a new instance of the BiglupDropdownOptionComponent class.
      */
-    constructor()
+    constructor(private _changeDetector: ChangeDetectorRef)
     {
     }
 
@@ -70,6 +71,7 @@ export class BiglupDropdownOptionComponent
     public setSelected(selected: boolean)
     {
         this._selected = selected;
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -116,5 +118,6 @@ export class BiglupDropdownOptionComponent
             this._selectedEmitter.emit(this);
 
         event.preventDefault();
+        this._changeDetector.detectChanges();
     }
 }

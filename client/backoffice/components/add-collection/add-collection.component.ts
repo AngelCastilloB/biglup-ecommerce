@@ -94,6 +94,7 @@ export class AddCollectionComponent implements OnInit
                     this._i18nInfoReferenceMap[lang] = info;
                 });
 
+                this._changeDetector.detectChanges();
                 return;
             }
 

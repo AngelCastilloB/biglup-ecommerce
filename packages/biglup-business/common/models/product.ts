@@ -19,6 +19,9 @@
 
 import { I18nString }                   from 'meteor/biglup:i18n';
 import { ProductVariant, ProductImage } from './';
+import { ColorVariantAttribute,
+         SizeVariantAttribute,
+         MaterialVariantAttribute }     from './variant-attributes';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -38,8 +41,6 @@ export class Product
      * @param description      The description of the product.
      * @param barcode          The barcode of the product.
      * @param sku              The stock keeping unit code (SKU) of the product.
-     * @param color            The color variant of the product.
-     * @param size             The size variant of the product.
      * @param variantProducts  The list of variants for this product.
      * @param price            The price of the product.
      * @param discount         The discount of the product.
@@ -56,30 +57,28 @@ export class Product
      * @param publishedAt      The publication date of the product.
      */
     constructor(
-        public _id:              string                = null,
-        public slug:             string                = '',
-        public categories:       Array<string>         = Array<string>(),
-        public title:            Array<I18nString>     = Array<I18nString>(),
-        public images:           Array<ProductImage>   = Array<ProductImage>(),
-        public description:      Array<I18nString>     = Array<I18nString>(),
-        public barcode:          string                = '',
-        public sku:              string                = '',
-        public color:            Array<I18nString>     = Array<I18nString>(),
-        public size:             Array<I18nString>     = Array<I18nString>(),
-        public variantProducts:  Array<ProductVariant> = Array<ProductVariant>(),
-        public price:            number                = 0,
-        public discount:         number                = 0,
-        public trackInventory:   boolean               = false,
-        public stock:            number                = 0,
-        public isLowQuantity:    boolean               = false,
-        public isSoldOut:        boolean               = false,
-        public isBackorder:      boolean               = false,
-        public requiresShipping: boolean               = false,
-        public hashtags:         Array<string>         = Array<string>(),
-        public isVisible:        boolean               = false,
-        public createdAt:        Date                  = new Date(),
-        public updatedAt:        Date                  = new Date(),
-        public publishedAt:      Date                  = new Date())
+        public _id:              string                   = null,
+        public slug:             string                   = '',
+        public categories:       Array<string>            = Array<string>(),
+        public title:            Array<I18nString>        = Array<I18nString>(),
+        public images:           Array<ProductImage>      = Array<ProductImage>(),
+        public description:      Array<I18nString>        = Array<I18nString>(),
+        public barcode:          string                   = '',
+        public sku:              string                   = '',
+        public variantProducts:  Array<ProductVariant>    = Array<ProductVariant>(),
+        public price:            number                   = 0,
+        public discount:         number                   = 0,
+        public trackInventory:   boolean                  = false,
+        public stock:            number                   = 0,
+        public isLowQuantity:    boolean                  = false,
+        public isSoldOut:        boolean                  = false,
+        public isBackorder:      boolean                  = false,
+        public requiresShipping: boolean                  = false,
+        public hashtags:         Array<string>            = Array<string>(),
+        public isVisible:        boolean                  = false,
+        public createdAt:        Date                     = new Date(),
+        public updatedAt:        Date                     = new Date(),
+        public publishedAt:      Date                     = new Date())
     {
     }
 }

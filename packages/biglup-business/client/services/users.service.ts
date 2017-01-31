@@ -49,7 +49,7 @@ export class UsersService extends MeteorReactive
             this.autorun(() =>
             {
                 this._userCollectionStream.next(Meteor.users.find({}).fetch());
-            });
+            }, true);
         });
     }
 

@@ -4,6 +4,10 @@
 @import './partials/image-manager';
 @import './partials/add-collection';
 @import './partials/collections';
+@import './partials/variants';
+@import './partials/add-color-variant';
+@import './partials/add-size-variant';
+@import './partials/add-material-variant';
 
 body {
     @extend .typography;

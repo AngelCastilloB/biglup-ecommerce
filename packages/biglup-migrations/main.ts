@@ -17,29 +17,41 @@
 
 /* IMPORTS ************************************************************************************************************/
 
-import { Meteor }           from 'meteor/meteor';
-import { createMigrations } from './server/create-migrations';
+import { configureDefaultMigrations,
+         configureMockMigrations }   from './server/create-migrations';
+import { Meteor }                    from 'meteor/meteor';
 
 /* CONSTANTS **********************************************************************************************************/
 
 const MIGRATIONS_SETTINGS = {
     migrate: false,
     reset: false,
-    locales: ['en', 'zh', 'kr', 'es']
+    locales: ['en', 'zh', 'kr', 'es'],
+    initialize: false,
+    mock: false
 };
 
 /* METEOR SERVER START UP *********************************************************************************************/
 
 Meteor.startup(() =>
 {
-    if (!Meteor.settings['migrations'])
-        Meteor.settings['migrations'] = MIGRATIONS_SETTINGS;
+    let settings: any = Meteor.settings['migrations'];
 
-    if (Meteor.settings['migrations'].migrate)
+    if (!settings)
+        settings = MIGRATIONS_SETTINGS;
+
+    if (settings.migrate)
     {
-        createMigrations();
+        if (settings.mock)
+        {
+            configureMockMigrations();
+        }
+        else if (settings.initialize)
+        {
+            configureDefaultMigrations();
+        }
 
-        if (Meteor.settings['migrations'].reset)
+        if (settings.reset)
         {
             // the library doesn't provide public APIs to properly reset the collection.
             // Even though we could Migrations.migrateTo(0)

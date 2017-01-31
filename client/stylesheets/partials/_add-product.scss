@@ -2,6 +2,10 @@
 
 .add-product-content
 {
+  .add-product-variants-button-center {
+    text-align: center;
+  }
+
   .biglup-add-product-title {
     color: $secondary-text-color;
     margin: 0;
@@ -38,5 +42,55 @@
 
   #quantity > div {
     margin: 0!important;
+  }
+
+  .add-variant-product-buttons {
+    button {
+      position: absolute;
+      top: 50%;
+    }
+  }
+
+  .add-product-variants-enable-center {
+    text-align: center;
+    width: 100%;
+    .check-container {
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .add-product-variants-labels-center {
+    width: 100%;
+    .labels-container {
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .color-variant-label {
+    color: #ff881d;
+    line-height: 25px;
+    font-size: 15px;
+  }
+
+  .size-variant-label {
+    color: rgba(0, 129, 9, 0.67);
+    line-height: 25px;
+    font-size: 15px;
+  }
+
+  .material-variant-label {
+    color: rgba(105, 61, 195, 0.73);
+    line-height: 25px;
+    font-size: 15px;
+  }
+
+  .add-product-variant-color-label {
+    font-size: 15px;
   }
 }

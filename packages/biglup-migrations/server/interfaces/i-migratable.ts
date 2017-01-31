@@ -22,7 +22,6 @@
  */
 export interface IMigratable
 {
-
     /**
      * @summary Migrates the data to the database.
      */

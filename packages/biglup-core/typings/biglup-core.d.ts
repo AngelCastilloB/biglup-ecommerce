@@ -65,6 +65,8 @@ declare module Core
     {
         public transform(value: Array<any>): any;
     }
+
+    export function StringFormat(format, arguments): string;
 }
 // MODULE EXPORT ******************************************************************************************************/
 

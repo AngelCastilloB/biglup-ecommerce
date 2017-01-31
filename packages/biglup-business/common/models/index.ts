@@ -26,3 +26,4 @@ export * from './product-image';
 export * from './product-variant';
 export * from './sub-category';
 export * from './user';
+export * from './variant-attributes';

@@ -1,0 +1,18 @@
+@import '{biglup:ui}/client/stylesheets/partials/base';
+
+.variants-content
+{
+  .biglup-paper-1 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 12px;
+  }
+
+  .variants-add-button
+  {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 40px;
+  }
+}

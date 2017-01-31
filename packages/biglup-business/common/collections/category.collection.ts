@@ -19,6 +19,7 @@
 
 import { CategorySchema } from '../schemas/category.schema';
 import { Category }       from '../models';
+import { Mongo }          from 'meteor/mongo';
 
 // IMPLEMENTATION *****************************************************************************************************/
 

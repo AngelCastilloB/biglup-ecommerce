@@ -99,8 +99,12 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
      * @param _el              The element this attribute will enhance.
      * @param _changeDetector  A reference to the angular change detector engine.
      * @param _renderer        The renderer.
+     * @param _applicationRef  The application reference.
      */
-    constructor(private _el: ElementRef, private _renderer: Renderer, private _changeDetector: ChangeDetectorRef)
+    constructor(
+        private _el: ElementRef,
+        private _renderer: Renderer,
+        private _changeDetector: ChangeDetectorRef)
     {
     }
 
@@ -280,6 +284,7 @@ export class BiglupInputComponent implements OnInit, AfterViewInit
     {
         this._hasFocus = true;
         this._focusEmitter.emit(this._hasFocus);
+        this._changeDetector.detectChanges();
     }
 
     /**

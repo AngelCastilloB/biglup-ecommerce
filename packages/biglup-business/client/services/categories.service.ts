@@ -53,7 +53,7 @@ export class CategoriesService extends MeteorReactive
             {
                 this._categories = Categories.find().fetch();
                 this._categoriesStream.next(this._categories);
-            });
+            }, true);
         });
     }
 

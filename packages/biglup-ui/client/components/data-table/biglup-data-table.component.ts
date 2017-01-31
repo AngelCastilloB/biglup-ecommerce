@@ -58,6 +58,7 @@ export enum DataTableSortingOrder
  */
 export interface DataTableColumn
 {
+    multiField?: boolean;
     name: string;
     label: string;
     numeric?: boolean;
@@ -333,8 +334,18 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
         {
             row._dataTableSelected = false;
 
-            this._columns.filter((c: any) => c.format).forEach((c: any) => row[c.name] = c.format(row[c.name]));
-
+            this._columns.filter((c: any) => c.format).forEach(
+                (c: any) =>
+                {
+                    if (c.multiField)
+                    {
+                        row[c.name[0]] = c.format(row[c.name[0]], row[c.name[1]]);
+                    }
+                    else
+                    {
+                        row[c.name] = c.format(row[c.name])
+                    }
+                });
             return row;
         });
     }

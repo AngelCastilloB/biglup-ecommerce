@@ -50,8 +50,11 @@ export class ImagesService extends MeteorReactive
 
         this.subscribe('images', () =>
         {
-            this._images = Images.find().fetch();
-            this._imagesStream.next(this._images);
+            this.autorun(() =>
+            {
+                this._images = Images.find().fetch();
+                this._imagesStream.next(this._images);
+            }, true);
         });
     }
 

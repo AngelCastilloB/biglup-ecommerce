@@ -24,7 +24,76 @@
       <product-image-manager #imagesManager [(model)]="_product.images"></product-image-manager>
     </biglup-paper>
 
+    <biglup-tabs *ngIf="_isVariantsEanbled">
+      <biglup-tab title="{{'Color' | translate }}">
+        <div class="biglup-grid">
+          <div class="biglup-cell biglup-cell-3-col" *ngFor="let color of _variantsService.getColors() | async">
+            <div class="biglup-grid">
+              <div class="biglup-cell biglup-cell-6-col">
+                <biglup-checkbox [(checked)]="_colorToggle[color._id]" (checkedChange)="_onVariantAttributeChanged()">
+                  <span class="add-product-variant-color-label">{{color.name | mongoTranslate }}</span>
+                </biglup-checkbox>
+              </div>
+              <div class="biglup-cell biglup-cell-6-col">
+                <div
+                  style="border:none; width: 40px; height: 40px; border-radius: 4px; box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)"
+                  [style.background]="color.value">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </biglup-tab>
+      <biglup-tab title="{{'Size' | translate }}">
+        <div class="biglup-grid">
+          <div class="biglup-cell biglup-cell-2-col" *ngFor="let size of _variantsService.getSizes() | async">
+            <biglup-checkbox [(checked)]="_sizeToggle[size._id]" (checkedChange)="_onVariantAttributeChanged()">
+              {{size.size | mongoTranslate }}
+            </biglup-checkbox>
+          </div>
+        </div>
+      </biglup-tab>
+      <biglup-tab title="{{'Material' | translate }}">
+        <div class="biglup-grid">
+          <div class="biglup-cell biglup-cell-2-col" *ngFor="let material of _variantsService.getMaterials() | async">
+            <biglup-checkbox [(checked)]="_materialToggle[material._id]" (checkedChange)="_onVariantAttributeChanged()">
+              {{material.material | mongoTranslate }}
+            </biglup-checkbox>
+          </div>
+        </div>
+      </biglup-tab>
+    </biglup-tabs>
+
     <biglup-paper elevation="1">
+      <span><b>{{ 'Variants' | translate }}</b></span>
+      <div *ngIf="_isVariantsEanbled">
+        <div *ngFor="let variant of _product.variantProducts">
+          <add-product-variant [model]="variant" [trackInventory]="_product.trackInventory"></add-product-variant>
+        </div>
+      </div>
+      <div class="biglup-grid">
+        <div class="biglup-cell biglup-cell-12-col">
+          <div style="width: 100%" class="add-product-variants-button-center">
+            <biglup-button
+              raised="true"
+              class="add-variant-product-buttons"
+              *ngIf="!_isVariantsEanbled"
+              (click)="_setEnableVariants(!_isVariantsEanbled)"
+              color="primary">{{'Add Variants' | translate }}
+            </biglup-button>
+            <biglup-button
+              raised="true"
+              class="add-variant-product-buttons add-product-variants-button-center"
+              *ngIf="_isVariantsEanbled"
+              (click)="_setEnableVariants(!_isVariantsEanbled)"
+              color="primary">{{'Cancel' | translate }}
+            </biglup-button>
+          </div>
+        </div>
+      </div>
+    </biglup-paper>
+
+    <biglup-paper elevation="1" *ngIf="!_isVariantsEanbled">
       <span><b>{{ 'Pricing' | translate }}</b></span><br>
       <div class="biglup-grid">
         <div class="biglup-cell biglup-cell-6-col">
@@ -50,8 +119,8 @@
     </biglup-paper>
 
     <biglup-paper elevation="1">
-      <span><b>{{ 'Inventory' | translate }}</b></span><br>
-      <div class="biglup-grid">
+      <span *ngIf="!_isVariantsEanbled"><b>{{ 'Inventory' | translate }}</b></span><br>
+      <div class="biglup-grid" *ngIf="!_isVariantsEanbled">
         <div class="biglup-cell biglup-cell-6-col">
           <biglup-input #skuInput hint="{{'SKU (Stock Keeping Unit)' | translate}}" floatingHint="true" [(value)]="_product.sku"></biglup-input>
         </div>
@@ -59,8 +128,8 @@
           <biglup-input #barcodeInput hint="{{'Barcode (ISBN, UPC, GTIN, etc.)' | translate}}" floatingHint="true" [(value)]="_product.barcode"></biglup-input>
         </div>
       </div>
-      <br>
-      <br>
+      <br *ngIf="!_isVariantsEanbled">
+      <br *ngIf="!_isVariantsEanbled">
       <span><b>{{ 'Inventory Policy' | translate }}</b></span>
       <br>
       <br>
@@ -71,7 +140,7 @@
           </biglup-checkbox>
         </div>
         <div class="biglup-cell biglup-cell-6-col" *ngIf="_product.trackInventory" >
-          <biglup-input hint="{{ 'Quantity' | translate }}" [(value)]="_product.stock" id="quantity" name="quantity" floatingHint="true"></biglup-input>
+          <biglup-input hint="{{ 'Quantity' | translate }}" [(value)]="_product.stock" id="quantity" name="quantity" floatingHint="true" *ngIf="!_isVariantsEanbled"></biglup-input>
         </div>
         <div class="biglup-cell biglup-cell-12-col" *ngIf="_product.trackInventory" >
           <biglup-checkbox [(checked)]="_product.isBackorder" name="allow-backorder" id="allow-backorder">
@@ -88,9 +157,13 @@
 
     <biglup-paper elevation="1">
       <span><b>{{ 'Visibility' | translate }}</b></span><br><br>
-      <biglup-checkbox [(checked)]="_product.isVisible">
-        {{ "Show this product in the store" | translate }}
-      </biglup-checkbox>
+      <div class="biglup-grid">
+        <div class="biglup-cell biglup-cell-12-col">
+          <biglup-checkbox [(checked)]="_product.isVisible">
+            {{ "Show this product in the store" | translate }}
+          </biglup-checkbox>
+        </div>
+      </div>
     </biglup-paper>
   </div>
   <br>
@@ -119,5 +192,4 @@
                  raised="true"
                  (click)="_onCancel()">{{'Cancel' | translate }}
   </biglup-button>
-
 </div>

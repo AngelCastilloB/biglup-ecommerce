@@ -22,6 +22,7 @@ export * from './common/schemas/user.schema';
 export * from './common/collections/category.collection';
 export * from './common/collections/image.collection';
 export * from './common/collections/product.collection';
+export * from './common/collections/variant-attributes.collections';
 
 // Models
 export * from './common/models/index';
@@ -31,3 +32,4 @@ import './server/publications/category.publication';
 import './server/publications/images.publication';
 import './server/publications/product.publication';
 import './server/publications/user.publication';
+import './server/publications/variant-attributes.publication';

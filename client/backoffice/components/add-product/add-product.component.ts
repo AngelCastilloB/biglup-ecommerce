@@ -29,7 +29,11 @@ import { I18nSingletonService, _T }           from 'meteor/biglup:i18n';
 import { BiglupModalComponent }               from 'meteor/biglup:ui';
 import { ProductsService }                    from 'meteor/biglup:business';
 import { CategoriesService }                  from 'meteor/biglup:business';
-import { Product }                            from 'meteor/biglup:business';
+import { VariantAttributesService,
+         ColorVariantAttribute,
+         SizeVariantAttribute,
+         MaterialVariantAttribute }           from 'meteor/biglup:business';
+import { Product, ProductVariant }            from 'meteor/biglup:business';
 import { I18nString }                         from 'meteor/biglup:i18n';
 import { InputFilters, BiglupInputComponent } from 'meteor/biglup:ui';
 import { I18nInputComponent }                 from '../i18n-input/i18n-input.component';
@@ -59,11 +63,18 @@ export class AddProductComponent implements OnInit, AfterViewInit
     private _product:               Product              = new Product();
     @ViewChild(BiglupModalComponent)
     private _modal:                 BiglupModalComponent;
-    private _waitModalResult:       boolean              = false;
-    private _isEditMode:            boolean              = false;
-    private _i18nTitleReferenceMap: Object               = {};
-    private _i18nDescReferenceMap:  Object               = {};
-    private InputFilters:           InputFilters         = InputFilters;
+    private _waitModalResult:       boolean                                      = false;
+    private _isEditMode:            boolean                                      = false;
+    private _isVariantsEanbled:     boolean                                      = false;
+    private _i18nTitleReferenceMap: Object                                       = {};
+    private _i18nDescReferenceMap:  Object                                       = {};
+    private InputFilters:           InputFilters                                 = InputFilters;
+    private _colorToggle:           { [key: string]: boolean; }                  = {};
+    private _sizeToggle:            { [key: string]: boolean; }                  = {};
+    private _materialToggle:        { [key: string]: boolean; }                  = {};
+    private _colorMap:              { [key: string]: ColorVariantAttribute; }    = {};
+    private _sizeMap:               { [key: string]: SizeVariantAttribute; }     = {};
+    private _materialMap:           { [key: string]: MaterialVariantAttribute; } = {};
 
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
@@ -73,8 +84,44 @@ export class AddProductComponent implements OnInit, AfterViewInit
         private _route: ActivatedRoute,
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService,
-        private _changeDetector: ChangeDetectorRef)
+        private _changeDetector: ChangeDetectorRef,
+        private _variantsService: VariantAttributesService)
     {
+        this._variantsService.getColors().subscribe(
+            (colors) =>
+            {
+                colors.forEach(
+                    (colorVariantAttribute) =>
+                    {
+                        this._colorToggle[colorVariantAttribute._id] = false;
+                        this._colorMap[colorVariantAttribute._id] = colorVariantAttribute;
+                    }
+                );
+            });
+
+        this._variantsService.getMaterials().subscribe(
+            (materials) =>
+            {
+                materials.forEach(
+                    (materialVariantAttribute) =>
+                    {
+                        this._materialToggle[materialVariantAttribute._id] = false;
+                        this._materialMap[materialVariantAttribute._id] = materialVariantAttribute;
+                    }
+                );
+            });
+
+        this._variantsService.getSizes().subscribe(
+            (sizes) =>
+            {
+                sizes.forEach(
+                    (sizeVariantAttribute) =>
+                    {
+                        this._sizeToggle[sizeVariantAttribute._id] = false;
+                        this._sizeMap[sizeVariantAttribute._id] = sizeVariantAttribute;
+                    }
+                );
+            });
     }
 
     /**
@@ -100,6 +147,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     this._i18nDescReferenceMap[lang] = description;
                 });
 
+                this._changeDetector.detectChanges();
                 return;
             }
 
@@ -132,6 +180,25 @@ export class AddProductComponent implements OnInit, AfterViewInit
                         this._i18nTitleReferenceMap[lang] = title;
                         this._i18nDescReferenceMap[lang]  = description;
                     });
+
+
+                    if (this._product.variantProducts.length > 0)
+                    {
+                        this._isVariantsEanbled = true;
+
+                        this._product.variantProducts.forEach(
+                            (variant) =>
+                            {
+                                if (variant.color !== null)
+                                    this._colorToggle[variant.color._id] = true;
+
+                                if (variant.size !== null)
+                                    this._sizeToggle[variant.size._id] = true;
+
+                                if (variant.material !== null)
+                                    this._materialToggle[variant.material._id] = true;
+                            });
+                    }
 
                     this._changeDetector.detectChanges();
                 });
@@ -198,25 +265,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
         if (isRequieredMissing)
             return;
 
-        if (!this._skuInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product SKU (Stock Keeping Unit) is required'));
-
-            return;
-        }
-
-        if (!this._barcodeInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product barcode is required'));
-
-            return;
-        }
-
-        // Fix number types.
+        // Fixes number types.
         this._product.price = Number.parseFloat(this._product.price.toString());
         this._product.discount = Number.parseFloat(this._product.discount.toString());
         this._product.stock = Number.parseFloat(this._product.stock.toString());
@@ -271,7 +320,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
             {
                 console.error('Show Title message');
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('The Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
@@ -280,24 +329,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         if (isRequieredMissing)
             return;
-
-        if (!this._skuInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product SKU (Stock Keeping Unit) is required'));
-
-            return;
-        }
-
-        if (!this._barcodeInput.getValue())
-        {
-            this._modal.show(
-                _T('Requiered Field Missing'),
-                _T('Product barcode is required'));
-
-            return;
-        }
 
         // Fix number types.
         this._product.price = Number.parseFloat(this._product.price.toString());
@@ -342,5 +373,299 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
             this._router.navigate(['/admin/products']);
         }
+    }
+
+    /**
+     * @summary enables the variants.
+     * @private
+     */
+    private _setEnableVariants(enable: boolean)
+    {
+        this._isVariantsEanbled = enable;
+
+        if (!this._isVariantsEanbled)
+        {
+            this._product.variantProducts = [];
+
+            for (var key in this._colorToggle)
+                this._colorToggle[key] = false;
+
+            for (var key in this._sizeToggle)
+                this._sizeToggle[key] = false;
+
+            for (var key in this._materialToggle)
+                this._materialToggle[key] = false;
+        }
+
+        this._changeDetector.detectChanges();
+    }
+
+    /**
+     * @summary Event handler for when a variant attribute changes.
+     * @private
+     */
+    private _onVariantAttributeChanged()
+    {
+        const toggledColors: [ColorVariantAttribute] = this._filterColorMap(this._colorToggle);
+        const toggledSizes: [SizeVariantAttribute] = this._filterSizeMap(this._sizeToggle);
+        const toggledMaterials: [MaterialVariantAttribute] = this._filterMaterialMap(this._materialToggle);
+
+        let tempVariants: Array<ProductVariant> = this._product.variantProducts;
+
+        this._product.variantProducts = [];
+
+        if (toggledColors.length === 0 && toggledSizes.length > 0 && toggledMaterials.length > 0)
+        {
+            toggledSizes.forEach(
+                (sizeVariantAttribute) =>
+                {
+                    toggledMaterials.forEach(
+                        (materialVariantAttribute) =>
+                        {
+                            let variant = tempVariants.find(
+                                (variant) =>
+                                    variant.color === null &&
+                                    variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                                    variant.material !== null && variant.material._id === materialVariantAttribute._id);
+
+                            if (variant)
+                            {
+                                this._product.variantProducts.push(variant);
+                            }
+                            else
+                            {
+                                this._product.variantProducts.push(
+                                    new ProductVariant('', '', null, sizeVariantAttribute, materialVariantAttribute));
+                            }
+                        });
+                });
+        }
+        else if (toggledColors.length > 0 && toggledSizes.length === 0 && toggledMaterials.length > 0)
+        {
+            toggledColors.forEach(
+                (colorVariantAttribute) =>
+                {
+                    toggledMaterials.forEach(
+                        (materialVariantAttribute) =>
+                        {
+                            let variant = tempVariants.find(
+                                (variant) =>
+                                variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                                variant.size === null &&
+                                variant.material !== null && variant.material._id === materialVariantAttribute._id);
+
+                            if (variant)
+                            {
+                                this._product.variantProducts.push(variant);
+                            }
+                            else
+                            {
+                                this._product.variantProducts.push(
+                                    new ProductVariant('', '', colorVariantAttribute, null, materialVariantAttribute));
+                            }
+                        });
+                });
+        }
+        else if (toggledColors.length > 0 && toggledSizes.length > 0 && toggledMaterials.length === 0)
+        {
+            toggledColors.forEach(
+                (colorVariantAttribute) =>
+                {
+                    toggledSizes.forEach(
+                        (sizeVariantAttribute) =>
+                        {
+                            let variant = tempVariants.find(
+                                (variant) =>
+                                variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                                variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                                variant.material === null);
+
+                            if (variant)
+                            {
+                                this._product.variantProducts.push(variant);
+                            }
+                            else
+                            {
+                                this._product.variantProducts.push(
+                                    new ProductVariant('', '', colorVariantAttribute, sizeVariantAttribute, null));
+                            }
+                        });
+                });
+        }
+        else if (toggledColors.length === 0 && toggledSizes.length === 0 && toggledMaterials.length > 0)
+        {
+            toggledMaterials.forEach(
+                (materialVariantAttribute) =>
+                {
+                    let variant = tempVariants.find(
+                        (variant) =>
+                        variant.color === null &&
+                        variant.size === null &&
+                        variant.material !== null && variant.material._id === materialVariantAttribute._id);
+
+                    if (variant)
+                    {
+                        this._product.variantProducts.push(variant);
+                    }
+                    else
+                    {
+                        this._product.variantProducts.push(
+                            new ProductVariant('', '', null, null, materialVariantAttribute));
+                    }
+                });
+        }
+        else if (toggledColors.length === 0 && toggledSizes.length > 0 && toggledMaterials.length === 0)
+        {
+            toggledSizes.forEach(
+                (sizeVariantAttribute) =>
+                {
+                    let variant = tempVariants.find(
+                        (variant) =>
+                        variant.color === null &&
+                        variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                        variant.material === null);
+
+                    if (variant)
+                    {
+                        this._product.variantProducts.push(variant);
+                    }
+                    else
+                    {
+                        this._product.variantProducts.push(
+                            new ProductVariant('', '', null, sizeVariantAttribute, null));
+                    }
+                });
+        }
+        else if (toggledColors.length > 0 && toggledSizes.length === 0 && toggledMaterials.length === 0)
+        {
+            toggledColors.forEach(
+                (colorVariantAttribute) =>
+                {
+                    let variant = tempVariants.find(
+                        (variant) =>
+                        variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                        variant.size === null &&
+                        variant.material === null);
+
+                    if (variant)
+                    {
+                        this._product.variantProducts.push(variant);
+                    }
+                    else
+                    {
+                        this._product.variantProducts.push(
+                            new ProductVariant('', '', colorVariantAttribute, null, null));
+                    }
+                });
+        }
+        else
+        {
+            toggledColors.forEach(
+                (colorVariantAttribute) =>
+                {
+                    toggledSizes.forEach(
+                        (sizeVariantAttribute) =>
+                        {
+                            toggledMaterials.forEach(
+                                (materialVariantAttribute) =>
+                                {
+                                    let variant = tempVariants.find(
+                                        (variant) =>
+                                        variant.color !== null && variant.color._id === colorVariantAttribute._id &&
+                                        variant.size !== null && variant.size._id === sizeVariantAttribute._id &&
+                                        variant.material !== null && variant.material._id === materialVariantAttribute._id);
+
+                                    if (variant)
+                                    {
+                                        this._product.variantProducts.push(variant);
+                                    }
+                                    else
+                                    {
+                                        this._product.variantProducts.push(
+                                            new ProductVariant(
+                                                '',
+                                                '',
+                                                colorVariantAttribute,
+                                                sizeVariantAttribute,
+                                                materialVariantAttribute));
+                                    }
+                                });
+                        });
+                });
+        }
+
+        this._changeDetector.detectChanges();
+    }
+
+    /**
+     * @summary Gets the color variant attributes that are toggled..
+     *
+     * @param map The toggle map
+     *
+     * @return [ColorVariantAttribute] The array of color variant attributes.
+     * @private
+     */
+    private _filterColorMap(map: any): [ColorVariantAttribute]
+    {
+        let array: [ColorVariantAttribute] = <[ColorVariantAttribute]>[];
+
+        for (let key in map)
+        {
+            if (map.hasOwnProperty(key))
+            {
+                if (map[key])
+                    array.push(this._colorMap[key]);
+            }
+        }
+
+        return array;
+    }
+
+    /**
+     * @summary Gets the size variant attributes that are toggled..
+     *
+     * @param map The toggle map
+     *
+     * @return [SizeVariantAttribute] The array of size variant attributes.
+     * @private
+     */
+    private _filterSizeMap(map: any): [SizeVariantAttribute]
+    {
+        let array: [SizeVariantAttribute] = <[SizeVariantAttribute]>[];
+
+        for (let key in map)
+        {
+            if (map.hasOwnProperty(key))
+            {
+                if (map[key])
+                    array.push(this._sizeMap[key]);
+            }
+        }
+
+        return array;
+    }
+
+    /**
+     * @summary Gets the material variant attributes that are toggled..
+     *
+     * @param map The toggle map
+     *
+     * @return [MaterialVariantAttribute] The array of material variant attributes.
+     * @private
+     */
+    private _filterMaterialMap(map: any): [MaterialVariantAttribute]
+    {
+        let array: [MaterialVariantAttribute] = <[MaterialVariantAttribute]>[];
+
+        for (let key in map)
+        {
+            if (map.hasOwnProperty(key))
+            {
+                if (map[key])
+                    array.push(this._materialMap[key]);
+            }
+        }
+
+        return array;
     }
 }

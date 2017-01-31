@@ -17,29 +17,48 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { I18nString } from 'meteor/biglup:i18n';
+import { ColorVariantAttribute,
+         SizeVariantAttribute,
+         MaterialVariantAttribute } from './variant-attributes';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
  * @summary The product variant type.
  */
+
+/**
+ * @summary The product category model.
+ */
 export class ProductVariant
 {
     /**
      * @summary Initialises a new instance of the ProductVariant class.
      *
-     * @param color         The color variant of the product.
-     * @param size          The size variant of the product.
-     * @param isLowQuantity Indicates if this variant is in low quantity (Denormalization field).
-     * @param stock         The stock of the product.
-     * @param isSoldOut     Indicates if this product is sold out.
+     * @param barcode          The barcode of the product.
+     * @param sku              The stock keeping unit code (SKU) of the product.
+     * @param color            The color variant of the product.
+     * @param size             The size variant of the product.
+     * @param material         The material variant of the product.
+     * @param price            The price of the product.
+     * @param discount         The discount of the product.
+     * @param stock            The current stock of this product.
+     * @param isLowQuantity    Indicates if this product is in low quantity (denormalization field).
+     * @param isSoldOut        Indicates if this product is already sold out (denormalization field).
+     * @param isEnabled        Indicates if this product variant is enabled.
      */
-    constructor(public color:         Array<I18nString> = Array<I18nString>(),
-                public size:          Array<I18nString> = Array<I18nString>(),
-                public isLowQuantity: boolean           = false,
-                public stock:         number            = 0,
-                public isSoldOut:     boolean           = false)
+    constructor(
+        public barcode:          string                   = '',
+        public sku:              string                   = '',
+        public color:            ColorVariantAttribute    = new ColorVariantAttribute(),
+        public size:             SizeVariantAttribute     = new SizeVariantAttribute(),
+        public material:         MaterialVariantAttribute = new MaterialVariantAttribute(),
+        public price:            number                   = 0,
+        public discount:         number                   = 0,
+        public stock:            number                   = 0,
+        public isLowQuantity:    boolean                  = false,
+        public isSoldOut:        boolean                  = false,
+        public isEnabled:        boolean                  = true)
     {
     }
 }

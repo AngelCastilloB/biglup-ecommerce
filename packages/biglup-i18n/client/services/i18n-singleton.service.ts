@@ -267,7 +267,10 @@ export class I18nSingletonService
      */
     private _getLocaleString(i18nStrings: I18nString[], locale: string)
     {
-        let value: string;
+        let value: string = '';
+
+        if (!(i18nStrings instanceof Array))
+            return value;
 
         let found: I18nString = i18nStrings.find((i18nString: I18nString) => i18nString.language === locale);
 

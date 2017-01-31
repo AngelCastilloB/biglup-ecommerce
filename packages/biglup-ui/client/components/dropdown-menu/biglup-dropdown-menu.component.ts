@@ -95,6 +95,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
      */
     public ngOnInit(): any
     {
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -150,6 +151,8 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
             this._el.nativeElement, 'touchstart').subscribe(() => this._input.getInputNativeElement().focus());
 
         this._input.setDirty();
+
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -189,5 +192,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
                 this._menuList.nativeElement.style.display   = 'none';
             });
         }
+
+        this._changeDetector.detectChanges();
     }
 }

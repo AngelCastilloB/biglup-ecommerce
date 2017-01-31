@@ -22,6 +22,7 @@ export * from './client/services/images.service';
 export * from './client/services/products.service';
 export * from './client/services/user-auth.service';
 export * from './client/services/users.service';
+export * from './client/services/variant-attributes.service';
 
 // Models
 export * from './common/models/index';

@@ -32,21 +32,24 @@ Package.onUse(function(api)
         'client/services/images.service.ts',
         'client/services/products.service.ts',
         'client/services/user-auth.service.ts',
-        'client/services/users.service.ts'
+        'client/services/users.service.ts',
+        'client/services/variant-attributes.service.ts'
     ], 'client');
 
     // Collections
     api.addFiles([
         'common/collections/category.collection.ts',
         'common/collections/image.collection.ts',
-        'common/collections/product.collection.ts'
+        'common/collections/product.collection.ts',
+        'common/collections/variant-attributes.collections.ts'
     ], ['client', 'server']);
 
     // Methods
     api.addFiles([
         'common/methods/cart.methods.ts',
         'common/methods/category.methods.ts',
-        'common/methods/product.methods.ts'
+        'common/methods/product.methods.ts',
+        'common/methods/variant-attributes.methods.ts'
     ], ['client', 'server']);
 
     // Models
@@ -69,7 +72,8 @@ Package.onUse(function(api)
         'common/schemas/category.schema.ts',
         'common/schemas/i18n-string.schema.ts',
         'common/schemas/product.schema.ts',
-        'common/schemas/user.schema.ts'
+        'common/schemas/user.schema.ts',
+        'common/schemas/variant-attributes.schema.ts'
     ], ['client', 'server']);
 
     // Publications
@@ -77,7 +81,8 @@ Package.onUse(function(api)
         'server/publications/category.publication.ts',
         'server/publications/images.publication.ts',
         'server/publications/product.publication.ts',
-        'server/publications/user.publication.ts'
+        'server/publications/user.publication.ts',
+        'server/publications/variant-attributes.publication.ts'
     ], 'server');
 
     api.mainModule ('client.ts', "client");
