@@ -18,8 +18,10 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component,
+         OnInit,
          OnDestroy,
-         ViewChild }                from '@angular/core';
+         ViewChild,
+         ChangeDetectorRef }        from '@angular/core';
 import { Router }                   from '@angular/router';
 import { ProductsService, Product } from 'meteor/biglup:business';
 import { _T, I18nSingletonService } from 'meteor/biglup:i18n';
@@ -33,6 +35,8 @@ import { BiglupModalComponent,
 // noinspection TypeScriptCheckImport
 import template from './inventory.component.html';
 
+var dateFormat = require('dateformat');
+
 // INTERFACES *********************************************************************************************************/
 
 /**
@@ -40,6 +44,7 @@ import template from './inventory.component.html';
  */
 export interface ProductItem
 {
+    id: string;
     product: any;
     sku: string;
     isBackorder: boolean;
@@ -55,7 +60,7 @@ export interface ProductItem
     selector: 'inventory',
     template,
 })
-export class InventoryComponent implements OnDestroy
+export class InventoryComponent implements OnDestroy, OnInit
 {
     @ViewChild(BiglupModalComponent)
     private _modal:            BiglupModalComponent;
@@ -67,13 +72,20 @@ export class InventoryComponent implements OnDestroy
     /**
      * @summary Initializes a new instance of the InventoryComponent class.
      */
-    constructor(private _router: Router, private _productsService: ProductsService)
+    constructor(private _router: Router, private _productsService: ProductsService, private _changeDetector: ChangeDetectorRef)
     {
         this._buildTableFormat();
         this._i18nSubscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() => this._buildTableFormat());
+    }
 
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
+    public ngOnInit(): any
+    {
         this._subscription = this._productsService.getProducts().subscribe((products)=>
         {
+            this._productItems = [];
             products.forEach((product: Product)=>
             {
                 let hasActiveVariants: boolean = false;
@@ -87,12 +99,13 @@ export class InventoryComponent implements OnDestroy
                         if (variant.isEnabled)
                         {
                             this._productItems.push(
-                            {
-                                product: { id: product._id, title: product.title, variant: variant },
-                                sku: product.sku,
-                                isBackorder: product.isBackorder,
-                                quantity: variant.stock
-                            })
+                                {
+                                    id: product._id,
+                                    product: { title: product.title, variant: variant },
+                                    sku: product.sku,
+                                    isBackorder: product.isBackorder,
+                                    quantity: variant.stock
+                                })
                         }
                     });
                 }
@@ -100,13 +113,16 @@ export class InventoryComponent implements OnDestroy
                 {
                     this._productItems.push(
                         {
-                            product: { id: product._id, title: product.title, variant: null },
+                            id: product._id,
+                            product: { title: product.title, variant: null },
                             sku: product.sku,
                             isBackorder: product.isBackorder,
                             quantity: product.stock
                         })
                 }
             });
+
+            this._changeDetector.detectChanges();
         });
     }
 
@@ -129,26 +145,34 @@ export class InventoryComponent implements OnDestroy
     {
         this._dataTableColums = [
             {
-                name: ['product'], label: _T('Product Variant'), format: (value) =>
+                name: ['product'],
+                label: _T('Product Variant'),
+                hasLink: true,
+                getLink: (value) =>
+                {
+                    return StringFormat('/admin/products/edit-product/%s', [value.id]);
+                },
+                format: (value) =>
                 {
                     if (value.variant === null)
                     {
-                        return StringFormat(_T('<a href="%s">%s</a>'), [value.id, I18nSingletonService.getInstance().getMongoText(value.title)]);
+                        return StringFormat(_T('<font size="3px">%s</font>'), [I18nSingletonService.getInstance().getMongoText(value.title)]);
                     }
                     else
                     {
-                        let variants: string = StringFormat('%s%s%s', [
-                            value.variant.color !== null ? I18nSingletonService.getInstance().getMongoText(value.variant.color.name) : '',
-                            value.variant.size !== null ? '/' + I18nSingletonService.getInstance().getMongoText(value.variant.size.size) : '',
-                            value.variant.material !== null ? '/' + I18nSingletonService.getInstance().getMongoText(value.variant.material.material) : '']);
+                        let variants: string = StringFormat('<font size="2px">%s%s%s<font>', [
+                            value.variant.color !== null ? '<font class="color-variant-label">' + I18nSingletonService.getInstance().getMongoText(value.variant.color.name) + '</font>': '',
+                            value.variant.size !== null ? '/' + '<font class="size-variant-label">' + I18nSingletonService.getInstance().getMongoText(value.variant.size.size) + '</font>' : '',
+                            value.variant.material !== null ? '/' + '<font class="material-variant-label">' + I18nSingletonService.getInstance().getMongoText(value.variant.material.material) + '</font>' : '']);
 
-                        return StringFormat(_T('<a href="/admin/products/edit-product/%s">%s<br>%s</a>'), [value.id, I18nSingletonService.getInstance().getMongoText(value.title), variants]);
+                        return StringFormat('<font size="3px">%s</font><br>%s', [I18nSingletonService.getInstance().getMongoText(value.title), variants]);
                     }
                 }
             },
             { name: 'sku', label: _T('SKU')},
             { name: 'isBackorder', label: _T('When sold out'), format:(value)=> value ? _T('Continue selling') : _T('Stop selling')},
-            { name: 'quantity', label: _T('Quantity'), numeric: true}
+            { name: 'quantity', label: _T('Quantity'), numeric: true },
+            { name: 'updatedAt', label: _T('Last Update'), format: (date) => dateFormat(date, "mmmm dS, yyyy, HH:MM:ss")}
         ];
     }
 }

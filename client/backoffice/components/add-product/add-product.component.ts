@@ -24,6 +24,7 @@ import { Component,
          ViewChildren,
          QueryList,
          ChangeDetectorRef }                  from '@angular/core';
+import { Location }                           from '@angular/common';
 import { Router, ActivatedRoute }             from '@angular/router';
 import { I18nSingletonService, _T }           from 'meteor/biglup:i18n';
 import { BiglupModalComponent }               from 'meteor/biglup:ui';
@@ -85,7 +86,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService,
         private _changeDetector: ChangeDetectorRef,
-        private _variantsService: VariantAttributesService)
+        private _variantsService: VariantAttributesService,
+        private _location: Location)
     {
         this._variantsService.getColors().subscribe(
             (colors) =>
@@ -357,7 +359,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
      */
     private _onCancel(): void
     {
-        this._router.navigate(['/admin/products']);
+        this._location.back();
     }
 
     /**
