@@ -53,8 +53,8 @@ const copyProduct = (product: Product) =>
     clone.variantProducts.forEach(
         (variant) =>
         {
-            variant.price = Number(variant.price)
-            variant.stock = Number(variant.stock)
+            variant.price = Number(variant.price);
+            variant.stock = Number(variant.stock);
             variant.discount = Number(variant.discount)
         });
 

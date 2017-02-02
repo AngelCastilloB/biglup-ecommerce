@@ -31,6 +31,8 @@ import { BiglupModalComponent,
          BiglupModalButtons,
          BiglupModalResult }        from 'meteor/biglup:ui';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './inventory.component.html';
@@ -63,11 +65,12 @@ export interface ProductItem
 export class InventoryComponent implements OnDestroy, OnInit
 {
     @ViewChild(BiglupModalComponent)
-    private _modal:            BiglupModalComponent;
-    private _dataTableColums:  any = {};
-    private _i18nSubscription: any;
-    private _productItems:     Array<ProductItem> = [];
-    private _subscription:     any;
+    private _modal:              BiglupModalComponent;
+    private _dataTableColums:    any = {};
+    private _i18nSubscription:   any;
+    private _productItems:       Array<ProductItem> = [];
+    private _productItemsStream: BehaviorSubject<Array<ProductItem>> = new BehaviorSubject<Array<ProductItem>>(Array<ProductItem>());
+    private _subscription:       any;
 
     /**
      * @summary Initializes a new instance of the InventoryComponent class.
@@ -85,7 +88,7 @@ export class InventoryComponent implements OnDestroy, OnInit
     {
         this._subscription = this._productsService.getProducts().subscribe((products)=>
         {
-            this._productItems = [];
+            let productItems = [];
             products.forEach((product: Product)=>
             {
                 let hasActiveVariants: boolean = false;
@@ -98,30 +101,31 @@ export class InventoryComponent implements OnDestroy, OnInit
                     {
                         if (variant.isEnabled)
                         {
-                            this._productItems.push(
-                                {
-                                    id: product._id,
-                                    product: { title: product.title, variant: variant },
-                                    sku: product.sku,
-                                    isBackorder: product.isBackorder,
-                                    quantity: variant.stock
-                                })
+                            productItems.push(
+                            {
+                                id: product._id,
+                                product: { title: product.title, variant: variant },
+                                sku: variant.sku,
+                                isBackorder: product.isBackorder,
+                                quantity: variant.stock
+                            })
                         }
                     });
                 }
                 else
                 {
-                    this._productItems.push(
-                        {
-                            id: product._id,
-                            product: { title: product.title, variant: null },
-                            sku: product.sku,
-                            isBackorder: product.isBackorder,
-                            quantity: product.stock
-                        })
+                    productItems.push(
+                    {
+                        id: product._id,
+                        product: { title: product.title, variant: null },
+                        sku: product.sku,
+                        isBackorder: product.isBackorder,
+                        quantity: product.stock
+                    })
                 }
             });
 
+            this._productItemsStream.next(productItems);
             this._changeDetector.detectChanges();
         });
     }

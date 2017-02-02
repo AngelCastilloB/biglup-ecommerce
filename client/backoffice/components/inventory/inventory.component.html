@@ -6,11 +6,10 @@
     <a class="active"><i class="material-icons md-16">card_travel</i>{{ 'Inventory' | translate }}</a>
   </biglup-breadcrumb>
   <biglup-data-table
-    *ngIf="_productItems.length > 0"
     icon='card_travel'
     title="{{ 'Product Inventory List' | translate }}"
     [columns]="_dataTableColums"
-    [data]="_productItems"
+    [dataStream]="_productItemsStream"
     [rowSelection]="false">
   </biglup-data-table>
 </div>
