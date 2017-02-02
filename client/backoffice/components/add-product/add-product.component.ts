@@ -201,7 +201,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
                                     this._materialToggle[variant.material._id] = true;
                             });
                     }
-
                     this._changeDetector.detectChanges();
                 });
         });
@@ -437,7 +436,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', null, sizeVariantAttribute, materialVariantAttribute));
+                                    new ProductVariant('', '', '', null, sizeVariantAttribute, materialVariantAttribute));
                             }
                         });
                 });
@@ -463,7 +462,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', colorVariantAttribute, null, materialVariantAttribute));
+                                    new ProductVariant('', '', '', colorVariantAttribute, null, materialVariantAttribute));
                             }
                         });
                 });
@@ -489,7 +488,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', colorVariantAttribute, sizeVariantAttribute, null));
+                                    new ProductVariant('', '', '', colorVariantAttribute, sizeVariantAttribute, null));
                             }
                         });
                 });
@@ -512,7 +511,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', null, null, materialVariantAttribute));
+                            new ProductVariant('', '', '', null, null, materialVariantAttribute));
                     }
                 });
         }
@@ -534,7 +533,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', null, sizeVariantAttribute, null));
+                            new ProductVariant('', '', '', null, sizeVariantAttribute, null));
                     }
                 });
         }
@@ -556,7 +555,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', colorVariantAttribute, null, null));
+                            new ProductVariant('', '', '', colorVariantAttribute, null, null));
                     }
                 });
         }
@@ -585,6 +584,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                                     {
                                         this._product.variantProducts.push(
                                             new ProductVariant(
+                                                '',
                                                 '',
                                                 '',
                                                 colorVariantAttribute,

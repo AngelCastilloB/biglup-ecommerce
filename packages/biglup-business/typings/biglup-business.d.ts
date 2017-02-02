@@ -101,6 +101,13 @@ declare module Business
         public deleteMaterial(id: string): any;
     }
 
+    class InventoryService
+    {
+        public increaseProductInventory(productId: string, amount: number): any;
+        public increaseVariantInventory(productId: string, variantId: string, amount: number): any;
+        public setProductInventory(productId: string, amount: number): any;
+        public setVariantInventory(productId: string, variantId: string, amount: number): any;
+    }
 // COLLECTIONS ********************************************************************************************************/
 
     const Categories: any;
@@ -179,6 +186,7 @@ declare module Business
     class ProductVariant
     {
         constructor(
+            public _id:              string                   = '',
             public barcode:          string                   = '',
             public sku:              string                   = '',
             public color:            ColorVariantAttribute    = new ColorVariantAttribute(),

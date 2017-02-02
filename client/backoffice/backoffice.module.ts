@@ -50,6 +50,7 @@ import { AddMaterialVariantComponent }   from './components/add-material-variant
 import { AddProductVariantComponent }    from './components/add-product-variant/add-product-variant.component';
 import { InventoryComponent }            from './components/inventory/inventory.component';
 import { VariantAttributesService }      from 'meteor/biglup:business';
+import { InventoryService }              from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -111,7 +112,8 @@ import { VariantAttributesService }      from 'meteor/biglup:business';
         DragulaService,
         CartsService,
         BiglupToastService,
-        VariantAttributesService
+        VariantAttributesService,
+        InventoryService
     ]
 })
 export class BackofficeModule
