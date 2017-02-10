@@ -1,0 +1,20 @@
+<biglup-modal-message (onClose)="_onModalClose($event)"></biglup-modal-message>
+<h4 class="biglup-products-title">{{ 'Products' | translate }}</h4>
+<biglup-breadcrumb>
+  <a [routerLink]="['/dashboard']"><i class="material-icons md-16">home</i>{{ 'Dashboard' | translate }}</a>
+  <a class="active"><i class="material-icons md-16">card_travel</i>{{ 'Products' | translate }}</a>
+</biglup-breadcrumb>
+<biglup-data-table
+  icon='card_travel'
+  title="{{ 'Product List' | translate }}"
+  (delete)="_onDelete($event)"
+  (edit)="_onEdit($event)"
+  [columns]="_dataTableColums"
+  [dataStream]="_productsService.getProducts()">
+</biglup-data-table>
+<div class="products-add-product-button">
+  <biglup-button
+    [routerLink]="['/products/add-product']"
+    raised="true" color="primary">{{'Add Product' | translate }}
+  </biglup-button>
+</div>

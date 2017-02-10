@@ -1,0 +1,11 @@
+!.gitignore
+css/
+
+# update to proper fix
+# TODO check original copy method to mimic
+!css/drag.min.css
+!css/mdb.css
+!css/mdb.min.css
+!css/style.css
+
+js/bootstrap.js
