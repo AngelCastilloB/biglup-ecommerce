@@ -58,11 +58,13 @@ export enum DataTableSortingOrder
  */
 export interface DataTableColumn
 {
-    multiField?: boolean;
     name: string;
     label: string;
     numeric?: boolean;
     format?: { (value: any): any };
+    multiField?: boolean;
+    hasLink?: boolean;
+    getLink?: { (value: any): any };
 }
 
 // EXPORTS ************************************************************************************************************/
@@ -81,6 +83,7 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
     @Input('icon')
     private _icon: string = '';
     @Input('data')
+    private _originalData:       any[];
     private _data:               any[];
     @Input('dataStream')
     private _dataStream:         any;
@@ -146,6 +149,7 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
         }
         else
         {
+            this._data = _.cloneDeep(this._originalData);
             this._preprocessData();
             this._initialized = true;
             this.filterData();
@@ -153,13 +157,23 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
 
         this._i18nSubscription = I18nSingletonService.getInstance().getLocaleChangeEmitter().subscribe(() =>
         {
-            this._dataStream.take(1).subscribe((data) =>
+            if (this._dataStream)
             {
-                this._data = _.cloneDeep(data);
+                this._dataStream.take(1).subscribe((data) =>
+                {
+                    this._data = _.cloneDeep(data);
+                    this._preprocessData();
+                    this._initialized = true;
+                    this.filterData();
+                });
+            }
+            else
+            {
+                this._data = _.cloneDeep(this._originalData);
                 this._preprocessData();
                 this._initialized = true;
                 this.filterData();
-            });
+            }
         });
     }
 

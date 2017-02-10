@@ -42,16 +42,20 @@
       </tr>
       </thead>
       <tbody *ngIf="_hasData">
-      <tr [class.biglup-data-table-selected-row]="row._dataTableSelected" *ngFor="let row of _visibleData">
-        <td *ngIf="_rowSelection" class="biglup-data-table-checkbox-cell" data-title="Selecttion">
-          <biglup-checkbox [(checked)]="row._dataTableSelected"></biglup-checkbox>
-        </td>
+        <tr [class.biglup-data-table-selected-row]="row._dataTableSelected" *ngFor="let row of _visibleData">
+          <td *ngIf="_rowSelection" class="biglup-data-table-checkbox-cell" data-title="Selecttion">
+            <biglup-checkbox [(checked)]="row._dataTableSelected"></biglup-checkbox>
+          </td>
 
-        <td [class.biglup-data-table-numeric]="column.numeric" *ngFor="let column of _columns; let last=last;" [attr.data-title]="column.label">
-          <span *ngIf="!column.multiField">{{ row[column.name] }}</span>
-          <span *ngIf="column.multiField">{{ row[column.name[0]] }}</span>
-        </td>
-      </tr>
+          <td [class.biglup-data-table-numeric]="column.numeric" *ngFor="let column of _columns; let last=last;" [attr.data-title]="column.label">
+            <a *ngIf="column.hasLink" [routerLink]="[column.getLink(row)]">
+              <span *ngIf="!column.multiField" [innerHTML]="row[column.name]"></span>
+              <span *ngIf="column.multiField" [innerHTML]="row[column.name[0]]"></span>
+            </a>
+            <span *ngIf="!column.multiField && !column.hasLink" [innerHTML]="row[column.name]"></span>
+            <span *ngIf="column.multiField && !column.hasLink" [innerHTML]="row[column.name[0]]"></span>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

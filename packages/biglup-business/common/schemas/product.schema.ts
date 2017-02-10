@@ -28,6 +28,7 @@ import { I18nStringSchema }               from './i18n-string.schema';
 import { ColorVariantAttributeSchema,
          SizeVariantAttributeSchema,
          MaterialVariantAttributeSchema } from './variant-attributes.schema';
+import { Random }                         from 'meteor/random';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -65,6 +66,22 @@ export let ProductImageSchema: any = new SimpleSchema({
  * @summary The product variant schema.
  */
 export let ProductVariantSchema: any = new SimpleSchema({
+    _id: {
+        label: `${PRODUCT_IMAGE_SCHEMA_NAME} id`,
+        type: String,
+        autoValue()
+        {
+            if (this.isInsert)
+            {
+                return Random.id();
+            }
+            else if (this.isSet)
+            {
+                this.unset();
+            }
+        },
+        optional: true
+    },
     sku: {
         type: String,
         label: `${PRODUCT_VARIANT_SCHEMA_NAME} sk`,

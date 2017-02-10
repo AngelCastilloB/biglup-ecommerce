@@ -35,6 +35,7 @@ export class ProductVariant
     /**
      * @summary Initialises a new instance of the ProductVariant class.
      *
+     * @param _id              The variant unique id.
      * @param barcode          The barcode of the product.
      * @param sku              The stock keeping unit code (SKU) of the product.
      * @param color            The color variant of the product.
@@ -48,6 +49,7 @@ export class ProductVariant
      * @param isEnabled        Indicates if this product variant is enabled.
      */
     constructor(
+        public _id:              string                   = '',
         public barcode:          string                   = '',
         public sku:              string                   = '',
         public color:            ColorVariantAttribute    = new ColorVariantAttribute(),

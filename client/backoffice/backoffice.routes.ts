@@ -31,6 +31,7 @@ import { VariantsComponent }           from './components/variants/variants.comp
 import { AddColorVariantComponent }    from './components/add-color-variant/add-color-variant.component';
 import { AddSizeVariantComponent }     from './components/add-size-variant/add-size-variant.component';
 import { AddMaterialVariantComponent } from './components/add-material-variant/add-material-variant.component';
+import { InventoryComponent }          from './components/inventory/inventory.component';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -60,6 +61,7 @@ const ROUTES: Routes = [
             {path: 'collections', component: CollectionsComponent},
             {path: 'collections/add-collection', component: AddCollectionComponent},
             {path: 'collections/edit-collection/:id', component: AddCollectionComponent},
+            {path: 'products/inventory', component: InventoryComponent},
         ]
     },
 ];

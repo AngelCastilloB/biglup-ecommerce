@@ -33,7 +33,8 @@ Package.onUse(function(api)
         'client/services/products.service.ts',
         'client/services/user-auth.service.ts',
         'client/services/users.service.ts',
-        'client/services/variant-attributes.service.ts'
+        'client/services/variant-attributes.service.ts',
+        'client/services/inventory.service.ts'
     ], 'client');
 
     // Collections
@@ -49,7 +50,8 @@ Package.onUse(function(api)
         'common/methods/cart.methods.ts',
         'common/methods/category.methods.ts',
         'common/methods/product.methods.ts',
-        'common/methods/variant-attributes.methods.ts'
+        'common/methods/variant-attributes.methods.ts',
+        'common/methods/inventory.methods.ts'
     ], ['client', 'server']);
 
     // Models

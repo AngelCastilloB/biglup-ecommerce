@@ -24,6 +24,7 @@ import { Component,
          ViewChildren,
          QueryList,
          ChangeDetectorRef }                  from '@angular/core';
+import { Location }                           from '@angular/common';
 import { Router, ActivatedRoute }             from '@angular/router';
 import { I18nSingletonService, _T }           from 'meteor/biglup:i18n';
 import { BiglupModalComponent }               from 'meteor/biglup:ui';
@@ -85,7 +86,8 @@ export class AddProductComponent implements OnInit, AfterViewInit
         private _productsService: ProductsService,
         private _categoriesService: CategoriesService,
         private _changeDetector: ChangeDetectorRef,
-        private _variantsService: VariantAttributesService)
+        private _variantsService: VariantAttributesService,
+        private _location: Location)
     {
         this._variantsService.getColors().subscribe(
             (colors) =>
@@ -199,7 +201,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
                                     this._materialToggle[variant.material._id] = true;
                             });
                     }
-
                     this._changeDetector.detectChanges();
                 });
         });
@@ -357,7 +358,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
      */
     private _onCancel(): void
     {
-        this._router.navigate(['/admin/products']);
+        this._location.back();
     }
 
     /**
@@ -435,7 +436,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', null, sizeVariantAttribute, materialVariantAttribute));
+                                    new ProductVariant('', '', '', null, sizeVariantAttribute, materialVariantAttribute));
                             }
                         });
                 });
@@ -461,7 +462,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', colorVariantAttribute, null, materialVariantAttribute));
+                                    new ProductVariant('', '', '', colorVariantAttribute, null, materialVariantAttribute));
                             }
                         });
                 });
@@ -487,7 +488,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                             else
                             {
                                 this._product.variantProducts.push(
-                                    new ProductVariant('', '', colorVariantAttribute, sizeVariantAttribute, null));
+                                    new ProductVariant('', '', '', colorVariantAttribute, sizeVariantAttribute, null));
                             }
                         });
                 });
@@ -510,7 +511,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', null, null, materialVariantAttribute));
+                            new ProductVariant('', '', '', null, null, materialVariantAttribute));
                     }
                 });
         }
@@ -532,7 +533,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', null, sizeVariantAttribute, null));
+                            new ProductVariant('', '', '', null, sizeVariantAttribute, null));
                     }
                 });
         }
@@ -554,7 +555,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                     else
                     {
                         this._product.variantProducts.push(
-                            new ProductVariant('', '', colorVariantAttribute, null, null));
+                            new ProductVariant('', '', '', colorVariantAttribute, null, null));
                     }
                 });
         }
@@ -583,6 +584,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
                                     {
                                         this._product.variantProducts.push(
                                             new ProductVariant(
+                                                '',
                                                 '',
                                                 '',
                                                 colorVariantAttribute,

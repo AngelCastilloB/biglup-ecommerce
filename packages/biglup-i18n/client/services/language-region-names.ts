@@ -61,4 +61,4 @@ export const languageRegionNames =
     no_NO : 'Norsk',
     bg_BG : 'български език',
     lt_LT : 'Lithuanian'
-}
+};

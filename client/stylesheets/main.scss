@@ -8,6 +8,7 @@
 @import './partials/add-color-variant';
 @import './partials/add-size-variant';
 @import './partials/add-material-variant';
+@import './partials/inventory';
 
 body {
     @extend .typography;
