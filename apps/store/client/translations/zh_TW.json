@@ -1,0 +1,470 @@
+[
+    {
+       "key":   "Ecommerce",
+       "value": "電子商務"
+    },
+    {
+       "key":   "Dashboard",
+       "value": "儀表板"
+    },
+    {
+       "key":   "Orders",
+       "value": "命令"
+    },
+    {
+       "key":   "Customers",
+       "value": "顧客"
+    },
+    {
+       "key":   "Products",
+       "value": "製品"
+    },
+    {
+       "key":   "Inventory",
+       "value": "庫存"
+    },
+    {
+       "key":   "Collections",
+       "value": "集合"
+    },
+    {
+       "key":   "Reports",
+       "value": "報告"
+    },
+    {
+       "key":   "Add Collection",
+       "value": "加入收藏"
+    },
+    {
+       "key":   "Edit Collection",
+       "value": "编辑集合"
+    },
+    {
+       "key":   "Title",
+       "value": "標題"
+    },
+    {
+       "key":   "Description",
+       "value": "描述"
+    },
+    {
+       "key":   "Visibility",
+       "value": "能見度"
+    },
+    {
+       "key":   "Show this collection in the store",
+       "value": "在商店中显示此集合"
+    },
+    {
+       "key":   "Delete",
+       "value": "刪除"
+    },
+    {
+       "key":   "Create",
+       "value": "創建"
+    },
+    {
+       "key":   "Update",
+       "value": "更新"
+    },
+    {
+       "key":   "Cancel",
+       "value": "取消"
+    },
+    {
+       "key":   "Requiered Field Missing",
+       "value": "请求字段丢失"
+    },
+    {
+       "key":   "Collection Name is required ",
+       "value": "集合名称是必需的"
+    },
+    {
+       "key":   "Create Category",
+       "value": "創建類別"
+    },
+    {
+       "key":   "Creating...",
+       "value": "創建..."
+    },
+    {
+       "key":   "Category Created.",
+       "value": "分類創建."
+    },
+    {
+       "key":   "Error",
+       "value": "錯誤"
+    },
+    {
+       "key":   "There was an error creating the category.",
+       "value": "有一個錯誤創建類別."
+    },
+    {
+       "key":   "Delete Category",
+       "value": "刪除類別"
+    },
+    {
+       "key":   "Deleting...",
+       "value": "刪除..."
+    },
+    {
+       "key":   "Category Deleted.",
+       "value": "分類刪除."
+    },
+    {
+       "key":   "There was an error deleting the category.",
+       "value": "有一個錯誤刪除類別."
+    },
+    {
+       "key":   "Update Category",
+       "value": "更新類別"
+    },
+    {
+       "key":   "Updating...",
+       "value": "更新..."
+    },
+    {
+       "key":   "Category Updated.",
+       "value": "分類更新."
+    },
+    {
+       "key":   "There was an error updating the category.",
+       "value": "有一個錯誤更新類別."
+    },
+    {
+       "key":   "Add Product",
+       "value": "添加產品"
+    },
+    {
+       "key":   "Edit Product",
+       "value": "编辑产品"
+    },
+    {
+       "key":   "Pricing",
+       "value": "價錢"
+    },
+    {
+       "key":   "Price",
+       "value": "價錢"
+    },
+    {
+       "key":   "Discount",
+       "value": "折扣"
+    },
+    {
+       "key":   "Categories",
+       "value": "分類"
+    },
+    {
+       "key":   "SKU (Stock Keeping Unit)",
+       "value": "SKU（库存单位"
+    },
+    {
+       "key":   "Barcode (ISBN, UPC, GTIN, etc.)",
+       "value": "条形码（ISBN，UPC，GTIN等）"
+    },
+    {
+       "key":   "Inventory Policy",
+       "value": "庫存策略"
+    },
+    {
+       "key":   "Track Inventory",
+       "value": "跟踪庫存"
+    },
+    {
+       "key":   "Quantity",
+       "value": "数量"
+    },
+    {
+       "key":   "Allow customers to purchase this product when it's out of stock",
+       "value": "讓客戶購買本產品時，它的脫銷"
+    },
+    {
+       "key":   "This product requires shipping",
+       "value": "此產品需要運輸"
+    },
+    {
+       "key":   "Show this product in the store",
+       "value": "顯示在店裡這款產品"
+    },
+    {
+       "key":   "Product Title is required ",
+       "value": "产品标题是必需的"
+    },
+    {
+       "key":   "Product SKU (Stock Keeping Unit) is required",
+       "value": "需要产品SKU（库存单位)"
+    },
+    {
+       "key":   "Product barcode is required",
+       "value": "需要产品条形码"
+    },
+    {
+       "key":   "Create Product",
+       "value": "創建產品"
+    },
+    {
+       "key":   "Product Created.",
+       "value": "產品上創建."
+    },
+    {
+       "key":   "There was an error creating the product.",
+       "value": "有一個錯誤創建產品."
+    },
+    {
+       "key":   "Delete Product",
+       "value": "刪除產品"
+    },
+    {
+       "key":   "Product Deleted.",
+       "value": "產品已刪除."
+    },
+    {
+       "key":   "There was an error deleting the product.",
+       "value": "有一個錯誤刪除產品."
+    },
+    {
+       "key":   "The Product Title is required ",
+       "value": "产品标题是必需的"
+    },
+    {
+       "key":   "Update Product",
+       "value": "更新產品"
+    },
+    {
+       "key":   "Product Updated.",
+       "value": "產品更新."
+    },
+    {
+       "key":   "There was an error updating the product.",
+       "value": "有一個錯誤更新產品."
+    },
+    {
+       "key":   "Collection List",
+       "value": "集合列表"
+    },
+    {
+       "key":   "Name",
+       "value": "名称"
+    },
+    {
+       "key":   "Delete Collections",
+       "value": "删除集合"
+    },
+    {
+       "key":   "Are you sure you want to delete this collections?",
+       "value": "您确定要删除此收藏吗？"
+    },
+    {
+       "key":   "Delete Products",
+       "value": "删除产品"
+    },
+    {
+       "key":   "Collections Deleted.",
+       "value": "收藏已删除."
+    },
+    {
+       "key":   "There was an error deleting the collections.",
+       "value": "删除集合时出错."
+    },
+    {
+       "key":   "The product title is empty",
+       "value": "产品标题为空"
+    },
+    {
+       "key":   "Images",
+       "value": "圖片"
+    },
+    {
+       "key":   "Select Files",
+       "value": "選擇文件"
+    },
+    {
+       "key":   "Drop images to upload",
+       "value": "圖像拖放上傳"
+    },
+    {
+       "key":   "Product List",
+       "value": "产品列表"
+    },
+    {
+       "key":   "SKU",
+       "value": "庫存單位"
+    },
+    {
+       "key":   "Color",
+       "value": "顏色"
+    },
+    {
+       "key":   "Size",
+       "value": "尺寸"
+    },
+    {
+       "key":   "Are you sure you want to delete this products?",
+       "value": "您确定要删除此产品吗?"
+    },
+    {
+       "key":   "Products Deleted.",
+       "value": "产品已删除."
+    },
+    {
+       "key":   "There was an error deleting the products.",
+       "value": "删除产品时出错."
+    },
+    {
+       "key":   "Sku:",
+       "value": "庫存單位:"
+    },
+    {
+       "key":   "Color:",
+       "value": "顏色："
+    },
+    {
+       "key":   "Size:",
+       "value": "尺寸："
+    },
+    {
+       "key":   "Add to Cart",
+       "value": "添加到購物車"
+    },
+    {
+       "key":   "Remove",
+       "value": "去掉"
+    },
+    {
+       "key":   "E-commerce",
+       "value": "電子商務"
+    },
+    {
+       "key":   "Administration",
+       "value": "行政"
+    },
+    {
+       "key":   "Login",
+       "value": "登錄"
+    },
+    {
+       "key":   "Logout",
+       "value": "登出"
+    },
+    {
+       "key":   "Not a member",
+       "value": "非會員"
+    },
+    {
+       "key":   "Sign up",
+       "value": "註冊"
+    },
+    {
+       "key":   "Forgot",
+       "value": "忘記"
+    },
+    {
+       "key":   "Password",
+       "value": "密碼"
+    },
+    {
+       "key":   "The credentials provided did not match our records.",
+       "value": "提供的憑證不符合我們的記錄."
+    },
+    {
+       "key":   "Reset password",
+       "value": "重設密碼"
+    },
+    {
+       "key":   "Login with",
+       "value": "與登錄"
+    },
+    {
+       "key":   "Remember your",
+       "value": "記住你"
+    },
+    {
+       "key":   "The Email provided did not match our records.",
+       "value": "所提供的電子郵件不符合我們的記錄."
+    },
+    {
+       "key":   "Gallery",
+       "value": "畫廊"
+    },
+    {
+       "key":   "Buy now",
+       "value": "立即購買"
+    },
+    {
+       "key":   "SKU:",
+       "value": "庫存單位:"
+    },
+    {
+       "key":   "Share with your friends!",
+       "value": "與朋友分享！"
+    },
+    {
+       "key":   "Register",
+       "value": "寄存器"
+    },
+    {
+       "key":   "Already a member",
+       "value": "已經是會員"
+    },
+    {
+       "key":   "Rows per page:",
+       "value": "每页行数:"
+    },
+    {
+       "key":   "of",
+       "value": "的"
+    },
+    {
+       "key":   "No data found.",
+       "value": "没有找到数据."
+    },
+    {
+       "key":   "Search...",
+       "value": "搜索..."
+    },
+    {
+       "key":   "Ok",
+       "value": "好"
+    },
+    {
+       "key":   "No",
+       "value": "不"
+    },
+    {
+       "key":   "Yes",
+       "value": "是"
+    },
+    {
+       "key":   "Continue",
+       "value": "继续"
+    },
+    {
+       "key":   "The operation was canceled.",
+       "value": "操作已取消."
+    },
+    {
+       "key":   "Huge",
+       "value": "巨大"
+    },
+    {
+       "key":   "Large",
+       "value": "大"
+    },
+    {
+       "key":   "Normal",
+       "value": "正常"
+    },
+    {
+       "key":   "View Profile",
+       "value": "查看资料"
+    },
+    {
+       "key":   "Language",
+       "value": "语言"
+    },
+    {
+       "key":   "Dismiss",
+       "value": "解雇"
+    }
+]

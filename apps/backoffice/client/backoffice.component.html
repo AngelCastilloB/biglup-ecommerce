@@ -1,0 +1,22 @@
+<biglup-left-navbar-layout>
+  <biglup-toolbar (toggleNavbar)="_onToggleDrawer($event)" title="{{'Ecommerce' | translate }}">
+    <biglup-icon-button rippleColor="black" icon="chat"></biglup-icon-button>
+    <biglup-icon-button rippleColor="black" icon="more_vert"></biglup-icon-button>
+  </biglup-toolbar>
+  <biglup-left-navbar-layout-menu [hideDrawer]="_hideDrawer">
+    <biglup-vertical-menu>
+      <biglup-vertical-menu-option icon='home' [routerLink]="['/dashboard']" label="{{'Dashboard' | translate }}"></biglup-vertical-menu-option>
+      <biglup-vertical-menu-option icon='inbox' [routerLink]="['/orders']" label="{{'Orders' | translate }}"></biglup-vertical-menu-option>
+      <biglup-vertical-menu-option icon='group' [routerLink]="['/customers']" label="{{'Customers' | translate }}"></biglup-vertical-menu-option>
+      <biglup-vertical-submenu icon='card_travel' label="{{'Products' | translate }}">
+        <biglup-vertical-menu-option [routerLink]="['/products']" label="{{'Products' | translate }}"></biglup-vertical-menu-option>
+        <biglup-vertical-menu-option [routerLink]="['/products/inventory']" label="{{'Inventory' | translate }}"></biglup-vertical-menu-option>
+        <biglup-vertical-menu-option [routerLink]="['/collections']" label="{{'Collections' | translate }}"></biglup-vertical-menu-option>
+        <biglup-vertical-menu-option [routerLink]="['/products/variants']" label="{{'Edit Variants' | translate }}"></biglup-vertical-menu-option>
+      </biglup-vertical-submenu>
+      <biglup-vertical-menu-option icon='timeline' [routerLink]="['/reports']" label="{{'Reports' | translate }}"></biglup-vertical-menu-option>
+  </biglup-left-navbar-layout-menu>
+  <biglup-left-navbar-layout-content>
+    <router-outlet></router-outlet>
+  </biglup-left-navbar-layout-content>
+</biglup-left-navbar-layout>
