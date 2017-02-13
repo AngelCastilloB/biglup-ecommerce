@@ -12,12 +12,12 @@
   </span>
 
   <span>
-    <a class="nav-link" [routerLink]="['/admin']">{{'Administration' | translate}}</a>
+    <a class="nav-link" href="http://admin.store.com">{{'Administration' | translate}}</a>
   </span>
 
   <span>
-    <a (click)="_changeLanguage('zh')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
-    <a (click)="_changeLanguage('en')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
+    <a (click)="_changeLanguage('zh_TW')" rel="zh-TW"><img src="/images/zh_TW.png" alt="Chinese"/></a>
+    <a (click)="_changeLanguage('en_US')" rel="en-US"><img src="/images/en_US.png" alt="English"/></a>
   </span>
   <span class="auth-links">
     <a class="nav-link" [routerLink]="['/login']" *ngIf="!_isLogged">{{'Login' | translate}}</a>

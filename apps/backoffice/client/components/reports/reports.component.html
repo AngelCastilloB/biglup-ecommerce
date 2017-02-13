@@ -1,1 +1,305 @@
-REPORTS!
+<h3>BUTTONS</h3>
+<hr>
+<h5>FLAT</h5>
+<biglup-button color="primary">Primary</biglup-button>
+<biglup-button color="accent">Accent</biglup-button>
+<biglup-button color="warn">Warn</biglup-button>
+<biglup-button color="monochrome">Monochrome</biglup-button>
+<biglup-button disabled="true" color="primary">Disabled</biglup-button>
+
+<h5>RAISED</h5>
+<biglup-button raised="true" color="primary">Primary</biglup-button>
+<biglup-button raised="true" color="accent">Accent</biglup-button>
+<biglup-button raised="true" color="warn">Warn</biglup-button>
+<biglup-button raised="true" color="monochrome">Monochrome</biglup-button>
+<biglup-button raised="true" color="monochrome-inverted">Inverted</biglup-button>
+<biglup-button raised="true" disabled="true" color="disabled">Disabled</biglup-button>
+
+<h5>ICONS</h5>
+<biglup-button icon="done" color="primary">Primary</biglup-button>
+<biglup-button icon="backup" color="accent">Accent</biglup-button>
+<biglup-button icon="favorite" color="warn">Warn</biglup-button>
+<biglup-button icon="access_time" color="monochrome">Monochrome</biglup-button>
+<biglup-button icon="block" disabled="true" color="primary">Disabled</biglup-button>
+<br><br><br>
+<biglup-button icon="done" raised="true" color="primary">Primary</biglup-button>
+<biglup-button icon="backup" raised="true" color="accent">Accent</biglup-button>
+<biglup-button icon="favorite" raised="true" color="warn">Warn</biglup-button>
+<biglup-button icon="access_time" raised="true" color="monochrome">Monochrome</biglup-button>
+<biglup-button icon="access_time" raised="true" color="monochrome-inverted">Inverted</biglup-button>
+<biglup-button icon="block" raised="true" disabled="true" color="disabled">Disabled</biglup-button>
+
+<h3>INPUTS</h3>
+<hr>
+<div style="width: 40%">
+  <h5>PASSWORD</h5>
+  <biglup-input name="sample1" hint="Password" isPassword="true" floatingHint="true"></biglup-input>
+  <h5>LABELS</h5>
+  <biglup-input name="sample2" hint="Type something..."></biglup-input>
+  <biglup-input name="sample3" hint="Numbers Only" [filter]="InputFilters.digits"></biglup-input>
+  <h5>FLOATING LABELS</h5>
+  <biglup-input name="sample4" hint="Text Input" floatingHint="true"></biglup-input>
+  <biglup-input name="sample5" hint="Numbers Only" floatingHint="true"
+                [filter]="InputFilters.numerical"></biglup-input>
+  <h5>DISABLED</h5>
+  <biglup-input disabled name="sample6" hint="Im Disabled"></biglup-input>
+  <h5>VALIDATIONS</h5>
+  <biglup-input #validate errorMessage="Numbers Only!" name="validate" hint="Numbers"></biglup-input>
+  <biglup-input #validate2 errorMessage="Letters Only!" name="validate2" hint="A-Z Floating"
+                floatingHint="true"></biglup-input>
+  <h5>ICONS</h5>
+  <biglup-input #email name="email" hint="Email" leftIcon="email" floatingHint="true"
+                errorMessage="Please a valid email!"></biglup-input>
+</div>
+
+<h3>DROP BOX</h3>
+<hr>
+<br>
+
+<div style="width: 1000px">
+  <h5>TITLE</h5>
+  <biglup-dropdown-menu title="Your favourite pastry" [(value)]="_dropdownOneValue">
+    <biglup-dropdown-option value="Croissant">Croissant</biglup-dropdown-option>
+    <biglup-dropdown-option value="Donut">Donut</biglup-dropdown-option>
+    <biglup-dropdown-option value="Financier">Financier</biglup-dropdown-option>
+    <biglup-dropdown-option value="Madeleine">Madeleine</biglup-dropdown-option>
+  </biglup-dropdown-menu>
+  <br>
+  Value: {{ _dropdownOneValue }}
+  <br>
+  <br>
+  <biglup-dropdown-menu title="Numbers" [(value)]="_dropdownTwoValue">
+    <biglup-dropdown-option value="10">10</biglup-dropdown-option>
+    <biglup-dropdown-option value="25">25</biglup-dropdown-option>
+    <biglup-dropdown-option value="50" selected="true">50</biglup-dropdown-option>
+    <biglup-dropdown-option value="100">100</biglup-dropdown-option>
+  </biglup-dropdown-menu>
+  <br>
+  Value: {{ _dropdownTwoValue }}
+  <br>
+  <br>
+  <h5>NO TITLE</h5>
+  <biglup-dropdown-menu [(value)]="_dropdownThreeValue">
+    <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+    <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+    <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+    <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+  </biglup-dropdown-menu>
+  <br>
+  Value: {{ _dropdownThreeValue }}
+  <br>
+  <br>
+  <h5>DISABLED</h5>
+  <biglup-dropdown-menu title="Colors" disabled="true">
+    <biglup-dropdown-option value="Red">Red</biglup-dropdown-option>
+    <biglup-dropdown-option value="Green">Green</biglup-dropdown-option>
+    <biglup-dropdown-option value="Blue" selected="true">Blue</biglup-dropdown-option>
+    <biglup-dropdown-option value="Orange">Orange</biglup-dropdown-option>
+  </biglup-dropdown-menu>
+  <br>
+</div>
+<h3>CHECKBOX</h3>
+<hr>
+<br>
+<biglup-checkbox>Checkbox</biglup-checkbox>
+<br>
+<biglup-checkbox checked="true">Checked</biglup-checkbox>
+<br>
+<biglup-checkbox disabled="true">Disabled</biglup-checkbox>
+<br>
+<biglup-checkbox disabled="true" checked="true">Disabled Checked</biglup-checkbox>
+
+<h3>RADIO GROUP</h3>
+<hr>
+<br>
+<biglup-radio-group [(value)]="_radioGroupValue">
+  <biglup-radio-button name="a" value="1">Option 1</biglup-radio-button>
+  <biglup-radio-button name="b" value="2">Option 2</biglup-radio-button>
+  <biglup-radio-button name="c" value="3">Option 3</biglup-radio-button>
+  <biglup-radio-button name="d" value="4">Option 4</biglup-radio-button>
+  <biglup-radio-button name="e" value="5" disabled="true">Disabled</biglup-radio-button>
+</biglup-radio-group>
+<biglup-radio-button name="f" value="6" disabled="true" selected="true">Disabled Checked</biglup-radio-button>
+
+<br>
+<p>Radio Group Value: {{ _radioGroupValue }}</p>
+
+<h3>ICON BUTTON</h3>
+<hr>
+<br>
+<biglup-icon-button icon="backup" color="red"></biglup-icon-button>
+<biglup-icon-button icon="search" color="#3f51b5"></biglup-icon-button>
+<biglup-icon-button icon="arrow_upward" color="violet"></biglup-icon-button>
+<biglup-icon-button icon="arrow_downward" color="#737373"></biglup-icon-button>
+<biglup-icon-button icon="delete" color="#737373"></biglup-icon-button>
+<biglup-icon-button icon="chevron_right" color="#737373"></biglup-icon-button>
+<biglup-icon-button icon="chevron_left" color="#737373"></biglup-icon-button>
+
+<h3>DATA TABLE</h3>
+<hr>
+<br>
+<biglup-data-table (delete)="_logEvent($event)" (edit)="_logEvent($event)" [columns]="_dataTableColums"
+                   [data]="_dataTableData"></biglup-data-table>
+<br>
+<h3>BADGES</h3>
+<hr>
+<br>
+<biglup-badge label="1"></biglup-badge>
+<biglup-badge label="52"></biglup-badge>
+<biglup-badge label="New"></biglup-badge>
+
+<br>
+<h3>PAPER</h3>
+<hr>
+<br>
+<biglup-paper elevation="1">1</biglup-paper>
+<biglup-paper elevation="2">2</biglup-paper>
+<biglup-paper elevation="3">3</biglup-paper>
+<biglup-paper elevation="4">4</biglup-paper>
+<biglup-paper elevation="5">5</biglup-paper>
+<biglup-paper elevation="6">6</biglup-paper>
+<biglup-paper elevation="7">7</biglup-paper>
+<biglup-paper elevation="8">8</biglup-paper>
+<biglup-paper elevation="9">9</biglup-paper>
+
+<h3>TOAST</h3>
+<hr>
+<br>
+<br>
+<h5>NOT DISSMISABLE</h5>
+<biglup-button (click)="_displayToast('Your message was sent', false)" raised="true" color="primary">Single Line
+</biglup-button>
+<biglup-button
+  (click)="_displayToast('This is a longer message that wont fit on one line. It is, inevitably, quite a boring thing. Hopefully it is still useful.', false)"
+  raised="true" color="primary">Multi Line
+</biglup-button>
+<h5>DISSMISABLE</h5>
+<biglup-button (click)="_displayToast('Your message was sent')" raised="true" color="primary">Single Line
+</biglup-button>
+<biglup-button
+  (click)="_displayToast('This is a longer message that wont fit on one line. It is, inevitably, quite a boring thing. Hopefully it is still useful.')"
+  raised="true" color="primary">Multi Line
+</biglup-button>
+
+<br>
+<h3>GRID</h3>
+<hr>
+<br>
+
+<div class="biglup-grid">
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-1-col">1</div>
+</div>
+<div class="biglup-grid">
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-6-col">6</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-4-col">4</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-2-col">2</div>
+</div>
+<div class="biglup-grid">
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-6-col biglup-cell-8-col-tablet">6 (8 tablet)</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-4-col biglup-cell-6-col-tablet">4 (6 tablet)</div>
+  <div style="background-color: #0a6ebd; height: 50px; color: white; text-align: center;" class="biglup-cell biglup-cell-2-col biglup-cell-4-col-phone">2 (4 phone)</div>
+</div>
+
+<br>
+<h3>CHARTS</h3>
+<hr>
+<br>
+<div class="biglup-grid">
+  <div class="biglup-cell-10-col">
+    <h5>BARS</h5>
+    <canvas biglupChart
+            [datasets]="_barChartData"
+            [labels]="_barChartLabels"
+            [options]="_barChartOptions"
+            [legend]="_barChartLegend"
+            [chartType]="_barChartType">
+    </canvas>
+  </div>
+  <div class="biglup-cell-10-col">
+    <h5>LINES</h5>
+    <canvas biglupChart
+            [datasets]="_lineChartData"
+            [labels]="_lineChartLabels"
+            [options]="_lineChartOptions"
+            [legend]="_lineChartLegend"
+            [chartType]="_lineChartType"></canvas>
+
+  </div>
+  <div class="biglup-cell-10-col">
+    <h5>Doughnut</h5>
+    <canvas biglupChart
+            [data]="_doughnutChartData"
+            [labels]="_doughnutChartLabels"
+            [chartType]="_doughnutChartType"></canvas>
+  </div>
+  <div class="biglup-cell-10-col">
+    <h5>Radar</h5>
+    <canvas biglupChart
+            [datasets]="_radarChartData"
+            [labels]="_radarChartLabels"
+            [chartType]="_radarChartType"></canvas>
+  </div>
+  <div class="biglup-cell-10-col">
+    <h5>Pie</h5>
+    <canvas biglupChart
+            [data]="_pieChartData"
+            [labels]="_pieChartLabels"
+            [chartType]="_pieChartType"></canvas>
+  </div>
+  <div class="biglup-cell-10-col">
+    <h5>Polar</h5>
+    <canvas biglupChart
+            [data]="_polarAreaChartData"
+            [labels]="_polarAreaChartLabels"
+            [legend]="_polarAreaLegend"
+            [chartType]="_polarAreaChartType"></canvas>
+  </div>
+</div>
+<br>
+<h3>COLOR PICKER</h3>
+<hr>
+<br>
+<input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color1" oKButton="true" (colorPickerChange)="_color1=$event" [style.background]="_color1"/>
+<input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color2" oKButton="true" (colorPickerChange)="_color2=$event" [style.background]="_color2"/>
+<input style="border:none; width: 40px; height: 40px; border-radius: 4px; cursor: pointer;" readonly [biglupColorPicker]="_color3" oKButton="true" (colorPickerChange)="_color3=$event" [style.background]="_color3"/>
+<h3>TABS</h3>
+<hr>
+<br>
+<biglup-tabs>
+  <biglup-tab [title]="'English'">
+    <canvas biglupChart
+            [data]="_doughnutChartData"
+            [labels]="_doughnutChartLabels"
+            [chartType]="_doughnutChartType"></canvas>
+  </biglup-tab>
+  <biglup-tab title="中文">
+    <canvas biglupChart
+            [data]="_polarAreaChartData"
+            [labels]="_polarAreaChartLabels"
+            [legend]="_polarAreaLegend"
+            [chartType]="_polarAreaChartType"></canvas>
+  </biglup-tab>
+</biglup-tabs>
+<br>
+<h3>BREADCRUMBS</h3>
+<hr>
+<br>
+<biglup-breadcrumb>
+  <a href="#">JavaScript</a>
+  <a href="#">AngularJS</a>
+  <a href="#">CoffeeScript</a>
+  <a href="#">TypeScript</a>
+  <a href="#" class="active">Angular 2</a>
+</biglup-breadcrumb>
+<br>  <br>  <br>  <br>

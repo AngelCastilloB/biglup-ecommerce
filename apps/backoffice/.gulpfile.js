@@ -75,8 +75,7 @@ gulp.task('copy-meteor-settings', function ()
 gulp.task('uglify-css', function (callback)
 {
     const files = [
-        PATHS.drag.css.src,
-        PATHS.ng2Material.css.src
+        PATHS.drag.css.src
     ];
 
     pump([

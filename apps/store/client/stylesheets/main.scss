@@ -1,6 +1,3 @@
-@import '{biglup:ui}/client/stylesheets/main';
-
-body {
-    @extend .typography;
-}
-
+@import 'partials/reset';
+@import 'partials/grid';
+@import 'partials/designer-drawer';

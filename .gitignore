@@ -48,4 +48,10 @@ private/storage/
 /typings/globals/
 /typings/modules/
 /typings/index.d.ts
+/apps/store/typings/globals/
+/apps/store/typings/modules/
+/apps/store/typings/index.d.ts
+/apps/backoffice/typings/globals/
+/apps/backoffice/typings/modules/
+/apps/backoffice/typings/index.d.ts
 

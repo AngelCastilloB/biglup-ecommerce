@@ -1,0 +1,40 @@
+#designerDrawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 270px;
+  left: -270px;
+  overflow: auto;
+  z-index: 6;
+  transition: transform 0.2s;
+  background-color: #00A000;
+}
+
+#designerDrawer.active {
+  transform: translate(270px);
+}
+
+#designerDrawerContent {
+  margin-left: 30px;
+  -webkit-transition: margin-left 200ms 0ms;
+  transition: margin-left 200ms 0ms;
+}
+
+#designerDrawerContent.active {
+  margin-left: 300px;
+}
+
+#designerToggle {
+  position: fixed;
+  width: 30px;
+  top: 0;
+  bottom: 0;
+  background-color: #0a6ebd;
+  overflow: auto;
+  -webkit-transition: margin-left 200ms 0ms;
+  transition: margin-left 200ms 0ms;
+}
+
+#designerToggle.active {
+  margin-left: 270px;
+}

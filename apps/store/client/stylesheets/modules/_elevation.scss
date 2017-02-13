@@ -1,0 +1,68 @@
+/*
+ * Material Design elevation variables and mixins.
+ */
+$keyUmbraOpacity:      0.2;
+$keyPenumbraOpacity:   0.14;
+$ambientShadowOpacity: 0.12;
+
+$_umbra-elevation-map: (
+        0: '0 0 0 0 rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        1: '0 3px 1px -2px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        2: '0 3px 3px -2px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        3: '0 3px 2px -2px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        4: '0 2px 4px -1px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        5: '0 4px 2px -2px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        6: '0 3px 5px -1px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        7: '0 4px 4px -3px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        8: '0 5px 5px -3px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+        9: '0 8px 10px -5px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+       10: '0 11px 15px -7px rgba(0, 0, 0, #{$keyUmbraOpacity})',
+);
+
+$_penumbra-elevation-map: (
+        0: '0 0 0 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        1: '0 2px 2px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        2: '0 3px 4px 0  rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        3: '0 3px 4px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        4: '0 4px 5px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        5: '0 4px 5px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        6: '0 6px 10px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        7: '0 6px 8px 0 rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        8: ' 0 8px 10px 1px rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+        9: '0 16px 24px 2px rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+       10: '0 24px 38px 3px rgba(0, 0, 0, #{$keyPenumbraOpacity})',
+);
+
+$_ambient-elevation-map: (
+        0: '0 0 0 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        1: '0 1px 5px 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        2: '0 1px 8px 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        3: '0 1px 7px 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        4: '0 1px 10px 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        5: '0 2px 9px 1px rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        6: '0 1px 18px 0 rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        7: '0 3px 14px 2px  rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        8: '0  6px 30px 5px  rgba(0, 0, 0, #{$ambientShadowOpacity})',
+        9: '0 9px 46px 8px rgba(0, 0, 0, #{$ambientShadowOpacity})',
+);
+
+$elevation-property:                   box-shadow !default;
+$elevation-transition-duration:        0.7s !default;
+$elevation-transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+/*
+ * Applies the correct css rules to an element to give it the elevation specified by $zValue.
+ * The $zValue must be between 0 and 24.
+ */
+@mixin elevation($zValue) {
+  @if type-of($zValue) != number or not unitless($zValue) {
+    @error '$zValue must be a unitless number';
+  }
+  @if $zValue < 0 or $zValue > 10 {
+    @error '$zValue must be between 0 and 10';
+  }
+
+  #{$elevation-property}: #{map-get($_umbra-elevation-map, $zValue)},
+  #{map-get($_penumbra-elevation-map, $zValue)},
+  #{map-get($_ambient-elevation-map, $zValue)};
+}
