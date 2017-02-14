@@ -32,7 +32,7 @@ import { LandingPageComponent }             from './components/landing-page/land
 import { CategoryItemComponent }            from './components/category-item/category-item.component';
 import { CategoryComponent }                from './components/category/category.component';
 import { FrontendComponent }                from './frontend.component';
-import { CartComponent }                    from './components/header/components/cart.component';
+import { CartComponent }                    from './components/header/components/cart/cart.component';
 import { CategoriesService }                from 'meteor/biglup:business';
 import { ProductsService }                  from 'meteor/biglup:business';
 import { ImagesService }                    from 'meteor/biglup:business';
@@ -44,6 +44,9 @@ import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BiglupUiModule }                   from 'meteor/biglup:ui';
 import { IdGeneratorService }               from 'meteor/biglup:core';
+import { ActionbarComponent }               from './components/header/components/action-bar/action-bar.component';
+import { HeaderLogoComponent }              from './components/header/components/logo/logo.component';
+import { HeaderNavMenuComponent }           from './components/header/components/nav/nav-menu.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -52,7 +55,10 @@ import { IdGeneratorService }               from 'meteor/biglup:core';
         FrontendComponent,
         // header (child of frontend)
         HeaderComponent,
+        ActionbarComponent,
         CartComponent,
+        HeaderNavMenuComponent,
+        HeaderLogoComponent,
         // TODO: refactor into child feature modules
 
         // auth

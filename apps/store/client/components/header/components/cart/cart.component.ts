@@ -44,7 +44,6 @@ import template from './cart.component.html';
 @Component({
     selector: 'cart',
     template,
-    styleUrls: ['cart.component.css'],
     animations: [
         // gives an animation effect whenever showCart changes.
         // showCart is bound to the _isVisible flag of this component.
