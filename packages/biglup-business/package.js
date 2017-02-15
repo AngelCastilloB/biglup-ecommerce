@@ -64,7 +64,6 @@ Package.onUse(function(api)
         'common/models/product.ts',
         'common/models/product-image.ts',
         'common/models/product-variant.ts',
-        'common/models/sub-category.ts',
         'common/models/user.ts'
     ], ['client', 'server']);
 

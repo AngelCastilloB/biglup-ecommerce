@@ -33,7 +33,7 @@ import template from './frontend.component.html';
 export class FrontendComponent
 {
     private _subLoaded:  boolean  = false;
-    private _isDevModeOn: boolean = true;
+    private _isDevModeOn: boolean = false;
     private _showDrawer: boolean  = false;
 
     constructor(private _categoriesService: CategoriesService)

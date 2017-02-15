@@ -1,34 +1,10 @@
 <nav id="primary_nav_wrap">
   <ul>
-    <li class="current-menu-item"><a href="#">Home</a></li>
-    <li><a href="#" class="isSubmenu">Menu 1</a>
-      <ul>
-        <li><a href="#">Sub Menu 1</a></li>
-        <li><a href="#">Sub Menu 2</a></li>
-        <li><a href="#">Sub Menu 3</a></li>
-        <li><a href="#">Sub Menu 4</a>
-        </li>
-        <li><a href="#">Sub Menu 5</a></li>
+    <li *ngFor="let category of _categoriesService.getRootCategories() | async">
+      <a [routerLink]="['/category', category._id]" [class.isSubmenu]="_categoriesService.hasSubcategories(category._id) | async" >{{category.name | mongoTranslate}}</a>
+      <ul *ngIf="_categoriesService.hasSubcategories(category._id) | async">
+        <li *ngFor="let subCategory of _categoriesService.getSubCategories(category._id) | async"><a [routerLink]="['/category', subCategory._id]">{{subCategory.name | mongoTranslate}}</a></li>
       </ul>
     </li>
-    <li><a href="#" class="isSubmenu">Menu 2</a>
-      <ul>
-        <li><a href="#">Sub Menu 1</a></li>
-        <li><a href="#">Sub Menu 2</a></li>
-        <li><a href="#">Sub Menu 3</a></li>
-      </ul>
-    </li>
-    <li><a href="#" class="isSubmenu">Menu 3</a>
-      <ul>
-        <li class="dir"><a href="#">Sub Menu 1</a></li>
-        <li><a href="#">Sub Menu 3</a></li>
-        <li><a href="#">Sub Menu 4</a></li>
-        <li><a href="#">Sub Menu 5</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Menu 4</a></li>
-    <li><a href="#">Menu 5</a></li>
-    <li><a href="#">Menu 6</a></li>
-    <li><a href="#">Contact Us</a></li>
   </ul>
 </nav>

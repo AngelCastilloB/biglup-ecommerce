@@ -46,6 +46,22 @@ Meteor.methods({
         category.name = category.name.filter((element) => element.value && element.value !== '');
         category.info = category.info.filter((element) => element.value && element.value !== '');
 
+        if (category.parentCategory !== null && category.parentCategory !== '')
+        {
+            category.isRootCategory = false;
+
+            if (Categories.find({_id: category.parentCategory}).count() === 0)
+            {
+                throw new Meteor.Error(
+                    'createProduct.categoryDoesNotExist',
+                    'The parent category does not exist (' + category.parentCategory + ').');
+            }
+        }
+        else
+        {
+            category.isRootCategory = true;
+        }
+
         check(category, CategorySchema);
 
         return Categories.insert(category);
@@ -153,6 +169,22 @@ Meteor.methods({
             throw new Meteor.Error(
                 'updateCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
+        }
+
+        if (category.parentCategory !== null && category.parentCategory !== '')
+        {
+            category.isRootCategory = false;
+
+            if (Categories.find({_id: category.parentCategory}).count() === 0)
+            {
+                throw new Meteor.Error(
+                    'createProduct.categoryDoesNotExist',
+                    'The parent category does not exist (' + category.parentCategory + ').');
+            }
+        }
+        else
+        {
+            category.isRootCategory = true;
         }
 
         let id = category._id;

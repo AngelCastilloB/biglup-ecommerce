@@ -62,10 +62,10 @@
   <div class="biglup-data-table-footer" *ngIf="_hasData">
     <span class="biglup-data-table-footer-text">{{ 'Rows per page:' | translate }}</span>
     <biglup-dropdown-menu (valueChange)="_setPageSize($event)">
-      <biglup-dropdown-option value="10">10</biglup-dropdown-option>
-      <biglup-dropdown-option value="25">25</biglup-dropdown-option>
-      <biglup-dropdown-option value="50">50</biglup-dropdown-option>
-      <biglup-dropdown-option value="100">100</biglup-dropdown-option>
+      <biglup-dropdown-option value="10" (selectionChange)="_onSelectionChange($event)">10</biglup-dropdown-option>
+      <biglup-dropdown-option value="25" (selectionChange)="_onSelectionChange($event)">25</biglup-dropdown-option>
+      <biglup-dropdown-option value="50" (selectionChange)="_onSelectionChange($event)">50</biglup-dropdown-option>
+      <biglup-dropdown-option value="100" (selectionChange)="_onSelectionChange($event)">100</biglup-dropdown-option>
     </biglup-dropdown-menu>
     <span class="biglup-data-table-footer-text">{{ _currentPage + 1 }} {{ 'of' | translate }} {{ _totalPages }}</span>
     <biglup-icon-button (click)="_prevPage()" icon="navigate_before" color="#555555"></biglup-icon-button>

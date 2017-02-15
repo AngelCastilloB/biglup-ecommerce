@@ -25,9 +25,10 @@ import { Component,
          ChangeDetectorRef,
          EventEmitter,
          OnInit,
-         OnDestroy }                from '@angular/core';
-import { BiglupInputComponent }     from '../input/biglup-input.component';
-import { I18nSingletonService, _T } from 'meteor/biglup:i18n';
+         OnDestroy }                   from '@angular/core';
+import { BiglupInputComponent }        from '../input/biglup-input.component';
+import { I18nSingletonService, _T }    from 'meteor/biglup:i18n';
+import { BiglupDropdownMenuComponent } from '../dropdown-menu/biglup-dropdown-menu.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -78,6 +79,8 @@ export interface DataTableColumn
 })
 export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestroy
 {
+    @ViewChild(BiglupDropdownMenuComponent)
+    private _dropMenu:           BiglupDropdownMenuComponent;
     @Input('title')
     private _title: string = '';
     @Input('icon')
@@ -454,5 +457,16 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
         }
 
         return !this._value ? message : this._value;
+    }
+
+    /**
+     * @summary Triggered when the parent category changes.
+     *
+     * @param change The change.
+     * @private
+     */
+    private _onSelectionChange(change)
+    {
+        this._dropMenu.onSelectionChange(change);
     }
 }

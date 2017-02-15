@@ -37,6 +37,9 @@ declare module Business
     class CategoriesService
     {
         public getCategories(): any;
+        public getRootCategories(): any;
+        public hasSubcategories(): any;
+        public getSubCategories(rootCategory: string): any;
         public getCategory(categoryId: string): any;
         public createCategory(category: Category): any;
         public updateCategory(category: Category): any;
@@ -147,15 +150,16 @@ declare module Business
     export class Category
     {
         constructor(
-            public _id:           string             = null,
-            public slug:          string             = '',
-            public name:          Array<I18nString>  = Array<I18nString>(),
-            public info:          Array<I18nString>  = Array<I18nString>(),
-            public image:         string             = '',
-            public active:        boolean            = false,
-            public createdAt:     Date               = new Date(),
-            public updatedAt:     Date               = new Date(),
-            public subCategories: Array<SubCategory> = Array<SubCategory>());
+            public _id:            string             = null,
+            public slug:           string             = '',
+            public name:           Array<I18nString>  = Array<I18nString>(),
+            public info:           Array<I18nString>  = Array<I18nString>(),
+            public image:          string             = '',
+            public active:         boolean            = false,
+            public createdAt:      Date               = new Date(),
+            public updatedAt:      Date               = new Date(),
+            public isRootCategory: boolean            = false,
+            public parentCategory: string             = '')
     }
 
     export class Image
@@ -240,19 +244,6 @@ declare module Business
     class MaterialVariantAttribute
     {
         constructor(public _id: string = null, public material: Array<I18nString> = Array<I18nString>());
-    }
-
-    class SubCategory
-    {
-        constructor(
-            public _id:       string            = null,
-            public slug:      string            = '',
-            public name:      Array<I18nString> = Array<I18nString>(),
-            public info:      Array<I18nString> = Array<I18nString>(),
-            public image:     string            = null,
-            public active:    boolean           = false,
-            public createdAt: Date              = new Date(),
-            public updatedAt: Date              = new Date());
     }
 
     class User

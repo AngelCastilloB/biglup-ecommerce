@@ -123,6 +123,9 @@ declare module BiglupUi
         public setInvalid(isInvalid: boolean);
         public getValue(): string;
     }
+    class BiglupDropdownMenuComponent {
+        public onSelectionChange(option);
+    }
     class BiglupCheckboxComponent {}
     class RippleDirective {}
     class BiglupUiModule {}

@@ -5,7 +5,7 @@
   <div #container class="biglup-dropdown-menu-container">
     <biglup-input #input
                   [disabled]="_isDisabled"
-                  (hasFocus)="_onFocusChange($event)"
+                  (click)="_onClick($event)"
                   floatingHint="true"
                   readonly="true"
                   [value]="_text"

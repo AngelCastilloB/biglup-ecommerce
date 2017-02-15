@@ -18,6 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CategoriesService }            from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,7 +38,7 @@ export class HeaderNavMenuComponent implements OnInit, OnDestroy
     /**
      * @summary Initializes a new instance of the HeaderNavMenuComponent class.
      */
-    constructor()
+    constructor(private _categoriesService: CategoriesService)
     {
     }
 

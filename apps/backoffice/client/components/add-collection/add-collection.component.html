@@ -19,6 +19,19 @@
         <i18n-text-editor [(model)]="_i18nInfoReferenceMap[lang]"></i18n-text-editor>
       </biglup-tab>
     </biglup-tabs>
+
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Parent Category' | translate }}</b></span><br><br>
+
+      <label class="biglup-dropdown-menu-simple">
+        <select [(ngModel)]="_category.parentCategory">
+          <option value="" selected> {{ "None" | translate }} </option>
+          <option *ngFor="let category of _getCategoriesObservable() | async" [value]="category._id" > {{ category.name | mongoTranslate }} </option>
+        </select>
+      </label>
+
+    </biglup-paper>
+
     <biglup-paper elevation="1">
       <span><b>{{ 'Visibility' | translate }}</b></span><br><br>
       <biglup-checkbox [(checked)]="_category.active">

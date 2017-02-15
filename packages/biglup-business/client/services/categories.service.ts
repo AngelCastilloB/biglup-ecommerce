@@ -68,6 +68,46 @@ export class CategoriesService extends MeteorReactive
     }
 
     /**
+     * @summary Returns all the available root categories.
+     *
+     * @returns {Observable<Array<Product>>} The observable list of products.
+     */
+    public getRootCategories(): Observable<Array<Category>>
+    {
+        return this._categoriesStream
+            .distinctUntilChanged()
+            .mergeMap(array => new BehaviorSubject(array.filter(category => category.isRootCategory)));
+    }
+
+    /**
+     * @summary Observable that returns whether the given category has subcategories.
+     *
+     * @param rootCategory The category to query.
+     *
+     * @return {Observable<boolean>} A cold observable with the result.
+     */
+    public hasSubcategories(rootCategory: string): Observable<boolean>
+    {
+        return Observable.create(observer =>
+        {
+            observer.next(this._categories.filter(category => category.parentCategory === rootCategory).length > 0);
+            observer.complete();
+        });
+    }
+
+    /**
+     * @summary Returns all the available subcategories for the given root category.
+     *
+     * @returns {Observable<Array<Product>>} The observable list of products.
+     */
+    public getSubCategories(rootCategory: string): Observable<Array<Category>>
+    {
+        return this._categoriesStream
+            .distinctUntilChanged()
+            .mergeMap(array => new BehaviorSubject(array.filter(category => category.parentCategory === rootCategory)));
+    }
+
+    /**
      * @summary Gets one category given its id.
      *
      * @param categoryId The id of the category to be found.

@@ -19,6 +19,7 @@
 
 import { Component,
          Input,
+         Output,
          EventEmitter,
          ChangeDetectorRef,
          ViewChild } from '@angular/core';
@@ -46,21 +47,14 @@ export class BiglupDropdownOptionComponent
     private _isDisabled: boolean = false;
     @Input('value')
     private _value: string = '';
-    private _selectedEmitter: any = new EventEmitter();
+    @Output('selectionChange') selectionChange: any = new EventEmitter();
+    private _isSubscribed: boolean = false;
 
     /**
      * @summary Initializes a new instance of the BiglupDropdownOptionComponent class.
      */
     constructor(private _changeDetector: ChangeDetectorRef)
     {
-    }
-
-    /**
-     * @summary Gets the selected emitter.
-     */
-    public getSelectedEmitter(): EventEmitter
-    {
-        return this._selectedEmitter;
     }
 
     /**
@@ -105,6 +99,24 @@ export class BiglupDropdownOptionComponent
     }
 
     /**
+     * @summary Gets whether the parten already subscribed to this instance.
+     *
+     * @return {boolean} True if it was already subscribed, otherwise, false.
+     */
+    public getIsSubscribed(): boolean
+    {
+        return this._isSubscribed;
+    }
+
+    /**
+     * @summary Sets this instance as subscribed.
+     */
+    public setIsSubscribed()
+    {
+        this._isSubscribed = true;
+    }
+
+    /**
      * @summary Event handler for the on click event.
      *
      * @param event The click event.
@@ -114,10 +126,6 @@ export class BiglupDropdownOptionComponent
         if (this._isDisabled)
             return;
 
-        if (this._selectedEmitter)
-            this._selectedEmitter.emit(this);
-
-        event.preventDefault();
-        this._changeDetector.detectChanges();
+       this.selectionChange.emit(this);
     }
 }
