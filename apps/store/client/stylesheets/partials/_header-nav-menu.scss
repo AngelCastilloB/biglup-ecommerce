@@ -1,3 +1,5 @@
+@import './base';
+
 #primary_nav_wrap {
   margin-top: 15px;
   width: 100%;
@@ -30,7 +32,7 @@
       font-size: 12px;
       line-height: 40px;
       padding: 0 15px;
-      font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: $base-font-family;
       text-transform: uppercase;
     }
     li {

@@ -6,3 +6,8 @@
 @import 'partials/header-logo';
 @import 'modules/layout';
 @import 'partials/header-nav-menu';
+@import 'partials/typography';
+
+body {
+  @extend .typography;
+}
