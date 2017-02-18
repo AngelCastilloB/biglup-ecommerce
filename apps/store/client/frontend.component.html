@@ -5,10 +5,14 @@
   </div>
   <div [class.active]="_showDrawer" id="designerDrawerContent">
     <header *ngIf="_subLoaded"></header>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 <div *ngIf="!_isDevModeOn">
   <header *ngIf="_subLoaded"></header>
-  <router-outlet></router-outlet>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

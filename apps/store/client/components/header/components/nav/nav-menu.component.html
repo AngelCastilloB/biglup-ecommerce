@@ -1,9 +1,9 @@
 <nav id="primary_nav_wrap">
   <ul>
     <li *ngFor="let category of _categoriesService.getRootCategories() | async">
-      <a [routerLink]="['/category', category._id]" [class.isSubmenu]="_categoriesService.hasSubcategories(category._id) | async" >{{category.name | mongoTranslate}}</a>
-      <ul *ngIf="_categoriesService.hasSubcategories(category._id) | async">
-        <li *ngFor="let subCategory of _categoriesService.getSubCategories(category._id) | async"><a [routerLink]="['/category', subCategory._id]">{{subCategory.name | mongoTranslate}}</a></li>
+      <a [routerLink]="['/category', category._id]" [class.isSubmenu]="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" >{{category.name | mongoTranslate}}</a>
+      <ul *ngIf="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0">
+        <li *ngFor="let subCategory of category.denormalizedSubcategories"><a [routerLink]="['/category', subCategory._id]">{{subCategory.name | mongoTranslate}}</a></li>
       </ul>
     </li>
   </ul>

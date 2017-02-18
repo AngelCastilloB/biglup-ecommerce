@@ -1,17 +1,19 @@
 <div class="header-action-bar">
-  <div class="biglup-grid">
-    <div class="biglup-cell biglup-cell-6-col">
-      <i class="fa fa-facebook-square action-bar-icon" aria-hidden="true"></i>
-      <i class="fa fa-instagram action-bar-icon" aria-hidden="true"></i>
-    </div>
-    <div class="biglup-cell biglup-cell-6-col">
-      <cart></cart>
-      <a [routerLink]="['/login']"><i class="fa fa-user action-bar-icon pull-right" aria-hidden="true"></i></a>
-      <i class="fa fa-search action-bar-icon pull-right" aria-hidden="true"></i>
-      <a [routerLink]="['/']"><i class="fa fa-home action-bar-icon pull-right" aria-hidden="true"></i></a>
-        <select (change)="_changeLanguage($event.target.value)" class="language-picker pull-right">
-          <option *ngFor="let lang of _i18nSingletonService.getSupportedLanguages()" [value]="lang">{{ _i18nSingletonService.getOriginalName(lang) }}</option>
-        </select>
+  <div class="header-content">
+    <div class="biglup-grid">
+      <div class="biglup-cell biglup-cell-6-col">
+        <i class="fa fa-facebook-square action-bar-icon" aria-hidden="true"></i>
+        <i class="fa fa-instagram action-bar-icon" aria-hidden="true"></i>
+      </div>
+      <div class="biglup-cell biglup-cell-6-col">
+        <cart></cart>
+        <a [routerLink]="['/login']"><i class="fa fa-user action-bar-icon pull-right" aria-hidden="true"></i></a>
+        <i class="fa fa-search action-bar-icon pull-right" aria-hidden="true"></i>
+        <a [routerLink]="['/']"><i class="fa fa-home action-bar-icon pull-right" aria-hidden="true"></i></a>
+          <select (change)="_changeLanguage($event.target.value)" class="language-picker pull-right">
+            <option *ngFor="let lang of _i18nSingletonService.getSupportedLanguages()" [value]="lang">{{ _i18nSingletonService.getOriginalName(lang) }}</option>
+          </select>
+      </div>
     </div>
   </div>
 </div>
