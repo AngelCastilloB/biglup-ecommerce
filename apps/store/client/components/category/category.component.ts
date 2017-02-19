@@ -17,9 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute }    from '@angular/router';
-import { ProductsService }   from 'meteor/biglup:business';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute }               from '@angular/router';
+import { ProductsService }              from 'meteor/biglup:business';
+import { Category, CategoriesService }  from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,14 +35,16 @@ import template from './category.component.html';
     selector: 'category',
     template
 })
-export class CategoryComponent implements OnInit
+export class CategoryComponent implements OnInit, OnDestroy
 {
-    private _categoryId: string;
+    private _categoryId:   string;
+    private _category:     Category = null;
+    private _subscription: any      = null;
 
     /**
      * @summary Initializes a new instance of the CategoryComponent class.
      */
-    constructor(private _route: ActivatedRoute, private _productsService: ProductsService)
+    constructor(private _route: ActivatedRoute, private _productsService: ProductsService, private _categoriesService: CategoriesService)
     {
     }
 
@@ -53,6 +56,22 @@ export class CategoryComponent implements OnInit
         this._route.params.subscribe((params) =>
         {
             this._categoryId = params['categoryId'];
+
+            this._subscription = this._categoriesService.getCategory(this._categoryId).subscribe(
+                (category) =>
+                {
+                    this._category = category;
+                }
+            );
         });
+    }
+
+    /**
+     * @summary destroys unneeded subscriptions and related resources.
+     */
+    public ngOnDestroy()
+    {
+        if (this._subscription !== null)
+            this._subscription.unsubscribe();
     }
 }

@@ -40,6 +40,7 @@ import { CartsService }                     from 'meteor/biglup:business';
 import { BiglupToastService }               from 'meteor/biglup:ui';
 import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
 import { TruncateStringPipe }               from 'meteor/biglup:core';
+import { SanitizeHtmlPipe }                 from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BiglupUiModule }                   from 'meteor/biglup:ui';
@@ -80,7 +81,8 @@ import { HeaderNavMenuComponent }           from './components/header/components
         // landing
         LandingPageComponent,
 
-        TruncateStringPipe
+        TruncateStringPipe,
+        SanitizeHtmlPipe
     ],
     imports: [
         FrontendRoutesModule,

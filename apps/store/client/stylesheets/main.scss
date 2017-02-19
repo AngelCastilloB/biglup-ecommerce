@@ -9,6 +9,7 @@
 @import 'partials/typography';
 @import 'partials/category-item';
 @import 'partials/content';
+@import "partials/category";
 
 body {
   @extend .typography;

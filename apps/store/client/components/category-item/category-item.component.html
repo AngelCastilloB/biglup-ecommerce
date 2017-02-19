@@ -8,8 +8,14 @@
         <img class="category-item-bottom" [src]="model.images[1].url" alt="" />
       </div>
       <div class="category-item-description">
-        <p>{{ model.title | mongoTranslate }}</p>
-        <h6>{{ model.price }} -{{ model.discount }}%</h6>
+        <p class="product-title">{{ model.title | mongoTranslate }}</p>
+        <div class="price normal" *ngIf="_getDiscountedPrice() !== model.price">
+          <span class="normal">${{ model.price }}.00</span>
+          <span class="discount">${{ _getDiscountedPrice() }}.00</span>
+        </div>
+        <div class="price normal" *ngIf="_getDiscountedPrice() === model.price">
+          <span class="discount">${{ model.price }}.00</span>
+        </div>
       </div>
     </div>
   </a>

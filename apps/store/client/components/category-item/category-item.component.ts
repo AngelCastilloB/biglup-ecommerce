@@ -66,4 +66,13 @@ export class CategoryItemComponent implements OnInit
             error => console.error(error)
         );
     }
+
+    /**
+     * The discounted price.
+     * @private
+     */
+    private _getDiscountedPrice()
+    {
+        return this.model.price - Math.round((this.model.price * this.model.discount) / 100);
+    }
 }

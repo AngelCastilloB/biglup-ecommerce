@@ -1,8 +1,22 @@
 <!--Product panel-->
-<div class="jumbotron" *ngIf="_product">
+<div class="jumbotron" *ngIf="_product && _category">
+  <div class="category">
+    <ul *ngIf="_category.denormalizedParent" class="breadcrumbs">
+      <li><a class="breadcrumb-link" [routerLink]="['/category', _category.denormalizedParent._id]">{{_category.denormalizedParent.name | mongoTranslate }}</a></li> <i class="fa fa-long-arrow-right breadcrumb-current-link" aria-hidden="true"></i>
+      <li><a class="breadcrumb-link" [routerLink]="['/category', _category._id]">{{_category.name | mongoTranslate }}</a></li> <i class="fa fa-long-arrow-right breadcrumb-current-link" aria-hidden="true"></i>
+      <li class="breadcrumb-current-link">{{_product.title | mongoTranslate }}</li>
+    </ul>
+    <ul *ngIf="!_category.denormalizedParent" class="breadcrumbs">
+      <li><a class="breadcrumb-link" [routerLink]="['/category', _category._id]">{{_category.name | mongoTranslate }}</a></li> <i class="fa fa-long-arrow-right breadcrumb-current-link" aria-hidden="true"></i>
+      <li class="breadcrumb-current-link">{{_product.title | mongoTranslate }}</li>
+    </ul>
+  </div>
+  <br>
+  <br>
   <!--Grid-->
   <div class="container-fluid">
     <div class="row">
+
       <!--First column-->
       <div class="col-md-4">
         <h4>{{ 'Gallery' | translate }}</h4>
@@ -76,7 +90,7 @@
             {{ _category.name | mongoTranslate }}
           </a>
         </h4>
-        <div [innerHTML]=_i18nService.getMongoText(_product.description)></div>
+        <div [innerHTML]="_i18nService.getMongoText(_product.description) | sanitizeHtml"></div>
       </div>
     </div>
   </div>

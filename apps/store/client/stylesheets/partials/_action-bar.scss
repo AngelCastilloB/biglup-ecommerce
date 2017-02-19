@@ -1,3 +1,5 @@
+@import './base';
+
 .header-action-bar {
   .header-content {
     margin: 0 auto;
@@ -42,5 +44,6 @@
     line-height: 40px;
     font-weight: bold;
     cursor: pointer;
+    font-size: 13px;
   }
 }

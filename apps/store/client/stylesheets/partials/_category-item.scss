@@ -1,6 +1,7 @@
 .category-item {
   max-width: 340px;
   max-height: 510px;
+  margin-top: 30px;
 
   img {
     max-width: 100%;
@@ -35,6 +36,32 @@
 
   .category-item-description {
     position: relative;
+  }
+
+  .product-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+    margin-top: 15px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+  }
+
+  .price {
+    text-align: center;
+    .normal {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 2px;
+      display: inline-block;
+      opacity: 1;
+      padding-right: 10px;
+    }
+    .discount {
+    }
   }
 }
 

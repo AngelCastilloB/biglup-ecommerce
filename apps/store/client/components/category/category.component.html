@@ -1,7 +1,15 @@
-<div class="container">
-  <div *ngIf="_categoryId" class="row">
+<div class="container category">
+  <div *ngIf="_category" class="row">
     <div>
-      <span>{{ 'RESULTS' | translate }}</span>
+      <ul *ngIf="_category.denormalizedParent" class="breadcrumbs">
+        <li><a class="breadcrumb-link" [routerLink]="['/category', _category.denormalizedParent._id]">{{_category.denormalizedParent.name | mongoTranslate }}</a></li> <i class="fa fa-long-arrow-right breadcrumb-current-link" aria-hidden="true"></i>
+        <li class="breadcrumb-current-link">{{_category.name | mongoTranslate }}</li>
+      </ul>
+
+      <ul *ngIf="!_category.denormalizedParent" class="breadcrumbs">
+        <li class="breadcrumb-current-link">{{_category.name | mongoTranslate }}</li>
+      </ul>
+
     </div>
     <div class="biglup-grid" *ngIf="!_isVariantsEanbled">
       <div class="biglup-cell biglup-cell-3-col" *ngFor="let product of _productsService.getCategoryProducts(_categoryId) | async">

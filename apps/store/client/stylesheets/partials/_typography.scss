@@ -4,6 +4,10 @@
     font-family: $base-font-family;
     font-size: $base-font-size;
     font-weight: $base-font-weight;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-backface-visibility: hidden;
 };
 
 .font-table-base {
@@ -154,6 +158,11 @@
 .ordered-list { list-style: decimal; }
 
 .typography {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-backface-visibility: hidden;
+
     a { @extend .link; }
 
     i, em { @extend .italic; }
@@ -166,14 +175,16 @@
     h5, .h5 { @extend .h5; margin: 1em 0 0.5em; }
     h6, .h6 { @extend .h6; margin: 1em 0 0.5em; }
 
-    p, ul, ol, pre { @extend .block-margins; }
+    p, ul, ol, pre {
+      @extend .font-common-base;
+      @extend .block-margins; }
 
     ul { @extend .unordered-list; }
     ol { @extend .ordered-list; }
 
     pre, code { @extend .fixed; }
 
-    input, label, span { @extend .font-common-base; }
+    input, label, span, select { @extend .font-common-base; }
     table, td, tr {
       @extend .font-table-base;
       > span
