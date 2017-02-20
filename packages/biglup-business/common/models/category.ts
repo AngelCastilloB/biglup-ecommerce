@@ -38,7 +38,9 @@ export class Category
      * @param createdAt      The category date of creation.
      * @param updatedAt      The last time this category was updated.
      * @param isRootCategory The is root category flag.
-     * @param parentCategory The parent Category
+     * @param parentCategory The parent Category.
+     * @param denormalizedSubcategories Denormalization field for subcategory..
+     * @param denormalizedParent        Denormalization field for parent category.
      */
     constructor(
         public _id:            string             = null,
@@ -50,7 +52,9 @@ export class Category
         public createdAt:      Date               = new Date(),
         public updatedAt:      Date               = new Date(),
         public isRootCategory: boolean            = false,
-        public parentCategory: string             = '')
+        public parentCategory: string             = '',
+        public denormalizedSubcategories: Array<Category> = Array<Category>(),
+        public denormalizedParent : Category = null)
     {
     }
 }

@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component }         from '@angular/core';
-import { CategoriesService } from 'meteor/biglup:business';
+import { Component }                                         from '@angular/core';
+import { CategoriesService, AppearancesService, Appearance } from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -32,18 +32,17 @@ import template from './frontend.component.html';
 @Component({template})
 export class FrontendComponent
 {
-    private _subLoaded:  boolean  = false;
-    private _isDevModeOn: boolean = false;
-    private _showDrawer: boolean  = false;
+    private _subLoaded:   boolean    = false;
+    private _isDevModeOn: boolean    = false;
+    private _showDrawer:  boolean    = false;
+    private _appearance:  Appearance = null;
 
-    constructor(private _categoriesService: CategoriesService)
+    constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        console.error((Date.now() / 1000 | 0) + " Requesting data");
-        this._categoriesService.getCategories().subscribe(
-            data =>
+        this._appearancesService.getAppearance('Kn5732fSfeyyXpkQQ').subscribe(
+            (appearance: Appearance) =>
             {
-                console.error((Date.now() / 1000 | 0) + " Got data");
-                this._subLoaded = true;
+                this._appearance = appearance
             });
     }
 

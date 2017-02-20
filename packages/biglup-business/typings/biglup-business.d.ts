@@ -111,6 +111,16 @@ declare module Business
         public setProductInventory(productId: string, amount: number): any;
         public setVariantInventory(productId: string, variantId: string, amount: number): any;
     }
+
+    class AppearancesService
+    {
+        public getAppearances(): any;
+        public getAppearance(appearanceId: string): any;
+        public createAppearance(appearance: Appearance): String;
+        public updateAppearance(appearance: Appearance): any;
+        public deleteAppearance(appearanceId: string): any;
+    }
+
 // COLLECTIONS ********************************************************************************************************/
 
     const Categories: any;
@@ -120,6 +130,7 @@ declare module Business
     const VariantColors: any;
     const VariantSizes: any;
     const VariantMaterials: any;
+    const Appearances: any;
 
 // MODELS *************************************************************************************************************/
 
@@ -159,7 +170,9 @@ declare module Business
             public createdAt:      Date               = new Date(),
             public updatedAt:      Date               = new Date(),
             public isRootCategory: boolean            = false,
-            public parentCategory: string             = '')
+            public parentCategory: string             = '',
+            public denormalizedSubcategories: Array<Category> = Array<Category>(),
+            public denormalizedParent : Category = null)
     }
 
     export class Image
@@ -262,6 +275,51 @@ declare module Business
         verified: boolean;
     }
 
+    class AppearanceLayout
+    {
+        constructor(
+            public name:           string = '',
+            public configuration:  any    = null);
+    }
+
+    class AppearanceStyle
+    {
+        constructor(
+            public header: AppearanceHeaderStyle = new AppearanceHeaderStyle(),
+            public footer: AppearanceFooterStyle = new AppearanceFooterStyle());
+    }
+
+    class AppearanceHeaderStyle
+    {
+        constructor(
+            public topBarBackgroundColor: string = '#000000',
+            public topBarFontColor:       string = '#FFFFFF',
+            public logoBackgroundColor:   string = '#FFFFFF',
+            public logoUrl:               string = '',
+            public logoAlignment:         string = 'center',
+            public menuBackgroundColor:   string = '#000000',
+            public menuFontColor:         string = '#FFFFFF');
+    }
+
+    class Appearance
+    {
+        constructor(
+            public _id: String = null,
+            public name: String = '',
+            public style: AppearanceStyle = new AppearanceStyle(),
+            public layout: Array<AppearanceLayout> = [],
+            public isEditable:     boolean             = true,
+            public createdAt:      Date            = new Date(),
+            public updatedAt:      Date            = new Date());
+    }
+
+    class AppearanceFooterStyle
+    {
+        constructor(
+            public backgroundColor: string = '#000000',
+            public fontColor:       string = '#FFFFFF');
+    }
+
 // SCHEMAS ************************************************************************************************************/
 
     const CartSchema: any;
@@ -275,6 +333,7 @@ declare module Business
     const ColorVariantAttributeSchema: any;
     const SizeVariantAttributeSchema: any;
     const MaterialVariantAttributeSchema: any;
+    const AppearanceSchema: any;
 }
 
 // MODULE EXPORT ******************************************************************************************************/

@@ -17,11 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { I18nSingletonService }         from 'meteor/biglup:i18n';
-import { UserAuthService }              from 'meteor/biglup:business';
-import { Subscription }                 from 'rxjs';
-import { CategoriesService }            from 'meteor/biglup:business';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { I18nSingletonService }                from 'meteor/biglup:i18n';
+import { UserAuthService }                     from 'meteor/biglup:business';
+import { Subscription }                        from 'rxjs';
+import { CategoriesService }                   from 'meteor/biglup:business';
+import { Appearance }                          from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -39,6 +40,8 @@ import template from './header.component.html';
 })
 export class HeaderComponent implements OnInit, OnDestroy
 {
+    @Input('appearance')
+    private _appearance: Appearance;
     private _isLogged:             boolean;
     private _isLoggedSubscription: Subscription;
 

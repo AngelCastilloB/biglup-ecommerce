@@ -66,6 +66,11 @@ declare module Core
         public transform(value: Array<any>): any;
     }
 
+    export class SanitizeHtmlPipe
+    {
+        transform(html:string):any;
+    }
+
     export function StringFormat(format, arguments): string;
 }
 // MODULE EXPORT ******************************************************************************************************/

@@ -37,6 +37,7 @@ import { CategoriesService }                from 'meteor/biglup:business';
 import { ProductsService }                  from 'meteor/biglup:business';
 import { ImagesService }                    from 'meteor/biglup:business';
 import { CartsService }                     from 'meteor/biglup:business';
+import { AppearancesService }               from 'meteor/biglup:business';
 import { BiglupToastService }               from 'meteor/biglup:ui';
 import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
 import { TruncateStringPipe }               from 'meteor/biglup:core';
@@ -98,7 +99,8 @@ import { HeaderNavMenuComponent }           from './components/header/components
         CartsService,
         BiglupToastService,
         ImagesService,
-        IdGeneratorService
+        IdGeneratorService,
+        AppearancesService
     ]
 })
 export class FrontendModule

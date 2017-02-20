@@ -17,8 +17,9 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { I18nSingletonService }         from 'meteor/biglup:i18n';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { I18nSingletonService }                from 'meteor/biglup:i18n';
+import { AppearanceHeaderStyle }               from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,6 +36,9 @@ import template from './action-bar.component.html';
 })
 export class ActionbarComponent implements OnInit, OnDestroy
 {
+    @Input('headerStyle')
+    private _style: AppearanceHeaderStyle;
+
     private _i18nSingletonService: I18nSingletonService = I18nSingletonService.getInstance();
 
     /**

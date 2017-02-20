@@ -11,7 +11,7 @@
   </div>
 </div>
 <div *ngIf="!_isDevModeOn">
-  <header *ngIf="_subLoaded"></header>
+  <header *ngIf="_appearance" [appearance]="_appearance"></header>
   <div class="content">
     <router-outlet></router-outlet>
   </div>

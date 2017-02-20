@@ -27,6 +27,7 @@ import { Images }                    from 'meteor/biglup:business';
 import { ContentGeneratorFactory }   from './generators/content-generator-factory';
 import { AbstractContentGenerator }  from './generators/abstract-content-generator';
 import { VariantAttributeMigration } from './variant-attributes.migration';
+import { AppearanceMigration }       from './appearance.migration';
 
 // FUNCTIONS **********************************************************************************************************/
 
@@ -91,7 +92,8 @@ export const configureMockMigrations = () =>
 export const configureDefaultMigrations = () =>
 {
     let migrations = [
-        new VariantAttributeMigration()
+        new VariantAttributeMigration(),
+        new AppearanceMigration()
     ];
 
     // Each migration version needs to be added with the add method.

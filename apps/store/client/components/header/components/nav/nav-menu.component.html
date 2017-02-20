@@ -1,4 +1,6 @@
-<nav id="primary_nav_wrap">
+<nav id="primary_nav_wrap"
+     [style.background-color]="_style.menuBackgroundColor"
+     [style.color]="_style.menuFontColor">
   <ul>
     <li *ngFor="let category of _categoriesService.getRootCategories() | async">
       <a [routerLink]="['/category', category._id]" [class.isSubmenu]="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" >{{category.name | mongoTranslate}}</a>

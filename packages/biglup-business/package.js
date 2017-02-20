@@ -34,7 +34,8 @@ Package.onUse(function(api)
         'client/services/user-auth.service.ts',
         'client/services/users.service.ts',
         'client/services/variant-attributes.service.ts',
-        'client/services/inventory.service.ts'
+        'client/services/inventory.service.ts',
+        'client/services/appearances.service.ts'
     ], 'client');
 
     // Collections
@@ -42,7 +43,8 @@ Package.onUse(function(api)
         'common/collections/category.collection.ts',
         'common/collections/image.collection.ts',
         'common/collections/product.collection.ts',
-        'common/collections/variant-attributes.collections.ts'
+        'common/collections/variant-attributes.collections.ts',
+        'common/collections/appearance.collections.ts'
     ], ['client', 'server']);
 
     // Methods
@@ -51,7 +53,8 @@ Package.onUse(function(api)
         'common/methods/category.methods.ts',
         'common/methods/product.methods.ts',
         'common/methods/variant-attributes.methods.ts',
-        'common/methods/inventory.methods.ts'
+        'common/methods/inventory.methods.ts',
+        'common/methods/appearance.methods.ts'
     ], ['client', 'server']);
 
     // Models
@@ -64,7 +67,12 @@ Package.onUse(function(api)
         'common/models/product.ts',
         'common/models/product-image.ts',
         'common/models/product-variant.ts',
-        'common/models/user.ts'
+        'common/models/user.ts',
+        'common/models/appearance.ts',
+        'common/models/appearance-footer-style.ts',
+        'common/models/appearance-header-style.ts',
+        'common/models/appearance-layout.ts',
+        'common/models/appearance-style.ts'
     ], ['client', 'server']);
 
     // Schemas
@@ -74,7 +82,8 @@ Package.onUse(function(api)
         'common/schemas/i18n-string.schema.ts',
         'common/schemas/product.schema.ts',
         'common/schemas/user.schema.ts',
-        'common/schemas/variant-attributes.schema.ts'
+        'common/schemas/variant-attributes.schema.ts',
+        'common/schemas/appearance.schema.ts'
     ], ['client', 'server']);
 
     // Publications
@@ -83,7 +92,8 @@ Package.onUse(function(api)
         'server/publications/images.publication.ts',
         'server/publications/product.publication.ts',
         'server/publications/user.publication.ts',
-        'server/publications/variant-attributes.publication.ts'
+        'server/publications/variant-attributes.publication.ts',
+        'server/publications/appearance.publication.ts'
     ], 'server');
 
     api.mainModule ('client.ts', "client");

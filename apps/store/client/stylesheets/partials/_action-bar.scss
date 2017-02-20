@@ -8,8 +8,6 @@
   }
 
   width: 100%;
-  color: white;
-  background-color: black;
 
   .action-bar-icon {
     padding-left: 10px;
@@ -17,30 +15,8 @@
     cursor: pointer;
   }
 
-  a:link {
-    color: white;
-  }
-
-  a:visited {
-    color: white;
-  }
-
-  a:hover {
-    color: white;
-  }
-
-  a:active {
-    color: white;
-  }
-
-  i:hover {
-    color: white;
-  }
-
   .language-picker {
-    color: #FFF;
     border: 0;
-    background-color: black;
     line-height: 40px;
     font-weight: bold;
     cursor: pointer;

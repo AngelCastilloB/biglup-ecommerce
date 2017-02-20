@@ -25,6 +25,7 @@ export * from './client/services/validation.service';
 // Pipes
 export * from './client/pipes/array-random.pipe';
 export * from './client/pipes/truncate-string.pipe';
+export * from './client/pipes/sanitize-html.pipe';
 
 // Others
 export * from './client/format/string.format';

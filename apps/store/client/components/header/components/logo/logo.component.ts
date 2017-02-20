@@ -17,7 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { AppearanceHeaderStyle }               from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,6 +35,9 @@ import template from './logo.component.html';
 })
 export class HeaderLogoComponent implements OnInit, OnDestroy
 {
+    @Input('headerStyle')
+    private _style: AppearanceHeaderStyle;
+
     /**
      * @summary Initializes a new instance of the HeaderLogoComponent class.
      */

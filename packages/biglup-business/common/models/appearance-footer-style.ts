@@ -1,10 +1,10 @@
 /**
- * @file models.ts
+ * @file AppearanceFooterStyle.ts
  *
- * @summary The Models exports.
+ * @summary The appearance footer style model.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   September 05 2016
+ * @date   February 20 2017
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,17 +17,21 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export * from './cart';
-export * from './cart-item';
-export * from './category';
-export * from './image';
-export * from './product';
-export * from './product-image';
-export * from './product-variant';
-export * from './user';
-export * from './variant-attributes';
-export * from './appearance';
-export * from './appearance-footer-style';
-export * from './appearance-header-style';
-export * from './appearance-layout';
-export * from './appearance-style';
+/**
+ * @summary The footer style model.
+ */
+export class AppearanceFooterStyle
+{
+    /**
+     * @summary Initializes a new instance of the AppearanceFooterStyle class.
+     *
+     * @param backgroundColor The background color.
+     * @param fontColor       The font color.
+     */
+    constructor(
+        public backgroundColor: string = '#000000',
+        public fontColor:       string = '#FFFFFF')
+    {
+    }
+}
+ 

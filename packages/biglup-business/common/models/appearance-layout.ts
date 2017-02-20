@@ -1,10 +1,10 @@
 /**
- * @file models.ts
+ * @file AppearanceLayout.ts
  *
- * @summary The Models exports.
+ * @summary The appearance layout model.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   September 05 2016
+ * @date   February 20 2017
  *
  * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
@@ -17,17 +17,19 @@
 
 // EXPORTS ************************************************************************************************************/
 
-export * from './cart';
-export * from './cart-item';
-export * from './category';
-export * from './image';
-export * from './product';
-export * from './product-image';
-export * from './product-variant';
-export * from './user';
-export * from './variant-attributes';
-export * from './appearance';
-export * from './appearance-footer-style';
-export * from './appearance-header-style';
-export * from './appearance-layout';
-export * from './appearance-style';
+/**
+ * @summary Defines the appearance layout model.
+ */
+export class AppearanceLayout
+{
+    /**
+     * @summary Initializes a new instance of the AppearanceLayout class.
+     * @param name          The name of the layout.
+     * @param configuration The configuration object of the layout.
+     */
+    constructor(
+        public name:           string = '',
+        public configuration:  any    = null)
+    {
+    }
+}
