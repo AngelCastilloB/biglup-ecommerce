@@ -79,6 +79,15 @@ export class CollectionsComponent implements OnDestroy
     {
         this._dataTableColums = [
             { name: 'name', label: _T('Name'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)},
+            { name: 'denormalizedParent', label: _T('Parent'), format:
+                (value) =>
+                {
+                    if (value == null)
+                        return _T('Root');
+
+                    return value.name;
+                }
+            },
             { name: 'info', label: _T('Description'), format: (value) => I18nSingletonService.getInstance().getMongoText(value)}
         ];
     }

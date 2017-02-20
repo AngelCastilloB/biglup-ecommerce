@@ -93,4 +93,14 @@
   .add-product-variant-color-label {
     font-size: 15px;
   }
+
+  .add-product-category-list {
+    list-style: none;
+
+    .add-product-category-list {
+      margin-left: 35px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
 }

@@ -152,7 +152,7 @@ export class AddCollectionComponent implements OnInit
             if (!i18nInput.getIsValid())
             {
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
@@ -211,7 +211,7 @@ export class AddCollectionComponent implements OnInit
             if (!i18nInput.getIsValid())
             {
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 

@@ -107,14 +107,23 @@
     <br>
     <biglup-paper elevation="1">
       <span><b>{{ 'Categories' | translate }}</b></span></br>
-      <div class="biglup-grid">
-        <div class="biglup-cell biglup-cell-3-col" *ngFor="let category of _categoriesService.getCategories() | async">
+
+      <ul class="add-product-category-list">
+        <li *ngFor="let category of _categoriesService.getRootCategories() | async">
           <biglup-checkbox [checked]="_productHasCategory(category._id)"
                            (checkedChange)="_onCategoryToggle(category._id, $event)">
             {{category.name | mongoTranslate}}
           </biglup-checkbox>
-        </div>
-      </div>
+          <ul *ngIf="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" class="add-product-category-list">
+            <li *ngFor="let subCategory of category.denormalizedSubcategories">
+              <biglup-checkbox [checked]="_productHasCategory(subCategory._id)"
+                               (checkedChange)="_onCategoryToggle(subCategory._id, $event)">
+                {{subCategory.name | mongoTranslate}}
+              </biglup-checkbox>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
     </biglup-paper>
 
