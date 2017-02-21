@@ -49,6 +49,7 @@ import { IdGeneratorService }               from 'meteor/biglup:core';
 import { ActionbarComponent }               from './components/header/components/action-bar/action-bar.component';
 import { HeaderLogoComponent }              from './components/header/components/logo/logo.component';
 import { HeaderNavMenuComponent }           from './components/header/components/nav/nav-menu.component';
+import { DesignerComponent }                from './components/designer/designer.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -83,7 +84,10 @@ import { HeaderNavMenuComponent }           from './components/header/components
         LandingPageComponent,
 
         TruncateStringPipe,
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+
+        // Designer
+        DesignerComponent
     ],
     imports: [
         FrontendRoutesModule,

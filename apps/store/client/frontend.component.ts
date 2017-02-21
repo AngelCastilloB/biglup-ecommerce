@@ -32,17 +32,17 @@ import template from './frontend.component.html';
 @Component({template})
 export class FrontendComponent
 {
-    private _subLoaded:   boolean    = false;
-    private _isDevModeOn: boolean    = false;
+    private _isDevModeOn: boolean    = true;
     private _showDrawer:  boolean    = false;
     private _appearance:  Appearance = null;
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        this._appearancesService.getAppearance('Kn5732fSfeyyXpkQQ').subscribe(
+        this._appearancesService.getAppearance('S7wHGD5CH5F9YQw7z').subscribe(
             (appearance: Appearance) =>
             {
-                this._appearance = appearance
+                this._appearance = appearance;
+                console.error(appearance);
             });
     }
 

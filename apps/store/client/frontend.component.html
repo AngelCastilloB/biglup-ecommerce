@@ -1,10 +1,14 @@
 <div *ngIf="_isDevModeOn">
   <div [class.active]="_showDrawer" id="designerDrawer">
+    <designer *ngIf="_appearance" [appearance]="_appearance"></designer>
   </div>
   <div [class.active]="_showDrawer" id="designerToggle" (click)="_onToggleClick()">
+    <div class="toggleLabel">
+      <i [class.fa-caret-left]="_showDrawer" [class.fa-caret-right]="!_showDrawer" class="fa" aria-hidden="true"></i>
+    </div>
   </div>
   <div [class.active]="_showDrawer" id="designerDrawerContent">
-    <header *ngIf="_subLoaded"></header>
+    <header *ngIf="_appearance" [appearance]="_appearance"></header>
     <div class="content">
       <router-outlet></router-outlet>
     </div>

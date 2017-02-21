@@ -35,13 +35,12 @@ import template from './header.component.html';
  */
 @Component({
     selector: 'header',
-    template,
-    styleUrls: ['header.component.css']
+    template
 })
 export class HeaderComponent implements OnInit, OnDestroy
 {
     @Input('appearance')
-    private _appearance: Appearance;
+    private _appearance:           Appearance;
     private _isLogged:             boolean;
     private _isLoggedSubscription: Subscription;
 
