@@ -15,9 +15,16 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
   <img src="https://gitlab.com/arcangelz/biglup-ecommerce/uploads/b02fc1fbb7dbc6302566092fbf42f54d/biglup-framework-small.png" alt="Architecture"/>
 </p>
 
+## Project Structure
+
+ The project is organized in two folders: apps and packages.
+
+ Inside the apps folder are located both the backoffice app and the store app, both are independent meteor apps. In the packages
+ folders are located all the reusable and common packages.
+
 ## Conventions
 
-### File system structure
+### File System Structure Inside Projects
 
  * All folders should be lower case with "-" character as word separator.
  * All parts of the components should be name as follows name.component.ts|html|css|spec to represent those various files.
@@ -77,12 +84,16 @@ Biglup e-commerce is a modern reactive, real-time event driven platform. The pla
 
 Developers using **Windows** should review the [Windows specific installation requirements for Meteor](https://www.meteor.com/install).
 
+Before you start the application you must export an special environment variable to point meteor to the correct packages folder location:
+
+export METEOR_PACKAGE_DIRS=E:\sourcecode\biglup-ecommerce\packages
+
 ```bash
 curl https://install.meteor.com | /bin/sh # installs Meteor
 
-git clone git@gitlab.com:arcangelz/biglup-ecommerce.git
+git clone git@gitlab.com:biglup/biglup-ecommerce.git
 
-cd biglup-ecommerce
+cd biglup-ecommerce/apps/{backoffice|store}
 
 typings install
 
@@ -90,6 +101,13 @@ meteor npm install
 
 meteor
 ```
+
+To run both apps in coordination:
+
+ * Go th the backoffice folder and start the backoffice client in the desired local IP Address: meteor --port 127.0.0.10:80
+ * In a second terminal go again to the backoffice folder and find the mongo database URL: meteor mongo -U
+ * Once you have the database URL, in a different terminal, go to the store folder and export: export MONGO_URL=mongodb://127.0.0.1:81/meteor (Here use the previously obtained database URL)
+ * Start the store server: meteor --port 127.0.0.10:80
 
 ### Meteor JSON configuration
 
@@ -167,11 +185,10 @@ to the predefined coding styles conventions.
 *  Single page web app (SPA) created using AngularJS2, Meteor, NodeJS and MongoDB
 *  Product Search
 *  Add to Cart and Product Details
-*  Checkout with Paypal Integration
 *  Minimal User Registration process
 *  Order history and Password Management
 *  Facility for Multi level Category
-*  Mobile optimized with Bootstrap
+*  Mobile optimized
 *  Loads more products on scroll (No paging required)
 
 ### Store Back Office Features
@@ -184,13 +201,12 @@ to the predefined coding styles conventions.
 
 ## Contributors
 
-
 * Angel Castillo <angel.castillo@biglup.com>
 * Alejandro Granadillo <slayerfat@gmail.com>
 
 ## License
 
-Copyright 2016 Biglup. All Rights Reserved.
+Copyright 2017 Biglup. All Rights Reserved.
 
 Confidential Information of Biglup. Not for disclosure or distribution
 prior written consent. This software contains code, techniques and know-how which 
