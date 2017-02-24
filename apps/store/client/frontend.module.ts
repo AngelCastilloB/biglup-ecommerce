@@ -38,18 +38,19 @@ import { ProductsService }                  from 'meteor/biglup:business';
 import { ImagesService }                    from 'meteor/biglup:business';
 import { CartsService }                     from 'meteor/biglup:business';
 import { AppearancesService }               from 'meteor/biglup:business';
-import { BiglupToastService }               from 'meteor/biglup:ui';
 import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
 import { TruncateStringPipe }               from 'meteor/biglup:core';
 import { SanitizeHtmlPipe }                 from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BiglupUiModule }                   from 'meteor/biglup:ui';
 import { IdGeneratorService }               from 'meteor/biglup:core';
 import { ActionbarComponent }               from './components/header/components/action-bar/action-bar.component';
 import { HeaderLogoComponent }              from './components/header/components/logo/logo.component';
 import { HeaderNavMenuComponent }           from './components/header/components/nav/nav-menu.component';
 import { DesignerComponent }                from './components/designer/designer.component';
+import { ColorPickerService }               from './components/designer/services/color-picker/color-picker.service';
+import { ColorPickerDirective }             from './components/designer/directives/color-picker/color-picker.directive';
+import { DynamicColorPickerModule }         from './components/designer/directives/color-picker/color-picker.directive';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -87,7 +88,8 @@ import { DesignerComponent }                from './components/designer/designer
         SanitizeHtmlPipe,
 
         // Designer
-        DesignerComponent
+        DesignerComponent,
+        ColorPickerDirective
     ],
     imports: [
         FrontendRoutesModule,
@@ -95,16 +97,16 @@ import { DesignerComponent }                from './components/designer/designer
         FormsModule,
         ReactiveFormsModule,
         BiglupI18nModule,
-        BiglupUiModule
+        DynamicColorPickerModule
     ],
     providers: [
         CategoriesService,
         ProductsService,
         CartsService,
-        BiglupToastService,
         ImagesService,
         IdGeneratorService,
-        AppearancesService
+        AppearancesService,
+        ColorPickerService
     ]
 })
 export class FrontendModule

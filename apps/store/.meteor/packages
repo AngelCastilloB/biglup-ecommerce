@@ -38,7 +38,6 @@ barbatus:angular2-runtime
 
 biglup:i18n
 biglup:core
-biglup:ui
 biglup:business
 biglup:migrations
 biglup:configuration

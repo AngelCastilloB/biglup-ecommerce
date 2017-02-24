@@ -34,16 +34,19 @@
     </section>
 
     <section id="content2" class="tab-content">
-      <h3>Headline 2</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <input
+        style="
+        border:none;
+        width: 40px;
+        height: 40px;
+        border-radius:4px;
+        cursor: pointer;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        display: block"
+        readonly [ColorPicker]="_appearance.style.header.topBarBackgroundColor"
+        oKButton="true"
+        (colorPickerChange)="_appearance.style.header.topBarBackgroundColor=$event"
+        [style.background]="_appearance.style.header.topBarBackgroundColor"/> Header
     </section>
   </div>
 

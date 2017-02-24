@@ -1,5 +1,5 @@
 /**
- * @file biglup-color-picker.component.ts
+ * @file color-picker.component.ts
  *
  * @summary
  *
@@ -20,17 +20,17 @@
 import { Component,
          ElementRef,
          ViewChild,
-         OnInit }                   from '@angular/core';
-import { Rgba }                     from '../../services/color-picker/internals/Rgba';
-import { Hsla }                     from '../../services/color-picker/internals/Hsla';
-import { Hsva }                     from '../../services/color-picker/internals/Hsva';
-import { SliderPosition }           from '../../services/color-picker/internals/SliderPosition';
-import { SliderDimension }          from '../../services/color-picker/internals/SliderDimension';
-import { BiglupColorPickerService } from '../../services/color-picker/biglup-color-picker.service';
+         OnInit }             from '@angular/core';
+import { Rgba }               from '../../services/color-picker/internals/Rgba';
+import { Hsla }               from '../../services/color-picker/internals/Hsla';
+import { Hsva }               from '../../services/color-picker/internals/Hsva';
+import { SliderPosition }     from '../../services/color-picker/internals/SliderPosition';
+import { SliderDimension }    from '../../services/color-picker/internals/SliderDimension';
+import { ColorPickerService } from '../../services/color-picker/color-picker.service';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './biglup-color-picker.component.html';
+import template from './color-picker.component.html';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -38,10 +38,10 @@ import template from './biglup-color-picker.component.html';
  * @summary Color picker dialog.
  */
 @Component({
-    selector: 'biglup-color-picker',
+    selector: 'color-picker',
     template
 })
-export class BiglupColorPickerComponent implements OnInit
+export class ColorPickerComponent implements OnInit
 {
     private _hsva:                Hsva;
     private _rgbaText:            Rgba;
@@ -91,12 +91,12 @@ export class BiglupColorPickerComponent implements OnInit
     private _dialogElement: any;
 
     /**
-     * @summary Initializes a new instance of the BiglupColorPickerComponent class.
+     * @summary Initializes a new instance of the ColorPickerComponent class.
      *
      * @param el      The element reference.
      * @param service The color picker service.
      */
-    constructor(private el: ElementRef, private service: BiglupColorPickerService)
+    constructor(private el: ElementRef, private service: ColorPickerService)
     {
     }
 
