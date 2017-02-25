@@ -8,7 +8,7 @@
   font-size:11px;
 }
 
-@mixin boder-radius($radius){
+@mixin border-radius($radius){
   -moz-border-radius: $radius;
   -webkit-border-radius: $radius;
   border-radius: $radius;
@@ -16,17 +16,19 @@
 }
 
 .color-picker{
-  background-color: transparent!important;
+  background-color: white!important;
   cursor: default!important;
-  width: 230px!important;
-  height: auto!important;
-  left:30px!important;
-  top:250px!important;
-  position:absolute!important;
+  width: 170px;
+  height: auto;
+  left:30px;
+  top:0;
+  position:absolute;
   color: grey!important;
   font-family: $base-font-family!important;
   font-weight: $base-font-weight!important;
   z-index: 2000!important;
+  @include elevation(1);
+  border-radius: 5px;
 
   -webkit-touch-callout: none!important;
   -webkit-user-select: none!important;
@@ -66,7 +68,7 @@
   }
 
   .button-area{
-    padding: 0 16px 16px 16px;
+    padding: 0 0 0 0;
     text-align: right;
   }
 
@@ -87,7 +89,7 @@
       width: 18px;
       height: 18px;
       margin: 4px 6px 8px 6px;
-      @include boder-radius(25%);
+      @include border-radius(25%);
       border: #a9a9a9 solid 1px;
     }
   }
@@ -130,7 +132,7 @@
   div.cursor-sv{
     cursor:default;
     position:relative;
-    @include boder-radius(50%);
+    @include border-radius(50%);
     width: 15px;
     height: 15px;
     border: #ddd solid 1px;
@@ -139,7 +141,7 @@
   div.cursor{
     cursor:default;
     position:relative;
-    @include boder-radius(50%);
+    @include border-radius(50%);
     width: 16px;
     height: 16px;
     border: #222 solid 2px;
@@ -174,7 +176,9 @@
     height: 16px;
     border:none;
     margin-bottom: 16px;
+    margin-top: 16px;
     background-size: 100% 100%;
+    border-radius: 2px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIWDwkUFWbCCAAAAFxJREFUaN7t0kEKg0AQAME2x83/n2qu5qCgD1iDhCoYdpnbQC9bbY1qVO/jvc6k3ad91s7/7F1/csgPrujuQ17BDYSFsBAWwgJhISyEBcJCWAgLhIWwEBYIi2f7Ar/1TCgFH2X9AAAAAElFTkSuQmCC');
   }
   .alpha{
@@ -192,13 +196,13 @@
     top: 16px;
     left: 8px;
     position:absolute;
-    @include boder-radius(50%);
+    @include border-radius(50%);
   }
 
   .selected-color-background{
     width: 40px;
     height: 40px;
-    @include boder-radius(50%);
+    @include border-radius(50%);
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAh0lEQVRYR+2W0QlAMQgD60zdfwOdqa8TmI/wQMr5K0I5bZLIzLOa2nt37VVVbd+dDx5obgCC3KBLwJ2ff4PnVidkf+ucIhw80HQaCLo3DMH3CRK3iFsmAWVl6hPNDwt8EvNE5q+YuEXcMgkonVM6SdyCoEvAnZ8v1Hjx817MilmxSUB5rdLJDycZgUAZUch/AAAAAElFTkSuQmCC');
   }
 
@@ -225,7 +229,7 @@
     padding: 4px 8px;
 
     .box{
-      padding: 0 24px 8px 8px;
+      padding: 0 0 0 0;
       input{
         min-width: 0;
         flex: 1;
@@ -257,14 +261,15 @@
     font-size: 11px;
     font-family: $base-font-family;
     font-weight: $base-font-weight;
-    padding: 4px 8px;
+    padding: 4px 4px;
 
     .box{
-      padding: 0 24px 8px 8px;
+      padding: 0 0 10px 0;
       input{
         flex: 1 1 auto;
-        border: #a9a9a9 solid 1px;
+        border: #cac8c8 solid 1px;
         padding: 1px;
+        border-radius: 3px;
       }
       div{
         flex: 1 1 auto;

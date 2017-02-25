@@ -3,7 +3,7 @@
 .designer {
   width: 100%;
   height: 100%;
-  background: white;
+  background: #ebebeb;
   .designerTitle {
     background-color: #3f51b5;
 
@@ -28,10 +28,16 @@
   }
 
   .appearanceTitle {
-    padding-left: 15px;
     padding-top: 15px;
     font-size: 16px;
     position: absolute;
+    width: 100%;
+    padding-bottom: 20px;
+    background: white;
+    font-family: $base-font-family;
+    b {
+      padding-left: 15px;
+    }
   }
 
   .tab_container {
@@ -109,6 +115,27 @@
       margin: 0 0.4em 0 0;
     }
   }
+
+  .designerColorItemTitle {
+    margin: 8px 0 0 0;
+    font-family: $base-font-family;
+    font-size: 15px;
+  }
+
+  .designerColorStyleTitle {
+    color: #282828;
+  }
+
+  .designerColorItem {
+        border:none;
+        width: 40px;
+        height: 20px;
+        border-radius:4px;
+        cursor: pointer;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        display: block;
+  }
+
   #tab1 {
     &:checked {
       ~ {

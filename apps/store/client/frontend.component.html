@@ -2,8 +2,8 @@
   <div [class.active]="_showDrawer" id="designerDrawer">
     <designer *ngIf="_appearance" [appearance]="_appearance"></designer>
   </div>
-  <div [class.active]="_showDrawer" id="designerToggle" (click)="_onToggleClick()">
-    <div class="toggleLabel">
+  <div [class.active]="_showDrawer" id="designerToggle">
+    <div class="toggleLabel" (click)="_onToggleClick()">
       <i [class.fa-caret-left]="_showDrawer" [class.fa-caret-right]="!_showDrawer" class="fa" aria-hidden="true"></i>
     </div>
   </div>

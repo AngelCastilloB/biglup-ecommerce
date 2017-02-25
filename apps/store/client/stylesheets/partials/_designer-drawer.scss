@@ -11,6 +11,10 @@
   transition: transform 0.2s;
   background-color: #ebebeb;
   @include elevation(4);
+
+  hr {
+    border-color: #3f51b5;
+  }
 }
 
 #designerDrawer.active {

@@ -613,4 +613,22 @@ export class ColorPickerComponent implements OnInit
             height: element.offsetHeight
         };
     }
+
+    /**
+     * Gets the style of this color picker window.
+     *
+     * @return {{height: string, width: string, top: string, left: string, position: string}}
+     * @private
+     */
+    private _getStyles()
+    {
+        let styles = {
+            'height.px': this._height,
+            'width.px': this._width,
+            'top.px': this._top,
+            'left.px': this._left,
+            'position': this._position,
+        };
+        return styles;
+    }
 }

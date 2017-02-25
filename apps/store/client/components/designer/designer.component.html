@@ -2,7 +2,7 @@
   <div class="designerTitle">
     <h6>{{ 'Designer' | translate }}</h6>
   </div>
-  <span class="appearanceTitle"><b>{{ 'Appearance' | translate }}:</b> {{ _appearance.name }}</span>
+  <div class="appearanceTitle"><b>{{ 'Appearance' | translate }}:</b> {{ _appearance.name }}</div>
   <div class="tab_container">
     <input id="tab1" type="radio" name="tabs" checked>
     <label for="tab1">
@@ -34,19 +34,97 @@
     </section>
 
     <section id="content2" class="tab-content">
-      <input
-        style="
-        border:none;
-        width: 40px;
-        height: 40px;
-        border-radius:4px;
-        cursor: pointer;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-        display: block"
-        readonly [ColorPicker]="_appearance.style.header.topBarBackgroundColor"
-        oKButton="true"
-        (colorPickerChange)="_appearance.style.header.topBarBackgroundColor=$event"
-        [style.background]="_appearance.style.header.topBarBackgroundColor"/> Header
+
+      <span class="designerColorStyleTitle"> {{ 'Header' | translate }} </span>
+      <hr>
+      <div class="biglup-grid" style="padding: 0; margin: 0;">
+        <div class="biglup-cell biglup-cell-12-col">
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.topBarBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.topBarBackgroundColor=$event"
+                [style.background]="_appearance.style.header.topBarBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Top Bar Background' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.topBarFontColor"
+                (colorPickerChange)="_appearance.style.header.topBarFontColor=$event"
+                [style.background]="_appearance.style.header.topBarFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Top Bar Font' | translate }}</div>
+            </div>
+          </div>
+
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.logoBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.logoBackgroundColor=$event"
+                [style.background]="_appearance.style.header.logoBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Logo Background' | translate }}</div>
+            </div>
+          </div>
+
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Logo Image' | translate }}</div>
+            </div>
+          </div>
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Logo Alignment' | translate }}</div>
+            </div>
+          </div>
+
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.menuBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.menuBackgroundColor=$event"
+                [style.background]="_appearance.style.header.menuBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Menu Background' | translate }}</div>
+            </div>
+          </div>
+
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.menuFontColor"
+                (colorPickerChange)="_appearance.style.header.menuFontColor=$event"
+                [style.background]="_appearance.style.header.menuFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Menu Font' | translate }}</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
   </div>
 

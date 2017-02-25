@@ -1,4 +1,4 @@
-<div class="color-picker" [hidden]="!_show" [style.height.px]="_height" [style.width.px]="_width" [style.top.px]="_top" [style.left.px]="_left" [style.position]="_position" #dialogPopup>
+<div class="color-picker" [hidden]="!_show" [ngStyle]="_getStyles()" #dialogPopup>
   <div *ngIf="_dialogDisplay=='popup'" class="arrow arrow-{{_cpPosition}}" [style.top.px]="_arrowTop"></div>
 
   <div [slider] [style.background-color]="_hueSliderColor" [rgX]="1" [rgY]="1" (newValue)="setSaturationAndBrightness($event)" class="saturation-lightness">
@@ -10,8 +10,6 @@
       <div [style.background-color]="_selectedColor" class="selected-color"></div>
     </div>
     <div class="right">
-      <div *ngIf="_alphaChannel==='disabled'" style="height: 18px;"></div>
-
       <div [slider] [rgX]="1" (newValue)="setHue($event)" class="hue" #hueSlider>
         <div [style.left.px]="_slider.h" class="cursor"></div>
       </div>
@@ -54,20 +52,9 @@
       <div>Hex</div>
     </div>
   </div>
-
-  <div (click)="formatPolicy()" class="type-policy"></div>
-
   <div *ngIf="_presetColors && _presetColors.length" class="preset-area">
     <hr>
-
     <div class="preset-label">{{_presetLabel}}</div>
-
     <div *ngFor="let color of _presetColors" class="preset-color" [style.backgroundColor]="_color" (click)="setColorFromString(_color)"></div>
   </div>
-
-  <div class="button-area">
-    <button *ngIf="_oKButton" type="button" class="{{_oKButtonClass}}" (click)="oKColor()">{{_oKButtonText}}</button>
-    <button *ngIf="_cancelButton" type="button" class="{{_cancelButtonClass}}" (click)="cancelColor()">{{_cancelButtonText}}</button>
-  </div>
-
 </div>

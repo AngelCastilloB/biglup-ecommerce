@@ -86,7 +86,7 @@ export class ColorPickerDirective implements OnInit, OnChanges
     @Input('height')
     private _cpHeight: string = 'auto';
     @Input('width')
-    private _cpWidth: string = '230px';
+    private _cpWidth: string = '170px';
     @Input('ignoredElements')
     private _cpIgnoredElements: any = [];
     @Input('dialogDisplay')
