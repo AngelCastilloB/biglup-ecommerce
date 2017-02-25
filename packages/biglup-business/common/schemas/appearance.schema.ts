@@ -22,12 +22,44 @@ const APPEARANCE_HEADER_STYLE_SCHEMA_NAME = 'AppearanceHeaderStyleSchema';
 const APPEARANCE_FOOTER_STYLE_SCHEMA_NAME = 'AppearanceFooterStyleSchema';
 const APPEARANCE_SCHEMA_NAME              = 'AppearanceSchema';
 const APPEARANCE_LAYOUT_SCHEMA_NAME       = 'AppearanceLayoutSchema';
+const APPEARANCE_LOGO_SCHEMA_NAME         = 'LogoImageSchema';
 
 // IMPORTS ************************************************************************************************************/
 
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // EXPORTS ************************************************************************************************************/
+
+/**
+ * @brief product image schema.
+ */
+export let LogoImageSchema: any = new SimpleSchema({
+    id: {
+        label: `${APPEARANCE_LOGO_SCHEMA_NAME} id`,
+        type: String
+    },
+    // Denormalized field: This will avoid the need to query the image collection.
+    url: {
+        label: `${APPEARANCE_LOGO_SCHEMA_NAME} url`,
+        type: String
+    },
+    isUploaded: {
+        label: `${APPEARANCE_LOGO_SCHEMA_NAME} isUploaded`,
+        type: Boolean
+    },
+    file:
+    {
+        label: 'The image file object.',
+        type: Object,
+        autoValue()
+        {
+            if (this.isInsert || this.isSet)
+                this.unset();
+        },
+        optional: true
+    }
+});
+
 
 /**
  * @brief Appearance layout schema.
@@ -60,9 +92,9 @@ export let AppearanceHeaderStyleSchema: any = new SimpleSchema({
         label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo background color`,
         type: String
     },
-    logoUrl: {
-        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo url`,
-        type: String
+    logo: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo`,
+        type: LogoImageSchema
     },
     logoAlignment: {
         label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo alignment`,

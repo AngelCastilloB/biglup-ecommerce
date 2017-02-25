@@ -289,16 +289,25 @@ declare module Business
             public footer: AppearanceFooterStyle = new AppearanceFooterStyle());
     }
 
+    class LogoImage
+    {
+        constructor(
+            public id: string  = '',
+            public url:        string  = '',
+            public isUploaded: boolean = false,
+            public file:       File    = null);
+    }
+
     class AppearanceHeaderStyle
     {
         constructor(
-            public topBarBackgroundColor: string = '#000000',
-            public topBarFontColor:       string = '#FFFFFF',
-            public logoBackgroundColor:   string = '#FFFFFF',
-            public logoUrl:               string = '',
-            public logoAlignment:         string = 'center',
-            public menuBackgroundColor:   string = '#000000',
-            public menuFontColor:         string = '#FFFFFF');
+            public topBarBackgroundColor: string    = '#000000',
+            public topBarFontColor:       string    = '#FFFFFF',
+            public logoBackgroundColor:   string    = '#FFFFFF',
+            public logo:                  LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+            public logoAlignment:         string    = 'center',
+            public menuBackgroundColor:   string    = '#000000',
+            public menuFontColor:         string    = '#FFFFFF');
     }
 
     class Appearance

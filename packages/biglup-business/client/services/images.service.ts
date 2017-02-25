@@ -17,14 +17,14 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }          from '@angular/core';
-import { Images }              from '../../common/collections/image.collection';
-import { BehaviorSubject }     from 'rxjs/BehaviorSubject';
-import { Observable }          from 'rxjs/Observable';
-import { Image, ProductImage } from '../../common/models';
-import { ImagesStore }         from '../../common/collections/image.collection.ts';
-import { UploadFS }            from 'meteor/jalik:ufs';
-import { MeteorReactive }      from 'angular2-meteor';
+import { Injectable }                     from '@angular/core';
+import { Images }                         from '../../common/collections/image.collection';
+import { BehaviorSubject }                from 'rxjs/BehaviorSubject';
+import { Observable }                     from 'rxjs/Observable';
+import { Image, ProductImage, LogoImage } from '../../common/models';
+import { ImagesStore }                    from '../../common/collections/image.collection.ts';
+import { UploadFS }                       from 'meteor/jalik:ufs';
+import { MeteorReactive }                 from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -148,6 +148,63 @@ export class ImagesService extends MeteorReactive
                 });
 
                 worker.start();
+        });
+    }
+
+    /**
+     * @summary Creates a new image.
+     *
+     * @param image The new logo image to be created in the database.
+     *
+     * @remark Logo images flagged as uploaded wont be uploaded.
+     */
+    public createLogoImage(image: LogoImage): Observable<number>
+    {
+        if (image.isUploaded)
+            return Observable.of(100);
+
+        if (!image.file)
+        {
+            throw new Meteor.Error(
+                'ImagesService.createLogoImage',
+                'You need to provide an image file to upload.');
+        }
+
+        let addedWork: number = 0;
+        return Observable.create(observer =>
+        {
+            let sourceFile: File = image.file;
+
+            const picture = {
+                name: sourceFile.name,
+                type: sourceFile.type,
+                size: sourceFile.size,
+            };
+
+            let worker = new UploadFS.Uploader({
+                store: ImagesStore,
+                data: sourceFile,
+                file: picture,
+                onError: (error) =>
+                {
+                    observer.error(error);
+                },
+                onComplete: (result) =>
+                {
+                    image.isUploaded = true;
+                    image.id         = result._id;
+                    image.url        = result.url.toString();
+
+                    observer.complete();
+                },
+                onProgress: (file, progress) =>
+                {
+                    addedWork = (progress * 100) - addedWork;
+                    observer.next(addedWork);
+                }
+            });
+
+            worker.start();
         });
     }
 }

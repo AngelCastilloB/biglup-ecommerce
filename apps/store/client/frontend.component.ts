@@ -38,7 +38,7 @@ export class FrontendComponent
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        this._appearancesService.getAppearance('S7wHGD5CH5F9YQw7z').subscribe(
+        this._appearancesService.getAppearance('5rQZBPCxz4TQP4j2E').subscribe(
             (appearance: Appearance) =>
             {
                 this._appearance = appearance;

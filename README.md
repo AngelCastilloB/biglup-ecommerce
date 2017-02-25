@@ -107,7 +107,7 @@ To run both apps in coordination:
  * Go th the backoffice folder and start the backoffice client in the desired local IP Address: meteor --port 127.0.0.10:80
  * In a second terminal go again to the backoffice folder and find the mongo database URL: meteor mongo -U
  * Once you have the database URL, in a different terminal, go to the store folder and export: export MONGO_URL=mongodb://127.0.0.1:81/meteor (Here use the previously obtained database URL)
- * Start the store server: meteor --port 127.0.0.10:80
+ * Start the store server: meteor --port 127.0.0.11:80
 
 ### Meteor JSON configuration
 

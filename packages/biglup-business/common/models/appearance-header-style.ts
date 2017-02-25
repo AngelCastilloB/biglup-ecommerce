@@ -15,6 +15,10 @@
  * Use of this software is subject to the terms of an end user license agreement.
  */
 
+// IMPORTS ************************************************************************************************************/
+
+import { LogoImage } from './logo-image';
+
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -28,19 +32,19 @@ export class AppearanceHeaderStyle
      * @param topBarBackgroundColor The top bar background color.
      * @param topBarFontColor       The top bar font color.
      * @param logoBackgroundColor   The logo area background color.
-     * @param logoUrl               The logo url.
+     * @param logo                  The sites logo.
      * @param logoAlignment         The logo alignment.
      * @param menuBackgroundColor   The menu background color.
      * @param menuFontColor         The menu font color.
      */
     constructor(
-        public topBarBackgroundColor: string = '#000000',
-        public topBarFontColor:       string = '#FFFFFF',
-        public logoBackgroundColor:   string = '#FFFFFF',
-        public logoUrl:               string = '/images/logo_placeholder.png',
-        public logoAlignment:         string = 'center',
-        public menuBackgroundColor:   string = '#000000',
-        public menuFontColor:         string = '#FFFFFF')
+        public topBarBackgroundColor: string    = '#000000',
+        public topBarFontColor:       string    = '#FFFFFF',
+        public logoBackgroundColor:   string    = '#FFFFFF',
+        public logo:                  LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+        public logoAlignment:         string    = 'center',
+        public menuBackgroundColor:   string    = '#000000',
+        public menuFontColor:         string    = '#FFFFFF')
     {
     }
 }

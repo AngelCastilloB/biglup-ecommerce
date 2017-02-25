@@ -35,8 +35,10 @@ const copyAppearance = (appearance: Appearance) =>
 
 // IMPORTS ************************************************************************************************************/
 
-import { Appearance, Appearances } from 'meteor/biglup:business';
-import { IMigratable }             from './interfaces/i-migratable';
+import { Appearance, Appearances }      from 'meteor/biglup:business';
+import { IMigratable }                  from './interfaces/i-migratable';
+import { ReadStream, createReadStream } from 'fs';
+import { ImagesStore }                  from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -45,6 +47,8 @@ import { IMigratable }             from './interfaces/i-migratable';
  */
 export class AppearanceMigration implements IMigratable
 {
+    private _defaultLogoImagePath = 'private/images/logo_placeholder.png';
+
     /**
      * @summary Initializes a new instance of the class AppearanceMigration.
      */
@@ -61,9 +65,26 @@ export class AppearanceMigration implements IMigratable
 
         let defaultAppearance = copyAppearance(new Appearance(null, 'default'));
 
-        defaultAppearance.isEditable = false;
+        console.log('Inserting logo image.');
+        const imageId = ImagesStore.create({name: 'default_logo', type: 'image/png'});
 
-        Appearances.insert(defaultAppearance);
+        ImagesStore.write(this._getImageStream(), imageId,
+            (error, image) =>
+            {
+                if (error)
+                {
+                    throw error;
+                }
+
+                console.log('Logo image with id ' + imageId + ' inserted');
+
+                defaultAppearance.isEditable = false;
+                defaultAppearance.style.header.logo.isUploaded = true;
+                defaultAppearance.style.header.logo.id         = imageId;
+                defaultAppearance.style.header.logo.url        = image.url;
+
+                Appearances.insert(defaultAppearance);
+            });
     }
 
     /**
@@ -72,5 +93,33 @@ export class AppearanceMigration implements IMigratable
     public down(): void
     {
         // TODO: See docs to implement properly.
+    }
+
+    /**
+     * @summary Creates a stream from the placeholder image file.
+     *
+     * @private
+     */
+    private _getImageStream(): ReadStream
+    {
+        let path;
+
+        try
+        {
+            path = Assets.absoluteFilePath(this._defaultLogoImagePath);
+        }
+        catch (error)
+        {
+            console.error(error);
+            if (error.message.match(/Unknown asset/))
+            {
+                throw new Error('Image migration requires a placeholder set in ' +
+                    'PROJECT_ROOT/private/images/logo_placeholder.png');
+            }
+
+            throw error;
+        }
+
+        return createReadStream(path);
     }
 }

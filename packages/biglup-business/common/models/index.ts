@@ -31,3 +31,4 @@ export * from './appearance-footer-style';
 export * from './appearance-header-style';
 export * from './appearance-layout';
 export * from './appearance-style';
+export * from './logo-image';

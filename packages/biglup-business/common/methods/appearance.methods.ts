@@ -17,10 +17,23 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Appearances }      from '../collections/appearance.collections';
-import { AppearanceSchema } from '../schemas/appearance.schema';
-import { Appearance }       from '../models';
-import { Meteor }           from 'meteor/meteor';
+import { Appearances }           from '../collections/appearance.collections';
+import { Images }                from '../collections/image.collection';
+import { AppearanceSchema }      from '../schemas/appearance.schema';
+import { Appearance, LogoImage } from '../models';
+import { Meteor }                from 'meteor/meteor';
+
+// INNER FUNCTIONS ****************************************************************************************************/
+
+/**
+ * @summary Removes the logo image related to the appearance.
+ *
+ * @param image The image to be removed.
+ */
+const removeLogoImage = (image: LogoImage) =>
+{
+    Images.remove({_id: image.id});
+};
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/
 
@@ -83,6 +96,7 @@ Meteor.methods({
         }
 
         Appearances.remove({_id: appearanceId});
+        removeLogoImage(appearance.style.header.logo);
     }
 });
 

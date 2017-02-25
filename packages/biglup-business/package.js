@@ -72,7 +72,8 @@ Package.onUse(function(api)
         'common/models/appearance-footer-style.ts',
         'common/models/appearance-header-style.ts',
         'common/models/appearance-layout.ts',
-        'common/models/appearance-style.ts'
+        'common/models/appearance-style.ts',
+        'common/models/logo-image.ts'
     ], ['client', 'server']);
 
     // Schemas

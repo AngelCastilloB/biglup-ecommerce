@@ -34,11 +34,11 @@
     </section>
 
     <section id="content2" class="tab-content">
-
       <span class="designerColorStyleTitle"> {{ 'Header' | translate }} </span>
       <hr>
       <div class="biglup-grid" style="padding: 0; margin: 0;">
         <div class="biglup-cell biglup-cell-12-col">
+          <h6>{{ 'Top Bar' | translate }}</h6>
           <div class="biglup-grid" style="padding: 0">
             <div class="biglup-cell biglup-cell-3-col">
               <input
@@ -48,7 +48,7 @@
                 [style.background]="_appearance.style.header.topBarBackgroundColor"/>
             </div>
             <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Top Bar Background' | translate }}</div>
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
             </div>
           </div>
           <div class="biglup-grid" style="padding: 0">
@@ -60,11 +60,35 @@
                 [style.background]="_appearance.style.header.topBarFontColor"/>
             </div>
             <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Top Bar Font' | translate }}</div>
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
             </div>
           </div>
-
-
+          <h6>{{ 'Logo' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-5-col">
+              <div class="designerColorItemTitle imageLabel">{{ 'Image' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-7-col">
+              <div class="logoUpload btn btn-primary">
+                <span>{{ 'Select' | translate }}</span>
+                <input type="file" class="upload" />
+              </div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-5-col">
+              <div class="designerColorItemTitle">{{ 'Alignment' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-7-col">
+              <label class="biglup-dropdown-menu-simple">
+                <select [(ngModel)]="_appearance.style.header.logoAlignment">
+                  <option value="left" selected> {{ "Left" | translate }} </option>
+                  <option value="center" selected> {{ "Center" | translate }} </option>
+                  <option value="right" selected> {{ "Right" | translate }} </option>
+                </select>
+              </label>
+            </div>
+          </div>
           <div class="biglup-grid" style="padding: 0">
             <div class="biglup-cell biglup-cell-3-col">
               <input
@@ -74,28 +98,10 @@
                 [style.background]="_appearance.style.header.logoBackgroundColor"/>
             </div>
             <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Logo Background' | translate }}</div>
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
             </div>
           </div>
-
-
-          <div class="biglup-grid" style="padding: 0">
-            <div class="biglup-cell biglup-cell-3-col">
-            </div>
-            <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Logo Image' | translate }}</div>
-            </div>
-          </div>
-
-          <div class="biglup-grid" style="padding: 0">
-            <div class="biglup-cell biglup-cell-3-col">
-            </div>
-            <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Logo Alignment' | translate }}</div>
-            </div>
-          </div>
-
-
+          <h6>{{ 'Menu' | translate }}</h6>
           <div class="biglup-grid" style="padding: 0">
             <div class="biglup-cell biglup-cell-3-col">
               <input
@@ -105,7 +111,7 @@
                 [style.background]="_appearance.style.header.menuBackgroundColor"/>
             </div>
             <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Menu Background' | translate }}</div>
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
             </div>
           </div>
 
@@ -119,7 +125,7 @@
                 [style.background]="_appearance.style.header.menuFontColor"/>
             </div>
             <div class="biglup-cell biglup-cell-9-col">
-              <div class="designerColorItemTitle">{{ 'Menu Font' | translate }}</div>
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
             </div>
           </div>
 

@@ -38,5 +38,7 @@ Package.onUse(function(api)
         'server/product.migration.ts',
     ], 'server');
 
+    api.addFiles('private/images/logo_placeholder.png', 'server', {isAsset: true});
+
     api.mainModule ('main.ts', "server");
 });

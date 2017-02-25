@@ -17,12 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }      from '@angular/core';
-import { Appearances }     from '../../common/collections/appearance.collections';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable }      from 'rxjs/Observable';
-import { Appearance }      from '../../common/models';
-import { MeteorReactive }  from 'angular2-meteor';
+import { Injectable }            from '@angular/core';
+import { Appearances }           from '../../common/collections/appearance.collections';
+import { BehaviorSubject }       from 'rxjs/BehaviorSubject';
+import { Observable }            from 'rxjs/Observable';
+import { Appearance, LogoImage } from '../../common/models';
+import { MeteorReactive }        from 'angular2-meteor';
+import { ImagesService }         from './images.service';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -61,7 +62,7 @@ export class AppearancesService extends MeteorReactive
     /**
      * @summary Initializes a new instance of the AppearancesService class.
      */
-    constructor()
+    constructor(private _imagesService: ImagesService)
     {
         super();
 
@@ -114,6 +115,8 @@ export class AppearancesService extends MeteorReactive
     public createAppearance(appearance: Appearance): Observable<string>
     {
         const copy = copyAppearance(appearance);
+
+        copy.style.header.logo.isUploaded = true;
         return Observable.create(observer => {
             this.call('createAppearance', copy, (error, result) =>
             {
@@ -138,20 +141,31 @@ export class AppearancesService extends MeteorReactive
     public updateAppearance(appearance: Appearance): Observable<string>
     {
         const copy = copyAppearance(appearance);
-        return Observable.create(observer => {
-            this.call('updateAppearance', copy, (error, result) =>
+
+        const totalProgress: number = 100;
+
+        return Observable
+            .of(appearance.style.header.logo)
+            .mergeMap(image => this._imagesService.createLogoImage(image))
+            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
+            .concat(Observable.create(observer =>
             {
-                if (error)
+                const preLoadedLogo = appearance.style.header.logo;
+                copy.style.header.logo = new LogoImage(preLoadedLogo.id, preLoadedLogo.url, preLoadedLogo.isUploaded);
+
+                Meteor.call('updateAppearance', copy, (error) =>
                 {
-                    observer.error(error);
-                }
-                else
-                {
-                    observer.next(result);
-                    observer.complete();
-                }
-            });
-        });
+                    if (error)
+                    {
+                        observer.error(error);
+                    }
+                    else
+                    {
+                        observer.next(100);
+                        observer.complete();
+                    }
+                });
+            }));
     }
 
     /**
