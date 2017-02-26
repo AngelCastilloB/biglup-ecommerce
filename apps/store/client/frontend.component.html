@@ -2,6 +2,11 @@
   <div [class.active]="_showDrawer" id="designerDrawer">
     <designer *ngIf="_appearance" [appearance]="_appearance"></designer>
   </div>
+  <div [class.active]="_showDrawer" class="designerMenu">
+      <div class="saveButton" (click)="_onSaveClick()">
+        <span>{{ 'Save' | translate }}</span>
+      </div>
+  </div>
   <div [class.active]="_showDrawer" id="designerToggle">
     <div class="toggleLabel" (click)="_onToggleClick()">
       <i [class.fa-caret-left]="_showDrawer" [class.fa-caret-right]="!_showDrawer" class="fa" aria-hidden="true"></i>
@@ -12,6 +17,7 @@
     <div class="content">
       <router-outlet></router-outlet>
     </div>
+    <footer *ngIf="_appearance" [footerStyle]="_appearance.style.footer"></footer>
   </div>
 </div>
 <div *ngIf="!_isDevModeOn">
@@ -19,4 +25,5 @@
   <div class="content">
     <router-outlet></router-outlet>
   </div>
+  <footer *ngIf="_appearance" [footerStyle]="_appearance.style.footer"></footer>
 </div>

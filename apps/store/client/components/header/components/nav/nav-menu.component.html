@@ -2,10 +2,10 @@
      [style.background-color]="_style.menuBackgroundColor"
      [style.color]="_style.menuFontColor">
   <ul>
-    <li *ngFor="let category of _categoriesService.getRootCategories() | async">
-      <a [routerLink]="['/category', category._id]" [class.isSubmenu]="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" >{{category.name | mongoTranslate}}</a>
-      <ul *ngIf="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0">
-        <li *ngFor="let subCategory of category.denormalizedSubcategories"><a [routerLink]="['/category', subCategory._id]">{{subCategory.name | mongoTranslate}}</a></li>
+    <li *ngFor="let category of _categoriesService.getRootCategories() | async" (mouseenter)="_onMouseOver($event)" (mouseleave)="_onMouseLeave($event)">
+      <a [style.color]="_style.menuFontColor" [routerLink]="['/category', category._id]" [class.isSubmenu]="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" >{{category.name | mongoTranslate}}</a>
+      <ul *ngIf="category.denormalizedSubcategories && category.denormalizedSubcategories.length > 0" [style.background-color]="_style.submenuBackgroundColor" [style.border-color]="_style.submenuBorderColor">
+        <li *ngFor="let subCategory of category.denormalizedSubcategories"><a [style.color]="_style.submenuFontColor" [routerLink]="['/category', subCategory._id]">{{subCategory.name | mongoTranslate}}</a></li>
       </ul>
     </li>
   </ul>

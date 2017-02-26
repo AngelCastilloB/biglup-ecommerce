@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component }                                         from '@angular/core';
+import { Component, OnDestroy }                              from '@angular/core';
 import { CategoriesService, AppearancesService, Appearance } from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
@@ -30,15 +30,16 @@ import template from './frontend.component.html';
  * @summary The front end root component.
  */
 @Component({template})
-export class FrontendComponent
+export class FrontendComponent implements OnDestroy
 {
-    private _isDevModeOn: boolean    = true;
-    private _showDrawer:  boolean    = false;
-    private _appearance:  Appearance = null;
+    private _isDevModeOn:   boolean    = true;
+    private _showDrawer:    boolean    = false;
+    private _appearance:    Appearance = null;
+    private _subscriptions: Array<any> = [];
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        this._appearancesService.getAppearance('5rQZBPCxz4TQP4j2E').subscribe(
+        this._appearancesService.getAppearance('7RTnQNE5SX2PK76NS').subscribe(
             (appearance: Appearance) =>
             {
                 this._appearance = appearance;
@@ -47,10 +48,33 @@ export class FrontendComponent
     }
 
     /**
+     * @summary destroys unneeded subscriptions and related resources.
+     */
+    public ngOnDestroy()
+    {
+        if (this._subscriptions)
+            this._subscriptions.forEach((subscribtion) => subscribtion.unsubscribe());
+    }
+
+    /**
      * Toggles the designer menu.
      */
     private _onToggleClick()
     {
         this._showDrawer = !this._showDrawer;
+    }
+
+    /**
+     * @summary Event handler for when the appearance is saved.
+     */
+    private _onSaveClick()
+    {
+        console.error(this._appearance);
+        this._subscriptions.push(this._appearancesService.updateAppearance(this._appearance).subscribe(
+            (progress) =>
+            {
+                console.error(progress);
+            }
+        ));
     }
 }

@@ -51,6 +51,7 @@ import { DesignerComponent }                from './components/designer/designer
 import { ColorPickerService }               from './components/designer/services/color-picker/color-picker.service';
 import { ColorPickerDirective }             from './components/designer/directives/color-picker/color-picker.directive';
 import { DynamicColorPickerModule }         from './components/designer/directives/color-picker/color-picker.directive';
+import { FooterComponent }                  from './components/footer/footer.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -89,7 +90,10 @@ import { DynamicColorPickerModule }         from './components/designer/directiv
 
         // Designer
         DesignerComponent,
-        ColorPickerDirective
+        ColorPickerDirective,
+
+        // Footer
+        FooterComponent
     ],
     imports: [
         FrontendRoutesModule,

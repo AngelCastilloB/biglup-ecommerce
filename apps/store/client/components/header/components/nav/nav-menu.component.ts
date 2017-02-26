@@ -58,4 +58,22 @@ export class HeaderNavMenuComponent implements OnInit, OnDestroy
     public ngOnDestroy()
     {
     }
+
+    /**
+     * @summary Event handler for when the mouse pointer enters the element.
+     * @param event The mouse event.
+     */
+    private _onMouseOver(event)
+    {
+        event.target.style.backgroundColor = this._style.menuHighlight;
+    }
+
+    /**
+     * @summary Event handler for when the mouse leaves the element.
+     * @param event The mouse event.
+     */
+    private _onMouseLeave(event)
+    {
+        event.target.style.backgroundColor = 'transparent';
+    }
 }

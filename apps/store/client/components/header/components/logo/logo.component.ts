@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { AppearanceHeaderStyle }               from 'meteor/biglup:business';
+import { Component, OnInit, OnDestroy, Input, ElementRef }      from '@angular/core';
+import { AppearancesService, AppearanceHeaderStyle, LogoImage } from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,12 +36,13 @@ import template from './logo.component.html';
 export class HeaderLogoComponent implements OnInit, OnDestroy
 {
     @Input('headerStyle')
-    private _style: AppearanceHeaderStyle;
+    private _style:         AppearanceHeaderStyle;
+    private _subscriptions: Array<any> = [];
 
     /**
      * @summary Initializes a new instance of the HeaderLogoComponent class.
      */
-    constructor()
+    constructor(private element: ElementRef, private _appearancesService: AppearancesService)
     {
     }
 
@@ -50,6 +51,15 @@ export class HeaderLogoComponent implements OnInit, OnDestroy
      */
     public ngOnInit(): any
     {
+        this.setImage(this._style.logo);
+
+        this._subscriptions.push(this._appearancesService.getLogoUpdate().subscribe(
+            (logo) =>
+            {
+                this._style.logo = logo;
+                this.setImage(logo);
+            }
+        ));
     }
 
     /**
@@ -57,5 +67,48 @@ export class HeaderLogoComponent implements OnInit, OnDestroy
      */
     public ngOnDestroy()
     {
+        if (this._subscriptions)
+            this._subscriptions.forEach((subscription) => subscription.unsubscribe());
+    }
+
+    /**
+     * @summary Sets the logo image.
+     *
+     * @param image The logo image.
+     */
+    public setImage(image: LogoImage)
+    {
+        let logoImage = this.element.nativeElement.querySelector('.image-responsive');
+        let reader    = new FileReader();
+
+        const { url, file, isUploaded } = image;
+
+        if (isUploaded)
+        {
+            logoImage.src = url;
+
+            return;
+        }
+
+        if (!file)
+        {
+            throw new Meteor.Error(
+                'image-display.component.setImage',
+                'The image is marked as *not* uploaded, but the field file is empty.');
+        }
+
+        reader.onload = (event: any) =>
+        {
+            if (event.type === 'load')
+            {
+                logoImage.src = event.target.result;
+            }
+            else if (event.type === 'error')
+            {
+                console.error('Could not read file.');
+            }
+        };
+
+        reader.readAsDataURL(file);
     }
 }

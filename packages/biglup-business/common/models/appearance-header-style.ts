@@ -29,24 +29,31 @@ export class AppearanceHeaderStyle
     /**
      * @summary Initializes a new instance of the AppearanceHeaderStyle class.
      *
-     * @param topBarBackgroundColor The top bar background color.
-     * @param topBarFontColor       The top bar font color.
-     * @param logoBackgroundColor   The logo area background color.
-     * @param logo                  The sites logo.
-     * @param logoAlignment         The logo alignment.
-     * @param menuBackgroundColor   The menu background color.
-     * @param menuFontColor         The menu font color.
+     * @param topBarBackgroundColor  The top bar background color.
+     * @param topBarFontColor        The top bar font color.
+     * @param logoBackgroundColor    The logo area background color.
+     * @param logo                   The sites logo.
+     * @param logoAlignment          The logo alignment.
+     * @param menuBackgroundColor    The menu background color.
+     * @param menuFontColor          The menu font color.
+     * @param menuHighlight          The menu highlight
+     * @param submenuBackgroundColor The sub menu background color.
+     * @param submenuFontColor       The sub menu font color.
+     * @param submenuBorderColor     The sub menu border color.
      */
     constructor(
-        public topBarBackgroundColor: string    = '#000000',
-        public topBarFontColor:       string    = '#FFFFFF',
-        public logoBackgroundColor:   string    = '#FFFFFF',
-        public logo:                  LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
-        public logoAlignment:         string    = 'center',
-        public menuBackgroundColor:   string    = '#000000',
-        public menuFontColor:         string    = '#FFFFFF')
+        public topBarBackgroundColor:  string    = '#000000',
+        public topBarFontColor:        string    = '#FFFFFF',
+        public logoBackgroundColor:    string    = '#FFFFFF',
+        public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+        public logoAlignment:          string    = 'center',
+        public menuBackgroundColor:    string    = '#000000',
+        public menuFontColor:          string    = '#FFFFFF',
+        public menuHighlight:          string    = '#5a595a',
+        public submenuBackgroundColor: string    = '#FFFFFF',
+        public submenuFontColor:       string    = '#5a595a',
+        public submenuBorderColor:     string    = '#000000')
     {
     }
 }
-
 

@@ -17,13 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }            from '@angular/core';
-import { Appearances }           from '../../common/collections/appearance.collections';
-import { BehaviorSubject }       from 'rxjs/BehaviorSubject';
-import { Observable }            from 'rxjs/Observable';
-import { Appearance, LogoImage } from '../../common/models';
-import { MeteorReactive }        from 'angular2-meteor';
-import { ImagesService }         from './images.service';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Appearances }              from '../../common/collections/appearance.collections';
+import { BehaviorSubject }          from 'rxjs/BehaviorSubject';
+import { Observable }               from 'rxjs/Observable';
+import { Appearance, LogoImage }    from '../../common/models';
+import { MeteorReactive }           from 'angular2-meteor';
+import { ImagesService }            from './images.service';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -58,6 +58,7 @@ export class AppearancesService extends MeteorReactive
 {
     private _appearances:       Array<Appearance> = Array<Appearance>();
     private _appearancesStream: any               = new BehaviorSubject<Array<Appearance>>(Array<Appearance>());
+    private _logoUpdateStream:  EventEmitter      = new EventEmitter<LogoImage>();
 
     /**
      * @summary Initializes a new instance of the AppearancesService class.
@@ -191,5 +192,23 @@ export class AppearancesService extends MeteorReactive
                 }
             });
         });
+    }
+
+    /**
+     * @summary Returns a hot observable with the new logo design.
+     */
+    public getLogoUpdate(): Observable<LogoImage>
+    {
+        return this._logoUpdateStream;
+    }
+
+    /**
+     * @summary Updates the logo of the site.
+     *
+     * @param logo The new logo.
+     */
+    public updateLogo(logo: LogoImage)
+    {
+        this._logoUpdateStream.emit(logo);
     }
 }

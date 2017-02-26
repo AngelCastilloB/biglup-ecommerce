@@ -606,8 +606,9 @@ export class ColorPickerComponent implements OnInit
      */
     public createBox(element: any, offset: boolean): any
     {
+        let top = element.getBoundingClientRect().top > element.offsetTop ? element.getBoundingClientRect().top : element.offsetTop + 28;
         return {
-            top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
+            top: top + (offset ? window.pageYOffset : 0),
             left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
             width: element.offsetWidth,
             height: element.offsetHeight

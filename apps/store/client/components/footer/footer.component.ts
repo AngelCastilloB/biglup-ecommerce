@@ -1,12 +1,12 @@
 /**
- * @file designer.component.ts
+ * @file header.component.ts
  *
- * @summary The designer component.
+ * @summary The footer of the application.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
- * @date   February 21 2017
+ * @date   July 17 2016
  *
- * @copyright Copyright 2017 Biglup. All Rights Reserved.
+ * @copyright Copyright 2016 Biglup. All Rights Reserved.
  *
  * Confidential Information of Biglup. Not for disclosure or distribution
  * prior written consent. This software contains code, techniques and know-how which
@@ -17,38 +17,38 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy, Input }       from '@angular/core';
-import { Appearance, LogoImage, AppearancesService } from 'meteor/biglup:business';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { AppearanceFooterStyle }               from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
-import template from './designer.component.html';
+import template from './footer.component.html';
 
 // EXPORTS ************************************************************************************************************/
 
 /**
- * @summary This component allows yo to modify.
+ * @summary This is the application footer.
  */
 @Component({
-    selector: 'designer',
+    selector: 'footer',
     template
 })
-export class DesignerComponent implements OnInit, OnDestroy
+export class FooterComponent implements OnInit, OnDestroy
 {
-    @Input('appearance')
-    private _appearance: Appearance;
+    @Input('footerStyle')
+    private _style: AppearanceFooterStyle;
 
     /**
-     * @summary Initializes a new instance of the DesignerComponent class.
+     * @summary Initializes a new instance of the Header class.
      */
-    constructor(private _appearancesService: AppearancesService)
+    constructor()
     {
     }
 
     /**
      * @summary Initialize the component after Angular initializes the data-bound input properties.
      */
-    public ngOnInit()
+    public ngOnInit(): any
     {
     }
 
@@ -57,20 +57,5 @@ export class DesignerComponent implements OnInit, OnDestroy
      */
     public ngOnDestroy()
     {
-    }
-
-    /**
-     * @summary Event handler for when a new logo is selected.
-     *
-     * @param file The new selected logo.
-     */
-    private _onFileSelected(file)
-    {
-        if (file.length < 1)
-            return;
-
-        let image = new LogoImage('', '', false, file[0]);
-
-        this._appearancesService.updateLogo(image);
     }
 }

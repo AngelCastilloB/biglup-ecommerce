@@ -119,6 +119,8 @@ declare module Business
         public createAppearance(appearance: Appearance): String;
         public updateAppearance(appearance: Appearance): any;
         public deleteAppearance(appearanceId: string): any;
+        public getLogoUpdate(): any;
+        public updateLogo(logo: LogoImage);
     }
 
 // COLLECTIONS ********************************************************************************************************/
@@ -301,13 +303,17 @@ declare module Business
     class AppearanceHeaderStyle
     {
         constructor(
-            public topBarBackgroundColor: string    = '#000000',
-            public topBarFontColor:       string    = '#FFFFFF',
-            public logoBackgroundColor:   string    = '#FFFFFF',
-            public logo:                  LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
-            public logoAlignment:         string    = 'center',
-            public menuBackgroundColor:   string    = '#000000',
-            public menuFontColor:         string    = '#FFFFFF');
+            public topBarBackgroundColor:  string    = '#000000',
+            public topBarFontColor:        string    = '#FFFFFF',
+            public logoBackgroundColor:    string    = '#FFFFFF',
+            public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+            public logoAlignment:          string    = 'center',
+            public menuBackgroundColor:    string    = '#000000',
+            public menuFontColor:          string    = '#FFFFFF',
+            public menuHighlight:          string    = '#5a595a',
+            public submenuBackgroundColor: string    = '#FFFFFF',
+            public submenuFontColor:       string    = '#000000',
+            public submenuBorderColor:     string    = '#000000');
     }
 
     class Appearance

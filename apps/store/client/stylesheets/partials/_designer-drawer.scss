@@ -4,8 +4,8 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 270px;
-  left: -270px;
+  width: 285px;
+  left: -285px;
   overflow: auto;
   z-index: 6;
   transition: transform 0.2s;
@@ -18,7 +18,7 @@
 }
 
 #designerDrawer.active {
-  transform: translate(270px);
+  transform: translate(285px);
 }
 
 #designerDrawerContent {
@@ -65,5 +65,5 @@
 }
 
 #designerToggle.active {
-  margin-left: 270px;
+  margin-left: 285px;
 }

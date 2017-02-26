@@ -107,6 +107,22 @@ export let AppearanceHeaderStyleSchema: any = new SimpleSchema({
     menuFontColor: {
         label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} menu font color`,
         type: String
+    },
+    menuHighlight: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} menu highlight color`,
+        type: String
+    },
+    submenuBackgroundColor: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} submenu background color`,
+        type: String
+    },
+    submenuFontColor: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} submenu font color color`,
+        type: String
+    },
+    submenuBorderColor: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} submenu font color`,
+        type: String
     }
 });
 

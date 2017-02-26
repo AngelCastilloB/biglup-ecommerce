@@ -1,11 +1,12 @@
 .header-logo {
-  line-height: initial;
   position: relative;
-  padding-bottom: 20px;
-  padding-top: 20px;
   img {
     max-width: 100%;
     height: auto;
     width: auto\9; /* ie8 */
+    display:inline-block;
+    margin:0;
+    vertical-align:top;
+    cursor: pointer;
   }
 }

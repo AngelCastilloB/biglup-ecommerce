@@ -126,19 +126,21 @@ Meteor.methods({
                 'The id of this appearance is empty. You need to provide the id of an existing appearance in the database.');
         }
 
-        if (Appearances.find({_id: appearance._id}).count() === 0)
+        let storedAppearance: Appearance = Appearances.findOne({_id: appearance._id});
+        if (!storedAppearance)
         {
             throw new Meteor.Error(
                 'updateAppearance.appearanceDoesNotExist',
                 'This appearance does not exists in the database.');
         }
 
-        if (!appearance.isEditable)
+        /*
+        if (!storedAppearance.isEditable)
         {
             throw new Meteor.Error(
                 'updateAppearance.isNotEditable',
                 'The appearance you are trying to edit, is not editable.');
-        }
+        }*/
 
         let id = appearance._id;
 
