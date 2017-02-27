@@ -17,8 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnDestroy }                              from '@angular/core';
+import { Component, OnDestroy, ViewChild }                   from '@angular/core';
 import { CategoriesService, AppearancesService, Appearance } from 'meteor/biglup:business';
+import { BiglupModalComponent }                              from './components/designer/components/modal/biglup-modal.component';
+import { I18nSingletonService, _T }                          from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -36,6 +38,8 @@ export class FrontendComponent implements OnDestroy
     private _showDrawer:    boolean    = false;
     private _appearance:    Appearance = null;
     private _subscriptions: Array<any> = [];
+    @ViewChild(BiglupModalComponent)
+    private _modal: BiglupModalComponent;
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
@@ -69,12 +73,18 @@ export class FrontendComponent implements OnDestroy
      */
     private _onSaveClick()
     {
-        console.error(this._appearance);
-        this._subscriptions.push(this._appearancesService.updateAppearance(this._appearance).subscribe(
-            (progress) =>
+        this._modal.showObservable(
+            _T('Update Appearance'),
+            _T('Updating...'),
+            this._appearancesService.updateAppearance(this._appearance),
             {
-                console.error(progress);
-            }
-        ));
+                title:   _T('Update Appearance'),
+                message: _T('Appearance Updated.')
+            },
+            {
+                title:   _T('Error'),
+                message: _T('There was an error updating the appearance.')
+            },
+        );
     }
 }

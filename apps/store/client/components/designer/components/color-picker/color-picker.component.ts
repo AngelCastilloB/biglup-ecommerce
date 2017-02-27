@@ -606,13 +606,35 @@ export class ColorPickerComponent implements OnInit
      */
     public createBox(element: any, offset: boolean): any
     {
-        let top = element.getBoundingClientRect().top > element.offsetTop ? element.getBoundingClientRect().top : element.offsetTop + 28;
+        let relativePosition = {
+            left: this._directiveElementRef.nativeElement.scrollLeft + this._directiveElementRef.nativeElement.offsetLeft,
+            top :  this._directiveElementRef.nativeElement.scrollTop + this._directiveElementRef.nativeElement.offsetTop
+        };
+
+        let drawer: any = this._findDrawer(this._directiveElementRef.nativeElement);
+        let isIe: any   = this._isIe();
+
+        let top = element.getBoundingClientRect().top + (!isIe ? drawer.scrollTop : 0);
         return {
             top: top + (offset ? window.pageYOffset : 0),
             left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
             width: element.offsetWidth,
             height: element.offsetHeight
         };
+    }
+
+    /**
+     * Finds the drawer element.
+     *
+     * @param element The element starting point.
+     * @return {any} The drawer element.
+     */
+    private _findDrawer(element: any): any
+    {
+        if (element.id === "designerDrawer")
+            return element;
+
+        return this._findDrawer(element.parentElement);
     }
 
     /**
@@ -631,5 +653,41 @@ export class ColorPickerComponent implements OnInit
             'position': this._position,
         };
         return styles;
+    }
+
+    /**
+     * @summary Detects IE
+     * @returns version of IE or false, if browser is not Internet Explorer
+     */
+    private _isIe(): any
+    {
+        let ua = window.navigator.userAgent;
+
+        var msie = ua.indexOf('MSIE ');
+
+        if (msie > 0)
+        {
+            // IE 10 or older => return version number
+            return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+        }
+
+        var trident = ua.indexOf('Trident/');
+
+        if (trident > 0)
+        {
+            // IE 11 => return version number
+            var rv = ua.indexOf('rv:');
+            return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+        }
+
+        var edge = ua.indexOf('Edge/');
+
+        if (edge > 0)
+        {
+            // Edge (IE 12+) => return version number
+            return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+        }
+
+        return false;
     }
 }

@@ -74,7 +74,12 @@ export class AppearancesService extends MeteorReactive
                 this._appearances = Appearances.find().fetch();
 
                 if (!!this._appearances)
+                {
                     this._appearancesStream.next(this._appearances);
+
+                    if (this._appearances.length > 0)
+                        this._logoUpdateStream.next(this._appearances[0].style.header.logo);
+                }
 
             }, true);
         });

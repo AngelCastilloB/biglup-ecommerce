@@ -52,6 +52,12 @@ import { ColorPickerService }               from './components/designer/services
 import { ColorPickerDirective }             from './components/designer/directives/color-picker/color-picker.directive';
 import { DynamicColorPickerModule }         from './components/designer/directives/color-picker/color-picker.directive';
 import { FooterComponent }                  from './components/footer/footer.component';
+import { BiglupModalComponent }             from './components/designer/components/modal/biglup-modal.component';
+import { ErrorAnimationComponent }          from './components/designer/components/modal/components/error-animation/error-animation.component';
+import { InformationAnimationComponent }    from './components/designer/components/modal/components/information-animation/information-animation.component';
+import { SuccessAnimationComponent }        from './components/designer/components/modal/components/success-animation/success-animation.component';
+import { WaitingAnimationComponent }        from './components/designer/components/modal/components/waiting-animation/waiting-animation.component';
+import { WarningAnimationComponent }        from './components/designer/components/modal/components/warning-animation/warning-animation.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -91,6 +97,12 @@ import { FooterComponent }                  from './components/footer/footer.com
         // Designer
         DesignerComponent,
         ColorPickerDirective,
+        BiglupModalComponent,
+        ErrorAnimationComponent,
+        InformationAnimationComponent,
+        SuccessAnimationComponent,
+        WaitingAnimationComponent,
+        WarningAnimationComponent,
 
         // Footer
         FooterComponent

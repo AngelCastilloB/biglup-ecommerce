@@ -17,8 +17,8 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy, Input }       from '@angular/core';
-import { Appearance, LogoImage, AppearancesService } from 'meteor/biglup:business';
+import { Component, OnInit, OnDestroy, Input,ViewChild } from '@angular/core';
+import { Appearance, LogoImage, AppearancesService }     from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -62,15 +62,20 @@ export class DesignerComponent implements OnInit, OnDestroy
     /**
      * @summary Event handler for when a new logo is selected.
      *
-     * @param file The new selected logo.
+     * @param file  The new selected logo.
+     * @param input The input element.
      */
-    private _onFileSelected(file)
+    private _onFileSelected(file, input: HTMLInputElement)
     {
+        if (input.value == null)
+            return;
+
         if (file.length < 1)
             return;
 
         let image = new LogoImage('', '', false, file[0]);
 
         this._appearancesService.updateLogo(image);
+        input.value = null;
     }
 }

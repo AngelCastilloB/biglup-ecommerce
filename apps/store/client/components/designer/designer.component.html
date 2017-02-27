@@ -70,7 +70,7 @@
             <div class="biglup-cell biglup-cell-7-col">
               <div class="logoUpload">
                 <span>{{ 'Select' | translate }}</span>
-                <input type="file" class="upload" (change)="_onFileSelected($event.srcElement.files)"/>
+                <input #fileInput type="file" class="upload" (change)="_onFileSelected($event.srcElement.files, fileInput)"/>
               </div>
             </div>
           </div>
