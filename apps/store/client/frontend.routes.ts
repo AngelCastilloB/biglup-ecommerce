@@ -18,15 +18,15 @@
 /* IMPORTS ************************************************************************************************************/
 
 import { Routes, RouterModule }        from '@angular/router';
-import { CategoryComponent }           from './components/category/category.component.ts';
-import { LandingPageComponent }        from './components/landing-page/landing-page.component.ts';
+import { CategoryComponent }           from './modules/category/components/category/category.component.ts';
+import { LandingPageComponent }        from './modules/landing-page';
 import { FrontendComponent }           from './frontend.component';
-import { ProductDetailsComponent }     from './components/product/product-details/product-details.component';
-import { LoginComponent }              from './components/login/login.component';
+import { ProductDetailsComponent }     from './modules/product/components/product-details/product-details.component';
+import { LoginComponent,
+         SignUpComponent,
+         PasswordResetComponent,
+         NewPasswordComponent  }       from './modules/authentication';
 import { IsUserLoggedOutGuardService } from 'meteor/biglup:core';
-import { SignUpComponent }             from './components/sign-up/sign-up.component';
-import { PasswordResetComponent }      from './components/password-reset/password-reset.component';
-import { NewPasswordComponent }        from './components/new-password/new-password.component';
 import { NewPasswordGuardService }     from 'meteor/biglup:core';
 
 /* EXPORTS ************************************************************************************************************/
@@ -39,7 +39,7 @@ const ROUTES: Routes = [
         path: '',
         component: FrontendComponent,
         children: [
-            {path: '', component: LandingPageComponent},
+            {path: '', component: LandingPageComponent },
             {path: 'login', component: LoginComponent, canActivate: [IsUserLoggedOutGuardService]},
             {path: 'signup', component: SignUpComponent, canActivate: [IsUserLoggedOutGuardService]},
             {path: 'password-reset', component: PasswordResetComponent, canActivate: [IsUserLoggedOutGuardService]},

@@ -19,7 +19,7 @@
 
 import { Component, OnDestroy, ViewChild }                   from '@angular/core';
 import { CategoriesService, AppearancesService, Appearance } from 'meteor/biglup:business';
-import { BiglupModalComponent }                              from './components/designer/components/modal/biglup-modal.component';
+import { BiglupModalComponent }                              from './modules/designer';
 import { I18nSingletonService, _T }                          from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.

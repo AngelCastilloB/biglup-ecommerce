@@ -19,93 +19,29 @@
 
 import { NgModule }                         from '@angular/core';
 import { FrontendRoutesModule }             from './frontend.routes';
-import { HeaderComponent }                  from './components/header/header.component';
-import { OauthLoginComponent }              from './components/oauth-login/oauth-login.component';
-import { FormErrorComponent }               from './components/form-error/form-error.component';
-import { ProductImagesCarouselComponent }   from './components/product/product-images-carousel/product-images-carousel';
-import { SignUpComponent }                  from './components/sign-up/sign-up.component';
-import { ProductDetailsComponent }          from './components/product/product-details/product-details.component';
-import { PasswordResetComponent }           from './components/password-reset/password-reset.component';
-import { NewPasswordComponent }             from './components/new-password/new-password.component';
-import { LoginComponent }                   from './components/login/login.component';
-import { LandingPageComponent }             from './components/landing-page/landing-page.component';
-import { CategoryItemComponent }            from './components/category-item/category-item.component';
-import { CategoryComponent }                from './components/category/category.component';
 import { FrontendComponent }                from './frontend.component';
-import { CartComponent }                    from './components/header/components/cart/cart.component';
 import { CategoriesService }                from 'meteor/biglup:business';
 import { ProductsService }                  from 'meteor/biglup:business';
 import { ImagesService }                    from 'meteor/biglup:business';
 import { CartsService }                     from 'meteor/biglup:business';
 import { AppearancesService }               from 'meteor/biglup:business';
 import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
-import { TruncateStringPipe }               from 'meteor/biglup:core';
-import { SanitizeHtmlPipe }                 from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdGeneratorService }               from 'meteor/biglup:core';
-import { ActionbarComponent }               from './components/header/components/action-bar/action-bar.component';
-import { HeaderLogoComponent }              from './components/header/components/logo/logo.component';
-import { HeaderNavMenuComponent }           from './components/header/components/nav/nav-menu.component';
-import { DesignerComponent }                from './components/designer/designer.component';
-import { ColorPickerService }               from './components/designer/services/color-picker/color-picker.service';
-import { ColorPickerDirective }             from './components/designer/directives/color-picker/color-picker.directive';
-import { DynamicColorPickerModule }         from './components/designer/directives/color-picker/color-picker.directive';
-import { FooterComponent }                  from './components/footer/footer.component';
-import { BiglupModalComponent }             from './components/designer/components/modal/biglup-modal.component';
-import { ErrorAnimationComponent }          from './components/designer/components/modal/components/error-animation/error-animation.component';
-import { InformationAnimationComponent }    from './components/designer/components/modal/components/information-animation/information-animation.component';
-import { SuccessAnimationComponent }        from './components/designer/components/modal/components/success-animation/success-animation.component';
-import { WaitingAnimationComponent }        from './components/designer/components/modal/components/waiting-animation/waiting-animation.component';
-import { WarningAnimationComponent }        from './components/designer/components/modal/components/warning-animation/warning-animation.component';
+import { FooterModule }                     from './modules/footer/footer.module';
+import { LandingPageModule }                from './modules/landing-page/landing-page.module';
+import { DesignerModule }                   from './modules/designer/designer.module';
+import { HeaderModule }                     from './modules/header/header.module';
+import { AuthenticationModule }             from './modules/authentication/authentication.module'
+import { ProductModule }                    from './modules/product/product.module';
+import { CategoryModule }                   from './modules/category/category.module';
 
 // EXPORTS ************************************************************************************************************/
 
 @NgModule({
     declarations: [
         FrontendComponent,
-        // header (child of frontend)
-        HeaderComponent,
-        ActionbarComponent,
-        CartComponent,
-        HeaderNavMenuComponent,
-        HeaderLogoComponent,
-        // TODO: refactor into child feature modules
-
-        // auth
-        LoginComponent,
-        OauthLoginComponent,
-        SignUpComponent,
-        NewPasswordComponent,
-        FormErrorComponent,
-
-        // product
-        ProductImagesCarouselComponent,
-        ProductDetailsComponent,
-        PasswordResetComponent,
-
-        // category
-        CategoryComponent,
-        CategoryItemComponent,
-
-        // landing
-        LandingPageComponent,
-
-        TruncateStringPipe,
-        SanitizeHtmlPipe,
-
-        // Designer
-        DesignerComponent,
-        ColorPickerDirective,
-        BiglupModalComponent,
-        ErrorAnimationComponent,
-        InformationAnimationComponent,
-        SuccessAnimationComponent,
-        WaitingAnimationComponent,
-        WarningAnimationComponent,
-
-        // Footer
-        FooterComponent
     ],
     imports: [
         FrontendRoutesModule,
@@ -113,7 +49,13 @@ import { WarningAnimationComponent }        from './components/designer/componen
         FormsModule,
         ReactiveFormsModule,
         BiglupI18nModule,
-        DynamicColorPickerModule
+        HeaderModule,
+        LandingPageModule,
+        DesignerModule,
+        AuthenticationModule,
+        ProductModule,
+        FooterModule,
+        CategoryModule
     ],
     providers: [
         CategoriesService,
@@ -122,7 +64,6 @@ import { WarningAnimationComponent }        from './components/designer/componen
         ImagesService,
         IdGeneratorService,
         AppearancesService,
-        ColorPickerService
     ]
 })
 export class FrontendModule

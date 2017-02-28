@@ -15,7 +15,7 @@
   </div>
   <div [class.active]="_showDrawer" id="designerDrawerContent">
     <header *ngIf="_appearance" [appearance]="_appearance"></header>
-    <div class="content">
+    <div class="body">
       <router-outlet></router-outlet>
     </div>
     <footer *ngIf="_appearance" [footerStyle]="_appearance.style.footer"></footer>
@@ -23,7 +23,7 @@
 </div>
 <div *ngIf="!_isDevModeOn">
   <header *ngIf="_appearance" [appearance]="_appearance"></header>
-  <div class="content">
+  <div class="body">
     <router-outlet></router-outlet>
   </div>
   <footer *ngIf="_appearance" [footerStyle]="_appearance.style.footer"></footer>

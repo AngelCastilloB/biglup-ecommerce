@@ -18,6 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Component } from '@angular/core';
+import { EntryType } from '../internals/components/landing-page-entry/landing-page-entry.component';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -34,6 +35,8 @@ import template from './landing-page.component.html';
 })
 export class LandingPageComponent
 {
+    private _entries: Array<EntryType> = [ EntryType.WideSlider, EntryType.HelloWorld ];
+
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.
      */

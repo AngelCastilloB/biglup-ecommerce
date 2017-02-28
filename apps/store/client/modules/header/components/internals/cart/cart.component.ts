@@ -25,8 +25,7 @@ import {
     state,
     animate,
     transition,
-    trigger
-}              from '@angular/core';
+    trigger }                   from '@angular/core';
 import { Cart, CartItem, User } from 'meteor/biglup:business';
 import { Subscription }         from 'rxjs';
 import { UserAuthService }      from 'meteor/biglup:business';
