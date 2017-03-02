@@ -23,6 +23,7 @@ import { LandingPageComponent }      from './components/landing-page/landing-pag
 import { LandingPageEntryComponent } from './components/internals/components/landing-page-entry/landing-page-entry.component';
 import { HelloWorldEntryComponent }  from './components/internals/components/hello-world-entry/hello-world-entry.component';
 import { WideSliderEntryComponent }  from './components/internals/components/wide-slider-entry/wide-slider-entry.component';
+import { SwiperModule }              from '../../modules/swiper/swiper.module';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -34,7 +35,8 @@ import { WideSliderEntryComponent }  from './components/internals/components/wid
         HelloWorldEntryComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        SwiperModule
     ],
     exports: [
         LandingPageComponent

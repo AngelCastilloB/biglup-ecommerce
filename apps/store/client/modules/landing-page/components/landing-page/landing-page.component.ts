@@ -35,7 +35,19 @@ import template from './landing-page.component.html';
 })
 export class LandingPageComponent
 {
-    private _entries: Array<EntryType> = [ EntryType.WideSlider, EntryType.HelloWorld ];
+    private _entries: Array<any> = [
+        {
+            type: EntryType.WideSlider,
+            params: {
+                speed: 2000,
+                autoplay: 5000,
+                loop: true,
+                isFillWidth: true
+            }
+        },
+        {
+            type: EntryType.HelloWorld,
+        }];
 
     /**
      * @summary Initializes a new instance of the LandingPageComponent class.

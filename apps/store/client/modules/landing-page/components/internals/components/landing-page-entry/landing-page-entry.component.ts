@@ -50,7 +50,7 @@ export enum EntryType
 export class LandingPageEntryComponent
 {
     @Input('type')
-    private _type:   EntryType;
+    private _type: any;
 
     @Input('params')
     private _params: any;

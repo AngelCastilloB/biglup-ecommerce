@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -32,8 +32,17 @@ import template from './wide-slider-entry.component.html';
     selector: 'wide-slider-entry',
     template
 })
-export class WideSliderEntryComponent
+export class WideSliderEntryComponent implements OnInit
 {
+    private _config: any = {
+        paginationClickable: true,
+        autoplay: 3000,
+        autoplayDisableOnInteraction: false,
+        loop: true,
+        speed: 1000
+    };
+
+    @Input('params')
     private _params: any;
 
     /**
@@ -41,5 +50,16 @@ export class WideSliderEntryComponent
      */
     constructor()
     {
+    }
+
+
+    /**
+     * @summary Initialize the component after Angular initializes the data-bound input properties.
+     */
+    public ngOnInit()
+    {
+        this._config.speed = this._params.speed ? this._params.speed : this._config.speed;
+        this._config.autoplay = this._params.autoplay ? this._params.autoplay : this._config.autoplay;
+        this._config.loop = this._params.loop ? this._params.loop : this._config.loop;
     }
 }
