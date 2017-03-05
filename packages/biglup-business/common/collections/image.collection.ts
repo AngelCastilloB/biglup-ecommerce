@@ -1,7 +1,7 @@
 /**
  * @file image.collection.ts
  *
- * @summary This is the image collection.
+ * @summary This is the image collection client side definition.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 17 2016
@@ -21,27 +21,6 @@ import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
 import { Image }    from '../models';
 
-// VALIDATORS *********************************************************************************************************/
-
-/**
- * @summary Rule validation for image insertion.
- *
- * @returns {boolean} true if the operation is allowed, otherwise, false.
- */
-const isAllowed = () =>
-{
-    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
-};
-
-// PERMISIONS *********************************************************************************************************/
-
-// Set default permissions for all stores
-UploadFS.config.defaultStorePermissions = new UploadFS.StorePermissions({
-    insert: isAllowed,
-    update: isAllowed,
-    remove: isAllowed
-});
-
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -54,39 +33,14 @@ export const Images = new Mongo.Collection<Image>('images');
 /**
  * @summary The images store.
  *
- * @type {UploadFS.store.Local} The image store
+ * @type {UploadFS.store.GoogleCloudStorage} The image store
  */
-export const ImagesStore = new UploadFS.store.Local(
-{
+export const ImagesStore = new UploadFS.store.GoogleCloudStorage({
     collection: Images,
-    path: '/uploads/images',
-    storesPath: 'images',
     name: 'images',
-    mode: '0744',
-    writeMode: '0744',
+    chunkSize: 1024 * 255,
     filter: new UploadFS.Filter(
     {
         contentTypes: ['image/*']
     }),
-});
-
-// VALIDATORS *********************************************************************************************************/
-
-/**
- * @summary Rule validation for image insertion.
- *
- * @returns {boolean} true if the operation is allowed, otherwise, false.
- */
-const isAllowed = () =>
-{
-    return true; // TODO: [USER-LOGIN] Only certain user roles can perform this operations (Admin, Editor etc...).
-};
-
-// RULES **************************************************************************************************************/
-
-Images.allow(
-{
-    insert: isAllowed,
-    update: isAllowed,
-    remove: isAllowed
 });

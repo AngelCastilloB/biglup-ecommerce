@@ -43,7 +43,7 @@ export class FrontendComponent implements OnDestroy
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        this._appearancesService.getAppearance('7RTnQNE5SX2PK76NS').subscribe(
+        this._appearancesService.getAppearance('nt2LJv8XGrRgb82k5').subscribe(
             (appearance: Appearance) =>
             {
                 this._appearance = appearance;

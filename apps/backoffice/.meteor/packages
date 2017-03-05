@@ -23,6 +23,7 @@ konecty:mongo-counter      #
 
 jalik:ufs                  # Custom upload file system
 jalik:ufs-local            # Local implementation of custom upload file system
+biglup:ufs-google-cloud    # Google cloud storage of custom upload file system
 check@1.2.4                      #
 momentjs:moment            # Date and time manipulation library
 percolate:migrations       # Allows database migrations

@@ -18,11 +18,10 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Injectable }                     from '@angular/core';
-import { Images }                         from '../../common/collections/image.collection';
+import { Images, ImagesStore }            from '../../common/collections/image.collection';
 import { BehaviorSubject }                from 'rxjs/BehaviorSubject';
 import { Observable }                     from 'rxjs/Observable';
 import { Image, ProductImage, LogoImage } from '../../common/models';
-import { ImagesStore }                    from '../../common/collections/image.collection.ts';
 import { UploadFS }                       from 'meteor/jalik:ufs';
 import { MeteorReactive }                 from 'angular2-meteor';
 

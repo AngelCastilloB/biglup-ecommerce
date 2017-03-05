@@ -19,7 +19,7 @@
 
 import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
-import { Images }                from '../collections/image.collection';
+import { Images }                from '../../server/collections/image.collection';
 import { ProductSchema }         from '../schemas/product.schema';
 import { Product, ProductImage } from '../models';
 import { Meteor }                from 'meteor/meteor';

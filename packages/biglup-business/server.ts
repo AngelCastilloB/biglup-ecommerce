@@ -20,7 +20,7 @@ export * from './common/schemas/user.schema';
 
 // Collections
 export * from './common/collections/category.collection';
-export * from './common/collections/image.collection';
+export * from './server/collections/image.collection';
 export * from './common/collections/product.collection';
 export * from './common/collections/variant-attributes.collections';
 export * from './common/collections/appearance.collections';

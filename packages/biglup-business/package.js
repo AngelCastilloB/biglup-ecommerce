@@ -20,6 +20,7 @@ Package.onUse(function(api)
     api.use('check');
     api.use('mongo');
     api.use('biglup:i18n');
+    api.use('biglup:ufs-google-cloud');
 
     api.addFiles([
         'typings/biglup-business.d.ts'
@@ -40,12 +41,19 @@ Package.onUse(function(api)
 
     // Collections
     api.addFiles([
+        'common/collections/image.collection.ts'
+    ], ['client']);
+
+    api.addFiles([
         'common/collections/category.collection.ts',
-        'common/collections/image.collection.ts',
         'common/collections/product.collection.ts',
         'common/collections/variant-attributes.collections.ts',
         'common/collections/appearance.collections.ts'
     ], ['client', 'server']);
+
+    api.addFiles([
+        'server/collections/image.collection.ts'
+    ], ['server']);
 
     // Methods
     api.addFiles([
@@ -55,7 +63,7 @@ Package.onUse(function(api)
         'common/methods/variant-attributes.methods.ts',
         'common/methods/inventory.methods.ts',
         'common/methods/appearance.methods.ts'
-    ], ['client', 'server']);
+    ], ['server']);
 
     // Models
     api.addFiles([
@@ -99,4 +107,6 @@ Package.onUse(function(api)
 
     api.mainModule ('client.ts', "client");
     api.mainModule ('server.ts', "server");
+
+    api.addAssets(['private/google-cloud-service-key.json'], "server");
 });

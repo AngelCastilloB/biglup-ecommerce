@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Appearances }           from '../collections/appearance.collections';
-import { Images }                from '../collections/image.collection';
+import { Images }                from '../../server/collections/image.collection';
 import { AppearanceSchema }      from '../schemas/appearance.schema';
 import { Appearance, LogoImage } from '../models';
 import { Meteor }                from 'meteor/meteor';
