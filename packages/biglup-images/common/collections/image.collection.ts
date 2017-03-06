@@ -1,7 +1,7 @@
 /**
  * @file image.collection.ts
  *
- * @summary This is the image collection server side definition.
+ * @summary This is the image collection client side definition.
  *
  * @author Angel Castillo <angel.castillo@biglup.com>
  * @date   July 17 2016
@@ -19,7 +19,7 @@
 
 import { Mongo }    from 'meteor/mongo';
 import { UploadFS } from 'meteor/jalik:ufs';
-import { Image }    from '../../common/models';
+import { Image }    from '../models/image';
 
 // VALIDATORS *********************************************************************************************************/
 
@@ -54,22 +54,20 @@ export const Images = new Mongo.Collection<Image>('images');
 /**
  * @summary The images store.
  *
- * @type {UploadFS.store.GoogleCloudStorage} The image store
+ * @type {UploadFS.store.Local} The image store
  */
-
-export const ImagesStore = new UploadFS.store.GoogleCloudStorage(
+export const ImagesStore = new UploadFS.store.Local(
 {
     collection: Images,
+    path: '/uploads/images',
+    storesPath: 'images',
     name: 'images',
-    chunkSize: 1024 * 255,
-    bucket: "biglup-images-dev-test",                                                 //required
-    projectId: "taiwan-test-149606",                                                  // Google Cloud storage project id; required if not set in environment variables
-    credentials: JSON.parse(Assets.getText('private/google-cloud-service-key.json')), // Google Cloud storage storage access key.
-    folder: "/uploads/images",                                                        //optional, which folder (key prefix) in the container to use
+    mode: '0744',
+    writeMode: '0744',
     filter: new UploadFS.Filter(
-    {
-        contentTypes: ['image/*']
-    }),
+        {
+            contentTypes: ['image/*']
+        }),
 });
 
 // VALIDATORS *********************************************************************************************************/

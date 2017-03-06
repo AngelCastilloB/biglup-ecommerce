@@ -20,7 +20,6 @@
 export * from './cart';
 export * from './cart-item';
 export * from './category';
-export * from './image';
 export * from './product';
 export * from './product-image';
 export * from './product-variant';

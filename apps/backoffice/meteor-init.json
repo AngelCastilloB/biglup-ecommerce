@@ -1,0 +1,29 @@
+{
+  "user": {
+    "name": "username",
+    "email": "user email",
+    "password": "someRandomPassword"
+  },
+  "migrations": {
+    "migrate": true,
+    "reset": true,
+    "initialize": true,
+    "locales": [
+      "en",
+      "zh"
+    ],
+    "mock": false
+  },
+  "facebook": {
+    "appId": "",
+    "secret": ""
+  },
+  "twitter": {
+    "consumerKey": "",
+    "secret": ""
+  },
+  "google": {
+    "clientId": "",
+    "secret": ""
+  }
+}

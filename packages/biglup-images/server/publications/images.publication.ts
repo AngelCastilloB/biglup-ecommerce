@@ -17,7 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Images } from '../../server/collections/image.collection';
+import { Images } from '../../common/collections/image.collection';
 import { Meteor } from 'meteor/meteor';
 
 // PUBLICATIONS *******************************************************************************************************/

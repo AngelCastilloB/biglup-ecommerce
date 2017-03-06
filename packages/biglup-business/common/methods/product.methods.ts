@@ -19,7 +19,7 @@
 
 import { Products }              from '../collections/product.collection';
 import { Categories }            from '../collections/category.collection';
-import { Images }                from '../../server/collections/image.collection';
+import { Images }                from 'meteor/biglup:images';
 import { ProductSchema }         from '../schemas/product.schema';
 import { Product, ProductImage } from '../models';
 import { Meteor }                from 'meteor/meteor';
@@ -39,7 +39,16 @@ const removeUnusedImages = (modifiedProduct: Product, currentProduct: Product) =
     let difference:         Array<String> = currentProductIds.filter(id => modifiedProductIds.indexOf(id) < 0);
 
     for (let i: number = 0; i < difference.length; ++i)
-        Images.remove({_id: difference[i]});
+    {
+        if (Meteor.settings.public['google-cloud-storage'])
+        {
+            Meteor.call('deleteGoogleCloudStorageFile', difference[i]);
+        }
+        else
+        {
+            Images.remove({_id: difference[i]});
+        }
+    }
 };
 
 /**
@@ -50,7 +59,16 @@ const removeUnusedImages = (modifiedProduct: Product, currentProduct: Product) =
 const removeAllImages = (images: Array<ProductImage>) =>
 {
     for (let i: number = 0; i < images.length; ++i)
-        Images.remove({_id: images[i].id});
+    {
+        if (Meteor.settings.public['google-cloud-storage'])
+        {
+            Meteor.call('deleteGoogleCloudStorageFile', images[i].id);
+        }
+        else
+        {
+            Images.remove({_id: images[i].id});
+        }
+    }
 };
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/

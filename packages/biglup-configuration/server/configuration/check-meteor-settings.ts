@@ -37,6 +37,13 @@ const GOOGLE_SETTINGS = {
     secret: ''
 };
 
+const GOOGLE_CLOUD_STORAGE_SETTINGS = { // Default settings connect to a development bucket.
+    bucket: '',
+    projectId: '',
+    credentials: '',
+    folder: ''
+};
+
 const TWITTER_SETTINGS = {
     consumerKey: '',
     secret: ''
@@ -59,31 +66,43 @@ export const checkMeteorSettings = () =>
 
     if (!Meteor.settings['facebook'])
     {
-        Meteor.settings['facebook']     = FACEBOOK_SETTINGS;
-        Meteor.settings.public.facebook = false;
+        Meteor.settings['facebook']        = FACEBOOK_SETTINGS;
+        Meteor.settings.public['facebook'] = false;
     }
     else
     {
-        Meteor.settings.public.facebook = true;
+        Meteor.settings.public['facebook'] = true;
     }
 
     if (!Meteor.settings['google'])
     {
-        Meteor.settings['google']     = GOOGLE_SETTINGS;
-        Meteor.settings.public.google = false;
+        Meteor.settings['google']        = GOOGLE_SETTINGS;
+        Meteor.settings.public['google'] = false;
     }
     else
     {
-        Meteor.settings.public.google = true;
+        Meteor.settings.public['google'] = true;
     }
 
     if (!Meteor.settings['twitter'])
     {
-        Meteor.settings['twitter']     = TWITTER_SETTINGS;
-        Meteor.settings.public.twitter = false;
+        Meteor.settings['twitter']        = TWITTER_SETTINGS;
+        Meteor.settings.public['twitter'] = false;
     }
     else
     {
-        Meteor.settings.public.twitter = true;
+        Meteor.settings.public['twitter'] = true;
+    }
+
+    if (!Meteor.settings['google-cloud-storage'])
+    {
+        Meteor.settings['google-cloud-storage']        = GOOGLE_CLOUD_STORAGE_SETTINGS;
+        Meteor.settings.public['google-cloud-storage'] = false;
+        Meteor.settings.public.isSelfHosted            = true;
+    }
+    else
+    {
+        Meteor.settings.public['google-cloud-storage'] = true;
+        Meteor.settings.public.isSelfHosted            = false;
     }
 };

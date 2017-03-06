@@ -18,7 +18,7 @@
 // IMPORTS ************************************************************************************************************/
 
 import { Appearances }           from '../collections/appearance.collections';
-import { Images }                from '../../server/collections/image.collection';
+import { Images }                from 'meteor/biglup:images';
 import { AppearanceSchema }      from '../schemas/appearance.schema';
 import { Appearance, LogoImage } from '../models';
 import { Meteor }                from 'meteor/meteor';
@@ -32,7 +32,14 @@ import { Meteor }                from 'meteor/meteor';
  */
 const removeLogoImage = (image: LogoImage) =>
 {
-    Images.remove({_id: image.id});
+    if (Meteor.settings.public['google-cloud-storage'])
+    {
+        Meteor.call('deleteGoogleCloudStorageFile', image.id);
+    }
+    else
+    {
+        Images.remove({_id: image.id});
+    }
 };
 
 // ADMINISTRATOR ONLY METHODS *****************************************************************************************/

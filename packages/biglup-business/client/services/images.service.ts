@@ -17,13 +17,13 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Injectable }                     from '@angular/core';
-import { Images, ImagesStore }            from '../../common/collections/image.collection';
-import { BehaviorSubject }                from 'rxjs/BehaviorSubject';
-import { Observable }                     from 'rxjs/Observable';
-import { Image, ProductImage, LogoImage } from '../../common/models';
-import { UploadFS }                       from 'meteor/jalik:ufs';
-import { MeteorReactive }                 from 'angular2-meteor';
+import { Injectable }                 from '@angular/core';
+import { Images, ImagesStore, Image } from 'meteor/biglup:images';
+import { BehaviorSubject }            from 'rxjs/BehaviorSubject';
+import { Observable }                 from 'rxjs/Observable';
+import { ProductImage, LogoImage }    from '../../common/models';
+import { UploadFS }                   from 'meteor/jalik:ufs';
+import { MeteorReactive }             from 'angular2-meteor';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
@@ -112,42 +112,12 @@ export class ImagesService extends MeteorReactive
                 'You need to provide an image file to upload.');
         }
 
-        let addedWork: number = 0;
-        return Observable.create(observer =>
-        {
-                let sourceFile: File = image.file;
+        let isSelfHosted: boolean = Meteor.settings.public.isSelfHosted;
 
-                const picture = {
-                    name: sourceFile.name,
-                    type: sourceFile.type,
-                    size: sourceFile.size,
-                };
+        if (isSelfHosted)
+            return this._createSelfHostedImageObserver(image);
 
-                let worker = new UploadFS.Uploader({
-                    store: ImagesStore,
-                    data: sourceFile,
-                    file: picture,
-                    onError: (error) =>
-                    {
-                        observer.error(error);
-                    },
-                    onComplete: (result) =>
-                    {
-                        image.isUploaded = true;
-                        image.id         = result._id;
-                        image.url        = result.url.toString();
-
-                        observer.complete();
-                    },
-                    onProgress: (file, progress) =>
-                    {
-                        addedWork = (progress * 100) - addedWork;
-                        observer.next(addedWork);
-                    }
-                });
-
-                worker.start();
-        });
+        return this._googleCloudStoreHostedImageObserver(image);
     }
 
     /**
@@ -169,6 +139,26 @@ export class ImagesService extends MeteorReactive
                 'You need to provide an image file to upload.');
         }
 
+        let isSelfHosted: boolean = Meteor.settings.public.isSelfHosted;
+
+        if (isSelfHosted)
+            return this._createSelfHostedImageObserver(image);
+
+        return this._googleCloudStoreHostedImageObserver(image);
+    }
+
+    /**
+     * @summary Creates an observable that uploads the image to a self hosting server.
+     *
+     * @param image  The image to be uploaded.
+     *
+     * @remark This method doesnt work on production.
+     *
+     * @return {any} The observable.
+     * @private
+     */
+    private _createSelfHostedImageObserver(image: any): Observable<number>
+    {
         let addedWork: number = 0;
         return Observable.create(observer =>
         {
@@ -204,6 +194,84 @@ export class ImagesService extends MeteorReactive
             });
 
             worker.start();
+        });
+    }
+
+    /**
+     * @summary Creates an observable that uploads the image to a self hosting server.
+     *
+     * @param image  The image to be uploaded.
+     *
+     * @remark This method doesnt work on production.
+     *
+     * @return {any} The observable.
+     * @private
+     */
+    private _googleCloudStoreHostedImageObserver(image: any): Observable<number>
+    {
+        let addedWork: number = 0;
+        return Observable.create(observer =>
+        {
+            let sourceFile: File = image.file;
+
+            Meteor.call('getGoogleCloudStorageSignedUrl', sourceFile.name, sourceFile.type, sourceFile.size, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            })
+        })
+        .mergeMap((signed: any) =>
+        {
+            return Observable.create(observer =>
+            {
+                let xhr = new XMLHttpRequest();
+                xhr.open('PUT', signed.signedUrl, true);
+
+                xhr.onload = (result) =>
+                {
+                    Meteor.call('confirmGoogleCloudStorageUpload', signed.id, true, (error, result) =>
+                    {
+                        if (error)
+                        {
+                            observer.error(error);
+                            Meteor.call('confirmGoogleCloudStorageUpload', signed.id, false);
+                        }
+                        else
+                        {
+                            image.isUploaded = true;
+                            image.id         = result._id;
+                            image.url        = result.url.toString();
+
+                            observer.complete();
+                        }
+                    });
+                };
+
+                xhr.upload.onprogress = (result) =>
+                {
+                    if (result.lengthComputable)
+                    {
+                        addedWork = ((result.loaded / result.total) * 100) - addedWork;
+                        observer.next(addedWork);
+                    }
+                };
+
+                xhr.onerror = (error) =>
+                {
+                    observer.error(error);
+                    Meteor.call('confirmGoogleCloudStorageUpload', signed.id, false);
+                };
+
+                image.file.name = signed.filename;
+                xhr.send(image.file);
+            });
         });
     }
 }

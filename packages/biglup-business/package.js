@@ -20,7 +20,7 @@ Package.onUse(function(api)
     api.use('check');
     api.use('mongo');
     api.use('biglup:i18n');
-    api.use('biglup:ufs-google-cloud');
+    api.use('biglup:images');
 
     api.addFiles([
         'typings/biglup-business.d.ts'
@@ -39,21 +39,12 @@ Package.onUse(function(api)
         'client/services/appearances.service.ts'
     ], 'client');
 
-    // Collections
-    api.addFiles([
-        'common/collections/image.collection.ts'
-    ], ['client']);
-
     api.addFiles([
         'common/collections/category.collection.ts',
         'common/collections/product.collection.ts',
         'common/collections/variant-attributes.collections.ts',
         'common/collections/appearance.collections.ts'
     ], ['client', 'server']);
-
-    api.addFiles([
-        'server/collections/image.collection.ts'
-    ], ['server']);
 
     // Methods
     api.addFiles([
@@ -70,7 +61,6 @@ Package.onUse(function(api)
         'common/models/cart.ts',
         'common/models/cart-item.ts',
         'common/models/category.ts',
-        'common/models/image.ts',
         'common/models/index.ts',
         'common/models/product.ts',
         'common/models/product-image.ts',
@@ -98,7 +88,6 @@ Package.onUse(function(api)
     // Publications
     api.addFiles([
         'server/publications/category.publication.ts',
-        'server/publications/images.publication.ts',
         'server/publications/product.publication.ts',
         'server/publications/user.publication.ts',
         'server/publications/variant-attributes.publication.ts',
