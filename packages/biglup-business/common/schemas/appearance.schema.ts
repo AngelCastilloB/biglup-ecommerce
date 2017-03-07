@@ -171,6 +171,10 @@ export const AppearanceSchema: any = new SimpleSchema({
         label: `${APPEARANCE_SCHEMA_NAME} isEditable`,
         type: Boolean
     },
+    isActive: {
+        label: `${APPEARANCE_SCHEMA_NAME} isActive`,
+        type: Boolean
+    },
     style: {
         label: `${APPEARANCE_SCHEMA_NAME} style`,
         type: AppearanceStyleSchema

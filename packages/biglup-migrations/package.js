@@ -12,6 +12,7 @@ Package.onUse(function(api)
     api.use('angular2-compilers');
     api.use('aldeed:simple-schema');
     api.use('aldeed:collection2');
+    api.use('biglup:images');
     api.use('mongo');
 
     // Generators

@@ -115,6 +115,7 @@ declare module Business
     class AppearancesService
     {
         public getAppearances(): any;
+        public getActiveAppearance(): any;
         public getAppearance(appearanceId: string): any;
         public createAppearance(appearance: Appearance): String;
         public updateAppearance(appearance: Appearance): any;
@@ -127,7 +128,6 @@ declare module Business
 
     const Categories: any;
     const Images: any;
-    const ImagesStore: any;
     const Products: any;
     const VariantColors: any;
     const VariantSizes: any;
@@ -323,7 +323,8 @@ declare module Business
             public name: String = '',
             public style: AppearanceStyle = new AppearanceStyle(),
             public layout: Array<AppearanceLayout> = [],
-            public isEditable:     boolean             = true,
+            public isEditable: boolean             = true,
+            public isActive: boolean               = false,
             public createdAt:      Date            = new Date(),
             public updatedAt:      Date            = new Date());
     }

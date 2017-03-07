@@ -35,6 +35,7 @@ export class Appearance
      * @param style      The style.
      * @param layout     The layout.
      * @param isEditable Whether this appearance is editable.
+     * @param isActive   Whether this appearance is the active appearance.
      * @param createdAt  The Appearance date of creation.
      * @param updatedAt  The last time this Appearance was updated.
      */
@@ -44,6 +45,7 @@ export class Appearance
         public style: AppearanceStyle = new AppearanceStyle(),
         public layout: Array<AppearanceLayout> = [],
         public isEditable: boolean             = true,
+        public isActive: boolean               = false,
         public createdAt:      Date            = new Date(),
         public updatedAt:      Date            = new Date())
     {

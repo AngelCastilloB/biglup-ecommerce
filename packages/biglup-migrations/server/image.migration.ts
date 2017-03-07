@@ -17,11 +17,12 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration }               from './abstract-migration';
-import { ImagesStore, Category, Product  } from 'meteor/biglup:business';
-import { Observable }                      from 'rxjs/Observable';
-import * as Jimp                           from 'jimp';
-import * as stream                         from 'stream';
+import { AbstractMigration }                 from './abstract-migration';
+import { Category, Product  }                from 'meteor/biglup:business';
+import { Observable }                        from 'rxjs/Observable';
+import * as Jimp                             from 'jimp';
+import * as stream                           from 'stream';
+import { ImagesStore, GoogleStorageService } from 'meteor/biglup:images'
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/map';
@@ -107,6 +108,11 @@ export class ImageMigration extends AbstractMigration
         this._products   = this._collections.products.find({}).fetch();
         this._categories = this._collections.categories.find({}).fetch();
 
+        if (GoogleStorageService.getInstance().isActive())
+            console.log('Google cloud service is active. The images will be uploaded to the cloud.');
+        else
+            console.log('The images will be hosted in the server');
+
         this._products.forEach((product: Product) => this._addProductImages(product));
         this._categories.forEach((category: Category) => this._addCategoryImage(category));
     }
@@ -143,18 +149,36 @@ export class ImageMigration extends AbstractMigration
      */
     private _createImage(name: string, callback: (error, image) => void)
     {
-        const imageId = ImagesStore.create({name, type: this._type});
+        let isGcsActive: boolean = GoogleStorageService.getInstance().isActive();
 
-        this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name).subscribe(
-            (buffer) =>
-            {
-                ImagesStore.write(buffer, imageId, callback);
-            },
-            (bufferError) =>
-            {
-                throw bufferError;
-            }
-        );
+        if (isGcsActive)
+        {
+            this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name).subscribe(
+                (buffer) =>
+                {
+                    GoogleStorageService.getInstance().uploadImage(buffer, name, this._type, 0);
+                },
+                (bufferError) =>
+                {
+                    throw bufferError;
+                }
+            );
+        }
+        else
+        {
+            const imageId = ImagesStore.create({name, type: this._type});
+
+            this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name).subscribe(
+                (buffer) =>
+                {
+                    ImagesStore.write(buffer, imageId, callback);
+                },
+                (bufferError) =>
+                {
+                    throw bufferError;
+                }
+            );
+        }
     }
 
     /**

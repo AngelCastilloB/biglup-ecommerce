@@ -108,8 +108,22 @@ export class AppearancesService extends MeteorReactive
             .distinctUntilChanged()
             .mergeMap((array) =>
             {
-                console.error(array);
                 return new BehaviorSubject(array.find(appearance => appearance._id === appearanceId));
+            });
+    }
+
+    /**
+     * @summary Gets the currently active appearance.
+     *
+     * @returns {Observable<Appearance>} The category observable.
+     */
+    public getActiveAppearance(): Observable<Appearance>
+    {
+        return this._appearancesStream
+            .distinctUntilChanged()
+            .mergeMap((array) =>
+            {
+                return new BehaviorSubject(array.find(appearance => appearance.isActive));
             });
     }
 

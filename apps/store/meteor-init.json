@@ -18,6 +18,24 @@
     "appId": "",
     "secret": ""
   },
+  "google-cloud-storage":
+  {
+    "bucket": "biglup-images-dev-test",
+    "projectId": "taiwan-test-149606",
+    "credentials": {
+      "type": "service_account",
+      "project_id": "taiwan-test-149606",
+      "private_key_id": "2e1bf92d5beb45eb8d4e528327347f2bbd69feb8",
+      "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCrAIFrfUanL/PL\nyGkPjXLCkji1wOuxx6eGMPacWpWocK6edwUIT0UM3qfzFE+ppheGN9FaHpDPnKvl\nIiKk5ubw56z6PlpBfzCWQl5S6m5kt6QHJAEARJdVJrdm9cEodMDCbc+OBaVluqGH\n0Y7DwcllfrrTufTZ21a3ej5bJLN9rnItH0HEoIYB+RR4UWiIn7qQc6pULjDBKC41\n4VS1UG90ogNSfunQI5CyShDAw/ITokSyHk0pmgfAR3F3JQEKxGeyN9pfWeNZrhtJ\neE0/0vGMbOA8ybM4AxJS5aDi4V6qb8SyjM3T5fC+BQrOKvzRXKK0BdDSg9XAvfrh\nx7ld6vYtAgMBAAECggEANHbMPjlKUwMQTmZnbWEdY3rPMVxGM94olLAzCVd1cR9Z\nQ78KaTlA2yj46EhEBK2zq/c2IOsdzMSprHwjmupI0oKR/JjiwhOOyZsFK3VHd1ks\nVxCByh5BO9vMCye9IndnqH9eXZl33FU9N9lgbsjmzF/sXAdCixCTc2lq9jW1aAp7\n2ZiGw4dkjtEN6MCRsQkt7Y/0SDkr3DO9FWxLlt5pKUKZl7gNryWYfYNHDw0A/Lf6\nDdg1dKqk1GLVVuQJM12S5vzSoEuLvVsqbpA/cQ/Rj3P9VZU+7Ql35AjB2PFcfeMz\nHFOLNeH8RIau8NzMBs5UunDuAREj0reNsisdqxt7YQKBgQDeIIgCqnmeX7sFWFLz\n33DXSmQ/q5G2CV1q8hXZfFYsTj5qaJxygxP5MIrYH0QoMirM/aRLEYWVPo7K/K3l\nj8R7s1OzsnMy4V1pRNghS70V4bda5zaEleQ430Tw1Hb6okQAE9Gobwijjtyvae96\nlBLPfWguQOTeoyrj67MKJEMnhQKBgQDFFCLSUfqy2D5HbYZp8hZq5aFjwXVG3nN+\nqdLGzASjbsKXfw5POzHLVkH+8EIAEjevCj9504e3KBsYw2bFa6kgDJgfBaPie2kH\nWcFQDqDHzTfcHshBQaVgHEQXGWnMr1GvAeDtbpOOd4A2ur+7FGBUBlP89xrflr02\n2G4+HMCQiQKBgEauZ1kh0e1ZXPOIdWzwrsFzBI9WEtmwBS/gtJ8t92XFyAqoGxA9\nMX/buHKpEFESFZiBJWRVwQIKk/l3igZARy9tkrbdk9ae69BxfayqoxJxbpzYcfqi\nj6qhMRjJIssCE01LAS3tlvwkm4id1vxUXd/0cdA2Ch3mIeHAwIn7m/rZAoGBALJk\nbrzI3lCjc4R+fMxMCcTLhZJh3MHAvPTrzlKK/Kvfp58wsIhBweoYc3bMjkG4O9Vj\nRmAFfPTrBdQdlFqiAJ51KAH0vgtVwJWZxmWsSBd0CNtktcp0HLlp/KyYIW/ZRuxO\nnAbwL/sm6tUfqEw0vplwfPgfyaCYtz/9G5V3u0tZAoGAbORC6asRbMGBu2fnIezo\npobgURwWve85G/Ovvlx2Bv9Be6513Kob8e+FvF/ITzUMHEzWnZxTSW+DpDz7Jeqy\nDZFhwIVP8D5EVOLOnnv4ZXJJYMS06MNgzwYgaNg1Uigy+64lcg/3s1pCrO4bqBsD\npZSUuuWbADSwMBYH3G0iFOo=\n-----END PRIVATE KEY-----\n",
+      "client_email": "imagedev@taiwan-test-149606.iam.gserviceaccount.com",
+      "client_id": "106299981755731359605",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://accounts.google.com/o/oauth2/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/imagedev%40taiwan-test-149606.iam.gserviceaccount.com"
+    },
+    "folder": "/uploads/images"
+  },
   "twitter": {
     "consumerKey": "",
     "secret": ""

@@ -35,6 +35,11 @@ Package.onUse(function(api)
         'common/models/image.ts'
     ], ['client', 'server']);
 
+    // Services
+    api.addFiles([
+        'server/services/google-cloud-storage.service.ts'
+    ], 'server');
+
     // Publications
     api.addFiles([
         'server/publications/images.publication.ts'

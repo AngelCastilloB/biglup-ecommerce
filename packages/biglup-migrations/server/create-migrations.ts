@@ -23,7 +23,7 @@ import { ProductMigration }          from './product.migration';
 import { Products }                  from 'meteor/biglup:business';
 import { IMigratable }               from './interfaces/i-migratable';
 import { ImageMigration }            from './image.migration';
-import { Images }                    from 'meteor/biglup:business';
+import { Images }                    from 'meteor/biglup:images';
 import { ContentGeneratorFactory }   from './generators/content-generator-factory';
 import { AbstractContentGenerator }  from './generators/abstract-content-generator';
 import { VariantAttributeMigration } from './variant-attributes.migration';

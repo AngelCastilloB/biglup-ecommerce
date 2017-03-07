@@ -22,6 +22,7 @@
 /* MODULES ************************************************************************************************************/
 
 declare module Images {
+
 // COLLECTIONS ********************************************************************************************************/
 
     const Images: any;
@@ -42,7 +43,20 @@ declare module Images {
             public uploading: boolean = false,
             public url: string = '')
     }
+
+// SERVICES ***********************************************************************************************************/
+
+    export class GoogleStorageService {
+        public static getInstance(): GoogleStorageService;
+        constructor();
+        public getSignedUrl(fileName: string, fileType: string, size: number): string;
+        public confirmUpload(id: string, result: boolean): any;
+        public deleteImage(id: string);
+        public uploadImage(stream: any, fileName: string, fileType: string, size: number): any;
+        public isActive(): boolean;
+    }
 }
+
 // MODULE EXPORT ******************************************************************************************************/
 
 declare module 'meteor/biglup:images'

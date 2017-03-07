@@ -23,3 +23,6 @@ export * from './common/models/image';
 
 // Publications
 import './server/publications/images.publication';
+
+// Services
+export * from './server/services/google-cloud-storage.service';

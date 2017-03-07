@@ -17,15 +17,7 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Images } from '../../common/collections/image.collection';
-
-import * as gcloud from 'google-cloud';
-import * as Future from 'fibers/future';
-
-// CONSTANTS **********************************************************************************************************/
-
-const GOOGLE_CLOUD_STORAGE_URL     = 'https://storage.googleapis.com/';
-const SIGNED_URL_EXPIRATION_OFFSET = 600000;
+import { GoogleStorageService } from '../services/google-cloud-storage.service';
 
 // METHODS ************************************************************************************************************/
 
@@ -49,74 +41,11 @@ Meteor.methods({
                  'You are not authorized to perform this action.');
          }*/
 
-        let options: any = Meteor.settings['google-cloud-storage'];
-
         check(fileName, String);
         check(fileType, String);
         check(size, Number);
 
-        const gcs: any = gcloud.storage({
-            projectId: options.projectId,
-            credentials: options.credentials
-        });
-
-        const bucket = gcs.bucket(options.bucket);
-
-        let folder = options.folder;
-
-        if (typeof folder === "string" && folder.length)
-        {
-            if (folder.slice(0, 1) === "/")
-                folder = folder.slice(1);
-
-            if (folder.slice(-1) !== "/")
-                folder += "/";
-        }
-        else
-        {
-            folder = "";
-        }
-
-        var future = new Future();
-
-        let id: any = Images.insert({
-                name: fileName,
-                type: fileType,
-                store: 'images',
-                complete: false,
-                path: options.folder + '/' + fileName,
-                progress: 0,
-                size: size,
-                toke: '',
-                uploading: true,
-                uploadedAt: Date.now(),
-                url: ''});
-
-        var filename = folder + id;
-        let futureUrl: string = GOOGLE_CLOUD_STORAGE_URL + options.bucket + '/' + filename;
-
-        Images.update({ _id: id }, {$set: {url: futureUrl}});
-
-        bucket.file(filename).getSignedUrl({
-            action: 'write',
-            expires: Date.now() + SIGNED_URL_EXPIRATION_OFFSET,
-            contentType: fileType
-        }, (error, signedUrl) =>
-        {
-            if (error == null)
-            {
-                let response: any = {id: id , signedUrl: signedUrl, filename: filename};
-                future.return(response);
-            }
-            else
-            {
-                future.throw(new Meteor.Error(
-                    'getGoogleCloudStorageSignedUrl.error',
-                    'There was an error requesting the signed url ' + error));
-            }
-        });
-
-        return future.wait();
+        return GoogleStorageService.getInstance().getSignedUrl(fileName, fileType, size);
     }
 });
 
@@ -139,78 +68,10 @@ Meteor.methods({
                  'You are not authorized to perform this action.');
          }*/
 
-        let options: any = Meteor.settings['google-cloud-storage'];
-
         check(id, String);
         check(result, Boolean);
 
-        const gcs: any = gcloud.storage({
-            projectId: options.projectId,
-            credentials: options.credentials
-        });
-
-        const bucket = gcs.bucket(options.bucket);
-
-        let image: any = Images.findOne({_id: id});
-
-        if (!image)
-        {
-            throw new Meteor.Error(
-                'confirmGoogleCloudStorageUpload.error',
-                'The image with the given ID (' + id + ') was not found.');
-        }
-
-        if (!result)
-        {
-            Images.remove({_id: id});
-            return;
-        }
-
-        let folder = options.folder;
-
-        if (typeof folder === "string" && folder.length)
-        {
-            if (folder.slice(0, 1) === "/")
-                folder = folder.slice(1);
-
-            if (folder.slice(-1) !== "/")
-                folder += "/";
-        }
-        else
-        {
-            folder = "";
-        }
-
-        var filename = folder + image._id;
-
-        var future = new Future();
-
-        bucket.file(filename).exists(
-        (error, exists) =>
-        {
-            if (error)
-            {
-                future.throw(new Meteor.Error(
-                    'confirmGoogleCloudStorageUpload.error',
-                    'There was an error with the confirmation of the file ' + error));
-
-                return;
-            }
-
-            if (!exists)
-            {
-                future.throw(new Meteor.Error(
-                    'confirmGoogleCloudStorageUpload.error',
-                    'There was an error with the confirmation of the file. The file does not exists'));
-
-                return;
-            }
-
-            bucket.file(filename).makePublic();
-            future.return(image);
-        });
-
-        return future.wait();
+        return GoogleStorageService.getInstance().confirmUpload(id, result);
     }
 });
 
@@ -232,58 +93,7 @@ Meteor.methods({
                  'You are not authorized to perform this action.');
          }*/
 
-        let options: any = Meteor.settings['google-cloud-storage'];
-
         check(id, String);
-
-        const gcs: any = gcloud.storage({
-            projectId: options.projectId,
-            credentials: options.credentials
-        });
-
-        const bucket = gcs.bucket(options.bucket);
-
-        let folder = options.folder;
-
-        if (typeof folder === "string" && folder.length)
-        {
-            if (folder.slice(0, 1) === "/")
-                folder = folder.slice(1);
-
-            if (folder.slice(-1) !== "/")
-                folder += "/";
-        }
-        else
-        {
-            folder = "";
-        }
-
-        let image: any = Images.findOne({_id: id});
-
-        if (!image)
-        {
-            throw new Meteor.Error(
-                'confirmGoogleCloudStorageUpload.error',
-                'The image with the given ID (' + id + ') was not found.');
-        }
-
-        var future = new Future();
-
-        bucket.file(folder + image._id).delete((error) =>
-        {
-            if (error)
-            {
-                future.throw(new Meteor.Error(
-                    'deleteGoogleCloudStorageFile.error',
-                    'There was an error deleting the image (' + id + ')'));
-
-                return;
-            }
-
-            Meteor.wrapAsync(Images.remove, {_id: id});
-            future.return(true);
-        });
-
-        future.wait();
+        return GoogleStorageService.getInstance().deleteImage(id);
     }
 });

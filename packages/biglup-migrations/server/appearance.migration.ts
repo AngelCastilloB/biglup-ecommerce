@@ -35,10 +35,10 @@ const copyAppearance = (appearance: Appearance) =>
 
 // IMPORTS ************************************************************************************************************/
 
-import { Appearance, Appearances }      from 'meteor/biglup:business';
-import { IMigratable }                  from './interfaces/i-migratable';
-import { ReadStream, createReadStream } from 'fs';
-import { ImagesStore }                  from 'meteor/biglup:business';
+import { Appearance, Appearances }          from 'meteor/biglup:business';
+import { IMigratable }                      from './interfaces/i-migratable';
+import { ReadStream, createReadStream }     from 'fs';
+import { ImagesStore,GoogleStorageService } from 'meteor/biglup:images';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -66,25 +66,51 @@ export class AppearanceMigration implements IMigratable
         let defaultAppearance = copyAppearance(new Appearance(null, 'default'));
 
         console.log('Inserting logo image.');
-        const imageId = ImagesStore.create({name: 'default_logo', type: 'image/png'});
 
-        ImagesStore.write(this._getImageStream(), imageId,
-            (error, image) =>
-            {
-                if (error)
+        if (GoogleStorageService.getInstance().isActive())
+            console.log('Google cloud service is active. The logo will be uploaded to the cloud.');
+        else
+            console.log('The logo will be hosted in the server');
+
+        let isGcsActive: boolean = GoogleStorageService.getInstance().isActive();
+
+        if (isGcsActive)
+        {
+            let upload = GoogleStorageService.getInstance().uploadImage(this._getImageStream(), 'default_logo', 'image/png', 0);
+
+            console.log('Logo image with id ' + upload._id + ' inserted');
+
+            defaultAppearance.isActive   = true;
+            defaultAppearance.isEditable = false;
+            defaultAppearance.style.header.logo.isUploaded = true;
+            defaultAppearance.style.header.logo.id         = upload._id;
+            defaultAppearance.style.header.logo.url        = upload.url;
+
+            Appearances.insert(defaultAppearance);
+        }
+        else
+        {
+            const imageId = ImagesStore.create({name: 'default_logo', type: 'image/png'});
+
+            ImagesStore.write(this._getImageStream(), imageId,
+                (error, image) =>
                 {
-                    throw error;
-                }
+                    if (error)
+                    {
+                        throw error;
+                    }
 
-                console.log('Logo image with id ' + imageId + ' inserted');
+                    console.log('Logo image with id ' + imageId + ' inserted');
 
-                defaultAppearance.isEditable = false;
-                defaultAppearance.style.header.logo.isUploaded = true;
-                defaultAppearance.style.header.logo.id         = imageId;
-                defaultAppearance.style.header.logo.url        = image.url;
+                    defaultAppearance.isActive   = true;
+                    defaultAppearance.isEditable = false;
+                    defaultAppearance.style.header.logo.isUploaded = true;
+                    defaultAppearance.style.header.logo.id         = imageId;
+                    defaultAppearance.style.header.logo.url        = image.url;
 
-                Appearances.insert(defaultAppearance);
-            });
+                    Appearances.insert(defaultAppearance);
+                });
+        }
     }
 
     /**
@@ -110,7 +136,6 @@ export class AppearanceMigration implements IMigratable
         }
         catch (error)
         {
-            console.error(error);
             if (error.message.match(/Unknown asset/))
             {
                 throw new Error('Image migration requires a placeholder set in ' +
