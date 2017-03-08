@@ -20,8 +20,6 @@
 import * as gcloud from 'google-cloud';
 import * as Future from 'fibers/future';
 
-// IMPORTS ************************************************************************************************************/
-
 import { Images }     from '../../common/collections/image.collection';
 import { ReadStream } from 'fs';
 

@@ -56,6 +56,41 @@ const createGenerators = (): AbstractContentGenerator[] =>
  * @summary This method configures the data base migration with mock data generators to populate the database for
  * testing purposes.
  */
+export const configureBothMigrations = () =>
+{
+    let generators: AbstractContentGenerator[] = createGenerators();
+
+    // the migrations to be called by the migrate function (order matters).
+    let migrations = [
+        new CategoryMigration(Categories, generators),
+        new ProductMigration(Products, generators, Categories),
+        new ImageMigration(Images, generators, {products: Products, categories: Categories}),
+        new VariantAttributeMigration(),
+        new AppearanceMigration()
+    ];
+
+    // Each migration version needs to be added with the add method.
+    // @see https://atmospherejs.com/percolate/migrations#advanced
+    // Since we could have multiple version (specially in production) we must adapt the migration strategy with multiple
+    // database versions in mind, the Migrations library attacks this issue by setting a version number at execution, if
+    // we need to add a different version of the database we can just add a new Migration.add with new migrations that
+    // will update the database in a non destructive manner.
+    Migrations.add({
+        version: 1,
+        name: 'Add fake and default documents.',
+        up() {
+            migrations.forEach((migration: IMigratable) => migration.up());
+        },
+        down() {
+            migrations.forEach((migration: IMigratable) => migration.down());
+        }
+    });
+};
+
+/**
+ * @summary This method configures the data base migration with mock data generators to populate the database for
+ * testing purposes.
+ */
 export const configureMockMigrations = () =>
 {
     let generators: AbstractContentGenerator[] = createGenerators();

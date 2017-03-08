@@ -13,6 +13,7 @@ Package.onUse(function(api)
     api.use('aldeed:simple-schema');
     api.use('aldeed:collection2');
     api.use('biglup:images');
+    api.use('biglup:business');
     api.use('mongo');
 
     // Generators
@@ -36,7 +37,7 @@ Package.onUse(function(api)
         'server/category.migration.ts',
         'server/create-migrations.ts',
         'server/image.migration.ts',
-        'server/product.migration.ts',
+        'server/product.migration.ts'
     ], 'server');
 
     api.addFiles('private/images/logo_placeholder.png', 'server', {isAsset: true});

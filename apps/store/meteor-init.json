@@ -6,13 +6,13 @@
   },
   "migrations": {
     "migrate": true,
-    "reset": true,
+    "reset": false,
     "initialize": true,
     "locales": [
       "en",
       "zh"
     ],
-    "mock": false
+    "mock": true
   },
   "facebook": {
     "appId": "",

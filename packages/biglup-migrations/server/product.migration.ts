@@ -80,7 +80,11 @@ export class ProductMigration extends AbstractMigration
         this.fetchCategories();
         this._generateProducts();
 
-        this._products.forEach(product => this._collection.insert(product));
+        console.error("products");
+        this._products.forEach(product =>
+        {
+            console.error(this._collection.insert(product));
+        });
     }
 
     /**
@@ -89,6 +93,12 @@ export class ProductMigration extends AbstractMigration
     private fetchCategories()
     {
         this._categories = this._categoriesCollection.find({}, {reactive: false}).fetch();
+
+        console.error("category");
+        this._categories.forEach((category) =>
+        {
+            console.error(category._id);
+        });
     }
 
     /**
@@ -106,8 +116,10 @@ export class ProductMigration extends AbstractMigration
             {
                 product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
                 product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
-                product.color.push({language: generator.getLocale(), value: generator.getColor()});
-                product.size.push({language: generator.getLocale(), value: generator.getSize()});
+
+                //TODO: [Angel] Add variants
+                //product.color.push({language: generator.getLocale(), value: generator.getColor()});
+                //product.size.push({language: generator.getLocale(), value: generator.getSize()});
             });
 
             this._products.push(product);
@@ -149,14 +161,6 @@ export class ProductMigration extends AbstractMigration
      */
     private _getRandomCategoryIds(): string[]
     {
-        const results = [];
-
-        // 10% chance of a product with no category.
-        if (Math.random() <= .1 || this._categories.length === 0)
-        {
-            return results;
-        }
-
         const array       = this._categories.slice(0);
         const probability = 4 / array.length;
         let amount        = array.length < 5 ? array.length : (Math.floor(Math.random() * 5) || 1);

@@ -18,7 +18,8 @@
 /* IMPORTS ************************************************************************************************************/
 
 import { configureDefaultMigrations,
-         configureMockMigrations }   from './server/create-migrations';
+         configureMockMigrations,
+         configureBothMigrations }   from './server/create-migrations';
 import { Meteor }                    from 'meteor/meteor';
 
 /* CONSTANTS **********************************************************************************************************/
@@ -42,15 +43,6 @@ Meteor.startup(() =>
 
     if (settings.migrate)
     {
-        if (settings.mock)
-        {
-            configureMockMigrations();
-        }
-        else if (settings.initialize)
-        {
-            configureDefaultMigrations();
-        }
-
         if (settings.reset)
         {
             // the library doesn't provide public APIs to properly reset the collection.
@@ -58,6 +50,19 @@ Meteor.startup(() =>
             // this fails when the migration is locked and needs to be unlocked.
             Migrations._collection.update({_id: 'control'}, {$set: {locked: false}});
             Migrations.migrateTo(0);
+        }
+
+        if (settings.mock && settings.initialize)
+        {
+            configureBothMigrations();
+        }
+        if (settings.mock)
+        {
+            configureMockMigrations();
+        }
+        else if (settings.initialize)
+        {
+            configureDefaultMigrations();
         }
 
         Migrations.migrateTo('latest');
