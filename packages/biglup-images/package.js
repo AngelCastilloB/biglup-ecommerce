@@ -20,6 +20,7 @@ Package.onUse(function(api)
     api.use('mongo');
     api.use('jalik:ufs');
     api.use('jalik:ufs-local');
+    api.use('http');
 
     api.addFiles([
         'common/collections/image.collection.ts'
@@ -39,6 +40,11 @@ Package.onUse(function(api)
     api.addFiles([
         'server/services/google-cloud-storage.service.ts'
     ], 'server');
+
+    // Utils
+    api.addFiles([
+        'common/utils/image-mime-types.ts'
+    ], ['client', 'server']);
 
     // Publications
     api.addFiles([

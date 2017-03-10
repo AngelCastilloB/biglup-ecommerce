@@ -28,6 +28,13 @@ import { MeteorReactive }             from 'angular2-meteor';
 // Reactive Extensions Imports
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/delayWhen';
+
+// CONSTANTS **********************************************************************************************************/
+
+const RETRY_COUNT = 3;
 
 // EXPORTS ************************************************************************************************************/
 
@@ -209,11 +216,11 @@ export class ImagesService extends MeteorReactive
      */
     private _googleCloudStoreHostedImageObserver(image: any): Observable<number>
     {
-        let addedWork: number = 0;
         return Observable.create(observer =>
         {
             let sourceFile: File = image.file;
 
+            console.error(sourceFile.name);
             Meteor.call('getGoogleCloudStorageSignedUrl', sourceFile.name, sourceFile.type, sourceFile.size, (error, result) =>
             {
                 if (error)
@@ -231,6 +238,7 @@ export class ImagesService extends MeteorReactive
         {
             return Observable.create(observer =>
             {
+                console.error("uploading");
                 let xhr = new XMLHttpRequest();
                 xhr.open('PUT', signed.signedUrl, true);
 
@@ -258,8 +266,8 @@ export class ImagesService extends MeteorReactive
                 {
                     if (result.lengthComputable)
                     {
-                        addedWork = ((result.loaded / result.total) * 100) - addedWork;
-                        observer.next(addedWork);
+                        console.error((result.loaded / result.total) * 100);
+                        observer.next((result.loaded / result.total) * 100);
                     }
                 };
 
@@ -271,7 +279,12 @@ export class ImagesService extends MeteorReactive
 
                 image.file.name = signed.filename;
                 xhr.send(image.file);
-            });
+            }).retryWhen(errors => errors
+                    //log error message
+                    .do(val => console.log(`Retry`))
+                    //restart in 5 seconds
+                    .delayWhen(()=> Observable.timer(1000))
+            );
         });
     }
 }

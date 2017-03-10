@@ -26,3 +26,6 @@ import './server/publications/images.publication';
 
 // Services
 export * from './server/services/google-cloud-storage.service';
+
+// Utils
+export * from './common/utils/image-mime-types.ts';

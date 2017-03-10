@@ -20,6 +20,7 @@
   },
   "google-cloud-storage":
   {
+    "imageService": "https://taiwan-test-149606.appspot.com/",
     "bucket": "biglup-images-dev-test",
     "projectId": "taiwan-test-149606",
     "credentials": {

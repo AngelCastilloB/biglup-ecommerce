@@ -205,7 +205,10 @@ export class ProductsService extends MeteorReactive
         return Observable
             .from(product.images)
             .mergeMap(image => this._imagesService.createProductImage(image))
-            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100), 0)
+            .do((progress) =>
+            {
+                console.error(progress);
+            })
             .concat(Observable.create(observer =>
             {
                 // Gets all the images with the new document id (Ignore file field to avoid sending data over the wire).

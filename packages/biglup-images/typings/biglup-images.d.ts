@@ -44,6 +44,25 @@ declare module Images {
             public url: string = '')
     }
 
+// UTILS **************************************************************************************************************/
+
+    export class ImageMimeTypeHelper
+    {
+        public static IMAGETYPE_JPEG;
+        public static IMAGETYPE_PNG;
+        public static IMAGETYPE_WBMP;
+        public static IMAGETYPE_GIF ;
+        public static IMAGETYPE_BMP;
+        public static IMAGETYPE_TIFF;
+        public static IMAGETYPE_XTIFF;
+        public static IMAGETYPE_ICO;
+        public static IMAGETYPE_XICO;
+        public static extensionToMime;
+        public static mimeToExtension;
+        public static isExtensionValid(extension: string): boolean;
+        public static isMimeTypeValid(mime: string): boolean;
+    }
+
 // SERVICES ***********************************************************************************************************/
 
     export class GoogleStorageService {

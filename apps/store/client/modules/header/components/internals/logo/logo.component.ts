@@ -56,7 +56,6 @@ export class HeaderLogoComponent implements OnInit, OnDestroy
         this._subscriptions.push(this._appearancesService.getLogoUpdate().subscribe(
             (logo) =>
             {
-                this._style.logo = logo;
                 this.setImage(logo);
             }
         ));
@@ -85,7 +84,7 @@ export class HeaderLogoComponent implements OnInit, OnDestroy
 
         if (isUploaded)
         {
-            logoImage.src = url;
+            logoImage.src = url + '=s00';
 
             return;
         }

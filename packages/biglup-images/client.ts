@@ -20,3 +20,6 @@ export * from './common/collections/image.collection';
 
 // Models
 export * from './common/models/image';
+
+// Utils
+export * from './common/utils/image-mime-types.ts';

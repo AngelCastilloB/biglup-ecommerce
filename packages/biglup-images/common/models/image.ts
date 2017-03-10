@@ -36,6 +36,7 @@ export class Image
      * @param uploadedAt The uploaded time timestamp.
      * @param uploading  Flag that indicates if the images is currently being uploaded.
      * @param url        The image URL on the server.
+     * @param isMagic    Gets whether the image URL is magic.
      */
     constructor(
         public _id:        string  = null,
@@ -48,7 +49,8 @@ export class Image
         public type:       string  = '',
         public uploadedAt: Date    = new Date(),
         public uploading:  boolean = false,
-        public url:        string  = '')
+        public url:        string  = '',
+        public isMagic:    boolean = false)
     {
     }
 }

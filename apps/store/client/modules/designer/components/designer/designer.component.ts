@@ -17,8 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component, OnInit, OnDestroy, Input,ViewChild } from '@angular/core';
-import { Appearance, LogoImage, AppearancesService }     from 'meteor/biglup:business';
+import { Component,
+         OnInit,
+         OnDestroy,
+         Input,
+         Output,
+         EventEmitter }                              from '@angular/core';
+import { Appearance, LogoImage, AppearancesService } from 'meteor/biglup:business';
+import { ImageMimeTypeHelper }                       from 'meteor/biglup:images';
+import { BiglupModalType,
+         BiglupModalButtons }                        from '../internals/components/modal/biglup-modal.component';
+import { I18nSingletonService, _T }                  from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -37,6 +46,8 @@ export class DesignerComponent implements OnInit, OnDestroy
 {
     @Input('appearance')
     private _appearance: Appearance;
+    @Output('showMessage')
+    private _showMessage: EventEmitter<any> = new EventEmitter<any>();
 
     /**
      * @summary Initializes a new instance of the DesignerComponent class.
@@ -68,14 +79,31 @@ export class DesignerComponent implements OnInit, OnDestroy
     private _onFileSelected(file, input: HTMLInputElement)
     {
         if (input.value == null)
-            return;
+            return false;
 
         if (file.length < 1)
-            return;
+            return false;
 
-        let image = new LogoImage('', '', false, file[0]);
+        let copy = file[0];
+
+        input.value = null;
+
+        if (!ImageMimeTypeHelper.isMimeTypeValid(copy.type))
+        {
+            this._showMessage.emit({
+                title: _T('Invalid Format'),
+                message: _T('The format of the selected image is not supported.'),
+                type: BiglupModalType.Warning,
+                buttons: BiglupModalButtons.Ok
+            });
+
+            return false;
+        }
+
+        let image = new LogoImage('', '', false, copy);
 
         this._appearancesService.updateLogo(image);
-        input.value = null;
+
+        return false;
     }
 }

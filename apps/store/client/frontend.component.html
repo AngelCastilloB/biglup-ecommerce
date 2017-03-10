@@ -1,7 +1,7 @@
 <biglup-modal-message></biglup-modal-message>
 <div *ngIf="_isDevModeOn">
   <div [class.active]="_showDrawer" id="designerDrawer">
-    <designer *ngIf="_appearance" [appearance]="_appearance"></designer>
+    <designer *ngIf="_appearance" [appearance]="_appearance" (showMessage)="_displayMessage($event)"></designer>
   </div>
   <div [class.active]="_showDrawer" class="designerMenu">
       <div class="designerButton" (click)="_onSaveClick()">

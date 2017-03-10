@@ -95,7 +95,12 @@ declare module BiglupUi
             observable: any,
             successOptions: { title: string, message: string },
             errorOptions: { title: string, message: string });
-
+        public showProgressObservable(
+            title: string,
+            message: string,
+            observable: any,
+            successOptions: { title: string, message: string },
+            errorOptions: { title: string, message: string });
     }
     class BiglupMediaService {}
     class BiglupVerticalMenuOptionComponent {}

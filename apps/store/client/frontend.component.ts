@@ -43,11 +43,18 @@ export class FrontendComponent implements OnDestroy
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
-        this._appearancesService.getActiveAppearance().subscribe(
+        this._subscriptions.push(this._appearancesService.getActiveAppearance().subscribe(
             (appearance: Appearance) =>
             {
                 this._appearance = appearance;
-            });
+            }));
+
+        this._subscriptions.push(this._appearancesService.getLogoUpdate().subscribe(
+            (logo) =>
+            {
+                this._appearance.style.header.logo = logo;
+            }
+        ));
     }
 
     /**
@@ -72,7 +79,7 @@ export class FrontendComponent implements OnDestroy
      */
     private _onSaveClick()
     {
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Update Appearance'),
             _T('Updating...'),
             this._appearancesService.updateAppearance(this._appearance),
@@ -84,6 +91,19 @@ export class FrontendComponent implements OnDestroy
                 title:   _T('Error'),
                 message: _T('There was an error updating the appearance.')
             },
+        );
+    }
+
+    /**
+     * @summary Displays a dialog message.
+     */
+    private _displayMessage(message: any)
+    {
+        this._modal.show(
+            message.title,
+            message.message,
+            message.type,
+            message.buttons
         );
     }
 }

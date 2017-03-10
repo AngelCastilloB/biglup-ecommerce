@@ -310,7 +310,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Create Product'),
             _T('Creating...'),
             this._productsService.createProduct(this._product),
@@ -332,7 +332,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
     {
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Delete Product'),
             _T('Deleting...'),
             this._productsService.deteleProduct(this._product._id),
@@ -374,7 +374,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Update Product'),
             _T('Updating...'),
             this._productsService.updateProduct(this._product),

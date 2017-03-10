@@ -20,13 +20,15 @@
 import * as gcloud from 'google-cloud';
 import * as Future from 'fibers/future';
 
-import { Images }     from '../../common/collections/image.collection';
-import { ReadStream } from 'fs';
+import { Images }              from '../../common/collections/image.collection';
+import { ReadStream }          from 'fs';
+import { ImageMimeTypeHelper } from '../../common/utils/image-mime-types';
 
 // CONSTANTS **********************************************************************************************************/
 
 const GOOGLE_CLOUD_STORAGE_URL     = 'https://storage.googleapis.com/';
 const SIGNED_URL_EXPIRATION_OFFSET = 600000;
+const IMAGE_SERVICE_END_PONT_NAME  = 'getImageUrl';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -113,6 +115,15 @@ export class GoogleStorageService
     {
         var future = new Future();
 
+        let extension = ImageMimeTypeHelper.mimeToExtension[fileType];
+
+        if (!extension)
+        {
+            future.throw(new Meteor.Error(
+                'GoogleStorageService.getSignedUrl.error',
+                'The format of the image file (' + fileType + ') is not supported.'));
+        }
+
         let id: any = Images.insert({
             name: fileName,
             type: fileType,
@@ -124,9 +135,10 @@ export class GoogleStorageService
             toke: '',
             uploading: true,
             uploadedAt: Date.now(),
-            url: ''});
+            url: '',
+            isMagic: true});
 
-        var filename = this._folder + id;
+        let filename = this._folder + id + '.' + extension;
         let futureUrl: string = GOOGLE_CLOUD_STORAGE_URL + this._options.bucket + '/' + filename;
 
         Images.update({ _id: id }, {$set: {url: futureUrl}});
@@ -163,6 +175,8 @@ export class GoogleStorageService
      */
     public confirmUpload(id: string, result: boolean): any
     {
+        var future = new Future();
+
         let image: any = Images.findOne({_id: id});
 
         if (!image)
@@ -178,18 +192,31 @@ export class GoogleStorageService
             return;
         }
 
-        var filename = this._folder + image._id;
+        let extension = ImageMimeTypeHelper.mimeToExtension[image.type];
 
-        var future = new Future();
+        if (!extension)
+        {
+            future.throw(new Meteor.Error(
+                'GoogleStorageService.getSignedUrl.error',
+                'The format of the image file (' + image.type + ') is not supported.'));
+
+            Images.remove({_id: id});
+            return;
+        }
+
+        let filename = this._folder + id + '.' + extension;
 
         this._bucket.file(filename).exists(
-            (error, exists) =>
+            Meteor.bindEnvironment((error, exists) =>
             {
                 if (error)
                 {
                     future.throw(new Meteor.Error(
                         'GoogleStorageService.confirmUpload.error',
-                        'There was an error with the confirmation of the file ' + error));
+                        'There was an error with the confirmation of the file '));
+
+                    Images.remove({_id: id});
+                    console.error('There was an error with the confirmation of the file: ' + error);
 
                     return;
                 }
@@ -200,12 +227,75 @@ export class GoogleStorageService
                         'GoogleStorageService.confirmUpload.error',
                         'There was an error with the confirmation of the file. The file does not exists'));
 
+                    Images.remove({_id: id});
                     return;
                 }
 
                 this._bucket.file(filename).makePublic();
+
+                let imageServletUrl = this._options.imageService;
+
+                if (!imageServletUrl)
+                {
+                    console.warn('No image servlet was configure, the image will be serve directly');
+                    future.return(image);
+                    return;
+                }
+
+                if (imageServletUrl.slice(-1) !== "/")
+                    imageServletUrl += "/";
+
+                imageServletUrl += IMAGE_SERVICE_END_PONT_NAME;
+
+                HTTP.call( 'GET', imageServletUrl,
+                {
+                    params:
+                    {
+                        "key": filename,
+                        "bucket": this._options.bucket
+                    }
+                },
+                ( error, response ) =>
+                {
+                    if (error)
+                    {
+                        future.throw(new Meteor.Error(
+                            'GoogleStorageService.confirmUpload.error',
+                            'There was an error with the confirmation of the file: '));
+
+                        console.error('There was an error with the confirmation of the file: ' + error);
+                        Images.remove({_id: id});
+                        return;
+                    }
+                    else
+                    {
+                        if (response.statusCode === 200)
+                        {
+                            let magicUrl: string = response.content;
+
+                            Images.update({ _id: id }, {$set: {url: magicUrl}});
+
+                            image.url = magicUrl;
+
+                            future.return(image);
+                        }
+                        else
+                        {
+                            console.warn('There was an error acquiring the magic url: ' + response);
+                            console.warn('the image will be serve directly');
+
+                            future.return(image);
+
+                            return;
+                        }
+                    }
+                });
+            },
+            ()=>
+            {
+                console.log('Failed to bind environment');
                 future.return(image);
-            });
+            }));
 
         return future.wait();
     }
@@ -228,7 +318,16 @@ export class GoogleStorageService
 
         var future = new Future();
 
-        this._bucket.file(this._folder + image._id).delete((error) =>
+        let extension = ImageMimeTypeHelper.mimeToExtension[image.type];
+
+        if (!extension)
+        {
+            future.throw(new Meteor.Error(
+                'GoogleStorageService.getSignedUrl.error',
+                'The format of the image file (' + image.type + ') is not supported.'));
+        }
+
+        this._bucket.file(this._folder + image._id + '.' + extension).delete((error) =>
         {
             if (error)
             {
@@ -251,6 +350,17 @@ export class GoogleStorageService
      */
     public uploadImage(stream: ReadStream, fileName: string, fileType: string, size: number): any
     {
+        var future = new Future();
+
+        let extension = ImageMimeTypeHelper.mimeToExtension[fileType];
+
+        if (!extension)
+        {
+            future.throw(new Meteor.Error(
+                'GoogleStorageService.uploadImage.error',
+                'The format of the image file (' + fileType + ') is not supported.'));
+        }
+
         let id: any = Images.insert({
             name: fileName,
             type: fileType,
@@ -262,9 +372,10 @@ export class GoogleStorageService
             toke: '',
             uploading: true,
             uploadedAt: Date.now(),
-            url: ''});
+            url: '',
+            isMagic: true});
 
-        var filename = this._folder + id;
+        var filename = this._folder + id + '.' + extension;
         let futureUrl: string = GOOGLE_CLOUD_STORAGE_URL + this._options.bucket + '/' + filename;
 
         Images.update({ _id: id }, {$set: {url: futureUrl}});
@@ -274,19 +385,14 @@ export class GoogleStorageService
         const file = this._bucket.file(filename);
 
         var remoteWriteStream = file.createWriteStream({
-            public: true,
-            resumable: false,
             metadata: {
                 contentType: fileType
             }
         });
 
-        var future = new Future();
-
         remoteWriteStream.on('finish', ()=>
         {
             file.makePublic();
-
             future.return(image);
         });
 

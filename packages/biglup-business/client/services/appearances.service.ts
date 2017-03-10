@@ -162,12 +162,10 @@ export class AppearancesService extends MeteorReactive
     {
         const copy = copyAppearance(appearance);
 
-        const totalProgress: number = 100;
-
         return Observable
             .of(appearance.style.header.logo)
             .mergeMap(image => this._imagesService.createLogoImage(image))
-            .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
+            .map(progress => progress < 10 ? 0 : progress - 10)
             .concat(Observable.create(observer =>
             {
                 const preLoadedLogo = appearance.style.header.logo;

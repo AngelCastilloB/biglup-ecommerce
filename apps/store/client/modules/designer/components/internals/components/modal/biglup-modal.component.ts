@@ -139,6 +139,8 @@ export class BiglupModalComponent
     private _buttons:      BiglupModalButtons              = BiglupModalButtons.Ok;
     private _busy:         Boolean                         = false;
     private _subscription: any;
+    private _showProgress: boolean                          = false;
+    private _progress: number                               = 0;
 
     // HACK: Allows to use BiglupModalType, BiglupModalResult & BiglupModalButtons in template
     private BiglupModalType    = BiglupModalType;
@@ -199,6 +201,8 @@ export class BiglupModalComponent
         if (this._busy)
             return;
 
+        this._showProgress = false;
+
         this._busy    = true;
         this._title   = title;
         this._message = message;
@@ -228,6 +232,75 @@ export class BiglupModalComponent
                 this._buttons      = BiglupModalButtons.Ok;
                 this._busy         = false;
                 this._subscription = null;
+
+                this._changeDetectorRef.detectChanges();
+            }
+        );
+
+        this._changeDetectorRef.detectChanges();
+
+        this._state = MODAL_STATE_SHOWING;
+    }
+
+    /**
+     * @summary Executes a given observable, displays the progress and shows a successful message if the observable completes, otherwise,
+     * shows an error message.
+     *
+     * @param title          The title of the modal to be shown.
+     * @param message        The message on the modal.
+     * @param observable     The observable to be executed.
+     * @param successOptions The modal options to be used when the observable completes.
+     * @param errorOptions   The modal options to be used if the observable fails.
+     */
+    public showProgressObservable(
+        title: string,
+        message: string,
+        observable: any,
+        successOptions: { title: string, message: string },
+        errorOptions: { title: string, message: string })
+    {
+        if (this._busy)
+            return;
+
+        this._showProgress = true;
+        this._progress     = 0;
+        this._busy         = true;
+        this._title        = title;
+        this._message      = message;
+        this._type         = BiglupModalType.Waiting;
+        this._buttons      = BiglupModalButtons.Cancel;
+
+        this._subscription = observable.subscribe(
+            (progress) =>
+            {
+                this._progress = Math.floor(progress);
+                this._changeDetectorRef.detectChanges();
+            },
+            (error) =>
+            {
+                console.error(error);
+
+                this._title        = errorOptions.title;
+                this._message      = errorOptions.message;
+                this._type         = BiglupModalType.Error;
+                this._buttons      = BiglupModalButtons.Ok;
+                this._busy         = false;
+                this._subscription = null;
+                this._showProgress = false;
+                this._progress     = 0;
+
+                this._changeDetectorRef.detectChanges();
+            },
+            () =>
+            {
+                this._title        = successOptions.title;
+                this._message      = successOptions.message;
+                this._type         = BiglupModalType.Success;
+                this._buttons      = BiglupModalButtons.Ok;
+                this._busy         = false;
+                this._subscription = null;
+                this._showProgress = false;
+                this._progress     = 0;
 
                 this._changeDetectorRef.detectChanges();
             }

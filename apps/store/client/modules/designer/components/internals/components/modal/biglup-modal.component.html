@@ -11,10 +11,13 @@
       <waiting-animation *ngIf="_type === BiglupModalType.Waiting"></waiting-animation>
       <information-animation *ngIf="_type === BiglupModalType.Information"></information-animation>
       <p>{{ _message }}</p>
+      <br *ngIf="_showProgress">
+      <p  *ngIf="_showProgress">{{ _progress }}%</p>
+      <br *ngIf="_showProgress">
     </div>
     <button (click)="_onButtonClick(BiglupModalResult.Cancel)"
                    *ngIf="_buttons === BiglupModalButtons.Cancel || _buttons === BiglupModalButtons.CancelOk || _buttons === BiglupModalButtons.CancelContinue"
-                   class="modal-button">
+                   class="modalButton modal-button">
       {{'Cancel' | translate }}
     </button>
 
