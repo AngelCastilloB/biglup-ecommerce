@@ -23,12 +23,15 @@ import * as Future from 'fibers/future';
 import { Images }              from '../../common/collections/image.collection';
 import { ReadStream }          from 'fs';
 import { ImageMimeTypeHelper } from '../../common/utils/image-mime-types';
+import { Image } from '../../common/models/image';
+import id = Random.id;
 
 // CONSTANTS **********************************************************************************************************/
 
-const GOOGLE_CLOUD_STORAGE_URL     = 'https://storage.googleapis.com/';
-const SIGNED_URL_EXPIRATION_OFFSET = 600000;
-const IMAGE_SERVICE_END_PONT_NAME  = 'getImageUrl';
+const GOOGLE_CLOUD_STORAGE_URL           = 'https://storage.googleapis.com/';
+const SIGNED_URL_EXPIRATION_OFFSET       = 600000;
+const IMAGE_SERVICE_END_PONT_NAME        = 'getImageUrl';
+const IMAGE_SERVICE_BATCH_END_PONT_NAME  = 'getImageUrls';
 
 /* EXPORTS ************************************************************************************************************/
 
@@ -106,9 +109,10 @@ export class GoogleStorageService
      * @summary Signed URLs provide a way to give time-limited read or write access to anyone in possession of the URL,
      * regardless of whether they have a Google account.
      *
-     * @param fileName  The name of the file.
-     * @param fileType  The type of the file.
-     * @param size      The size of the file.
+     * @param fileName      The name of the file.
+     * @param fileType      The type of the file.
+     * @param size          The size of the file.
+     *
      * @return {string} The signed url.
      */
     public getSignedUrl(fileName: string, fileType: string, size: number): string
@@ -136,7 +140,7 @@ export class GoogleStorageService
             uploading: true,
             uploadedAt: Date.now(),
             url: '',
-            isMagic: true});
+            isMagic: false });
 
         let filename = this._folder + id + '.' + extension;
         let futureUrl: string = GOOGLE_CLOUD_STORAGE_URL + this._options.bucket + '/' + filename;
@@ -151,7 +155,7 @@ export class GoogleStorageService
         {
             if (error == null)
             {
-                let response: any = {id: id , signedUrl: signedUrl, filename: filename};
+                let response: any = {id: id , signedUrl: signedUrl, filename: filename, servingUrl: futureUrl};
                 future.return(response);
             }
             else
@@ -216,7 +220,7 @@ export class GoogleStorageService
                         'There was an error with the confirmation of the file '));
 
                     Images.remove({_id: id});
-                    console.error('There was an error with the confirmation of the file: ' + error);
+                    console.error('There was an error with the confirmation of the file (Verifying file existence): ' + error);
 
                     return;
                 }
@@ -237,7 +241,6 @@ export class GoogleStorageService
 
                 if (!imageServletUrl)
                 {
-                    console.warn('No image servlet was configure, the image will be serve directly');
                     future.return(image);
                     return;
                 }
@@ -247,49 +250,80 @@ export class GoogleStorageService
 
                 imageServletUrl += IMAGE_SERVICE_END_PONT_NAME;
 
-                HTTP.call( 'GET', imageServletUrl,
+                setTimeout(Meteor.bindEnvironment(() =>
                 {
-                    params:
-                    {
-                        "key": filename,
-                        "bucket": this._options.bucket
-                    }
-                },
-                ( error, response ) =>
-                {
-                    if (error)
-                    {
-                        future.throw(new Meteor.Error(
-                            'GoogleStorageService.confirmUpload.error',
-                            'There was an error with the confirmation of the file: '));
+                    let retryCount: number = 5;
 
-                        console.error('There was an error with the confirmation of the file: ' + error);
-                        Images.remove({_id: id});
-                        return;
-                    }
-                    else
+                    while (retryCount !== 0)
                     {
-                        if (response.statusCode === 200)
+                        try
                         {
-                            let magicUrl: string = response.content;
+                            let response = HTTP.get(imageServletUrl,
+                                {
+                                    timeout:5000,
+                                    params:
+                                    {
+                                        "key": filename,
+                                        "bucket": this._options.bucket
+                                    }
+                                });
 
-                            Images.update({ _id: id }, {$set: {url: magicUrl}});
+                            if (response.statusCode === 200)
+                            {
+                                let magicUrl: string = response.content;
 
-                            image.url = magicUrl;
+                                Images.update({ _id: id }, {$set: {url: magicUrl, isMagic: true}});
 
-                            future.return(image);
+                                image.url = magicUrl;
+
+                                future.return(image);
+                                return;
+                            }
+                            else
+                            {
+                                if (retryCount > 0)
+                                {
+                                    --retryCount;
+                                    continue;
+                                }
+
+                                console.warn('There was an error acquiring the magic url: ' + response);
+                                console.warn('The image will be serve directly');
+
+                                future.return(image);
+                                return;
+                            }
                         }
-                        else
+                        catch (error)
                         {
-                            console.warn('There was an error acquiring the magic url: ' + response);
-                            console.warn('the image will be serve directly');
+                            console.error('There was an error with the confirmation of the file (Requesting Magic Url): ' + error);
+                            console.error('Retrying (' + (retryCount - 1) + '/' + retryCount + ')');
 
-                            future.return(image);
+                            if (retryCount > 0)
+                            {
+                                --retryCount;
+                                continue;
+                            }
 
+                            future.throw(new Meteor.Error(
+                                'GoogleStorageService.confirmUpload.error',
+                                'There was an error with the confirmation of the file'));
+
+                            console.error('There was an error with the confirmation of the file (Requesting Magic Url): ' + error);
+                            Images.remove({_id: id});
                             return;
                         }
                     }
-                });
+
+                    future.throw(new Meteor.Error(
+                        'GoogleStorageService.confirmUpload.error',
+                        'There was an error with the confirmation of the file'));
+                },
+                ()=>
+                {
+                    console.log('Failed to bind environment');
+                    future.return(image);
+                }), 500);
             },
             ()=>
             {

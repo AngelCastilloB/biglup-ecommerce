@@ -77,7 +77,6 @@ export class AppearanceMigration implements IMigratable
         if (isGcsActive)
         {
             let upload = GoogleStorageService.getInstance().uploadImage(this._getImageStream(), 'default_logo', 'image/png', 0);
-            upload = GoogleStorageService.getInstance().confirmUpload(upload._id, true);
 
             console.log('Logo image with id ' + upload._id + ' inserted');
 

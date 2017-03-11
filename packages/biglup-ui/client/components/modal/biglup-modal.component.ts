@@ -271,8 +271,7 @@ export class BiglupModalComponent
         this._subscription = observable.subscribe(
             (progress) =>
             {
-                this._progress = Math.floor(progress);
-                console.error(this._progress);
+                this._progress = Math.min(Math.floor(progress), 100);
                 this._changeDetectorRef.detectChanges();
             },
             (error) =>

@@ -140,11 +140,8 @@ export class ImageMigration extends AbstractMigration
             let count: number = 0;
             buffers.forEach((buffer) =>
             {
+                console.info('Uploading image ' + count + '/' + buffers.length);
                 let image = GoogleStorageService.getInstance().uploadImage(buffer, count.toString(), this._type, 0);
-
-                Meteor._sleepForMs(1000);
-
-                image = GoogleStorageService.getInstance().confirmUpload(image._id, true);
 
                 this._collections.products.update(
                     {

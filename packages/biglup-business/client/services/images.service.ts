@@ -31,10 +31,12 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/delayWhen';
+import 'rxjs/add/operator/map';
 
 // CONSTANTS **********************************************************************************************************/
 
 const RETRY_COUNT = 3;
+const DELAY       = 1000;
 
 // EXPORTS ************************************************************************************************************/
 
@@ -216,12 +218,12 @@ export class ImagesService extends MeteorReactive
      */
     private _googleCloudStoreHostedImageObserver(image: any): Observable<number>
     {
+        let addedWork: number = 0;
         return Observable.create(observer =>
         {
             let sourceFile: File = image.file;
 
-            console.error(sourceFile.name);
-            Meteor.call('getGoogleCloudStorageSignedUrl', sourceFile.name, sourceFile.type, sourceFile.size, (error, result) =>
+            Meteor.call('getGoogleCloudStorageSignedUrl', sourceFile.name, sourceFile.type, sourceFile.size, '', (error, signed) =>
             {
                 if (error)
                 {
@@ -229,62 +231,43 @@ export class ImagesService extends MeteorReactive
                 }
                 else
                 {
-                    observer.next(result);
-                    observer.complete();
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('PUT', signed.signedUrl, true);
+
+                    xhr.onload = (result) =>
+                    {
+                        image.isUploaded = true;
+                        image.id         = signed.id;
+                        image.url        = signed.servingUrl;
+
+                        observer.next(10); //last 10%
+                        observer.complete();
+                    };
+
+                    xhr.upload.onprogress = (result) =>
+                    {
+                        if (result.lengthComputable)
+                        {
+                            addedWork = ((Math.floor(result.loaded / result.total) * 90) - addedWork); // From 0% to 90%
+                            observer.next(addedWork);
+                        }
+                    };
+
+                    xhr.onerror = (error) =>
+                    {
+                        Meteor.call('confirmGoogleCloudStorageUpload', image.id, false, (err, res) =>
+                        {
+                            console.error("There was an error, deleting image " + res);
+                            observer.error(error);
+                        });
+
+                        observer.error(error);
+                    };
+
+                    image.file.name = signed.filename;
+                    xhr.send(image.file);
                 }
             })
-        })
-        .mergeMap((signed: any) =>
-        {
-            return Observable.create(observer =>
-            {
-                console.error("uploading");
-                let xhr = new XMLHttpRequest();
-                xhr.open('PUT', signed.signedUrl, true);
-
-                xhr.onload = (result) =>
-                {
-                    Meteor.call('confirmGoogleCloudStorageUpload', signed.id, true, (error, result) =>
-                    {
-                        if (error)
-                        {
-                            observer.error(error);
-                            Meteor.call('confirmGoogleCloudStorageUpload', signed.id, false);
-                        }
-                        else
-                        {
-                            image.isUploaded = true;
-                            image.id         = result._id;
-                            image.url        = result.url.toString();
-
-                            observer.complete();
-                        }
-                    });
-                };
-
-                xhr.upload.onprogress = (result) =>
-                {
-                    if (result.lengthComputable)
-                    {
-                        console.error((result.loaded / result.total) * 100);
-                        observer.next((result.loaded / result.total) * 100);
-                    }
-                };
-
-                xhr.onerror = (error) =>
-                {
-                    observer.error(error);
-                    Meteor.call('confirmGoogleCloudStorageUpload', signed.id, false);
-                };
-
-                image.file.name = signed.filename;
-                xhr.send(image.file);
-            }).retryWhen(errors => errors
-                    //log error message
-                    .do(val => console.log(`Retry`))
-                    //restart in 5 seconds
-                    .delayWhen(()=> Observable.timer(1000))
-            );
         });
     }
 }

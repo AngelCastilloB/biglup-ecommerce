@@ -24,9 +24,10 @@ import { GoogleStorageService } from '../services/google-cloud-storage.service';
 /**
  * @summary Registers the get google cloud storage signed url to Meteor's DDP system.
  *
- * @param {string}  fileName The name of the file.
- * @param {number}  fileType The file type.
- * @param {boolean} size     The size of the file.
+ * @param {string}  fileName    The name of the file.
+ * @param {number}  fileType    The file type.
+ * @param {boolean} size        The size of the file.
+ * @param {string}  transaction The transaction Id.
  *
  * @remark An object with the reserved id on the database and the signed url.
  */
