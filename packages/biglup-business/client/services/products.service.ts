@@ -33,6 +33,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/throttle';
 
 // INTERNALS **********************************************************************************************************/
 
@@ -167,12 +168,7 @@ export class ProductsService extends MeteorReactive
 
         return Observable
             .from(product.images)
-            .mergeMap(image => this._imagesService.createProductImage(image))
-            .do((progress) =>
-            {
-                console.error(progress);
-                return progress;
-            })
+            .mergeMap(image => this._imagesService.createProductImage(image), null, 5)
             .scan((accumulator, progress) => accumulator + ((progress / totalProgress)  * 100) , 0)
             .concat(Observable.create(observer =>
             {
@@ -213,7 +209,7 @@ export class ProductsService extends MeteorReactive
 
         return Observable
             .from(product.images)
-            .mergeMap(image => this._imagesService.createProductImage(image))
+            .mergeMap(image => this._imagesService.createProductImage(image), null, 5)
             .scan((accumulator, progress) => accumulator + ((progress / totalProgress) * 100) , 0)
             .concat(Observable.create(observer =>
             {

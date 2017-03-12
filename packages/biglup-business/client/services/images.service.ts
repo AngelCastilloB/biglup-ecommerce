@@ -33,11 +33,6 @@ import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/delayWhen';
 import 'rxjs/add/operator/map';
 
-// CONSTANTS **********************************************************************************************************/
-
-const RETRY_COUNT = 3;
-const DELAY       = 1000;
-
 // EXPORTS ************************************************************************************************************/
 
 /**
@@ -236,12 +231,27 @@ export class ImagesService extends MeteorReactive
 
                     xhr.onload = (result) =>
                     {
-                        image.isUploaded = true;
-                        image.id         = signed.id;
-                        image.url        = signed.servingUrl;
+                        Meteor.call('confirmGoogleCloudStorageUpload', signed.id, true, (error, result) =>
+                        {
+                            if (error)
+                            {
+                                Meteor.call('confirmGoogleCloudStorageUpload', image._id, false, (err, res) =>
+                                {
+                                    console.error("There was an error, deleting image " + error);
+                                    observer.error(error);
+                                });
+                            }
+                            else
+                            {
+                                image.isUploaded = true;
+                                image.id         = result._id;
+                                image.url        = result.url.toString();
 
-                        observer.next(10); //last 10%
-                        observer.complete();
+                                observer.next(10); //last 10%
+                                observer.complete();
+                            }
+                        });
+
                     };
 
                     xhr.upload.onprogress = (result) =>

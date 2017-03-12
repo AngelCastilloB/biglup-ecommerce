@@ -143,7 +143,10 @@ Meteor.methods({
         // Try to remove the product first since once we start to delete the images there is no way to rollback.
         Products.remove({_id: productId});
 
-        removeAllImages(product.images);
+        Meteor.defer(()=>
+        {
+            removeAllImages(product.images);
+        });
     }
 });
 
@@ -195,6 +198,7 @@ Meteor.methods({
                 'updateProduct.unauthorized',
                 'You are not authorized to perform this action.');
         }
+         */
 
         if (!product._id || product._id === '')
         {
@@ -202,7 +206,6 @@ Meteor.methods({
                 'updateProduct.idIsEmpty',
                 'The id of this product is empty. You need to provide the id of an existing product in the database.');
         }
-*/
 
         let currentProductState: Product = Products.findOne({_id: product._id});
 
@@ -213,7 +216,10 @@ Meteor.methods({
                 'This product does not exists in the database.');
         }
 
-        removeUnusedImages(product, currentProductState);
+        Meteor.defer(()=>
+        {
+            removeUnusedImages(product, currentProductState);
+        });
 
         let id = product._id;
 

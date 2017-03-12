@@ -34,6 +34,7 @@ import { GoogleStorageService } from '../services/google-cloud-storage.service';
 Meteor.methods({
     getGoogleCloudStorageSignedUrl(fileName: string, fileType: string, size: number)
     {
+        this.unblock();
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)
          {
@@ -61,6 +62,8 @@ Meteor.methods({
 Meteor.methods({
     confirmGoogleCloudStorageUpload(id: string, result: boolean)
     {
+        this.unblock();
+
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)
          {
@@ -86,6 +89,8 @@ Meteor.methods({
 Meteor.methods({
     deleteGoogleCloudStorageFile(id: string)
     {
+        this.unblock();
+
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)
          {

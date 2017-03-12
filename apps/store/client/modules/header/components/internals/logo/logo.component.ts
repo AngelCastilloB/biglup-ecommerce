@@ -84,7 +84,7 @@ export class HeaderLogoComponent implements OnInit, OnDestroy
 
         if (isUploaded)
         {
-            logoImage.src = url + '=s00';
+            logoImage.src = url;
 
             return;
         }
