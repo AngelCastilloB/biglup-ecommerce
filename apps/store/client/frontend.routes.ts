@@ -18,7 +18,7 @@
 /* IMPORTS ************************************************************************************************************/
 
 import { Routes, RouterModule }        from '@angular/router';
-import { CategoryComponent }           from './modules/category/components/category/category.component.ts';
+import { CategoryComponent }           from './modules/category/components/category/category.component';
 import { LandingPageComponent }        from './modules/landing-page';
 import { FrontendComponent }           from './frontend.component';
 import { ProductDetailsComponent }     from './modules/product/components/product-details/product-details.component';

@@ -7,9 +7,8 @@ Package.describe({
 
 Package.onUse(function(api)
 {
-    api.versionsFrom('1.4.1.1');
+    api.versionsFrom('1.4.3.2');
 
-    api.use('ecmascript');
     api.use('angular2-compilers');
 
     api.addFiles([
