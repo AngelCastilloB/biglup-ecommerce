@@ -86,6 +86,11 @@ export class ImageMigration extends AbstractMigration
     private _type = 'image/png';
 
     /**
+     * Srummary The total number of images.
+     */
+    private _totalImages: number  = 0;
+
+    /**
      * @summary Initializes a new instance of the class ImageMigration.
      *
      * @param _collection  The related image collection
@@ -118,6 +123,7 @@ export class ImageMigration extends AbstractMigration
             console.log('The images will be hosted in the server');
 
 
+        this._totalImages = this._amount * this._products.length;
         this._products.forEach((product: Product) => this._addProductImages(product));
     }
 
@@ -140,8 +146,9 @@ export class ImageMigration extends AbstractMigration
             let count: number = 0;
             buffers.forEach((buffer) =>
             {
-                console.info('Uploading image ' + count + '/' + buffers.length);
+                console.info('Uploading image ' + count + '/' + this._totalImages + '(' + (count / this._totalImages) * 100 + '%)');
                 let image = GoogleStorageService.getInstance().uploadImage(buffer, count.toString(), this._type, 0);
+                image = GoogleStorageService.getInstance().confirmUpload(image._id, true);
 
                 this._collections.products.update(
                     {

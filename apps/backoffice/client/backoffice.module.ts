@@ -55,6 +55,7 @@ import { TruncateStringPipe }               from 'meteor/biglup:core';
 import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BiglupUiModule }                   from 'meteor/biglup:ui';
+import { AppearancesComponent }             from './components/appearances/appearances.component';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -104,7 +105,10 @@ import { BiglupUiModule }                   from 'meteor/biglup:ui';
         ReportsComponent,
 
         // Pipes
-        TruncateStringPipe
+        TruncateStringPipe,
+
+        // Appearances
+        AppearancesComponent
     ],
     imports: [
         CommonModule,
