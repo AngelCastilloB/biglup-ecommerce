@@ -17,7 +17,6 @@
 
 // CONSTANTS **********************************************************************************************************/
 
-const SUB_CAT_SCHEMA_NAME = 'SubCategorySchema';
 const CAT_SCHEMA_NAME     = 'UserSchema';
 
 // IMPORTS ************************************************************************************************************/
@@ -26,60 +25,6 @@ import { SimpleSchema }     from 'meteor/aldeed:simple-schema';
 import { I18nStringSchema } from './i18n-string.schema';
 
 // EXPORTS ************************************************************************************************************/
-
-/**
- * @summary The sub category schema.
- */
-export let SubCategorySchema: any = new SimpleSchema({
-    name: {
-        type: [I18nStringSchema],
-        label: `${SUB_CAT_SCHEMA_NAME} name`
-    },
-    info: {
-        type: [I18nStringSchema],
-        label: `${SUB_CAT_SCHEMA_NAME} info`
-    },
-    slug: {
-        label: `${SUB_CAT_SCHEMA_NAME} slug`,
-        type: String,
-        optional: true,
-    },
-    image: {
-        type: String,
-        label: `${SUB_CAT_SCHEMA_NAME} image`,
-        optional: true
-    },
-    active: {
-        type: Boolean,
-        label: `${SUB_CAT_SCHEMA_NAME} active`,
-        defaultValue: true
-    },
-    createdAt: {
-        label: `${SUB_CAT_SCHEMA_NAME} createdAt`,
-        type: Date,
-        autoValue()
-        {
-            if (this.isInsert)
-            {
-                return new Date();
-            }
-            else if (this.isSet)
-            {
-                this.unset();
-            }
-        },
-        optional: true
-    },
-    updatedAt: {
-        type: Date,
-        label: `${SUB_CAT_SCHEMA_NAME} updatedAt`,
-        autoValue()
-        {
-            return new Date();
-        },
-        optional: true
-    }
-});
 
 /**
  * @summary The category schema.
@@ -113,6 +58,16 @@ export let CategorySchema: any = new SimpleSchema({
         label: `${CAT_SCHEMA_NAME} active`,
         defaultValue: true
     },
+    isRootCategory: {
+        type: Boolean,
+        label: `${CAT_SCHEMA_NAME} isRootCategory`,
+        defaultValue: true
+    },
+    parentCategory: {
+        type: String,
+        label: `${CAT_SCHEMA_NAME} parentCategory`,
+        optional: true
+    },
     createdAt: {
         label: `${CAT_SCHEMA_NAME} createdAt`,
         type: Date,
@@ -136,11 +91,6 @@ export let CategorySchema: any = new SimpleSchema({
         {
             return new Date();
         },
-        optional: true
-    },
-    subCategories: {
-        type: [SubCategorySchema],
-        label: `${CAT_SCHEMA_NAME} subCategories`,
         optional: true
     }
 });

@@ -24,6 +24,7 @@ export * from './client/services/user-auth.service';
 export * from './client/services/users.service';
 export * from './client/services/variant-attributes.service';
 export * from './client/services/inventory.service';
+export * from './client/services/appearances.service';
 
 // Models
 export * from './common/models/index';

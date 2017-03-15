@@ -1,7 +1,0 @@
-<div class="container">
-  <div *ngIf="_categoryId" class="row">
-      <div *ngFor="let product of _productsService.getCategoryProducts(_categoryId) | async">
-          <category-item [category]="_categoryId" [model]="product"></category-item>
-      </div>
-  </div>
-</div>

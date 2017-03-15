@@ -1,0 +1,12 @@
+<biglup-modal-message (onClose)="_onModalClose($event)"></biglup-modal-message>
+<h4 class="biglup-products-title">{{ 'Appearances' | translate }}</h4>
+<biglup-breadcrumb>
+  <a [routerLink]="['/dashboard']"><i class="material-icons md-16">home</i>{{ 'Dashboard' | translate }}</a>
+  <a class="active"><i class="material-icons md-16">brush</i>{{ 'Appearances' | translate }}</a>
+</biglup-breadcrumb>
+<div class="products-add-product-button">
+  <biglup-button
+    [routerLink]="['/products/add-appearance']"
+    raised="true" color="primary">{{'Add Appearance' | translate }}
+  </biglup-button>
+</div>

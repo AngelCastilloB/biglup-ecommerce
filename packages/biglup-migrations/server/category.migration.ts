@@ -84,6 +84,8 @@ export class CategoryMigration extends AbstractMigration
             {
                 category.name.push({language: generator.getLocale(), value: generator.getWords(1)});
                 category.info.push({language: generator.getLocale(), value: generator.getWords(10)});
+                category.isRootCategory = true;
+                category.active = true;
             });
 
             this._categories.push(category);

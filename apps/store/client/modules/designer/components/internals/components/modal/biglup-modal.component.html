@@ -1,0 +1,50 @@
+<div class="modal" [@modalBackground]="_state">
+  <div class="modal-content" [@modal]="_state">
+    <div class="modal-header">
+      <span class="close" (click)="_onButtonClick(BiglupModalResult.None)">×</span>
+      <h2 class="modal-title">{{ _title }}</h2>
+    </div>
+    <div class="modal-body">
+      <success-animation *ngIf="_type === BiglupModalType.Success"></success-animation>
+      <error-animation *ngIf="_type === BiglupModalType.Error"></error-animation>
+      <warning-animation *ngIf="_type === BiglupModalType.Warning"></warning-animation>
+      <waiting-animation *ngIf="_type === BiglupModalType.Waiting"></waiting-animation>
+      <information-animation *ngIf="_type === BiglupModalType.Information"></information-animation>
+      <p>{{ _message }}</p>
+      <br *ngIf="_showProgress">
+      <p  *ngIf="_showProgress">{{ _progress }}%</p>
+      <br *ngIf="_showProgress">
+    </div>
+    <button (click)="_onButtonClick(BiglupModalResult.Cancel)"
+                   *ngIf="_buttons === BiglupModalButtons.Cancel || _buttons === BiglupModalButtons.CancelOk || _buttons === BiglupModalButtons.CancelContinue"
+                   class="modalButton modal-button">
+      {{'Cancel' | translate }}
+    </button>
+
+    <button (click)="_onButtonClick(BiglupModalResult.Ok)"
+                   *ngIf="_buttons === BiglupModalButtons.Ok || _buttons === BiglupModalButtons.CancelOk"
+                   class="modalButton modal-button"
+                   [class.modal-right-button]="_buttons === BiglupModalButtons.CancelOk">
+      {{'Ok' | translate }}
+    </button>
+
+
+    <button (click)="_onButtonClick(BiglupModalResult.No)"
+                   *ngIf="_buttons === BiglupModalButtons.NoYes"
+                   class="modalButton modal-button">
+      {{'No' | translate }}
+    </button>
+
+    <button (click)="_onButtonClick(BiglupModalResult.Yes)"
+                   *ngIf="_buttons === BiglupModalButtons.NoYes"
+                   class="modalButton modal-button modal-right-button">
+      {{'Yes' | translate }}
+    </button>
+
+    <button (click)="_onButtonClick(BiglupModalResult.Continue)"
+                   *ngIf="_buttons === BiglupModalButtons.CancelContinue"
+                   class="modalButton modal-button modal-right-button">
+      {{'Continue' | translate }}
+    </button>
+  </div>
+</div>

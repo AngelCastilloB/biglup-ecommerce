@@ -1,0 +1,22 @@
+<div class="category-item">
+  <a [routerLink]="['product', model._id]">
+    <div>
+      <div class="category-item-images">
+        <div class="category-item-top">
+          <img [src]="model.images[0].url" alt="" />
+        </div>
+        <img class="category-item-bottom" [src]="model.images[1].url" alt="" />
+      </div>
+      <div class="category-item-description">
+        <p class="product-title">{{ model.title | mongoTranslate }}</p>
+        <div class="price normal" *ngIf="_getDiscountedPrice() !== model.price">
+          <span class="normal">${{ model.price }}.00</span>
+          <span class="discount">${{ _getDiscountedPrice() }}.00</span>
+        </div>
+        <div class="price normal" *ngIf="_getDiscountedPrice() === model.price">
+          <span class="discount">${{ model.price }}.00</span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

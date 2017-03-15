@@ -26,6 +26,7 @@ biglup:business@0.0.1
 biglup:configuration@0.0.1
 biglup:core@0.0.1
 biglup:i18n@0.0.1
+biglup:images@0.0.1
 biglup:migrations@0.0.1
 biglup:ui@0.0.1
 biglup:vendor-typings@0.0.1

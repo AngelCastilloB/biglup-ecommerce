@@ -82,7 +82,7 @@ export class ImagePreviewComponent implements OnInit, AfterViewInit
         {
             throw new Meteor.Error(
                 'image-display.component.setImage',
-                'The image is marked is *not* uploaded, but the field file is empty.');
+                'The image is marked as *not* uploaded, but the field file is empty.');
         }
 
         reader.onload = (event: any) =>

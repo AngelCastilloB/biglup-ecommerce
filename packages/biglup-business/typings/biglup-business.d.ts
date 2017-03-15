@@ -37,6 +37,9 @@ declare module Business
     class CategoriesService
     {
         public getCategories(): any;
+        public getRootCategories(): any;
+        public hasSubcategories(): any;
+        public getSubCategories(rootCategory: string): any;
         public getCategory(categoryId: string): any;
         public createCategory(category: Category): any;
         public updateCategory(category: Category): any;
@@ -108,15 +111,28 @@ declare module Business
         public setProductInventory(productId: string, amount: number): any;
         public setVariantInventory(productId: string, variantId: string, amount: number): any;
     }
+
+    class AppearancesService
+    {
+        public getAppearances(): any;
+        public getActiveAppearance(): any;
+        public getAppearance(appearanceId: string): any;
+        public createAppearance(appearance: Appearance): String;
+        public updateAppearance(appearance: Appearance): any;
+        public deleteAppearance(appearanceId: string): any;
+        public getLogoUpdate(): any;
+        public updateLogo(logo: LogoImage);
+    }
+
 // COLLECTIONS ********************************************************************************************************/
 
     const Categories: any;
     const Images: any;
-    const ImagesStore: any;
     const Products: any;
     const VariantColors: any;
     const VariantSizes: any;
     const VariantMaterials: any;
+    const Appearances: any;
 
 // MODELS *************************************************************************************************************/
 
@@ -147,15 +163,18 @@ declare module Business
     export class Category
     {
         constructor(
-            public _id:           string             = null,
-            public slug:          string             = '',
-            public name:          Array<I18nString>  = Array<I18nString>(),
-            public info:          Array<I18nString>  = Array<I18nString>(),
-            public image:         string             = '',
-            public active:        boolean            = false,
-            public createdAt:     Date               = new Date(),
-            public updatedAt:     Date               = new Date(),
-            public subCategories: Array<SubCategory> = Array<SubCategory>());
+            public _id:            string             = null,
+            public slug:           string             = '',
+            public name:           Array<I18nString>  = Array<I18nString>(),
+            public info:           Array<I18nString>  = Array<I18nString>(),
+            public image:          string             = '',
+            public active:         boolean            = false,
+            public createdAt:      Date               = new Date(),
+            public updatedAt:      Date               = new Date(),
+            public isRootCategory: boolean            = false,
+            public parentCategory: string             = '',
+            public denormalizedSubcategories: Array<Category> = Array<Category>(),
+            public denormalizedParent : Category = null)
     }
 
     export class Image
@@ -242,19 +261,6 @@ declare module Business
         constructor(public _id: string = null, public material: Array<I18nString> = Array<I18nString>());
     }
 
-    class SubCategory
-    {
-        constructor(
-            public _id:       string            = null,
-            public slug:      string            = '',
-            public name:      Array<I18nString> = Array<I18nString>(),
-            public info:      Array<I18nString> = Array<I18nString>(),
-            public image:     string            = null,
-            public active:    boolean           = false,
-            public createdAt: Date              = new Date(),
-            public updatedAt: Date              = new Date());
-    }
-
     class User
     {
         constructor(
@@ -271,6 +277,65 @@ declare module Business
         verified: boolean;
     }
 
+    class AppearanceLayout
+    {
+        constructor(
+            public name:           string = '',
+            public configuration:  any    = null);
+    }
+
+    class AppearanceStyle
+    {
+        constructor(
+            public header: AppearanceHeaderStyle = new AppearanceHeaderStyle(),
+            public footer: AppearanceFooterStyle = new AppearanceFooterStyle());
+    }
+
+    class LogoImage
+    {
+        constructor(
+            public id: string  = '',
+            public url:        string  = '',
+            public isUploaded: boolean = false,
+            public file:       File    = null);
+    }
+
+    class AppearanceHeaderStyle
+    {
+        constructor(
+            public topBarBackgroundColor:  string    = '#000000',
+            public topBarFontColor:        string    = '#FFFFFF',
+            public logoBackgroundColor:    string    = '#FFFFFF',
+            public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+            public logoAlignment:          string    = 'center',
+            public menuBackgroundColor:    string    = '#000000',
+            public menuFontColor:          string    = '#FFFFFF',
+            public menuHighlight:          string    = '#5a595a',
+            public submenuBackgroundColor: string    = '#FFFFFF',
+            public submenuFontColor:       string    = '#000000',
+            public submenuBorderColor:     string    = '#000000');
+    }
+
+    class Appearance
+    {
+        constructor(
+            public _id: String = null,
+            public name: String = '',
+            public style: AppearanceStyle = new AppearanceStyle(),
+            public layout: Array<AppearanceLayout> = [],
+            public isEditable: boolean             = true,
+            public isActive: boolean               = false,
+            public createdAt:      Date            = new Date(),
+            public updatedAt:      Date            = new Date());
+    }
+
+    class AppearanceFooterStyle
+    {
+        constructor(
+            public backgroundColor: string = '#000000',
+            public fontColor:       string = '#FFFFFF');
+    }
+
 // SCHEMAS ************************************************************************************************************/
 
     const CartSchema: any;
@@ -284,6 +349,7 @@ declare module Business
     const ColorVariantAttributeSchema: any;
     const SizeVariantAttributeSchema: any;
     const MaterialVariantAttributeSchema: any;
+    const AppearanceSchema: any;
 }
 
 // MODULE EXPORT ******************************************************************************************************/

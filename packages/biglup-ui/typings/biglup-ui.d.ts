@@ -95,7 +95,12 @@ declare module BiglupUi
             observable: any,
             successOptions: { title: string, message: string },
             errorOptions: { title: string, message: string });
-
+        public showProgressObservable(
+            title: string,
+            message: string,
+            observable: any,
+            successOptions: { title: string, message: string },
+            errorOptions: { title: string, message: string });
     }
     class BiglupMediaService {}
     class BiglupVerticalMenuOptionComponent {}
@@ -122,6 +127,9 @@ declare module BiglupUi
         public observeValueChanges(): any;
         public setInvalid(isInvalid: boolean);
         public getValue(): string;
+    }
+    class BiglupDropdownMenuComponent {
+        public onSelectionChange(option);
     }
     class BiglupCheckboxComponent {}
     class RippleDirective {}

@@ -9,6 +9,7 @@
 @import './partials/add-size-variant';
 @import './partials/add-material-variant';
 @import './partials/inventory';
+@import './partials/dragula';
 
 body {
     @extend .typography;

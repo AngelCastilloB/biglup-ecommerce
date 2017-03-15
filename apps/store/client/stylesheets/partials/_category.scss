@@ -1,0 +1,31 @@
+.category {
+  padding-top: 20px;
+  position: relative;
+  .breadcrumbs {
+    padding-top: 20px;
+    position: absolute;
+    z-index: 50;
+    top: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 0;
+    left: 15px;
+    padding-left: 0;
+    padding-bottom: 20px;
+    list-style: none;
+
+    .breadcrumb-link {
+      color: #c7c6c7;
+    }
+
+    .breadcrumb-current-link {
+      color: #807f80;
+    }
+    li {
+      display:inline;
+    }
+  }
+}
+

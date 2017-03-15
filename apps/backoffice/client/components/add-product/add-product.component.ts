@@ -226,12 +226,49 @@ export class AddProductComponent implements OnInit, AfterViewInit
         if (isChecked)
         {
             if (index === -1)
+            {
                 this._product.categories.push(id);
+
+                this._categoriesService.getCategory(id).subscribe(
+                    (cat) =>
+                    {
+                        if (!!cat.parentCategory && cat.parentCategory != '')
+                        {
+                            let parentIndex: number = this._product.categories.indexOf(cat.parentCategory);
+
+                            if (parentIndex === -1)
+                                this._product.categories.push(cat.parentCategory);
+                        }
+                    }
+                );
+            }
         }
         else
         {
             if (index > -1)
+            {
                 this._product.categories.splice(index, 1);
+
+                this._categoriesService.getCategory(id).subscribe(
+                    (cat) =>
+                    {
+                        if (cat.isRootCategory)
+                        {
+                            this._categoriesService.getSubCategories(cat._id).subscribe(
+                                (subcategories) =>
+                                {
+                                    subcategories.forEach((sub) =>
+                                    {
+                                        let subIndex: number = this._product.categories.indexOf(sub._id);
+
+                                        if (subIndex > -1)
+                                            this._product.categories.splice(subIndex, 1);
+                                    });
+                                });
+                        }
+                    }
+                );
+            }
         }
     }
 
@@ -273,7 +310,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Create Product'),
             _T('Creating...'),
             this._productsService.createProduct(this._product),
@@ -295,7 +332,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
     {
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Delete Product'),
             _T('Deleting...'),
             this._productsService.deteleProduct(this._product._id),
@@ -319,7 +356,6 @@ export class AddProductComponent implements OnInit, AfterViewInit
         {
             if (!i18nInput.getIsValid())
             {
-                console.error('Show Title message');
                 this._modal.show(
                     _T('Required Field Missing'),
                     _T('The Product Title is required ') + '(' + i18nInput.getLanguage() + ')');
@@ -338,7 +374,7 @@ export class AddProductComponent implements OnInit, AfterViewInit
 
         this._waitModalResult = true;
 
-        this._modal.showObservable(
+        this._modal.showProgressObservable(
             _T('Update Product'),
             _T('Updating...'),
             this._productsService.updateProduct(this._product),

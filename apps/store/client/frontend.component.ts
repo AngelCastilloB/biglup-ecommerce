@@ -17,7 +17,10 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy, ViewChild }                   from '@angular/core';
+import { CategoriesService, AppearancesService, Appearance } from 'meteor/biglup:business';
+import { BiglupModalComponent }                              from './modules/designer';
+import { I18nSingletonService, _T }                          from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -29,6 +32,78 @@ import template from './frontend.component.html';
  * @summary The front end root component.
  */
 @Component({template})
-export class FrontendComponent
+export class FrontendComponent implements OnDestroy
 {
+    private _isDevModeOn:   boolean    = true;
+    private _showDrawer:    boolean    = false;
+    private _appearance:    Appearance = null;
+    private _subscriptions: Array<any> = [];
+    @ViewChild(BiglupModalComponent)
+    private _modal: BiglupModalComponent;
+
+    constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
+    {
+        this._subscriptions.push(this._appearancesService.getActiveAppearance().subscribe(
+            (appearance: Appearance) =>
+            {
+                this._appearance = appearance;
+            }));
+
+        this._subscriptions.push(this._appearancesService.getLogoUpdate().subscribe(
+            (logo) =>
+            {
+                this._appearance.style.header.logo = logo;
+            }
+        ));
+    }
+
+    /**
+     * @summary destroys unneeded subscriptions and related resources.
+     */
+    public ngOnDestroy()
+    {
+        if (this._subscriptions)
+            this._subscriptions.forEach((subscribtion) => subscribtion.unsubscribe());
+    }
+
+    /**
+     * Toggles the designer menu.
+     */
+    private _onToggleClick()
+    {
+        this._showDrawer = !this._showDrawer;
+    }
+
+    /**
+     * @summary Event handler for when the appearance is saved.
+     */
+    private _onSaveClick()
+    {
+        this._modal.showProgressObservable(
+            _T('Update Appearance'),
+            _T('Updating...'),
+            this._appearancesService.updateAppearance(this._appearance),
+            {
+                title:   _T('Update Appearance'),
+                message: _T('Appearance Updated.')
+            },
+            {
+                title:   _T('Error'),
+                message: _T('There was an error updating the appearance.')
+            },
+        );
+    }
+
+    /**
+     * @summary Displays a dialog message.
+     */
+    private _displayMessage(message: any)
+    {
+        this._modal.show(
+            message.title,
+            message.message,
+            message.type,
+            message.buttons
+        );
+    }
 }

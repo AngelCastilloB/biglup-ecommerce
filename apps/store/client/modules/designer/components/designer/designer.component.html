@@ -1,0 +1,213 @@
+<div class="designer">
+  <div class="designerTitle">
+    <h6>{{ 'Designer' | translate }}</h6>
+  </div>
+  <div class="appearanceTitle"><b>{{ 'Appearance' | translate }}:</b> {{ _appearance.name }}</div>
+  <div class="tab_container">
+    <input id="tab1" type="radio" name="tabs" checked>
+    <label for="tab1">
+      <div class="label">
+        <i class="fa fa-object-group"></i><span>{{ 'Layout' | translate }}</span>
+      </div>
+    </label>
+
+    <input id="tab2" type="radio" name="tabs">
+    <label for="tab2">
+      <div class="label">
+         <i class="fa fa-tint"></i><span>{{ 'Colors' | translate }}</span>
+      </div>
+    </label>
+
+    <section id="content1" class="tab-content">
+      <h3>Headline 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur.</p>
+    </section>
+    <section id="content2" class="tab-content">
+      <span class="designerColorStyleTitle"> {{ 'Header' | translate }} </span>
+      <hr>
+      <div class="biglup-grid" style="padding: 0; margin: 0;">
+        <div class="biglup-cell biglup-cell-12-col">
+          <h6>{{ 'Top Bar' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.topBarBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.topBarBackgroundColor=$event"
+                [style.background]="_appearance.style.header.topBarBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.topBarFontColor"
+                (colorPickerChange)="_appearance.style.header.topBarFontColor=$event"
+                [style.background]="_appearance.style.header.topBarFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+          <h6>{{ 'Logo' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-5-col">
+              <div class="designerColorItemTitle imageLabel">{{ 'Image' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-7-col">
+              <div class="logoUpload">
+                <span>{{ 'Select' | translate }}</span>
+                <input #fileInput type="file" class="upload" (change)="_onFileSelected($event.srcElement.files, fileInput)"/>
+              </div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-5-col">
+              <div class="designerColorItemTitle">{{ 'Alignment' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-7-col">
+              <label class="biglup-dropdown-menu-simple">
+                <select [(ngModel)]="_appearance.style.header.logoAlignment">
+                  <option value="left" selected> {{ "Left" | translate }} </option>
+                  <option value="center" selected> {{ "Center" | translate }} </option>
+                  <option value="right" selected> {{ "Right" | translate }} </option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.logoBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.logoBackgroundColor=$event"
+                [style.background]="_appearance.style.header.logoBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+          <h6>{{ 'Menu' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.menuBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.menuBackgroundColor=$event"
+                [style.background]="_appearance.style.header.menuBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.menuFontColor"
+                (colorPickerChange)="_appearance.style.header.menuFontColor=$event"
+                [style.background]="_appearance.style.header.menuFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.menuHighlight"
+                (colorPickerChange)="_appearance.style.header.menuHighlight=$event"
+                [style.background]="_appearance.style.header.menuHighlight"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Highlight Color' | translate }}</div>
+            </div>
+          </div>
+          <h6>{{ 'Sub-Menu' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.submenuBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.submenuBackgroundColor=$event"
+                [style.background]="_appearance.style.header.submenuBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.submenuFontColor"
+                (colorPickerChange)="_appearance.style.header.submenuFontColor=$event"
+                [style.background]="_appearance.style.header.submenuFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.header.submenuBorderColor"
+                (colorPickerChange)="_appearance.style.header.submenuBorderColor=$event"
+                [style.background]="_appearance.style.header.submenuBorderColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Border Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="designerColorStyleTitle"> {{ 'Footer' | translate }} </span>
+      <hr>
+
+      <div class="biglup-grid" style="padding: 0; margin: 0;">
+        <div class="biglup-cell biglup-cell-12-col">
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.footer.backgroundColor"
+                (colorPickerChange)="_appearance.style.footer.backgroundColor=$event"
+                [style.background]="_appearance.style.footer.backgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-3-col">
+              <input
+                class="designerColorItem"
+                readonly [ColorPicker]="_appearance.style.footer.fontColor"
+                (colorPickerChange)="_appearance.style.footer.fontColor=$event"
+                [style.background]="_appearance.style.footer.fontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-9-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -73,6 +73,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
     private _selectedOption: BiglupDropdownOptionComponent;
     @Output('valueChange')
     private _valueChange = new EventEmitter();
+    private _toggle: boolean = false;
 
     /**
      * @summary Initializes a new instance of the BiglupDropdownMenuComponent class.
@@ -116,22 +117,6 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
 
                 defaultSelection = false;
             }
-
-            option.getSelectedEmitter().subscribe((selected) =>
-            {
-                if (this._selectedOption === selected)
-                    return;
-
-                if (this._selectedOption)
-                    this._selectedOption.setSelected(false);
-
-                this._selectedOption = selected;
-                this._value = selected.getValue();
-                this._text = option.getText();
-                this._valueChange.emit(this._value);
-
-                selected.setSelected(true);
-            });
         });
 
         if (defaultSelection && this._options && this._options.length > 0)
@@ -157,12 +142,12 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
 
     /**
      * @summary Event handler for when the focus changes.
-     *
-     * @param hasFocus True if the component now has focus, otherwise, false.
      * @private
      */
-    private _onFocusChange(hasFocus: boolean)
+    private _onClick()
     {
+        this._toggle = !this._toggle;
+
         this._menuList.nativeElement.style.left = this._container.nativeElement.offsetLeft + 'px';
 
         if (this._isDisabled)
@@ -170,7 +155,7 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
 
         const rect: ClientRect = this._container.nativeElement.getBoundingClientRect();
 
-        if (hasFocus)
+        if (this._toggle)
         {
             this._menuList.nativeElement.style.visibility = 'hidden';
             this._menuList.nativeElement.style.display = 'block';
@@ -194,5 +179,37 @@ export class BiglupDropdownMenuComponent implements AfterViewInit, OnInit, OnDes
         }
 
         this._changeDetector.detectChanges();
+    }
+
+    /**
+     * @summary Called when a new option is selection.
+     *
+     * @param option The selected option.
+     * @private
+     */
+    public onSelectionChange(selected)
+    {
+        if (this._selectedOption)
+            this._selectedOption.setSelected(false);
+
+        this._selectedOption = selected;
+        this._value = selected.getValue();
+        this._text = selected.getText();
+        this._valueChange.emit(this._value);
+
+        this._options.forEach((option) => option.setSelected(false));
+
+        selected.setSelected(true);
+
+        const rect: ClientRect = this._container.nativeElement.getBoundingClientRect();
+        Observable.timer(100).take(1).subscribe(
+            () =>
+            {
+                this._menuList.nativeElement.style.width     = rect.width / 3 + 'px';
+                this._menuList.nativeElement.style.maxHeight = '100px';
+                this._menuList.nativeElement.style.display   = 'none';
+                this._toggle = false;
+                this._changeDetector.detectChanges();
+            });
     }
 }

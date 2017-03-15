@@ -1,0 +1,25 @@
+@import './base';
+
+.header-action-bar {
+  .header-content {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 90%;
+  }
+
+  width: 100%;
+
+  .action-bar-icon {
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
+  .language-picker {
+    border: 0;
+    line-height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+  }
+}

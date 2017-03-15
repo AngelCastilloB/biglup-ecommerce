@@ -25,6 +25,7 @@ declare module 'meteor/jalik:ufs' {
                 GridFS: {new (...args): Store},
                 WABS: {new (...args): Store},
                 S3: {new (...args): Store},
+                GoogleCloudStorage: {new (...args): Store}
             },
             Filter: {new (...args): any};
     }

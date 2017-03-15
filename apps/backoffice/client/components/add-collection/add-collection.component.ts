@@ -27,15 +27,22 @@ import { Router, ActivatedRoute }    from '@angular/router';
 import { I18nSingletonService, _T }  from 'meteor/biglup:i18n';
 import { BiglupModalComponent,
          BiglupModalType,
-         BiglupModalResult }         from 'meteor/biglup:ui';
-import { Category }                  from 'meteor/biglup:business';
-import { CategoriesService }         from 'meteor/biglup:business';
-import { I18nString }                from 'meteor/biglup:i18n';
-import { I18nInputComponent }        from '../i18n-input/i18n-input.component';
+         BiglupModalResult,
+         BiglupDropdownMenuComponent } from 'meteor/biglup:ui';
+import { Category }                    from 'meteor/biglup:business';
+import { CategoriesService }           from 'meteor/biglup:business';
+import { I18nString }                  from 'meteor/biglup:i18n';
+import { I18nInputComponent }          from '../i18n-input/i18n-input.component';
+import { BehaviorSubject }             from 'rxjs/BehaviorSubject';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './add-collection.component.html';
+
+// Reactive Extensions Imports
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,6 +56,8 @@ import template from './add-collection.component.html';
 })
 export class AddCollectionComponent implements OnInit
 {
+    @ViewChild(BiglupDropdownMenuComponent)
+    private _dropMenu:              BiglupDropdownMenuComponent;
     @ViewChildren(I18nInputComponent)
     private _names:                 QueryList<I18nInputComponent>;
     @ViewChild(BiglupModalComponent)
@@ -104,6 +113,9 @@ export class AddCollectionComponent implements OnInit
                     this._category   = category;
                     this._isEditMode = true;
 
+                    if (!this._category.parentCategory)
+                        this._category.parentCategory = "";
+
                     this._i18nService.getSupportedLanguages().forEach((lang) =>
                     {
                         let name: I18nString = this._category.name.find((i18nString) => i18nString.language === lang);
@@ -140,7 +152,7 @@ export class AddCollectionComponent implements OnInit
             if (!i18nInput.getIsValid())
             {
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
@@ -199,7 +211,7 @@ export class AddCollectionComponent implements OnInit
             if (!i18nInput.getIsValid())
             {
                 this._modal.show(
-                    _T('Requiered Field Missing'),
+                    _T('Required Field Missing'),
                     _T('Collection Name is required ') + '(' + i18nInput.getLanguage() + ')');
             }
 
@@ -244,5 +256,24 @@ export class AddCollectionComponent implements OnInit
 
             this._router.navigate(['/collections']);
         }
+    }
+
+    /**
+     * @summary Gets all the root categories but excludes this category.
+     */
+    private _getCategoriesObservable(): any
+    {
+        return this._categoriesService.getRootCategories().mergeMap(array => new BehaviorSubject(array.filter(category => category._id !== this._category._id)));
+    }
+
+    /**
+     * @summary Triggered when the parent category changes.
+     *
+     * @param change The change.
+     * @private
+     */
+    private _onSelectionChange(change)
+    {
+        this._dropMenu.onSelectionChange(change);
     }
 }

@@ -1,6 +1,22 @@
-@import '{biglup:ui}/client/stylesheets/main';
+@import 'partials/reset';
+@import 'partials/grid';
+@import 'partials/designer-drawer';
+@import 'partials/action-bar';
+@import 'partials/header-cart';
+@import 'partials/header-logo';
+@import 'modules/layout';
+@import 'partials/header-nav-menu';
+@import 'partials/typography';
+@import 'partials/category-item';
+@import 'partials/content';
+@import 'partials/category';
+@import 'partials/designer';
+@import 'partials/color-picker';
+@import 'partials/footer';
+@import 'partials/modal';
+@import 'partials/swiper';
+@import 'partials/landing-page';
 
 body {
-    @extend .typography;
+  @extend .typography;
 }
-

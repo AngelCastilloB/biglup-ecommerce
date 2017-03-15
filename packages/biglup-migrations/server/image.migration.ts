@@ -17,14 +17,19 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AbstractMigration }               from './abstract-migration';
-import { ImagesStore, Category, Product  } from 'meteor/biglup:business';
-import { Observable }                      from 'rxjs/Observable';
-import * as Jimp                           from 'jimp';
-import * as stream                         from 'stream';
+import { AbstractMigration }                 from './abstract-migration';
+import { Category, Product  }                from 'meteor/biglup:business';
+import { Observable }                        from 'rxjs/Observable';
+import * as Jimp                             from 'jimp';
+import * as stream                           from 'stream';
+import { ImagesStore, GoogleStorageService } from 'meteor/biglup:images'
+import * as Future                           from 'fibers/future';
 
 // Reactive Extensions Imports
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/scan';
 
 // CONSTANTS **********************************************************************************************************/
 
@@ -81,6 +86,11 @@ export class ImageMigration extends AbstractMigration
     private _type = 'image/png';
 
     /**
+     * Srummary The total number of images.
+     */
+    private _totalImages: number  = 0;
+
+    /**
      * @summary Initializes a new instance of the class ImageMigration.
      *
      * @param _collection  The related image collection
@@ -107,8 +117,14 @@ export class ImageMigration extends AbstractMigration
         this._products   = this._collections.products.find({}).fetch();
         this._categories = this._collections.categories.find({}).fetch();
 
+        if (GoogleStorageService.getInstance().isActive())
+            console.log('Google cloud service is active. The images will be uploaded to the cloud.');
+        else
+            console.log('The images will be hosted in the server');
+
+
+        this._totalImages = this._amount * this._products.length;
         this._products.forEach((product: Product) => this._addProductImages(product));
-        this._categories.forEach((category: Category) => this._addCategoryImage(category));
     }
 
     /**
@@ -119,18 +135,46 @@ export class ImageMigration extends AbstractMigration
      */
     private _addProductImages(product: Product): void
     {
-        for (let i = 1; i <= this._amount; ++i)
+        let isGcsActive: boolean = GoogleStorageService.getInstance().isActive();
+
+        if (isGcsActive)
         {
-            this._createImage(i.toString(), (error, image) =>
+            let buffers: any[] = [];
+            for (let i = 1; i <= this._amount; ++i)
+                buffers.push(this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), i.toString()));
+
+            let count: number = 0;
+            buffers.forEach((buffer) =>
             {
-                if (error)
-                    throw error;
+                console.info('Uploading image ' + count + '/' + this._totalImages + '(' + (count / this._totalImages) * 100 + '%)');
+                let image = GoogleStorageService.getInstance().uploadImage(buffer, count.toString(), this._type, 0);
+                image = GoogleStorageService.getInstance().confirmUpload(image._id, true);
 
                 this._collections.products.update(
-                    {_id: product._id},
-                    {$push: { images: {id: image._id, url: image.url, isUploaded: true}}
-                });
+                    {
+                        _id: product._id
+                    },
+                    {
+                        $push: {images: {id: image._id, url: image.url, isUploaded: true}}
+                    });
+                ++count;
             });
+        }
+        else
+        {
+            for (let i = 1; i <= this._amount; ++i)
+            {
+                this._createImage(i.toString(), (error, image) =>
+                {
+                    if (error)
+                        throw error;
+
+                    this._collections.products.update(
+                        {_id: product._id},
+                        {$push: { images: {id: image._id, url: image.url, isUploaded: true}}
+                        });
+                });
+            }
         }
     }
 
@@ -145,16 +189,8 @@ export class ImageMigration extends AbstractMigration
     {
         const imageId = ImagesStore.create({name, type: this._type});
 
-        this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name).subscribe(
-            (buffer) =>
-            {
-                ImagesStore.write(buffer, imageId, callback);
-            },
-            (bufferError) =>
-            {
-                throw bufferError;
-            }
-        );
+        let buffer = this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), name);
+        ImagesStore.write(buffer, imageId, callback);
     }
 
     /**
@@ -184,51 +220,50 @@ export class ImageMigration extends AbstractMigration
      *
      * @returns {Observable<any>} An observable with that will return the newly created image as a readable buffer.
      */
-    private _getImageStream(width: number, height: number, color: number, name: string): Observable<any>
+    private _getImageStream(width: number, height: number, color: number, name: string): any
     {
-        return Observable.create(observer =>
+        var future = new Future();
+        let image = new Jimp(width, height, color, Meteor.bindEnvironment((error, result) =>
         {
-            let image = new Jimp(width, height, color, Meteor.bindEnvironment((error, result) =>
+            if (error)
             {
-                if (error)
+                future.throw(error);
+                return;
+            }
+
+            let typography = Jimp.FONT_SANS_64_BLACK;
+
+            if (color < MAX_32_BIT_INT / 2)
+                typography = Jimp.FONT_SANS_64_WHITE;
+
+            Jimp.loadFont(typography, Meteor.bindEnvironment((fontError, font) =>
+            {
+                if (fontError)
                 {
-                    observer.error(error);
+                    future.throw(fontError);
                     return;
                 }
 
-                let typography = Jimp.FONT_SANS_64_BLACK;
+                result.print(font, FONT_OFFSET, FONT_OFFSET, name);
 
-                if (color < MAX_32_BIT_INT / 2)
-                    typography = Jimp.FONT_SANS_64_WHITE;
-
-                Jimp.loadFont(typography, Meteor.bindEnvironment((fontError, font) =>
+                result.getBuffer(Jimp.MIME_PNG, Meteor.bindEnvironment((bufferError, buffer) =>
                 {
-                    if (fontError)
+                    if (bufferError)
                     {
-                        observer.error(fontError);
+                        future.throw(bufferError);
                         return;
                     }
 
-                    result.print(font, FONT_OFFSET, FONT_OFFSET, name);
+                    let bufferStream = new stream.PassThrough();
 
-                    result.getBuffer(Jimp.MIME_PNG, Meteor.bindEnvironment((bufferError, buffer) =>
-                    {
-                        if (bufferError)
-                        {
-                            observer.error(bufferError);
-                            return;
-                        }
+                    bufferStream.end(buffer);
 
-                        let bufferStream = new stream.PassThrough();
-
-                        bufferStream.end(buffer);
-
-                        observer.next(bufferStream);
-                        observer.complete();
-                    }));
+                    future.return(bufferStream);
                 }));
             }));
-        });
+        }));
+
+        return future.wait();
     }
 
     /**

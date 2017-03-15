@@ -20,16 +20,16 @@ export * from './common/schemas/user.schema';
 
 // Collections
 export * from './common/collections/category.collection';
-export * from './common/collections/image.collection';
 export * from './common/collections/product.collection';
 export * from './common/collections/variant-attributes.collections';
+export * from './common/collections/appearance.collections';
 
 // Models
 export * from './common/models/index';
 
 // Publications
 import './server/publications/category.publication';
-import './server/publications/images.publication';
 import './server/publications/product.publication';
 import './server/publications/user.publication';
 import './server/publications/variant-attributes.publication';
+import './server/publications/appearance.publication';

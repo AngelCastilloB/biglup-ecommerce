@@ -1,0 +1,69 @@
+@import "./base";
+
+#designerDrawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 285px;
+  left: -285px;
+  overflow: auto;
+  z-index: 6;
+  transition: transform 0.2s;
+  background-color: #ebebeb;
+  @include elevation(4);
+
+  hr {
+    border-color: #3f51b5;
+  }
+}
+
+#designerDrawer.active {
+  transform: translate(285px);
+}
+
+#designerDrawerContent {
+  -webkit-transition: margin-left 200ms 0ms;
+  transition: margin-left 200ms 0ms;
+}
+
+#designerDrawerContent.active {
+  margin-left: 285px;
+}
+
+#designerToggle {
+  position: fixed;
+  width: 20px;
+  top: 0;
+  bottom: 0;
+  background-color: transparent;
+  overflow: auto;
+  -webkit-transition: margin-left 200ms 0ms;
+  transition: margin-left 200ms 0ms;
+  z-index: 999;
+
+  .toggleLabel {
+    @include elevation(1);
+    height: 40px;
+    width: 100%;
+    background-color: #ebebeb;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 1000;
+    i {
+      margin-top: 13px;
+    }
+  }
+}
+
+#designerToggle.active {
+  margin-left: 285px;
+}

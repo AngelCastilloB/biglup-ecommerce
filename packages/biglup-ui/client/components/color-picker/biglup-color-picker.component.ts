@@ -35,7 +35,7 @@ import template from './biglup-color-picker.component.html';
 /* EXPORTS ************************************************************************************************************/
 
 /**
- * @summary Color pciker dialog.
+ * @summary Color picker dialog.
  */
 @Component({
     selector: 'biglup-color-picker',
@@ -542,7 +542,7 @@ export class BiglupColorPickerComponent implements OnInit
      */
     public update(emit: boolean = true)
     {
-        let hsla     = this.service.hsva2hsla(this._hsva);
+        let hsla    = this.service.hsva2hsla(this._hsva);
         let rgba    = this.service.denormalizeRGBA(this.service.hsvaToRgba(this._hsva));
         let hueRgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this._hsva.h, 1, 1, 1)));
 

@@ -1,0 +1,12 @@
+.header-logo {
+  position: relative;
+  img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+    display:inline-block;
+    margin:0;
+    vertical-align:top;
+    cursor: pointer;
+  }
+}

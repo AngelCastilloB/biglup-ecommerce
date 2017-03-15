@@ -26,9 +26,10 @@ import { Component,
          Input,
          Output,
          EventEmitter ,
-         ChangeDetectorRef } from '@angular/core';
-import { DragulaService }    from 'ng2-dragula/ng2-dragula';
-import { ProductImage }      from 'meteor/biglup:business';
+         ChangeDetectorRef }   from '@angular/core';
+import { DragulaService }      from 'ng2-dragula/ng2-dragula';
+import { ProductImage }        from 'meteor/biglup:business';
+import { ImageMimeTypeHelper } from 'meteor/biglup:images';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -125,6 +126,9 @@ export class ProductImageManagerComponent
 
         let newFiles: Array<ProductImage> = Array.prototype.slice.call(files).map(file =>
             new ProductImage('', '', false, file));
+
+        newFiles = newFiles
+            .filter((image: ProductImage) => ImageMimeTypeHelper.isMimeTypeValid(image.file.type));
 
         if (this._previewFiles.length === 0)
         {

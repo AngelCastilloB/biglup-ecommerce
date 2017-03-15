@@ -46,6 +46,40 @@ Meteor.methods({
         category.name = category.name.filter((element) => element.value && element.value !== '');
         category.info = category.info.filter((element) => element.value && element.value !== '');
 
+        if (category.parentCategory !== null && category.parentCategory !== '')
+        {
+            category.isRootCategory = false;
+
+            let parent: Category = Categories.findOne({_id: category.parentCategory});
+
+            if (!parent)
+            {
+                throw new Meteor.Error(
+                    'createCategory.categoryDoesNotExist',
+                    'The parent category does not exist (' + category.parentCategory + ').');
+            }
+
+            if (!parent.isRootCategory)
+            {
+                throw new Meteor.Error(
+                    'createCategory.parentCategoryIsNotRoot',
+                    'The parent category is not a root category (' + category.parentCategory + ').');
+            }
+
+            if (parent._id === category._id)
+            {
+                throw new Meteor.Error(
+                    'createCategory.parentCategoryIsItself',
+                    'The category can not have itself as a parent category (' + category.parentCategory + ').');
+            }
+        }
+        else
+        {
+            category.isRootCategory = true;
+        }
+
+        delete category['denormalizedParent'];
+        delete category['denormalizedSubcategories'];
         check(category, CategorySchema);
 
         return Categories.insert(category);
@@ -78,6 +112,20 @@ Meteor.methods({
                 'This category does not exists in the database.');
         }
 
+        // Removes all subcategories from products.
+        let subcategories = Categories.find({parentCategory: categoryId}).fetch();
+
+        subcategories.forEach((sub: Category) =>
+        {
+            Categories.remove({_id: sub._id});
+
+            Meteor.call('removeCategory', sub._id, (error) =>
+            {
+                if (error)
+                    console.error(error);
+            });
+        });
+
         Categories.remove({_id: categoryId});
 
         Meteor.call('removeCategory', categoryId, (error) =>
@@ -100,9 +148,9 @@ Meteor.methods({
         /*
          if (!Meteor.users.findOne(this.userId).isAdmin)
          {
-         throw new Meteor.Error(
-         'deleteCategories.unauthorized',
-         'You are not authorized to perform this action.');
+             throw new Meteor.Error(
+                 'deleteCategories.unauthorized',
+                 'You are not authorized to perform this action.');
          }
          */
 
@@ -131,6 +179,8 @@ Meteor.methods({
         category.name = category.name.filter((element) => element.value && element.value !== '');
         category.info = category.info.filter((element) => element.value && element.value !== '');
 
+        delete category['denormalizedParent'];
+        delete category['denormalizedSubcategories'];
         check(category, CategorySchema);
 
         /*
@@ -153,6 +203,38 @@ Meteor.methods({
             throw new Meteor.Error(
                 'updateCategory.categoryDoesNotExist',
                 'This category does not exists in the database.');
+        }
+
+        if (category.parentCategory !== null && category.parentCategory !== '')
+        {
+            category.isRootCategory = false;
+
+            let parent: Category = Categories.findOne({_id: category.parentCategory});
+
+            if (!parent)
+            {
+                throw new Meteor.Error(
+                    'updateCategory.categoryDoesNotExist',
+                    'The parent category does not exist (' + category.parentCategory + ').');
+            }
+
+            if (!parent.isRootCategory)
+            {
+                throw new Meteor.Error(
+                    'updateCategory.parentCategoryIsNotRoot',
+                    'The parent category is not a root category (' + category.parentCategory + ').');
+            }
+
+            if (parent._id === category._id)
+            {
+                throw new Meteor.Error(
+                    'updateCategory.parentCategoryIsItself',
+                    'The category can not have itself as a parent category (' + category.parentCategory + ').');
+            }
+        }
+        else
+        {
+            category.isRootCategory = true;
         }
 
         let id = category._id;
