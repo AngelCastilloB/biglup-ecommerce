@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
-    "angular2-meteor": "0.7.0-beta.3"
+    "angular2-meteor": "0.7.1"
 });
 
 Package.onUse(function(api)

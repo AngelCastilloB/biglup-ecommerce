@@ -6,13 +6,13 @@
 
 meteor-base@1.0.4                # Packages every Meteor app needs to have
 mobile-experience@1.0.4          # Packages for a great mobile UX
-mongo@1.1.14                      # The database Meteor supports right now
+mongo@1.1.16                      # The database Meteor supports right now
 reactive-var@1.0.11               # Reactive variable for tracker
 jquery@1.11.10                     # Helpful client-side library
-tracker@1.1.1                    # Meteor's client-side reactive programming library
+tracker@1.1.2                    # Meteor's client-side reactive programming library
 
-standard-minifier-css@1.3.2      # CSS minifier run for production mode
-standard-minifier-js@1.2.1       # JS minifier run for production mode
+standard-minifier-css@1.3.4      # CSS minifier run for production mode
+standard-minifier-js@1.2.3       # JS minifier run for production mode
 es5-shim@4.6.15                   # ECMAScript 5 compatibility for older browsers.
 
 angular2-compilers@=0.6.0  # Modified Angular 2 compilers
@@ -23,16 +23,16 @@ konecty:mongo-counter      #
 
 jalik:ufs                  # Custom upload file system
 jalik:ufs-local            # Local implementation of custom upload file system
-check@1.2.4                #
+check@1.2.5                #
 momentjs:moment            # Date and time manipulation library
 percolate:migrations       # Allows database migrations
 
 service-configuration@1.0.11      # Allows the manipulation of 3rd party services config.
 
-accounts-password@1.3.1          # Meteor password based account system
-accounts-facebook@1.0.11          # Meteor facebook based account system
-accounts-google@1.0.11            # Meteor google based account system
-accounts-twitter@1.1.12           # Meteor twitter based account system
+accounts-password@1.3.4          # Meteor password based account system
+accounts-facebook@1.1.1          # Meteor facebook based account system
+accounts-google@1.1.1            # Meteor google based account system
+accounts-twitter@1.2.1           # Meteor twitter based account system
 barbatus:angular2-polyfills
 barbatus:angular2-runtime
 
@@ -43,5 +43,5 @@ biglup:migrations
 biglup:configuration
 biglup:vendor-typings
 biglup:images
-shell-server@0.2.1
-http
+shell-server@0.2.3
+http@1.2.12
