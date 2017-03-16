@@ -19,6 +19,8 @@
 
 import { AfterViewInit }  from '@angular/core';
 import { Component }      from '@angular/core';
+import { AppearancesService,
+         Appearance }     from 'meteor/biglup:business';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
@@ -35,12 +37,12 @@ import template from './appearances.component.html';
 })
 export class AppearancesComponent implements AfterViewInit
 {
-    private _content: string = 'sssss';
-
     /**
      * @summary Initializes a new instance of the AppearancesComponent class.
+     *
+     * @param { AppearancesService } _appearancesService The Appearances service.
      */
-    constructor()
+    constructor(private _appearancesService: AppearancesService)
     {
     }
 

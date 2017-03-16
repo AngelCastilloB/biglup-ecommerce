@@ -56,6 +56,7 @@ import { CommonModule }                     from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BiglupUiModule }                   from 'meteor/biglup:ui';
 import { AppearancesComponent }             from './components/appearances/appearances.component';
+import { AppearancesService }               from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -128,7 +129,8 @@ import { AppearancesComponent }             from './components/appearances/appea
         CartsService,
         BiglupToastService,
         VariantAttributesService,
-        InventoryService
+        InventoryService,
+        AppearancesService
     ]
 })
 export class BackofficeModule
