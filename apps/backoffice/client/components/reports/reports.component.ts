@@ -51,6 +51,8 @@ export class ReportsComponent extends AfterViewInit {
     private _color1: string             = '#2fd534';
     private _color2: string             = '#bdc127';
     private _color3: string             = '#127bdc';
+    private _toggle1: boolean           = true;
+    private _toggle2: boolean           = false;
 
     // Charts
 

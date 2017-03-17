@@ -60,3 +60,4 @@ export * from './client/services/color-picker/internals/Hsla';
 export * from './client/services/color-picker/internals/Rgba';
 export * from './client/services/color-picker/internals/SliderDimension';
 export * from './client/services/color-picker/internals/SliderPosition';
+export * from './client/components/toggle/biglup-toggle.component';

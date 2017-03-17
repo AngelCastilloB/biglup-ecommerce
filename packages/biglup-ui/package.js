@@ -16,6 +16,7 @@ Package.onUse(function(api)
     api.use('ecmascript');
     api.use('angular2-compilers');
     api.use('biglup:i18n');
+    api.use('biglup:core');
 
     api.addFiles([
         'typings/biglup-ui.d.ts'
@@ -71,7 +72,8 @@ Package.onUse(function(api)
         'client/services/color-picker/internals/Hsla.ts',
         'client/services/color-picker/internals/Rgba.ts',
         'client/services/color-picker/internals/SliderDimension.ts',
-        'client/services/color-picker/internals/SliderPosition.ts'
+        'client/services/color-picker/internals/SliderPosition.ts',
+        'client/components/toggle/biglup-toggle.component.ts'
     ], 'client');
 
     api.addAssets(['assets/images/biglup-menu-header.png'], "client");

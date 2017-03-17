@@ -5,29 +5,14 @@
   <a class="active"><i class="material-icons md-16">brush</i>{{ 'Appearances' | translate }}</a>
 </biglup-breadcrumb>
 
-<div *ngFor="let appearance of _appearancesService.getAppearances() | async">
-  {{ appearance.name }}
-</div>
-
-<div class="add-product-content">
-  <biglup-paper elevation="1">
-    <span><b>{{ 'Set Site Appearance' | translate }}</b></span><br>
-    <div class="biglup-grid">
-      <div class="biglup-cell biglup-cell-12-col">
-        <label class="biglup-dropdown-menu-simple">
-          <select>
-            <option value="" selected> {{ "None" | translate }} </option>
-          </select>
-        </label>
-      </div>
-    </div>
-  </biglup-paper>
-
-  <div class="products-add-product-button">
-    <biglup-button
-      raised="true" color="primary">{{'Set' | translate }}
-    </biglup-button>
-  </div>
+<biglup-data-table
+  icon='brush'
+  title="{{ 'Appearances List' | translate }}"
+  (delete)="_onDelete($event)"
+  (edit)="_onEdit($event)"
+  [columns]="_dataTableColumns"
+  [dataStream]="_appearancesService.getAppearances()">
+</biglup-data-table>
 
   <div class="products-add-product-button">
     <biglup-button

@@ -17,14 +17,17 @@
 
 // IMPORTS ************************************************************************************************************/
 
-import { AfterViewInit }  from '@angular/core';
-import { Component }      from '@angular/core';
+import { AfterViewInit }            from '@angular/core';
+import { Component }                from '@angular/core';
 import { AppearancesService,
-         Appearance }     from 'meteor/biglup:business';
+         Appearance }               from 'meteor/biglup:business';
+import { _T, I18nSingletonService } from 'meteor/biglup:i18n';
 
 // REMARK: We need to suppress this warning since meteor-static-templates does not define a Default export.
 // noinspection TypeScriptCheckImport
 import template from './appearances.component.html';
+
+let dateFormat = require('dateformat');
 
 // EXPORTS ************************************************************************************************************/
 
@@ -37,6 +40,7 @@ import template from './appearances.component.html';
 })
 export class AppearancesComponent implements AfterViewInit
 {
+    private _dataTableColumns: any = {};
     /**
      * @summary Initializes a new instance of the AppearancesComponent class.
      *
@@ -44,6 +48,7 @@ export class AppearancesComponent implements AfterViewInit
      */
     constructor(private _appearancesService: AppearancesService)
     {
+        this._buildTableFormat();
     }
 
     /**
@@ -52,4 +57,17 @@ export class AppearancesComponent implements AfterViewInit
     public ngAfterViewInit()
     {
     }
+
+    /**
+     * @summary Builds the data table format.
+     */
+    private _buildTableFormat()
+    {
+        this._dataTableColumns = [
+            { name: 'name', label: _T('Title') },
+            { name: 'updatedAt', label: _T('Last Update'), format: (date) => dateFormat(date, "mmmm dS, yyyy, HH:MM:ss")},
+            { name: 'isActive', label: _T('Active')}
+        ];
+    }
+
 }

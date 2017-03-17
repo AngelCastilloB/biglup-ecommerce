@@ -33,7 +33,7 @@ import { BiglupModalComponent,
 // noinspection TypeScriptCheckImport
 import template from './products.component.html';
 
-var dateFormat = require('dateformat');
+let dateFormat = require('dateformat');
 
 // EXPORTS ************************************************************************************************************/
 

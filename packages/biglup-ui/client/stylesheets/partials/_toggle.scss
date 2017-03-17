@@ -1,0 +1,54 @@
+@import 'base';
+
+.biglup-toggle {
+  .biglup-toggle-press {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .biglup-toggle-hidden {
+    display: none;
+  }
+
+  .biglup-toggle-label {
+    position: relative;
+    display: block;
+    height: 14px;
+    width: 34px;
+    background: $disabled-background-color;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 28px;
+    &:after {
+      position: absolute;
+      left: -2px;
+      top: -3px;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 100px;
+      background: $primary-background-color;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+      content: '';
+      transition: all 0.3s ease;
+    }
+  }
+
+  .biglup-toggle-checkbox {
+    &:checked ~ label {
+      background: lighten($primary-color, 30%);
+      &:after {
+        left: 16px;
+        background: $primary-color;
+      }
+    }
+    &:disabled ~ label {
+      background: $disabled-background-color;
+      pointer-events: none;
+      &:after {
+        background: $disabled-text-color;
+      }
+    }
+  }
+}

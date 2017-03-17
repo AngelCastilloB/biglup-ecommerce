@@ -56,6 +56,8 @@ import { BiglupTextEditorComponent }              from './components/text-editor
 import { DomHandlerService }                      from './services/dom/dom-handler.service';
 import { BiglupColorPickerService }               from './services/color-picker/biglup-color-picker.service';
 import { BiglupColorPickerDirective }             from './directives/color-picker/biglup-color-picker.directive';
+import { BiglupToggleComponent }                  from './components/toggle/biglup-toggle.component';
+import { IdGeneratorService }                     from 'meteor/biglup:core';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -66,7 +68,8 @@ import { BiglupColorPickerDirective }             from './directives/color-picke
     providers: [
         BiglupMediaService,
         DomHandlerService,
-        BiglupColorPickerService
+        BiglupColorPickerService,
+        IdGeneratorService
     ],
     imports: [
         BrowserModule,
@@ -104,7 +107,8 @@ import { BiglupColorPickerDirective }             from './directives/color-picke
         BiglupTabComponent,
         BiglupTabsComponent,
         BiglupBreadcrumbComponent,
-        BiglupTextEditorComponent
+        BiglupTextEditorComponent,
+        BiglupToggleComponent
     ],
     exports: [
         BiglupColorPickerDirective,
@@ -137,7 +141,8 @@ import { BiglupColorPickerDirective }             from './directives/color-picke
         BiglupTabComponent,
         BiglupTabsComponent,
         BiglupBreadcrumbComponent,
-        BiglupTextEditorComponent
+        BiglupTextEditorComponent,
+        BiglupToggleComponent
     ]
 })
 export class BiglupUiModule

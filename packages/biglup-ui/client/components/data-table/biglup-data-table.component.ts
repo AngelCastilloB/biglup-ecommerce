@@ -66,6 +66,7 @@ export interface DataTableColumn
     multiField?: boolean;
     hasLink?: boolean;
     getLink?: { (value: any): any };
+    isToggle?: boolean;
 }
 
 // EXPORTS ************************************************************************************************************/

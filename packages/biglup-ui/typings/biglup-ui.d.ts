@@ -114,6 +114,7 @@ declare module BiglupUi
     class BiglupToastService {
         public displayToast(message: string, dismissable: boolean = true);
     }
+    class BiglupToggleComponent {}
     class BiglupPaperComponent {}
     class BiglupBadgeComponent {}
     class BiglupDropdownOptionComponent {}
@@ -140,11 +141,14 @@ declare module BiglupUi
 
     interface DataTableColumn
     {
-        multiField?: boolean;
-        name?: string;
+        name: string;
         label: string;
         numeric?: boolean;
         format?: { (value: any): any };
+        multiField?: boolean;
+        hasLink?: boolean;
+        getLink?: { (value: any): any };
+        isToggle?: boolean;
     }
 }
 
