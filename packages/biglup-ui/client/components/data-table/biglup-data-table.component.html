@@ -46,14 +46,14 @@
           <td *ngIf="_rowSelection" class="biglup-data-table-checkbox-cell" data-title="Selecttion">
             <biglup-checkbox [(checked)]="row._dataTableSelected"></biglup-checkbox>
           </td>
-
           <td [class.biglup-data-table-numeric]="column.numeric" *ngFor="let column of _columns; let last=last;" [attr.data-title]="column.label">
-            <a *ngIf="column.hasLink" [routerLink]="[column.getLink(row)]">
+            <span *ngIf="column.isToggle" (mouseup)="_onToggle(row)"><biglup-toggle [isReadOnly]="true" [toggle]="row[column.name]"></biglup-toggle></span>
+            <a *ngIf="!column.isToggle && column.hasLink" [routerLink]="[column.getLink(row)]">
               <span *ngIf="!column.multiField" [innerHTML]="row[column.name]"></span>
               <span *ngIf="column.multiField" [innerHTML]="row[column.name[0]]"></span>
             </a>
-            <span *ngIf="!column.multiField && !column.hasLink" [innerHTML]="row[column.name]"></span>
-            <span *ngIf="column.multiField && !column.hasLink" [innerHTML]="row[column.name[0]]"></span>
+            <span *ngIf="!column.isToggle && !column.multiField && !column.hasLink" [innerHTML]="row[column.name]"></span>
+            <span *ngIf="!column.isToggle && column.multiField && !column.hasLink" [innerHTML]="row[column.name[0]]"></span>
           </td>
         </tr>
       </tbody>

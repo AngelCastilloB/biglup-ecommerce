@@ -102,6 +102,8 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
     private _delete:              any     = new EventEmitter();
     @Output('edit')
     private _edit:                any     = new EventEmitter();
+    @Output('onrowtoggle')
+    private _toggle:              any     = new EventEmitter();
     private _hasData:             boolean = false;
     private _initialized:         boolean = false;
     private _locale:              string  = '';
@@ -224,6 +226,15 @@ export class BiglupDataTableComponent implements AfterViewInit, OnInit, OnDestro
 
         if (this._edit && selected)
             this._edit.emit(selected);
+    }
+
+    /**
+     * @summary Event handler for when the row is toggled.
+     */
+    private _onToggle(event)
+    {
+        if (this._toggle)
+            this._toggle.emit(event);
     }
 
     /**

@@ -1,6 +1,12 @@
 <div class="biglup-toggle">
   <div [class.biglup-toggle-press]="!_isDisabled">
-    <input type="checkbox" [id]="_id" class="biglup-toggle-checkbox biglup-toggle-hidden" [checked]="_toggle" [disabled]="_disabled"/>
-    <label [for]="_id" class="biglup-toggle-label"></label>
+    <input *ngIf="!_readOnly" type="checkbox" [id]="_id" class="biglup-toggle-checkbox biglup-toggle-hidden" [checked]="_toggle" [disabled]="_disabled"/>
+    <input *ngIf="_readOnly" [id]="_id" class="biglup-toggle-checkbox biglup-toggle-hidden" [checked]="_toggle" [disabled]="_disabled"/>
+    <label
+      [class.biglup-toggle-label-enabled]="_readOnly && _toggle"
+      [class.biglup-toggle-label-disabled]="_readOnly && !_toggle"
+      [for]="_id"
+      class="biglup-toggle-label">
+    </label>
   </div>
 </div>

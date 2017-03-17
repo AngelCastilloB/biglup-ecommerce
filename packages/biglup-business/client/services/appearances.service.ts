@@ -212,6 +212,57 @@ export class AppearancesService extends MeteorReactive
     }
 
     /**
+     * @summary Deletes the given appearances from the database.
+     *
+     * @param appearancesId The appearances Id collection.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public deleteAppearances(appearancesId: Array<string>): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('deleteAppearances', appearancesId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * @summary Sets the active appearance on the site.
+     *
+     * @param appearanceId The appearance Id.
+     *
+     * @return {Observable} a new cold observable
+     */
+    public activateAppearance(appearanceId: string): Observable<string>
+    {
+        return Observable.create(observer => {
+            this.call('setActiveAppearance', appearanceId, (error, result) =>
+            {
+                if (error)
+                {
+                    observer.error(error);
+                }
+                else
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+
+    /**
      * @summary Returns a hot observable with the new logo design.
      */
     public getLogoUpdate(): Observable<LogoImage>

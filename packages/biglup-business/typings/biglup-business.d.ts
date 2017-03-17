@@ -119,7 +119,9 @@ declare module Business
         public getAppearance(appearanceId: string): any;
         public createAppearance(appearance: Appearance): String;
         public updateAppearance(appearance: Appearance): any;
+        public activateAppearance(appearanceId: string): any;
         public deleteAppearance(appearanceId: string): any;
+        public deleteAppearances(appearancesId: Array<string>): any;
         public getLogoUpdate(): any;
         public updateLogo(logo: LogoImage);
     }

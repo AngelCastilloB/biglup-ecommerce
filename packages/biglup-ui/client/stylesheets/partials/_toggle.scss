@@ -51,4 +51,22 @@
       }
     }
   }
+
+    .biglup-toggle-label-enabled {
+      background: lighten($primary-color, 30%);
+      &:after {
+        left: 16px;
+        background: $primary-color;
+        transition: all 0.3s ease;
+      }
+    }
+
+    .biglup-toggle-label-disabled {
+      background: $disabled-background-color;
+      pointer-events: none;
+      &:after {
+        background: $primary-background-color;
+        transition: all 0.3s ease;
+      }
+    }
 }

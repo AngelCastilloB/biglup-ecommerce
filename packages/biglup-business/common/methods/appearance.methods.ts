@@ -98,14 +98,89 @@ Meteor.methods({
         if (!appearance.isEditable)
         {
             throw new Meteor.Error(
-                'updateAppearance.isNotEditable',
+                'deleteAppearance.isNotEditable',
                 'The appearance you are trying to delete, is not deletable.');
+        }
+
+        if (appearance.isActive)
+        {
+            throw new Meteor.Error(
+                'deleteAppearance.isActive',
+                'The appearance you are trying to delete, is still active.');
         }
 
         Appearances.remove({_id: appearanceId});
         removeLogoImage(appearance.style.header.logo);
     }
 });
+
+/**
+ * @summary Registers the delete appearances method to Meteor's DDP system. This method deletes the given appearances
+ * (and all its variants) from the system.
+ *
+ * @param products The collection of appearances id of the appearances to be deleted.
+ */
+Meteor.methods({
+    deleteAppearances(appearancesId: Array<string>)
+    {
+        /*
+         if (!Meteor.users.findOne(this.userId).isAdmin)
+         {
+             throw new Meteor.Error(
+                 'deleteAppearances.unauthorized',
+                 'You are not authorized to perform this action.');
+         }
+         */
+
+        appearancesId.forEach(
+            (id) =>
+            {
+                Meteor.call('deleteAppearance', id, (error) =>
+                {
+                    if (error)
+                        console.error(error);
+                });
+            });
+    }
+});
+
+/**
+ * @summary Registers the set active appearance method to Meteor's DDP system. This method sets the given appearance
+ * as the active appearance on the system.
+ *
+ * @param appearanceId The appearanceId id of the appearance to be activated.
+ */
+Meteor.methods({
+    setActiveAppearance(appearanceId: String)
+    {
+        /*
+         if (!Meteor.users.findOne(this.userId).isAdmin)
+         {
+             throw new Meteor.Error(
+                 'setActiveAppearance.unauthorized',
+                 'You are not authorized to perform this action.');
+         }*/
+
+        check(appearanceId, String);
+
+        let appearance: Appearance = Appearances.findOne({_id: appearanceId});
+        if (!appearance)
+        {
+            throw new Meteor.Error(
+                'setActiveAppearance.appearanceDoesNotExist',
+                'This appearance does not exists in the database.');
+        }
+
+        let activeAppearance: Appearance = Appearances.findOne({isActive: true});
+
+        // Set active appearance to inactive.
+        Appearances.update({_id: activeAppearance._id}, { $set: { isActive: false } });
+
+        // Set new appearance to active.
+        Appearances.update({_id: appearanceId}, { $set: { isActive: true } });
+    }
+});
+
 
 /**
  * @summary Registers the update appearance method to Meteor's DDP system. This method modifies the given appearance

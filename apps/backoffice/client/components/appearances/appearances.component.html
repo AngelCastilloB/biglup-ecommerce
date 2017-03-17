@@ -10,6 +10,7 @@
   title="{{ 'Appearances List' | translate }}"
   (delete)="_onDelete($event)"
   (edit)="_onEdit($event)"
+  (onrowtoggle)="_onToggle($event)"
   [columns]="_dataTableColumns"
   [dataStream]="_appearancesService.getAppearances()">
 </biglup-data-table>

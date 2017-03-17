@@ -35,6 +35,8 @@ import template from './biglup-toggle.component.html';
 })
 export class BiglupToggleComponent
 {
+    @Input('isReadOnly')
+    private _readOnly: boolean = false;
     @Input('toggle')
     private _toggle: boolean;
     @Output('toggleChange')
