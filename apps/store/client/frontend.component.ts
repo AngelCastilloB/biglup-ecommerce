@@ -43,9 +43,15 @@ export class FrontendComponent implements OnDestroy
 
     constructor(private _categoriesService: CategoriesService, private _appearancesService: AppearancesService)
     {
+        // Load pre rendered data.
+        this._appearance = Injected.obj('appearance');
+
         this._subscriptions.push(this._appearancesService.getActiveAppearance().subscribe(
             (appearance: Appearance) =>
             {
+                if (!appearance)
+                    return;
+
                 this._appearance = appearance;
             }));
 

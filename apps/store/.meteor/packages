@@ -45,3 +45,4 @@ biglup:vendor-typings
 biglup:images
 shell-server@0.2.3
 http@1.2.12
+meteorhacks:inject-initial

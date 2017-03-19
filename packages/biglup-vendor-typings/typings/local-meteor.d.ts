@@ -41,6 +41,22 @@ declare module 'meteor/meteor' {
     }
 }
 
+declare module WebApp
+{
+    let connectHandlers: any;
+}
+
+declare module Injected
+{
+    function obj(param: any): any;
+}
+
+declare module Inject
+{
+    function obj(param1: any, param2: any, param3: any): any;
+    function appUrl(param: any);
+}
+
 declare module Assets {
     function getBinary(assetPath: string, asyncCallback ?: Function): EJSON;
 
