@@ -245,104 +245,167 @@ export class GoogleStorageService
                 this._bucket.file(filename).exists(
                     Meteor.bindEnvironment((error, exists) =>
                     {
-                        if (error)
+                        try
                         {
-                            if (retryCount > 0)
+                            if (error)
                             {
-                                --retryCount;
-                                gotConfirmedFuture.return(false);
-                                return;
-                            }
-
-                            Images.remove({_id: id});
-                            console.error('There was an error with the confirmation of the file (Verifying file existence): ' + error);
-
-                            future.throw(new Meteor.Error(
-                                'GoogleStorageService.confirmUpload.error',
-                                'There was an error with the confirmation of the file '));
-
-                            gotConfirmedFuture.return(true);
-                            return;
-                        }
-
-                        if (!exists)
-                        {
-                            Images.remove({_id: id});
-
-                            future.throw(new Meteor.Error(
-                                'GoogleStorageService.confirmUpload.error',
-                                'There was an error with the confirmation of the file. The file does not exists'));
-
-                            gotConfirmedFuture.return(true);
-                            return;
-                        }
-
-                        this._bucket.file(filename).makePublic();
-
-                        let imageServletUrl = this._options.imageService;
-
-                        if (!imageServletUrl)
-                        {
-                            future.return(image);
-                            gotConfirmedFuture.return(true);
-                            return;
-                        }
-
-                        if (imageServletUrl.slice(-1) !== "/")
-                            imageServletUrl += "/";
-
-                        imageServletUrl += IMAGE_SERVICE_END_PONT_NAME;
-
-                        setTimeout(Meteor.bindEnvironment(() => {
-                                let response = HTTP.get(imageServletUrl,
-                                    {
-                                        timeout: 5000,
-                                        params: {
-                                            "key": filename,
-                                            "bucket": this._options.bucket
-                                        }
-                                    });
-
-                                if (response.statusCode === 200)
-                                {
-                                    let magicUrl: string = response.content;
-
-                                    Images.update({_id: id}, {$set: {url: magicUrl, isMagic: true}});
-
-                                    image.url = magicUrl;
-
-                                    future.return(image);
-                                    gotConfirmedFuture.return(true);
-                                    return;
-                                }
-                                else
-                                {
-                                    if (retryCount > 0)
-                                    {
-                                        --retryCount;
-                                        gotConfirmedFuture.return(false);
-                                        return;
-                                    }
-
-                                    console.warn('There was an error acquiring the magic url: ' + response);
-                                    console.warn('The image will be serve directly');
-
-                                    future.return(image);
-                                    gotConfirmedFuture.return(true);
-                                    return;
-                                }
-                            },
-                            ()=>
-                            {
-                                console.log('Failed to bind environment');
-
                                 if (retryCount > 0)
                                 {
                                     --retryCount;
                                     gotConfirmedFuture.return(false);
                                     return;
                                 }
-                            }), 500);
+
+                                Images.remove({_id: id});
+
+                                console.error('There was an error with the confirmation of the file (Verifying file existence): ' + error);
+
+                                future.throw(new Meteor.Error(
+                                    'GoogleStorageService.confirmUpload.error',
+                                    'There was an error with the confirmation of the file '));
+
+                                gotConfirmedFuture.return(true);
+                                return;
+                            }
+
+                            if (!exists)
+                            {
+                                Images.remove({_id: id});
+
+                                future.throw(new Meteor.Error(
+                                    'GoogleStorageService.confirmUpload.error',
+                                    'There was an error with the confirmation of the file. The file does not exists'));
+
+                                gotConfirmedFuture.return(true);
+                                return;
+                            }
+
+                            this._bucket.file(filename).makePublic();
+
+                            let imageServletUrl = this._options.imageService;
+
+                            if (!imageServletUrl)
+                            {
+                                future.return(image);
+                                gotConfirmedFuture.return(true);
+                                return;
+                            }
+
+                            if (imageServletUrl.slice(-1) !== "/")
+                                imageServletUrl += "/";
+
+                            imageServletUrl += IMAGE_SERVICE_END_PONT_NAME;
+
+                            setTimeout(Meteor.bindEnvironment(() =>
+                                {
+                                    try
+                                    {
+                                        let response = HTTP.get(imageServletUrl,
+                                            {
+                                                timeout: 5000,
+                                                params: {
+                                                    "key": filename,
+                                                    "bucket": this._options.bucket
+                                                }
+                                            });
+
+                                        if (response.statusCode === 200)
+                                        {
+                                            let magicUrl: string = response.content;
+
+                                            Images.update({_id: id}, {$set: {url: magicUrl, isMagic: true}});
+
+                                            image.url = magicUrl;
+
+                                            future.return(image);
+                                            gotConfirmedFuture.return(true);
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            if (retryCount > 0)
+                                            {
+                                                --retryCount;
+
+                                                if (retryCount === 0)
+                                                {
+                                                    future.throw(new Meteor.Error(
+                                                        'GoogleStorageService.confirmUpload.error',
+                                                        'There was an error with the confirmation of the file'));
+                                                }
+
+                                                gotConfirmedFuture.return(false);
+                                                return;
+                                            }
+
+                                            console.warn('There was an error acquiring the magic url: ' + response);
+                                            console.warn('The image will be serve directly');
+
+                                            future.return(image);
+                                            gotConfirmedFuture.return(true);
+                                            return;
+                                        }
+                                    }
+                                    catch (error)
+                                    {
+                                        console.error(error);
+
+                                        if (retryCount > 0)
+                                        {
+                                            --retryCount;
+
+                                            if (retryCount === 0)
+                                            {
+                                                future.throw(new Meteor.Error(
+                                                    'GoogleStorageService.confirmUpload.error',
+                                                    'There was an error with the confirmation of the file'));
+                                            }
+
+                                            gotConfirmedFuture.return(false);
+
+                                            return;
+                                        }
+                                    }
+                                },
+                                ()=>
+                                {
+                                    console.log('Failed to bind environment');
+
+                                    if (retryCount > 0)
+                                    {
+                                        --retryCount;
+
+                                        if (retryCount === 0)
+                                        {
+                                            future.throw(new Meteor.Error(
+                                                'GoogleStorageService.confirmUpload.error',
+                                                'There was an error with the confirmation of the file'));
+                                        }
+
+                                        gotConfirmedFuture.return(false);
+                                        return;
+                                    }
+                                }), 500);
+                        }
+                        catch (error)
+                        {
+                            console.error(error);
+                            if (retryCount > 0)
+                            {
+                                --retryCount;
+
+                                if (retryCount === 0)
+                                {
+                                    future.throw(new Meteor.Error(
+                                        'GoogleStorageService.confirmUpload.error',
+                                        'There was an error with the confirmation of the file'));
+                                }
+
+                                gotConfirmedFuture.return(false);
+                                return;
+                            }
+                        }
+
                     },
                     ()=>
                     {
@@ -351,6 +414,14 @@ export class GoogleStorageService
                         if (retryCount > 0)
                         {
                             --retryCount;
+
+                            if (retryCount === 0)
+                            {
+                                future.throw(new Meteor.Error(
+                                    'GoogleStorageService.confirmUpload.error',
+                                    'There was an error with the confirmation of the file'));
+                            }
+
                             gotConfirmedFuture.return(false);
                             return;
                         }
@@ -536,6 +607,13 @@ export class GoogleStorageService
         {
             file.makePublic();
             future.return(image);
+        });
+
+        remoteWriteStream.on('error', (error) =>
+        {
+            future.throw(new Meteor.Error(
+                'GoogleStorageService.uploadImage.error',
+                error));
         });
 
         stream.pipe(remoteWriteStream);

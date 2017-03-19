@@ -28,19 +28,10 @@ import { Category }                 from 'meteor/biglup:business';
  */
 export class CategoryMigration extends AbstractMigration
 {
-
-    /**
-     * @summary All the categories to be inserted.
-     */
-    private _categories: Array<Category> = Array<Category>();
-
-    /**
-     * @summary This migration will have the default amount of documents.
-     *
-     * @type {number}
-     * @private
-     */
-    private _amount = AbstractMigration.defaultAmount;
+    private _categories: Array<Category>    = Array<Category>();
+    private _subCategories: Array<Category> = Array<Category>();
+    private _categoryMaxAmount              = 10;
+    private _subCategoryMaxAmount           = 10;
 
     /**
      * @summary Initializes a new instances of the class CategoryMigration.
@@ -67,16 +58,19 @@ export class CategoryMigration extends AbstractMigration
         // https://docs.mongodb.com/manual/reference/method/db.collection.insert/
         // which accepts an array of documents, so we have to insert each one like animals.
         this._categories.forEach(category => this._collection.insert(category));
+
+        let mainCategories = this._collection.find({}).fetch();
+        this._generateSubCategories(mainCategories);
+
+        this._subCategories.forEach(category => this._collection.insert(category));
     }
 
     /**
      * Adds a category to the categories array according to the amount.
-     *
-     * @private
      */
     private _generateCategories()
     {
-        for (let i = 0; i < this._amount; i++)
+        for (let i = 0; i < this._categoryMaxAmount; i++)
         {
             const category: Category = new Category();
 
@@ -90,5 +84,30 @@ export class CategoryMigration extends AbstractMigration
 
             this._categories.push(category);
         }
+    }
+
+    /**
+     * Adds a subcategory to the categories array according to the amount.
+     */
+    private _generateSubCategories(categories)
+    {
+        categories.forEach((mainCategory) =>
+        {
+            for (let i = 0; i < this._subCategoryMaxAmount; i++)
+            {
+                const category: Category = new Category();
+
+                this._generators.forEach((generator: AbstractContentGenerator) =>
+                {
+                    category.name.push({language: generator.getLocale(), value: generator.getWords(1)});
+                    category.info.push({language: generator.getLocale(), value: generator.getWords(10)});
+                    category.isRootCategory = false;
+                    category.active = true;
+                    category.parentCategory = mainCategory._id;
+                });
+
+                this._subCategories.push(category);
+            }
+        });
     }
 }

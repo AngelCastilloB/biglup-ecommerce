@@ -35,7 +35,7 @@ export class ProductMigration extends AbstractMigration
      * @type {number}
      * @private
      */
-    private _amount = AbstractMigration.defaultAmount;
+    private _amount = 20;
 
     /**
      * @summary The collection of products that will be stored into the DB.
@@ -80,10 +80,9 @@ export class ProductMigration extends AbstractMigration
         this.fetchCategories();
         this._generateProducts();
 
-        console.error("products");
         this._products.forEach(product =>
         {
-            console.error(this._collection.insert(product));
+            this._collection.insert(product);
         });
     }
 
@@ -93,12 +92,6 @@ export class ProductMigration extends AbstractMigration
     private fetchCategories()
     {
         this._categories = this._categoriesCollection.find({}, {reactive: false}).fetch();
-
-        console.error("category");
-        this._categories.forEach((category) =>
-        {
-            console.error(category._id);
-        });
     }
 
     /**
@@ -108,22 +101,25 @@ export class ProductMigration extends AbstractMigration
      */
     private _generateProducts(): void
     {
-        for (let j = 0; j < this._amount; j++)
+        this._categories.forEach((category) =>
         {
-            const product = this._createPartialProduct();
-
-            this._generators.forEach((generator: AbstractContentGenerator) =>
+            for (let j = 0; j < this._amount; j++)
             {
-                product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
-                product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
+                const product = this._createPartialProduct(category);
 
-                //TODO: [Angel] Add variants
-                //product.color.push({language: generator.getLocale(), value: generator.getColor()});
-                //product.size.push({language: generator.getLocale(), value: generator.getSize()});
-            });
+                this._generators.forEach((generator: AbstractContentGenerator) =>
+                {
+                    product.title.push({language: generator.getLocale(), value: generator.getProductTitle()});
+                    product.description.push({language: generator.getLocale(), value: generator.getParagraph()});
 
-            this._products.push(product);
-        }
+                    //TODO: [Angel] Add variants
+                    //product.color.push({language: generator.getLocale(), value: generator.getColor()});
+                    //product.size.push({language: generator.getLocale(), value: generator.getSize()});
+                });
+
+                this._products.push(product);
+            }
+        });
     }
 
     /**
@@ -132,12 +128,12 @@ export class ProductMigration extends AbstractMigration
      * @returns {Product} The new product partial.
      * @private
      */
-    private _createPartialProduct(): Product
+    private _createPartialProduct(category): Product
     {
         const generator        = this._getGenerator();
         const product: Product = new Product();
 
-        product.categories       = this._getRandomCategoryIds();
+        product.categories       = [category._id, category.parentCategory];
         product.sku              = generator.getWords(1).toLowerCase() + '-' + generator.getRandomNumber(10000);
         product.barcode          = generator.getWords(2).replace(' ', '=').concat('.').toLowerCase();
         product.price            = generator.getRandomNumber(10000);
@@ -151,29 +147,6 @@ export class ProductMigration extends AbstractMigration
         product.requiresShipping = generator.getRandomBoolean();
 
         return product;
-    }
-
-    /**
-     * @summary Gives a random set of ids, from 1 to 5, with a change of no id returned.
-     *
-     * @returns {string[]} A random set of ids.
-     * @private
-     */
-    private _getRandomCategoryIds(): string[]
-    {
-        const array       = this._categories.slice(0);
-        const probability = 4 / array.length;
-        let amount        = array.length < 5 ? array.length : (Math.floor(Math.random() * 5) || 1);
-
-        return array.filter(category =>
-        {
-            if (amount > 0 && Math.random() > probability)
-            {
-                amount--;
-
-                return category;
-            }
-        }).map(category => category._id);
     }
 
     /**

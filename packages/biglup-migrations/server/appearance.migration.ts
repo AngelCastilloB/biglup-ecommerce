@@ -48,6 +48,7 @@ import { ImagesStore,GoogleStorageService } from 'meteor/biglup:images';
 export class AppearanceMigration implements IMigratable
 {
     private _defaultLogoImagePath = 'private/images/logo_placeholder.png';
+    private _defaultAppearances   = 5;
 
     /**
      * @summary Initializes a new instance of the class AppearanceMigration.
@@ -74,43 +75,66 @@ export class AppearanceMigration implements IMigratable
 
         let isGcsActive: boolean = GoogleStorageService.getInstance().isActive();
 
-        if (isGcsActive)
+        for (let i: number = 0; i < this._defaultAppearances; ++i)
         {
-            let upload = GoogleStorageService.getInstance().uploadImage(this._getImageStream(), 'default_logo', 'image/png', 0);
-            upload = GoogleStorageService.getInstance().confirmUpload(upload._id, true);
+            if (isGcsActive)
+            {
+                let retryCount: number = 4;
+                let imageUploaded: boolean = false;
 
-            console.log('Logo image with id ' + upload._id + ' inserted');
-
-            defaultAppearance.isActive   = true;
-            defaultAppearance.isEditable = false;
-            defaultAppearance.style.header.logo.isUploaded = true;
-            defaultAppearance.style.header.logo.id         = upload._id;
-            defaultAppearance.style.header.logo.url        = upload.url;
-
-            Appearances.insert(defaultAppearance);
-        }
-        else
-        {
-            const imageId = ImagesStore.create({name: 'default_logo', type: 'image/png'});
-
-            ImagesStore.write(this._getImageStream(), imageId,
-                (error, image) =>
+                while (retryCount > 0 && !imageUploaded)
                 {
-                    if (error)
+                    try
                     {
-                        throw error;
+                        let upload = GoogleStorageService.getInstance().uploadImage(this._getImageStream(), 'default_logo', 'image/png', 0);
+                        upload = GoogleStorageService.getInstance().confirmUpload(upload._id, true);
+
+                        console.log('Logo image with id ' + upload._id + ' inserted');
+                        defaultAppearance.isActive   = true;
+                        defaultAppearance.isEditable = false;
+                        defaultAppearance.style.header.logo.isUploaded = true;
+                        defaultAppearance.style.header.logo.id         = upload._id;
+                        defaultAppearance.style.header.logo.url        = upload.url;
+
+                        Appearances.insert(defaultAppearance);
+
+                        imageUploaded = true;
                     }
+                    catch (error)
+                    {
+                        console.error(error);
+                        console.info("Retrying");
 
-                    console.log('Logo image with id ' + imageId + ' inserted');
+                        --retryCount;
+                    }
+                }
 
-                    defaultAppearance.isActive   = true;
-                    defaultAppearance.isEditable = false;
-                    defaultAppearance.style.header.logo.isUploaded = true;
-                    defaultAppearance.style.header.logo.id         = imageId;
-                    defaultAppearance.style.header.logo.url        = image.url;
+                if (!imageUploaded)
+                    console.error('There was an error uploading one of the images for this appearance');
+            }
+            else
+            {
+                const imageId = ImagesStore.create({name: 'default_logo', type: 'image/png'});
 
-                    Appearances.insert(defaultAppearance);
-                });
+                ImagesStore.write(this._getImageStream(), imageId,
+                    (error, image) =>
+                    {
+                        if (error)
+                        {
+                            throw error;
+                        }
+
+                        console.log('Logo image with id ' + imageId + ' inserted');
+
+                        defaultAppearance.isActive   = true;
+                        defaultAppearance.isEditable = false;
+                        defaultAppearance.style.header.logo.isUploaded = true;
+                        defaultAppearance.style.header.logo.id         = imageId;
+                        defaultAppearance.style.header.logo.url        = image.url;
+
+                        Appearances.insert(defaultAppearance);
+                    });
+            }
         }
     }
 

@@ -91,6 +91,11 @@ export class ImageMigration extends AbstractMigration
     private _totalImages: number  = 0;
 
     /**
+     * Srummary The total number of images.
+     */
+    private _totalProgress: number  = 0;
+
+    /**
      * @summary Initializes a new instance of the class ImageMigration.
      *
      * @param _collection  The related image collection
@@ -117,13 +122,16 @@ export class ImageMigration extends AbstractMigration
         this._products   = this._collections.products.find({}).fetch();
         this._categories = this._collections.categories.find({}).fetch();
 
+        console.info(this._products.length + " products created in " + this._categories.length + " categories.");
+
         if (GoogleStorageService.getInstance().isActive())
             console.log('Google cloud service is active. The images will be uploaded to the cloud.');
         else
             console.log('The images will be hosted in the server');
 
-
         this._totalImages = this._amount * this._products.length;
+        this._totalProgress = 0;
+        console.info("Total images to be created: " + this._totalImages);
         this._products.forEach((product: Product) => this._addProductImages(product));
     }
 
@@ -143,21 +151,40 @@ export class ImageMigration extends AbstractMigration
             for (let i = 1; i <= this._amount; ++i)
                 buffers.push(this._getImageStream(IMAGE_WIDTH, IMAGE_HEIGHT, this._generateRandomColor(), i.toString()));
 
-            let count: number = 0;
             buffers.forEach((buffer) =>
             {
-                console.info('Uploading image ' + count + '/' + this._totalImages + '(' + (count / this._totalImages) * 100 + '%)');
-                let image = GoogleStorageService.getInstance().uploadImage(buffer, count.toString(), this._type, 0);
-                image = GoogleStorageService.getInstance().confirmUpload(image._id, true);
+                let retryCount: number = 4;
+                let imageUploaded: boolean = false;
+                while (retryCount > 0 && !imageUploaded)
+                {
+                    try
+                    {
+                        console.info('Uploading image ' + this._totalProgress + '/' + this._totalImages + '(' + ((this._totalProgress / this._totalImages) * 100).toFixed(2) + '%)');
+                        let image = GoogleStorageService.getInstance().uploadImage(buffer, this._totalProgress.toString(), this._type, 0);
+                        image = GoogleStorageService.getInstance().confirmUpload(image._id, true);
 
-                this._collections.products.update(
+                        this._collections.products.update(
+                            {
+                                _id: product._id
+                            },
+                            {
+                                $push: {images: {id: image._id, url: image.url, isUploaded: true}}
+                            });
+                        ++this._totalProgress;
+
+                        imageUploaded = true;
+                    }
+                    catch (error)
                     {
-                        _id: product._id
-                    },
-                    {
-                        $push: {images: {id: image._id, url: image.url, isUploaded: true}}
-                    });
-                ++count;
+                        console.error(error);
+                        console.info("Retrying");
+
+                        --retryCount;
+                    }
+                }
+
+                if (!imageUploaded)
+                    console.error('There was an error uploading one of the images for this product');
             });
         }
         else
