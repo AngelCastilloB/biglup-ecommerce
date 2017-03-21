@@ -18,21 +18,21 @@
 /* IMPORTS ************************************************************************************************************/
 
 import { Routes, RouterModule }        from '@angular/router';
-import { DashboardComponent }          from './components/dashboard/dashboard.component';
-import { OrdersComponent }             from './components/orders/orders.component';
-import { CustomersComponent }          from './components/customers/customers.component';
-import { ProductsComponent }           from './components/products/products.component';
-import { AddProductComponent }         from './components/add-product/add-product.component';
-import { ReportsComponent }            from './components/reports/reports.component';
+import { DashboardComponent }          from './modules/dashboard';
+import { ProductsComponent,
+         AddProductComponent }         from './modules/products';
+import { CollectionsComponent,
+         AddCollectionComponent }      from './modules/collections';
+import { VariantsComponent,
+         AddColorVariantComponent,
+         AddSizeVariantComponent,
+         AddMaterialVariantComponent}  from './modules/variants';
+import { InventoryComponent }          from './modules/inventory';
+import { AppearancesComponent}         from './modules/appearance/components/appearances/appearances.component';
+import { OrdersComponent }             from './modules/orders';
+import { CustomersComponent }          from './modules/customers';
+import { ReportsComponent }            from './modules/reports';
 import { BackofficeComponent }         from './backoffice.component';
-import { CollectionsComponent }        from './components/collections/collections.component';
-import { AddCollectionComponent }      from './components/add-collection/add-collection.component';
-import { VariantsComponent }           from './components/variants/variants.component';
-import { AddColorVariantComponent }    from './components/add-color-variant/add-color-variant.component';
-import { AddSizeVariantComponent }     from './components/add-size-variant/add-size-variant.component';
-import { AddMaterialVariantComponent } from './components/add-material-variant/add-material-variant.component';
-import { InventoryComponent }          from './components/inventory/inventory.component';
-import { AppearancesComponent}         from './components/appearances/appearances.component';
 
 /* EXPORTS ************************************************************************************************************/
 

@@ -20,117 +20,39 @@
 import { NgModule }                         from '@angular/core';
 import { BackofficeRoutesModule }           from './backoffice.routes';
 import { BackofficeComponent }              from './backoffice.component';
-import { AddCollectionComponent }           from './components/add-collection/add-collection.component';
-import { AddProductComponent }              from './components/add-product/add-product.component';
-import { CollectionsComponent }             from './components/collections/collections.component';
-import { CustomersComponent }               from './components/customers/customers.component';
-import { DashboardComponent }               from './components/dashboard/dashboard.component';
-import { OrdersComponent }                  from './components/orders/orders.component';
-import { ProductsComponent }                from './components/products/products.component';
-import { ProductImageManagerComponent }     from './components/product-images-manager/product-image-manager.component';
-import { ReportsComponent }                 from './components/reports/reports.component';
-import { CategoriesService }                from 'meteor/biglup:business';
-import { ProductsService }                  from 'meteor/biglup:business';
-import { IdGeneratorService }               from 'meteor/biglup:core';
-import { ImageDisplayComponent }            from './components/product-images-manager/components/image-display/image-display.component';
-import { ImagePreviewComponent }            from './components/product-images-manager/components/image-preview/image-preview.component';
-import { DragulaService, DragulaModule }    from 'ng2-dragula/ng2-dragula';
-import { FileDropDirective }                from './components/product-images-manager/directives/file-drop.directive';
-import { FileSelectDirective }              from './components/product-images-manager/directives/file-select.directive';
-import { ImagesService }                    from 'meteor/biglup:business';
-import { I18nInputComponent }               from './components/i18n-input/i18n-input.component';
-import { I18nTextEditorComponent }          from './components/i18n-text-editor/i18n-text-editor.component';
-import { CartsService }                     from 'meteor/biglup:business';
-import { BiglupToastService }               from 'meteor/biglup:ui';
-import { VariantsComponent }                from './components/variants/variants.component';
-import { AddColorVariantComponent }         from './components/add-color-variant/add-color-variant.component';
-import { AddSizeVariantComponent }          from './components/add-size-variant/add-size-variant.component';
-import { AddMaterialVariantComponent }      from './components/add-material-variant/add-material-variant.component';
-import { AddProductVariantComponent }       from './components/add-product-variant/add-product-variant.component';
-import { InventoryComponent }               from './components/inventory/inventory.component';
-import { VariantAttributesService }         from 'meteor/biglup:business';
-import { InventoryService }                 from 'meteor/biglup:business';
+import { DashboardModule }                  from './modules/dashboard';
+import { I18nModule }                       from './modules/i18n';
+import { CollectionsModule }                from './modules/collections';
+import { ProductsModule }                   from './modules/products';
+import { VariantsModule }                   from './modules/variants/variants.module';
+import { AppearancesModule }                from './modules/appearance';
+import { CustomersModule }                  from './modules/customers';
+import { OrdersModule }                     from './modules/orders';
+import { InventoryModule }                  from './modules/inventory';
+import { ReportsModule }                    from './modules/reports';
 import { BiglupI18nModule }                 from 'meteor/biglup:i18n';
-import { TruncateStringPipe }               from 'meteor/biglup:core';
-import { CommonModule }                     from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BiglupUiModule }                   from 'meteor/biglup:ui';
-import { AppearancesComponent }             from './components/appearances/appearances.component';
-import { AppearancesService }               from 'meteor/biglup:business';
 
 // EXPORTS ************************************************************************************************************/
 
 @NgModule({
     declarations: [
-        BackofficeComponent,
-
-        // TODO: refactor into child feature modules
-
-        // Common
-        DashboardComponent,
-
-        // collection
-        AddCollectionComponent,
-        CollectionsComponent,
-        I18nInputComponent,
-        I18nTextEditorComponent,
-
-        // product
-        AddProductComponent,
-        ProductsComponent,
-        AddProductVariantComponent,
-
-        // inventory
-        InventoryComponent,
-
-        // Variants
-        VariantsComponent,
-        AddColorVariantComponent,
-        AddSizeVariantComponent,
-        AddMaterialVariantComponent,
-
-        // customer
-        CustomersComponent,
-
-        // orders
-        OrdersComponent,
-
-        // images manager
-        ProductImageManagerComponent,
-        ImageDisplayComponent,
-        ImagePreviewComponent,
-        FileDropDirective,
-        FileSelectDirective,
-
-        // reports
-        ReportsComponent,
-
-        // Pipes
-        TruncateStringPipe,
-
-        // Appearances
-        AppearancesComponent
+        BackofficeComponent
     ],
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BiglupI18nModule,
-        BiglupUiModule,
         BackofficeRoutesModule,
-        DragulaModule
-    ],
-    providers: [
-        CategoriesService,
-        ProductsService,
-        ImagesService,
-        IdGeneratorService,
-        DragulaService,
-        CartsService,
-        BiglupToastService,
-        VariantAttributesService,
-        InventoryService,
-        AppearancesService
+        DashboardModule,
+        I18nModule,
+        CollectionsModule,
+        ProductsModule,
+        VariantsModule,
+        AppearancesModule,
+        CustomersModule,
+        OrdersModule,
+        InventoryModule,
+        ReportsModule,
+        BiglupI18nModule,
+        BiglupUiModule
     ]
 })
 export class BackofficeModule
