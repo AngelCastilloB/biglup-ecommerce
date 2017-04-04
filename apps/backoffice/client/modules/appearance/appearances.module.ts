@@ -22,6 +22,9 @@ import { RouterModule }         from '@angular/router';
 import { FormsModule }          from '@angular/forms';
 import { CommonModule }         from '@angular/common';
 import { AppearancesComponent } from './components/appearances/appearances.component'
+import { SlidersComponent }     from './components/sliders/sliders.component'
+import { FeaturedComponent }    from './components/featured/featured.component'
+import { CollagesComponent }    from './components/collages/collages.component'
 import { BiglupI18nModule }     from 'meteor/biglup:i18n';
 import { BiglupUiModule }       from 'meteor/biglup:ui';
 import { AppearancesService }   from 'meteor/biglup:business';
@@ -30,10 +33,16 @@ import { AppearancesService }   from 'meteor/biglup:business';
 
 @NgModule({
     declarations: [
-        AppearancesComponent
+        AppearancesComponent,
+        SlidersComponent,
+        FeaturedComponent,
+        CollagesComponent
     ],
     exports: [
-        AppearancesComponent
+        AppearancesComponent,
+        SlidersComponent,
+        FeaturedComponent,
+        CollagesComponent
     ],
     providers: [
         AppearancesService

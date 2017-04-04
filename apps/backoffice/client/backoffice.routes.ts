@@ -28,7 +28,10 @@ import { VariantsComponent,
          AddSizeVariantComponent,
          AddMaterialVariantComponent}  from './modules/variants';
 import { InventoryComponent }          from './modules/inventory';
-import { AppearancesComponent}         from './modules/appearance/components/appearances/appearances.component';
+import { AppearancesComponent,
+         SlidersComponent,
+         FeaturedComponent,
+         CollagesComponent }           from './modules/appearance';
 import { OrdersComponent }             from './modules/orders';
 import { CustomersComponent }          from './modules/customers';
 import { ReportsComponent }            from './modules/reports';
@@ -63,7 +66,10 @@ const ROUTES: Routes = [
             {path: 'collections/add-collection', component: AddCollectionComponent},
             {path: 'collections/edit-collection/:id', component: AddCollectionComponent},
             {path: 'products/inventory', component: InventoryComponent},
-            {path: 'appearances', component: AppearancesComponent}
+            {path: 'appearances', component: AppearancesComponent},
+            {path: 'appearances/sliders', component: SlidersComponent},
+            {path: 'appearances/featured', component: FeaturedComponent},
+            {path: 'appearances/collages', component: CollagesComponent}
         ]
     },
 ];
