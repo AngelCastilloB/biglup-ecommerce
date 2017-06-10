@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
-    "google-cloud": "0.41.2",
+    "google-cloud": "0.49.0",
     "fibers": "1.0.15"
 });
 
