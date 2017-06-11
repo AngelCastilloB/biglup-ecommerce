@@ -10,6 +10,7 @@
 @import './partials/add-material-variant';
 @import './partials/inventory';
 @import './partials/dragula';
+@import './partials/_add-appearance.scss';
 
 body {
     @extend .typography;

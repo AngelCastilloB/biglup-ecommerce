@@ -1,0 +1,213 @@
+<biglup-modal-message (onClose)="_onModalClosed($event)"></biglup-modal-message>
+<div class="add-appearance-content">
+  <h4 class="biglup-add-appearance-title">{{ 'Add Appearance' | translate }}</h4>
+  <biglup-breadcrumb>
+    <a [routerLink]="['/dashboard']"><i class="material-icons md-16">home</i>{{ 'Dashboard' | translate }}</a>
+    <a [routerLink]="['/appearances']"><i class="material-icons md-16">card_travel</i>{{ 'Appearances' | translate }}</a>
+    <a *ngIf="!_isEditMode" class="active"><i class="material-icons md-16">add_circle_outline</i> {{ 'Add Appearance' | translate }}</a>
+    <a *ngIf="_isEditMode" class="active"><i class="material-icons md-16">mode_edit</i> {{ 'Edit Appearance' | translate }}</a>
+  </biglup-breadcrumb>
+
+  <div>
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Appearance Name' | translate }}</b></span><br>
+          <biglup-input hint="{{'Name' | translate}}" floatingHint="true"></biglup-input>
+    </biglup-paper>
+
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Header Style' | translate }}</b></span></br>
+
+      <div class="biglup-grid">
+
+        <div class="biglup-cell biglup-cell-3-col">
+          <h6>{{ 'Top Bar' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.topBarBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.topBarBackgroundColor=$event"
+                [style.background]="_appearance.style.header.topBarBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.topBarFontColor"
+                (colorPickerChange)="_appearance.style.header.topBarFontColor=$event"
+                [style.background]="_appearance.style.header.topBarFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="biglup-cell biglup-cell-3-col">
+          <h6>{{ 'Logo' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-4-col">
+              <div class="designerColorItemTitle">{{ 'Align' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <label class="biglup-dropdown-menu-simple">
+                <select [(ngModel)]="_appearance.style.header.logoAlignment">
+                  <option value="left" selected> {{ "Left" | translate }} </option>
+                  <option value="center" selected> {{ "Center" | translate }} </option>
+                  <option value="right" selected> {{ "Right" | translate }} </option>
+                </select>
+              </label>
+            </div>
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.logoBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.logoBackgroundColor=$event"
+                [style.background]="_appearance.style.header.logoBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="biglup-cell biglup-cell-3-col">
+          <h6>{{ 'Menu' | translate }}</h6>
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.menuBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.menuBackgroundColor=$event"
+                [style.background]="_appearance.style.header.menuBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.menuFontColor"
+                (colorPickerChange)="_appearance.style.header.menuFontColor=$event"
+                [style.background]="_appearance.style.header.menuFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.menuHighlight"
+                (colorPickerChange)="_appearance.style.header.menuHighlight=$event"
+                [style.background]="_appearance.style.header.menuHighlight"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Highlight Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="biglup-cell biglup-cell-3-col">
+          <h6>{{ 'Sub-Menu' | translate }}</h6>
+
+          <div class="biglup-grid" style="padding: 0">
+
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.submenuBackgroundColor"
+                (colorPickerChange)="_appearance.style.header.submenuBackgroundColor=$event"
+                [style.background]="_appearance.style.header.submenuBackgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.submenuFontColor"
+                (colorPickerChange)="_appearance.style.header.submenuFontColor=$event"
+                [style.background]="_appearance.style.header.submenuFontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.header.submenuBorderColor"
+                (colorPickerChange)="_appearance.style.header.submenuBorderColor=$event"
+                [style.background]="_appearance.style.header.submenuBorderColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Border Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span><b>{{ 'Footer Style' | translate }}</b></span></br>
+
+      <div class="biglup-grid">
+        <div class="biglup-cell biglup-cell-3-col">
+          <div class="biglup-grid" style="padding: 0">
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.footer.backgroundColor"
+                (colorPickerChange)="_appearance.style.footer.backgroundColor=$event"
+                [style.background]="_appearance.style.footer.backgroundColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Background Color' | translate }}</div>
+            </div>
+            <div class="biglup-cell biglup-cell-4-col">
+              <input
+                class="designerColorItem"
+                readonly [biglupColorPicker]="_appearance.style.footer.fontColor"
+                (colorPickerChange)="_appearance.style.footer.fontColor=$event"
+                [style.background]="_appearance.style.footer.fontColor"/>
+            </div>
+            <div class="biglup-cell biglup-cell-8-col">
+              <div class="designerColorItemTitle">{{ 'Font Color' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </biglup-paper>
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Logo Images' | translate }}</b></span></br>
+    </biglup-paper>
+  <br>
+  <biglup-button class="add-appearance-left-buttons add-appearance-buttons"
+                 raised="true"
+                 *ngIf="_isEditMode"
+                 (click)="_deleteappearance()"
+                 color="warn">{{'Delete' | translate }}
+  </biglup-button>
+
+  <biglup-button class="add-appearance-right-buttons add-appearance-buttons"
+                 raised="true"
+                 *ngIf="!_isEditMode"
+                 (click)="_saveappearance()"
+                 color="primary">{{'Create' | translate }}
+  </biglup-button>
+
+  <biglup-button class="add-appearance-right-buttons add-appearance-buttons"
+                 raised="true"
+                 *ngIf="_isEditMode"
+                 (click)="_updateappearance()"
+                 color="primary">{{'Update' | translate }}
+  </biglup-button>
+
+  <biglup-button class="add-appearance-right-buttons add-appearance-buttons-cancel"
+                 raised="true"
+                 (click)="_onCancel()">{{'Cancel' | translate }}
+  </biglup-button>
+</div>

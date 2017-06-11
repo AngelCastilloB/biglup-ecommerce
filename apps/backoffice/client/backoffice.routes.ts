@@ -32,6 +32,7 @@ import { AppearancesComponent,
          SlidersComponent,
          FeaturedComponent,
          CollagesComponent }           from './modules/appearance';
+import { AddAppearanceComponent }      from './modules/appearance/components/add-appearance/add-appearance.component';
 import { OrdersComponent }             from './modules/orders';
 import { CustomersComponent }          from './modules/customers';
 import { ReportsComponent }            from './modules/reports';
@@ -67,6 +68,7 @@ const ROUTES: Routes = [
             {path: 'collections/edit-collection/:id', component: AddCollectionComponent},
             {path: 'products/inventory', component: InventoryComponent},
             {path: 'appearances', component: AppearancesComponent},
+            {path: 'appearances/add-appearance', component: AddAppearanceComponent},
             {path: 'appearances/sliders', component: SlidersComponent},
             {path: 'appearances/featured', component: FeaturedComponent},
             {path: 'appearances/collages', component: CollagesComponent}

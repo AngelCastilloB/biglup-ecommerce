@@ -21,4 +21,5 @@ export * from './components/appearances/appearances.component';
 export * from './components/sliders/sliders.component';
 export * from './components/featured/featured.component';
 export * from './components/collages/collages.component';
+export * from './components/add-appearance/add-appearance.component';
 export * from './appearances.module';
