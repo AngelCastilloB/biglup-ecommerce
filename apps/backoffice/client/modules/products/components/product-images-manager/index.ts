@@ -19,6 +19,4 @@
 
 export * from './components/image-display/image-display.component';
 export * from './components/image-preview/image-preview.component';
-export * from './directives/file-drop.directive';
-export * from './directives/file-select.directive';
 export * from './product-image-manager.component';

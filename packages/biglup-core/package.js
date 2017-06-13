@@ -31,6 +31,12 @@ Package.onUse(function(api)
         'client/pipes/truncate-string.pipe.ts'
     ], 'client');
 
+    // Directives
+    api.addFiles([
+        'client/directives/file-drop.directive.ts',
+        'client/directives/file-select.directive.ts'
+    ], 'client');
+
     // Others
     api.addFiles([
         'client/format/string.format.ts'

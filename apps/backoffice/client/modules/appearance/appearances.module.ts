@@ -30,6 +30,8 @@ import { BiglupUiModule }         from 'meteor/biglup:ui';
 import { AppearancesService }     from 'meteor/biglup:business';
 import { AddAppearanceComponent } from './components/add-appearance/add-appearance.component';
 import { I18nModule }             from '../../modules/i18n';
+import { DragulaService,
+         DragulaModule }          from 'ng2-dragula/ng2-dragula';
 
 // EXPORTS ************************************************************************************************************/
 
@@ -49,7 +51,8 @@ import { I18nModule }             from '../../modules/i18n';
         AddAppearanceComponent
     ],
     providers: [
-        AppearancesService
+        AppearancesService,
+        DragulaService
     ],
     imports: [
         RouterModule,
@@ -57,7 +60,8 @@ import { I18nModule }             from '../../modules/i18n';
         BiglupUiModule,
         FormsModule,
         I18nModule,
-        CommonModule
+        CommonModule,
+        DragulaModule
     ]
 })
 export class AppearancesModule

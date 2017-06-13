@@ -78,7 +78,7 @@ export class AddAppearanceComponent implements OnInit, AfterViewInit
     private _colorMap:              { [key: string]: ColorVariantAttribute; }    = {};
     private _sizeMap:               { [key: string]: SizeVariantAttribute; }     = {};
     private _materialMap:           { [key: string]: MaterialVariantAttribute; } = {};
-
+    private _previewFiles: Array<Object> = [];
     /**
      * @summary Initializes a new instance of the AddProductComponent class.
      */

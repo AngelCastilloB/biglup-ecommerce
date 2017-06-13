@@ -27,5 +27,9 @@ export * from './client/pipes/array-random.pipe';
 export * from './client/pipes/truncate-string.pipe';
 export * from './client/pipes/sanitize-html.pipe';
 
+// Directives
+export * from './client/directives/file-drop.directive';
+export * from './client/directives/file-select.directive';
+
 // Others
 export * from './client/format/string.format';

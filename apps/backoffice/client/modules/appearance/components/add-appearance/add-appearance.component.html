@@ -183,6 +183,71 @@
     </biglup-paper>
     <biglup-paper elevation="1">
       <span><b>{{ 'Logo Images' | translate }}</b></span></br>
+
+      <div class="biglup-grid">
+        <div class="biglup-cell biglup-cell-2-col" style="vertical-align: middle;">
+          <div style="height: 100%; display: table; text-align: left;">
+            <div style="display: table-cell; vertical-align: middle; text-align: left;">
+              <span><b>{{ 'Big Image' | translate }}:</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="biglup-cell biglup-cell-10-col">
+          <div>
+            <label ripple class="select-files-button pull-right">
+              {{ 'Select Files' | translate }} <input type="file" file-select style="display: none;" multiple/>
+            </label>
+          </div>
+          <div #drop class="dropzone dropzone-inactive" file-drop>
+            <div class="instructions-container" *ngIf="_previewFiles.length === 0">
+              <span class='fa fa-picture-o fa-5x'></span>
+              </br>
+              <span class="instructions">{{ 'Drop image to upload' | translate }}</span>
+            </div>
+            <div class='wrapper'>
+              <div class="container" [dragula]='"second-bag"'>
+                <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i" class="preview-component">
+                </div>
+              </div>
+            </div>
+          </div>
+          </br>
+        </div>
+        <div class="biglup-cell biglup-cell-2-col" style="vertical-align: middle;">
+          <div style="height: 100%; display: table; text-align: left;">
+            <div style="display: table-cell; vertical-align: middle; text-align: left;">
+              <span><b>{{ 'Mobile Image' | translate }}:</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="biglup-cell biglup-cell-10-col">
+          <div>
+            <label ripple class="select-files-button pull-right">
+              {{ 'Select Files' | translate }} <input type="file" file-select style="display: none;" multiple/>
+            </label>
+          </div>
+          <div #drop class="dropzone dropzone-inactive" file-drop>
+            <div class="instructions-container" *ngIf="_previewFiles.length === 0">
+              <span class='fa fa-picture-o fa-5x'></span>
+              </br>
+              <span class="instructions">{{ 'Drop images to upload' | translate }}</span>
+            </div>
+            <div class='wrapper'>
+              <div class="container" [dragula]='"second-bag"'>
+                <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i" class="preview-component">
+                </div>
+              </div>
+            </div>
+          </div>
+          </br>
+        </div>
+      </div>
+    </biglup-paper>
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Landing Page Elements' | translate }}</b></span></br>
+    </biglup-paper>
+    <biglup-paper elevation="1">
+      <span><b>{{ 'Landing Page Elements Order' | translate }}</b></span></br>
     </biglup-paper>
   <br>
   <biglup-button class="add-appearance-left-buttons add-appearance-buttons"
@@ -210,4 +275,4 @@
                  raised="true"
                  (click)="_onCancel()">{{'Cancel' | translate }}
   </biglup-button>
-</div>
+</div></div>

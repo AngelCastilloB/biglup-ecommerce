@@ -27,9 +27,9 @@ import { AddProductComponent }           from './components/add-product/add-prod
 import { ProductsComponent }             from './components/products/products.component';
 import { ImageDisplayComponent,
          ImagePreviewComponent,
-         FileDropDirective,
-         FileSelectDirective,
          ProductImageManagerComponent }  from './components/product-images-manager'
+import { FileDropDirective,
+         FileSelectDirective}            from 'meteor/biglup:core';
 import { BiglupI18nModule }              from 'meteor/biglup:i18n';
 import { BiglupUiModule }                from 'meteor/biglup:ui';
 import { I18nModule }                    from '../../modules/i18n';

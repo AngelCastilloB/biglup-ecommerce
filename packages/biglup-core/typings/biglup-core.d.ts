@@ -72,6 +72,11 @@ declare module Core
     }
 
     export function StringFormat(format, arguments): string;
+
+// DIRECTIVES *********************************************************************************************************/
+
+    export class FileDropDirective {}
+    export class  FileSelectDirective {}
 }
 // MODULE EXPORT ******************************************************************************************************/
 

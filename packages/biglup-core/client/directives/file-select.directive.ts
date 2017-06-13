@@ -50,7 +50,8 @@ export class FileSelectDirective
     {
         let files: FileList = this.el.nativeElement.files;
 
-        if (files.length) {
+        if (files.length)
+        {
             this.onSelected.emit(files);
         }
     }
