@@ -96,6 +96,10 @@ export let AppearanceHeaderStyleSchema: any = new SimpleSchema({
         label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo`,
         type: LogoImageSchema
     },
+    mobileLogo: {
+        label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} mobile logo`,
+        type: LogoImageSchema
+    },
     logoAlignment: {
         label: `${APPEARANCE_HEADER_STYLE_SCHEMA_NAME} logo alignment`,
         type: String

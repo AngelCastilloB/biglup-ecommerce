@@ -32,7 +32,7 @@ export class LogoImage
      */
     constructor(public id:         string  = '',
                 public url:        string  = '',
-                public isUploaded: boolean = false,
+                public isUploaded: boolean = true,
                 public file:       File    = null)
     {
     }

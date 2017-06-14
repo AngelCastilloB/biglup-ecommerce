@@ -117,7 +117,7 @@ declare module Business
         public getAppearances(): any;
         public getActiveAppearance(): any;
         public getAppearance(appearanceId: string): any;
-        public createAppearance(appearance: Appearance): String;
+        public createAppearance(appearance: Appearance): string;
         public updateAppearance(appearance: Appearance): any;
         public activateAppearance(appearanceId: string): any;
         public deleteAppearance(appearanceId: string): any;
@@ -298,7 +298,7 @@ declare module Business
         constructor(
             public id: string  = '',
             public url:        string  = '',
-            public isUploaded: boolean = false,
+            public isUploaded: boolean = true,
             public file:       File    = null);
     }
 
@@ -308,7 +308,8 @@ declare module Business
             public topBarBackgroundColor:  string    = '#000000',
             public topBarFontColor:        string    = '#FFFFFF',
             public logoBackgroundColor:    string    = '#FFFFFF',
-            public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+            public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png', true),
+            public mobileLogo:             LogoImage = new LogoImage('', '/images/logo_placeholder.png', true),
             public logoAlignment:          string    = 'center',
             public menuBackgroundColor:    string    = '#000000',
             public menuFontColor:          string    = '#FFFFFF',
@@ -321,8 +322,8 @@ declare module Business
     class Appearance
     {
         constructor(
-            public _id: String = null,
-            public name: String = '',
+            public _id: string = null,
+            public name: string = '',
             public style: AppearanceStyle = new AppearanceStyle(),
             public layout: Array<AppearanceLayout> = [],
             public isEditable: boolean             = true,

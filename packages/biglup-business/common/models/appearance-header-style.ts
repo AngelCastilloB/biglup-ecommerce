@@ -33,6 +33,7 @@ export class AppearanceHeaderStyle
      * @param topBarFontColor        The top bar font color.
      * @param logoBackgroundColor    The logo area background color.
      * @param logo                   The sites logo.
+     * @param mobileLogo             The sites mobile logo.
      * @param logoAlignment          The logo alignment.
      * @param menuBackgroundColor    The menu background color.
      * @param menuFontColor          The menu font color.
@@ -45,7 +46,8 @@ export class AppearanceHeaderStyle
         public topBarBackgroundColor:  string    = '#000000',
         public topBarFontColor:        string    = '#FFFFFF',
         public logoBackgroundColor:    string    = '#FFFFFF',
-        public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png'),
+        public logo:                   LogoImage = new LogoImage('', '/images/logo_placeholder.png', true),
+        public mobileLogo:             LogoImage = new LogoImage('', '/images/logo_placeholder.png', true),
         public logoAlignment:          string    = 'center',
         public menuBackgroundColor:    string    = '#000000',
         public menuFontColor:          string    = '#FFFFFF',

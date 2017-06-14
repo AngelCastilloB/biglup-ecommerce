@@ -29,6 +29,7 @@ import { BiglupI18nModule }       from 'meteor/biglup:i18n';
 import { BiglupUiModule }         from 'meteor/biglup:ui';
 import { AppearancesService }     from 'meteor/biglup:business';
 import { AddAppearanceComponent } from './components/add-appearance/add-appearance.component';
+import { ImagePreviewComponent }  from './components/add-appearance/components/image-preview/image-preview.component';
 import { I18nModule }             from '../../modules/i18n';
 import { DragulaService,
          DragulaModule }          from 'ng2-dragula/ng2-dragula';
@@ -41,7 +42,8 @@ import { DragulaService,
         AddAppearanceComponent,
         SlidersComponent,
         FeaturedComponent,
-        CollagesComponent
+        CollagesComponent,
+        ImagePreviewComponent
     ],
     exports: [
         AppearancesComponent,

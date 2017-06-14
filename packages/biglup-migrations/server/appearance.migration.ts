@@ -92,9 +92,12 @@ export class AppearanceMigration implements IMigratable
                         console.log('Logo image with id ' + upload._id + ' inserted');
                         defaultAppearance.isActive   = true;
                         defaultAppearance.isEditable = false;
-                        defaultAppearance.style.header.logo.isUploaded = true;
-                        defaultAppearance.style.header.logo.id         = upload._id;
-                        defaultAppearance.style.header.logo.url        = upload.url;
+                        defaultAppearance.style.header.logo.isUploaded       = true;
+                        defaultAppearance.style.header.logo.id               = upload._id;
+                        defaultAppearance.style.header.logo.url              = upload.url;
+                        defaultAppearance.style.header.mobileLogo.isUploaded = true;
+                        defaultAppearance.style.header.mobileLogo.id         = upload._id;
+                        defaultAppearance.style.header.mobileLogo.url        = upload.url;
 
                         Appearances.insert(defaultAppearance);
 
@@ -128,9 +131,12 @@ export class AppearanceMigration implements IMigratable
 
                         defaultAppearance.isActive   = true;
                         defaultAppearance.isEditable = false;
-                        defaultAppearance.style.header.logo.isUploaded = true;
-                        defaultAppearance.style.header.logo.id         = imageId;
-                        defaultAppearance.style.header.logo.url        = image.url;
+                        defaultAppearance.style.header.logo.isUploaded       = true;
+                        defaultAppearance.style.header.logo.id               = imageId;
+                        defaultAppearance.style.header.logo.url              = image.url;
+                        defaultAppearance.style.header.mobileLogo.isUploaded = true;
+                        defaultAppearance.style.header.mobileLogo.id         = imageId;
+                        defaultAppearance.style.header.mobileLogo.url        = image.url;
 
                         Appearances.insert(defaultAppearance);
                     });

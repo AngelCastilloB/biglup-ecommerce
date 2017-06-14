@@ -40,8 +40,8 @@ export class Appearance
      * @param updatedAt  The last time this Appearance was updated.
      */
     constructor(
-        public _id: String = null,
-        public name: String = '',
+        public _id: string = null,
+        public name: string = '',
         public style: AppearanceStyle = new AppearanceStyle(),
         public layout: Array<AppearanceLayout> = [],
         public isEditable: boolean             = true,

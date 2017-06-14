@@ -11,7 +11,7 @@
   <div>
     <biglup-paper elevation="1">
       <span><b>{{ 'Appearance Name' | translate }}</b></span><br>
-          <biglup-input hint="{{'Name' | translate}}" floatingHint="true"></biglup-input>
+          <biglup-input hint="{{'Name' | translate}}" floatingHint="true" [(value)]="this._appearance.name"></biglup-input>
     </biglup-paper>
 
     <biglup-paper elevation="1">
@@ -195,19 +195,18 @@
         <div class="biglup-cell biglup-cell-10-col">
           <div>
             <label ripple class="select-files-button pull-right">
-              {{ 'Select Files' | translate }} <input type="file" file-select style="display: none;" multiple/>
+              {{ 'Select File' | translate }} <input type="file" file-select style="display: none;" multiple/>
             </label>
           </div>
-          <div #drop class="dropzone dropzone-inactive" file-drop>
-            <div class="instructions-container" *ngIf="_previewFiles.length === 0">
+          <div #drop class="dropzone-small dropzone-inactive" file-drop>
+            <div class="instructions-container-small" *ngIf="!this._appearance.style.header.logo">
               <span class='fa fa-picture-o fa-5x'></span>
               </br>
-              <span class="instructions">{{ 'Drop image to upload' | translate }}</span>
+              <span class="instructions">{{ 'Drop big logo to upload' | translate }}</span>
             </div>
             <div class='wrapper'>
               <div class="container" [dragula]='"second-bag"'>
-                <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i" class="preview-component">
-                </div>
+                <logo-image-preview [model]="this._appearance.style.header.logo" *ngIf="this._appearance.style.header.logo"></logo-image-preview>
               </div>
             </div>
           </div>
@@ -223,19 +222,19 @@
         <div class="biglup-cell biglup-cell-10-col">
           <div>
             <label ripple class="select-files-button pull-right">
-              {{ 'Select Files' | translate }} <input type="file" file-select style="display: none;" multiple/>
+              {{ 'Select File' | translate }} <input type="file" file-select style="display: none;" multiple/>
             </label>
           </div>
-          <div #drop class="dropzone dropzone-inactive" file-drop>
-            <div class="instructions-container" *ngIf="_previewFiles.length === 0">
+
+          <div #drop class="dropzone-small dropzone-inactive" file-drop>
+            <div class="instructions-container-small" *ngIf="!this._appearance.style.header.mobileLogo">
               <span class='fa fa-picture-o fa-5x'></span>
               </br>
-              <span class="instructions">{{ 'Drop images to upload' | translate }}</span>
+              <span class="instructions">{{ 'Drop mobile logo to upload' | translate }}</span>
             </div>
             <div class='wrapper'>
               <div class="container" [dragula]='"second-bag"'>
-                <div *ngFor="let preview of _previewFiles; let i = index" [attr.id]="i" class="preview-component">
-                </div>
+                <logo-image-preview [model]="this._appearance.style.header.mobileLogo" *ngIf="this._appearance.style.header.mobileLogo"></logo-image-preview>
               </div>
             </div>
           </div>
@@ -253,21 +252,21 @@
   <biglup-button class="add-appearance-left-buttons add-appearance-buttons"
                  raised="true"
                  *ngIf="_isEditMode"
-                 (click)="_deleteappearance()"
+                 (click)="_deleteAppearance()"
                  color="warn">{{'Delete' | translate }}
   </biglup-button>
 
   <biglup-button class="add-appearance-right-buttons add-appearance-buttons"
                  raised="true"
                  *ngIf="!_isEditMode"
-                 (click)="_saveappearance()"
+                 (click)="_saveAppearance()"
                  color="primary">{{'Create' | translate }}
   </biglup-button>
 
   <biglup-button class="add-appearance-right-buttons add-appearance-buttons"
                  raised="true"
                  *ngIf="_isEditMode"
-                 (click)="_updateappearance()"
+                 (click)="_updateAppearance()"
                  color="primary">{{'Update' | translate }}
   </biglup-button>
 
